@@ -1,0 +1,363 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+    <head>
+        <meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>
+        <link type='text/css' href='c_000.css' rel='stylesheet'/>
+        <script language='javascript' type='text/javascript'>
+            var language=1;
+            var Json;
+            var lang=
+            {
+                N01:['事件记录','Event Records'],
+                N02:['详细记录','Detailed Records'],
+                N03:['序号','No.'],
+                N04:['时间','Time'],
+                N05:['事件名称','Event Name'],
+                N06:['一共','Total '],
+                N07:['页，共',' pages, '],
+                N08:['页，共',' page, '],
+                N09:['条记录',' records'],
+                N10:['条记录',' record'],
+                N11:['无记录。','No record.'],
+                N12:['<span style=color:#000>自检过程</span>','<span style=color:#000>Checking</span>'],
+                N13:['微网供电启动','MG Starting'],
+                N14:['电网供电启动','Grid Starting'],
+                N15:['微网供电运行','MG Running'],
+                N16:['电网供电运行','Grid Running'],
+                N17:['<span style=color:#F00>故障</span>','<span style=color:#F00>Fault</span>'],
+                N18:['停机中','Stopping'],
+                N19:['<span style=color:#000>停机</span>','<span style=color:#000>Stopped</span>'],
+                N20:['<span style=color:#F00>紧急停机</span>','<span style=color:#F00>Emergency Stop</span>'],
+                N21:['',''],
+                N22:['',''],
+                N23:['',''],
+                N24:['',''],
+                N25:['',''],
+                N26:['',''],
+                N27:['',''],
+				N28:['',''],
+                N29:['启动中','Starting'],
+                N30:['正在同步','Synchronizing'],
+                N31:['',''],
+                N32:['',''],
+                N33:['',''],
+                N34:['',''],
+                N35:['',''],
+                N36:['',''],
+                N37:['',''],
+                N38:['',''],
+                N39:['',''],
+                N40:['',''],
+                N41:['',''],
+                N42:['',''],
+                N43:['',''],
+                N44:['导出','Export']
+            };
+        </script>
+        <script src='j_000.js' type='text/javascript'></script>
+        <style type='text/css'>
+            .inquery{margin:5px auto;width:780px;_width:770px;text-align:right;padding-right:10px;}
+            .txt{margin:0 10px;width:120px;}
+            .PagerView{font-size:12px;font-family:tahoma,arial;color:#333;text-align:center;padding:8px;line-height:100%;}
+            .PagerView span{color:#999;margin:0 1px;padding:3px 6px;border:1px solid #ccc;}
+            .PagerView span.on{color:#fff;font-weight:bold;border:1px solid #666;background:#39f;}
+            .PagerView a{color:#00f;text-decoration:none;}
+            .PagerView a span{color:#33f;border:1px solid #66c;}
+            .pager{width:780px;margin:0 auto;}
+        </style>
+    </head>
+    <body onload='Init()'>
+        <script type='text/javascript'>
+            show_T('N01');
+        </script>
+		<div class='title'>
+			<div class='subtitle'>
+				<div class='r1 subcolor'></div>
+				<div class='r2 subcolor'></div>
+				<div class='r3 subcolor'></div>
+				<div class='r4 subcolor'></div>
+				<div class='content subcolor subcontent'>
+					<span id='N02'></span>
+				</div>
+				<div class='r4 subcolor'></div>
+				<div class='r3 subcolor'></div>
+				<div class='r2 subcolor'></div>
+				<div class='r1 subcolor'></div>
+				</div>
+				<div class='line_short'></div>
+				<button id='Exp' style='float:right;display:inline;margin-top:-30px;width:75px;height:24px;margin-right:20px;' onclick='Export()'><span id='N44'></span></button>
+			</div>
+		</div>
+        <table width='90%' border='0' style=' margin:0 auto;'>
+            <tr>
+                <td>
+                    <table width='100%' border='0' style='border-collapse:collapse;border:1px #aaa solid;'>
+                        <tr>
+                            <th width='100' scope='col'><span id='N03'></span></span></th>
+                            <th width='332' scope='col'><span id='N04'></span></th>
+                            <th width='332' scope='col'><span id='N05'></span></th>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table width='100%' border='0' style='margin-top:2px;border-collapse:collapse;border:1px #ddd solid;text-align:center'>
+                        <script type='text/javascript'>
+                            var str='';
+                            for(var i=1;i<=10;i++)
+                            {
+                                str+="<tr class='"+(i%2?"odd":"even")+"'>";
+                                str+="<td id='r"+(i<10?("0"+i):i)+"1' width='100'></td>";
+                                str+="<td id='r"+(i<10?("0"+i):i)+"2' width='332'></td>";
+                                str+="<td id='r"+(i<10?("0"+i):i)+"3' width='332'></td>";
+                                str+="</tr>";
+                            }
+                            document.write(str);
+                        </script>
+                    </table>
+                    <img id='waiting' style='margin:0 auto;z-index:20000;position:relative;top:-168px;' src='i_002.gif'/>
+                </td>
+            </tr>
+        </table>
+        <br/>
+        <div id='pager'></div>
+        <table width='90%' border='0'><tr><td width='100%' class='even tip'><span id='tip'>&nbsp;</span></td></tr></table>
+        <div class='btm_blank'></div>
+        <!--[if IE 6]><script type='text/javascript'>document.execCommand('BackgroundImageCache',false,true);</script><![endif]-->
+    </body>
+    <script type='text/javascript'>
+        window.history.forward(1);
+        var pager;
+        var tid;
+        var temp;
+        var page_num=1;
+
+        //测试
+        Json={ID_0x0301:85, ID_0x0300:0};
+
+        function Export()
+        {
+            var start = 0xFFFF;
+            for(var i = 0; i < 5; i++)
+            {
+                var URL='s_008.html?0x'+start.toString(16).toUpperCase();
+                var xmlhttp;
+                if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+                else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+                //xmlhttp.onreadystatechange=function() 
+                {
+                    //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                    {
+                        //eval('Json='+xmlhttp.responseText);
+                        if(Json.ID_0x0300==0 && start != 0xFFFE){
+                            start = 0xFFFE;
+                            $('Exp').disabled = true;
+                            $('waiting').style.display='inline';
+                            location.href='Event_Records.csv';
+                        }else if(Json.ID_0x0300 == 1){
+                            $('Exp').disabled = false;
+                            $('waiting').style.display='none';
+                            return;
+                        }
+                    }
+                };
+                //同步发送
+                URL = URL+'&time='+new Date();
+                //xmlhttp.open('GET',URL,false);
+                //xmlhttp.send();                
+            }
+            $('Exp').disabled = false;
+            $('waiting').style.display='none';
+        }
+        function Init()
+        {
+			FromWhichDevice();
+			if(FromMobileDevice==true)$('Exp').style.display='none';
+
+            var URL='s_008.html?0x0000&time='+new Date();
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            //xmlhttp.onreadystatechange=function()
+            {
+                //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    //eval('Json='+xmlhttp.responseText);
+        			if(Json.ID_0x0301==0x55)language=0;else language=1;
+        			lang_init(5);
+        			$('N44').innerHTML=lang.N44[language];
+        			doSubmit();
+        			show_tip('&nbsp;');
+                }
+            };
+            xmlhttp.open('GET',URL,true);
+            xmlhttp.send();
+        }
+		var E_id=new Array('1','2','3','4','5','6','7',
+						   '8','9','10','11','12','13','14','15',
+						   '16','17','18','19','20','21','22','23',
+						   '24','25','26','27','28','29','30','31','32');
+		var E_name=new Array('12','13','14','15','16','17','18','19',
+							 '20','21','22','23','24','25','26','27',
+							 '28','29','30','31','32','33','34','35',
+							 '36','37','38','39','40','41','42','43');
+        function doSubmit()
+        {
+            //调试
+
+			temp={'r':[
+            {'C1':1,'C2':'2014/08/13&nbsp;&nbsp;14:52:18','C3':'1'},
+            {'C1':2,'C2':'2014/08/13&nbsp;&nbsp;14:52:15','C3':'2'},
+            {'C1':3,'C2':'2014/08/13&nbsp;&nbsp;14:52:11','C3':'3'},
+            {'C1':4,'C2':'2014/08/13&nbsp;&nbsp;14:52:08','C3':'4'},
+            {'C1':5,'C2':'2014/08/13&nbsp;&nbsp;14:52:04','C3':'5'},
+            {'C1':6,'C2':'2014/08/13&nbsp;&nbsp;14:52:00','C3':'6'},
+            {'C1':7,'C2':'2014/08/13&nbsp;&nbsp;14:51:58','C3':'7'},
+            {'C1':8,'C2':'2014/08/13&nbsp;&nbsp;14:51:55','C3':'8'},
+            {'C1':9,'C2':'2014/08/13&nbsp;&nbsp;14:51:52','C3':'9'},
+            {'C1':10,'C2':'2014/08/13&nbsp;&nbsp;14:14:41','C3':'18'},
+            {'end':0}]};Records=14;
+
+            var URL='r_008.html?'
+            +'Y='+2000
+            +'&M='+1
+            +'&D='+1
+            //分页获取记录，每页10条记录
+            +'&P='+page_num
+            +'&time='+new Date();
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            //xmlhttp.onreadystatechange=function()
+            {
+                //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+        			show_tip('&nbsp;');
+                    //eval('temp='+xmlhttp.responseText);
+                    //收到loop条记录
+        			loop=temp.r.length-1;
+        			for(var aa=0;aa<loop;aa++)
+        			{
+        				tid=(aa<9)?'0'+(aa+1):aa+1;
+        				for(var j=1;j<=3;j++)
+        				{
+        					eval("$('r'+tid+'"+j+"').innerHTML=temp.r[aa].C"+j+";");
+                            //需要将基数的'\'补成'\\'
+        					if(j==3)for(var k=0;k<E_id.length;k++)eval("eval(\"if(temp.r[aa].C\"+\""+j+"==E_id[k])$('r\"+\""+tid+"3').innerHTML=lang.N"+E_name[k]+"[language];\")");
+        				}
+        			}
+        			for(var bb=loop;bb<10;bb++)
+        			{
+        				tid=(bb<9)?'0'+(bb+1):bb+1;
+        				for(var k=1;k<=3;k++)$('r'+tid+k).innerHTML='';
+        			}
+                    //记录数是0，禁止导出按钮
+        			if(Records==0)$('Exp').disabled=true;else $('Exp').disabled=false;
+        			if(Records<=10)
+        			{
+        				if(Records==0)
+        				{
+                            //无记录
+        					show_tip(lang.N11[language]);
+        					$('waiting').style.display='none';
+        					$('pager').style.display='none';
+        					return false;
+        				}
+        				else if(Records==1)
+        				{
+                            //仅仅显示单位区别
+        					$('pager').style.display='block';
+        					pager=new PagerView('pager',lang.N06[language],lang.N08[language],lang.N10[language]);
+        				}
+        				else
+        				{
+                            //仅仅显示单位区别
+        					$('pager').style.display='block';
+        					pager=new PagerView('pager',lang.N06[language],lang.N08[language],lang.N09[language]);
+        				}
+        			}
+        			else
+        			{
+                        //显示页数，总记录数
+        				$('pager').style.display='block';
+        				pager=new PagerView('pager',lang.N06[language],lang.N07[language],lang.N09[language]);
+        			}
+        			pager.itemCount=Records;
+        			pager.size=10;
+        			pager.index=1;
+        			pager.onclick=function(index)
+        			{
+                        //调试
+
+        				//temp={'r':[
+                        //{'C1':1,'C2':'2014/08/13&nbsp;&nbsp;14:52:18','C3':'1'},
+                        //{'C1':2,'C2':'2014/08/13&nbsp;&nbsp;14:52:15','C3':'2'},
+                        //{'C1':3,'C2':'2014/08/13&nbsp;&nbsp;14:52:11','C3':'3'},
+                        //{'C1':4,'C2':'2014/08/13&nbsp;&nbsp;14:52:08','C3':'4'},
+                        //{'C1':5,'C2':'2014/08/13&nbsp;&nbsp;14:52:04','C3':'5'},
+                        //{'C1':6,'C2':'2014/08/13&nbsp;&nbsp;14:52:00','C3':'6'},
+                        //{'C1':7,'C2':'2014/08/13&nbsp;&nbsp;14:51:58','C3':'7'},
+                        //{'C1':8,'C2':'2014/08/13&nbsp;&nbsp;14:51:55','C3':'8'},
+                        //{'C1':9,'C2':'2014/08/13&nbsp;&nbsp;14:51:52','C3':'9'},
+                        //{'C1':10,'C2':'2014/08/13&nbsp;&nbsp;14:14:41','C3':'18'},
+                        //{'end':0}]};Records=14;
+
+                        var URL='r_008.html?'
+                        +'Y='+2000
+                        +'&M='+1
+                        +'&D='+1
+                        +'&P='+index
+                        +'&time='+new Date();
+
+                        var xmlhttp;
+                        if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+                        else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+                        xmlhttp.onreadystatechange=function()
+                        {
+                            if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                            {                      
+                                show_tip('&nbsp;');
+                                eval('temp='+xmlhttp.responseText);
+                                //最大显示10条
+                				if(temp.r.length>10)
+                				{
+                                    loop=10;
+                                }
+                				else 
+                				{
+                                    loop=temp.r.length-1;
+                                }
+                				for(var cc=0;cc<loop;cc++)
+                				{
+                					tid=(cc<9)?'0'+(cc+1):cc+1;
+                					for(var j=1;j<=3;j++)
+                					{
+                						eval("$('r'+tid+'"+j+"').innerHTML=temp.r[cc].C"+j+";");
+                                        //需要将基数的'\'补成'\\'
+                						if(j==3)for(var k=0;k<E_id.length;k++)eval("eval(\"if(temp.r[cc].C\"+\""+j+"==E_id[k])$('r\"+\""+tid+"3').innerHTML=lang.N"+E_name[k]+"[language];\")");
+                					}
+                				}
+                                //从最后一条清空到表尾的记录
+                				for(var dd=loop;dd<10;dd++)
+                				{
+                					tid=(dd<9)?'0'+(dd+1):dd+1;
+                					for(var k=1;k<=3;k++)$('r'+tid+k).innerHTML='';
+                				}
+                				$('waiting').style.display='none';
+                            }
+                         };
+                        xmlhttp.open('GET',URL,true);
+                        xmlhttp.send();
+                        $('waiting').style.display='inline';
+                    };
+                    pager.render();
+                    $('waiting').style.display='none';
+                }
+            };
+            xmlhttp.open('GET',URL,true);
+            xmlhttp.send();
+            $('waiting').style.display='inline';
+        }
+    </script>
+</html>

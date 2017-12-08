@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>
+		<link type='text/css' href='c_000.css' rel='stylesheet'/>
+		<script type='text/javascript'>
+			var $=function(o){return document.getElementById(o);};
+			function lang_init_ex(st,end){for(var i=st;i<=end;i++)eval('$(\'N'+(i<10?'0'+i:i)+'\').innerHTML=lang.N'+(i<10?'0'+i:i)+'[language];');}
+			function show_T(tid)
+			{
+				var str='';
+				str+="<div class='title' style='width:90%;'><div class='r1 color'></div><div class='r2 color'></div><div class='r3 color'></div><div class='r4 color'></div>";
+				str+="<div class='content color'><span id='"+tid+"'></span></div>";
+				str+="<div class='r4 color'></div><div class='r3 color'></div><div class='r2 color'></div><div class='r1 color'></div></div><div class='blank'></div>";
+				document.write(str);
+			}
+			function show_sT(tid)
+			{
+				var str='';
+				str+="<div class='title' style='width:90%;'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+				str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+				str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+				document.write(str);
+			}
+			function sendHttpReq(url, successFn)
+			{
+				//alert(url);	
+		        var xmlhttp;
+		        if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+		        else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+		        xmlhttp.onreadystatechange=function()
+		        {
+		            if(xmlhttp.readyState==4 && xmlhttp.status==200)
+		            {
+		                if(xmlhttp.responseText=='1'){successFn();}
+		            }
+		        };
+		        xmlhttp.open('GET',url,true);
+		        xmlhttp.send();
+			}				
+		</script>
+		<style type='text/css'>
+			tr{height:27px;}
+			.select{width:180px;_width:150px;}
+			.time{width:65px;_width:100px;}
+			.txt{width:120px;height:22px;font-size:14px;text-align:right;}
+			.short_txt{width:50px;}
+			.td_value{text-align:right;padding-right:20px;}
+			.td1{padding-left:40px;text-align:left;}
+			.td2{padding-left:0px;text-align:left;}
+			.td3{padding-left:60px;text-align:left;}
+			.td4{padding-right:5px;text-align:right;}
+			.td5{padding-right:10px;text-align:right;}
+			.radio{padding-left:30px;}
+			.btnStyle{width:50px;height:24px;}
+		</style>
+	</head>
+	<body onload='Init()'>
+		<script type='text/javascript'>
+			show_T('N01');
+			show_sT('N02');
+		</script>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='10%' class='td1 odd'><span id='N03'></span></td>
+			  <td width='15%' class='td2 odd'><input class='txt' style='text-align:center;' id='IP' onkeyup='IPverify(this)' type='text'/></td>
+				<td width='10%' class='td1 odd'><span id='N04'></span></td>
+			  <td width='15%' class='td2 odd'><input class='txt' style='text-align:center;' id='SUBMASK' onkeyup='IPverify(this)' type='text'/></td>
+				<td width='10%' class='td1 odd'><span id='N05'></span></td>
+			  <td width='15%' class='td2 odd'><input class='txt' style='text-align:center;' id='GATEWAY' onkeyup='IPverify(this)' type='text'/></td>
+			   <td width='10%' class='td1 odd'><span id='N48'></span></td>
+			  <td width='15%' class='td2 odd'><input class='txt' style='text-align:center;' id='MAC' onkeyup='MACverify(this)' type='text'/></td>
+			</tr>
+		</table>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='50%' class='even' align='left'><span id='tip1' class='tip'>&nbsp;</span></td>
+				<td width='50%' class='even' align='right'>
+					<button class='btn' onclick='doSubmit(this)' id='N500' style='display:block;'></button>
+				</td>
+			</tr>
+		</table>
+		<div class='line_long'></div>
+		<div class='blank'></div>
+		<script type='text/javascript'>
+			show_sT('N44');
+		</script>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='10%' class='td1 odd'><span id='N45'></span></td>
+			  <td width='15%' class='td2 odd'><input class='txt' style='text-align:center;' id='IP2' onkeyup='IPverify2(this)' type='text'/></td>
+				<td width='10%' class='td1 odd'><span id='N46'></span></td>
+			  <td width='15%' class='td2 odd'><input class='txt' style='text-align:center;' id='SUBMASK2' onkeyup='IPverify2(this)' type='text'/></td>
+				<td width='10%' class='td1 odd'><span id='N47'></span></td>
+			  <td width='15%' class='td2 odd'><input class='txt' style='text-align:center;' id='GATEWAY2' onkeyup='IPverify2(this)' type='text'/></td>
+			    <td width='10%' class='td1 odd'><span id='N49'></span></td>
+			  <td width='15%' class='td2 odd'><input class='txt' style='text-align:center;' id='MAC2' onkeyup='MAC2verify(this)' type='text'/></td>
+			</tr>
+		</table>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='50%' class='even' align='left'><span id='tip8' class='tip'>&nbsp;</span></td>
+				<td width='50%' class='even' align='right'>
+					<button class='btn' onclick='doSubmit(this)' id='N512' style='display:block;'></button>
+				</td>
+			</tr>
+		</table>
+		<div class='line_long'></div>
+		<div class='blank'></div>
+		<script type='text/javascript'>
+			show_sT('N08');
+		</script>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='13%' class='td1 odd'><span id='N09'></span></td>
+			  <td width='15%' class='td2 odd'><input class='txt' id='ID_0x0164' maxlength='3' onkeyup='Verify(this)' type='text'/></td>
+				<td width='20%' class='td2 odd'>(1~247)</td>
+				<td width='20%' class='td1 odd'><span id='N10'></span></td>
+			  <td width='12%' class='td2 odd'><input class='txt' id='ID_0x0165' maxlength='5' onkeyup='Verify(this)' type='text'/></td>
+				<td width='20%' class='td2 odd'>(1~65535)</td>
+			</tr>
+		</table>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='50%' class='even' align='left'><span id='tip3' class='tip'>&nbsp;</span></td>
+				<td width='50%' class='even' align='right'>
+					<button class='btn' onclick='doSubmit(this)' id='N502' style='display:block;'></button>
+				</td>
+			</tr>
+		</table>
+		<div class='line_long'></div>
+		<div class='blank'></div>
+		<script type='text/javascript'>
+			show_sT('N11');
+		</script>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='15%' class='td1 odd'><span id='N12'></span></td>
+				<td width='15%' class='td2 odd'><input name='BMSMODE' type='radio' id='BMSM0' onclick='radiocontrol()' value='0' checked='checked'/><span id='N13'></span></td>
+				<td width='15%' class='td2 odd'><input name='BMSMODE' type='radio' id='BMSM1' onclick='radiocontrol()' value='1'/><span id='N14'></span></td>
+				<td width='15%' class='td2 odd'><input name='BMSMODE' type='radio' id='BMSM2' onclick='radiocontrol()' value='2'/><span id='N15'></span></td>
+				<td width='15%' class='td2 odd'></td>
+				<td width='10%' class='td2 odd'></td>
+			</tr>
+			<tr>
+				<td class='td1 even'><span id='N16'></span></td>
+				<td class='td2 even'><input name='BMSFCONT' type='radio' id='BMSFC0' value='0' checked='checked'/><span id='N17'></span></td>
+				<td class='td2 even'><input name='BMSFCONT' type='radio' id='BMSFC1' value='1'/><span id='N18'></span></td>
+				<td class='td2 even'><input name='BMSFCONT' type='radio' id='BMSFC2' value='2'/><span id='N19'></span></td>
+				<td class='td2 even'></td>
+				<td class='td2 even'></td>
+			</tr>
+			<tr>
+				<td class='td1 odd'><span id='N20'></span></td>
+				<td class='td2 odd'><input name='BMSWCONT' type='radio' id='BMSWC0' value='0' checked='checked'/><span id='N21'></span></td>
+				<td class='td2 odd'><input name='BMSWCONT' type='radio' id='BMSWC1' value='1'/><span id='N22'></span></td>
+				<td class='td2 odd'><input name='BMSWCONT' type='radio' id='BMSWC2' value='2'/><span id='N23'></span></td>
+				<td class='td2 odd'></td>
+				<td class='td2 odd'></td>
+			</tr>
+		</table>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='50%' class='even' align='left'><span id='tip4' class='tip'>&nbsp;</span></td>
+				<td width='50%' class='even' align='right'>
+					<button class='btn' onclick='doSubmit(this)' id='N503' style='display:block;'></button>
+				</td>
+			</tr>
+		</table>
+		<div class='line_long'></div>
+		<div class='blank'></div>
+		<script type='text/javascript'>
+			show_sT('N25');
+		</script>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='17%' class='td1 odd'><span id='N26'></span></td>
+			  <td width='17%' class='td2 odd'><input class='txt' id='ID_0x016A' maxlength='5' onkeyup='Verify(this)' type='text'/></td>
+				<td width='15%' class='td2 odd'>(1~65535)</td>
+				<td width='17%' class='td1 odd'></td>
+				<td width='17%' class='td2 odd'></td>
+				<td width='17%' class='td2 odd'></td>
+			</tr>
+			<tr>
+				<td class='td1 even'><span id='N27'></span></td>
+				<td class='td2 even'><input class='txt' id='ID_0x016B' maxlength='3' onkeyup='Verify(this)' type='text'/>s</td>
+				<td class='td2 even'>(1~255)</td>
+				<td class='td1 even'><span id='N28'></span></td>
+				<td class='td2 even'><input class='txt' id='ID_0x016C' maxlength='3' onkeyup='Verify(this)' type='text'/>s</td>
+				<td class='td2 even'>(1~255)</td>
+			</tr>
+			<tr>
+				<td class='td1 odd'><span id='N29'></span></td>
+				<td class='td2 odd'><input class='txt' id='ID_0x016D' maxlength='5' onkeyup='Verify(this)' type='text'/></td>
+				<td class='td2 odd'>(1~32767)</td>
+				<td class='td1 odd'><span id='N30'></span></td>
+				<td class='td2 odd'><input class='txt' id='ID_0x016E' maxlength='5' onkeyup='Verify(this)' type='text'/></td>
+				<td class='td2 odd'>(1~32767)</td>
+			</tr>
+		</table>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='50%' class='even' align='left'><span id='tip5' class='tip'>&nbsp;</span></td>
+				<td width='50%' class='even' align='right'>
+					<button class='btn' onclick='doSubmit(this)' id='N504' style='display:block;'></button>
+				</td>
+			</tr>
+		</table>
+		<div class='line_long'></div>
+		<div class='blank'></div>
+        <!-- 闁

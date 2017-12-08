@@ -1,0 +1,296 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>
+<style type='text/css'>
+	body{margin:0;padding:0;background-color:#fff;font-family:'微软雅黑',Arial,'宋体',sans-serif;}
+	#menu{margin:5px 0 0 0;width:245px;float:right;}
+	.menu_cn{line-height:36px;padding-left:65px;width:180px;height:36px;color:#000;background-color:#F58E03;font-weight:bold;font-size:16px;}
+	.submenu_cn{line-height:32px;padding-left:55px;width:190px;height:32px;color:#000;background-color:#eee;font-weight:normal;font-size:14px;}
+	.menu_en{line-height:36px;padding-left:6px;width:239px;height:36px;color:#000;background-color:#F58E03;font-weight:bold;font-size:16px;}
+	.submenu_en{line-height:32px;padding-left:20px;width:225px;height:32px;color:#000;background-color:#eee;font-weight:normal;font-size:14px;}
+	.color{background-color:#F58E03;}
+	.change_color{background-color:#007B3E;}
+	.r1{margin:0 5px;height:1px;overflow:hidden;}
+	.r2{margin:0 3px;height:1px;overflow:hidden;}
+	.r3{margin:0 2px;height:1px;overflow:hidden;}
+	.r4{margin:0 1px;height:2px;overflow:hidden;}
+	.blank{height:1px;overflow:hidden;background-color:#fff;width:213px;}
+</style>
+<script language='javascript' type='text/javascript'>
+	var $=function(o){return document.getElementById(o);};
+	var current_id='h_002';
+	var language=1;
+	var Json;
+	var HaveInitH002=false;
+	var lang=
+	{
+		N01:['运行信息','Operating Information'],
+		N02:['概要信息','Summary Information'],
+		N03:['储能逆变器信息','PCS Information'],
+		N04:['参数设置','Parameters Settings'],
+		N05:['系统参数','System Parameters'],
+		N06:['运行参数','Operating Parameters'],
+		N07:['EMS通讯参数','EMS Comm Parameters'],
+		N08:['历史记录','History Records'],
+		N09:['运行记录','Running Records'],
+		N10:['事件记录','Event Records'],
+		N11:['故障记录','Fault Records'],
+		N12:['系统信息','System Information'],
+		N13:['光伏逆变器信息', 'PV Information'],
+		N14:['光伏汇流箱信息', 'PVS Information'],
+		N15:['光伏控制器信息', 'DCDC Information'],
+		N16:['电池信息', 'BMS Information'],
+		N17:['电表信息', 'Aemmter Information'],
+		N18:['实时监控信息', 'RealTime Monitor'],
+		N19:['从设备参数', 'Slave Unit Parameters'],
+		N20:['保护参数', 'Protection Parameters'],
+		N21:['告警记录','Alarm Records'],
+		N22:['详细信息','Detail Information'],
+		N23:['环境监测仪信息','Env-Detector Information']
+	};
+	var temp1=new Array('yxxx','cssz','lsjl','h_010');
+	//+ h_025: 实时监控界面
+	var temp2=new Array('h_002','h_003','h_004','h_005','h_006','h_007','h_008','h_009','h_015','h_016','h_017','h_018','h_025','h_026','h_027','h_028','h_029','h_043','h_045');
+	function change_color(obj)
+	{
+		if(current_id!=obj.id)
+		{
+			for(var i=1;i<=4;i++)
+			{
+				if(obj.id=='yxxx')
+				$('top'+i).className='r'+i+' change_color';
+				if(obj.id=='h_010')
+				$('btm'+i).className='r'+i+' change_color';
+			}
+			obj.style.background='#007b3e';
+			obj.style.color='#fff';
+		}
+	}
+	function resume_color(obj)
+	{
+		if(current_id!=obj.id)
+		{
+			for(var i=1;i<=4;i++)
+			{
+				if(obj.id=='yxxx')
+				$('top'+i).className='r'+i+' color';
+				if(obj.id=='h_010')
+				$('btm'+i).className='r'+i+' color';
+			}
+			switch(obj.id)
+			{
+				case 'yxxx':
+				case 'cssz':
+				case 'lsjl':
+				case 'h_010':
+					obj.style.background='#F58E03';
+					obj.style.color='#000';
+				break;
+				default:
+					obj.style.background='#eee';
+					obj.style.color='#000';
+				break;
+			}
+		}
+	}
+	function showurl(obj)
+	{
+		var temp_num;
+		for(var i=2;i<=18;i++)
+		{
+			if(i==11||i==12||i==13||i==14) continue;
+			if(i<10)temp_num='h_00'+i;
+			else temp_num='h_0'+i;
+			if(i==10){
+				$(temp_num).style.background='#F58E03';
+				$(temp_num).style.color='#000';
+			}else{
+				$(temp_num).style.background='#eeeeee';
+				$(temp_num).style.color='#000';
+			}
+		}
+
+		//+实时监控界面
+		$('h_025').style.background='#eeeeee';
+		$('h_025').style.color='#000';
+
+		//+电表界面
+		$('h_026').style.background='#eeeeee';
+		$('h_026').style.color='#000';
+
+		//+从设备通讯参数
+		$('h_027').style.background='#eeeeee';
+		$('h_027').style.color='#000';
+
+		//+保护参数
+		$('h_028').style.background='#eeeeee';
+		$('h_028').style.color='#000';		
+
+		//告警界面
+		$('h_029').style.background='#eeeeee';
+		$('h_029').style.color='#000';		
+
+		//详细信息界面
+		$('h_043').style.background='#eeeeee';
+		$('h_043').style.color='#000';			
+
+		//环境仪信息界面
+		$('h_045').style.background='#eeeeee';
+		$('h_045').style.color='#000';	
+
+		obj.style.background='#007B3E';
+		obj.style.color='#fff';
+		if(obj.id!='h_010')
+		{
+			for(var i=1;i<=4;i++)
+			{
+				$('btm'+i).className='r'+i+' color';
+			}
+		}
+		current_id=obj.id;
+		var SURL='';
+		if(document.all){
+			SURL=current_id+'.html';
+		}else{
+			SURL=current_id+'.html';
+		}
+		//alert(SURL);
+		top.main.location.href=SURL;
+	}
+	function Init()
+	{
+		var URL='s_013.html?time='+new Date();
+		var xmlhttp;
+		if(window.XMLHttpRequest) xmlhttp=new XMLHttpRequest();
+		else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+		//xmlhttp.onreadystatechange=function()
+		{
+			//if(xmlhttp.readyState==4 && xmlhttp.status==200)
+			{	
+				var num,temp;
+
+				//测试
+				Json={ID_0x0301:85, ID_0x0390:1, ID_0x0391:1,ID_0x0392:1,ID_0x0393:1,ID_0x0394:1,ID_0x0395:1,ID_0x0396:0,ID_0x0397:1,ID_0x0398:1, ID_0x039A:1};
+				//eval('Json='+xmlhttp.responseText);
+
+				if(Json.ID_0x0301==0x55)language=0;else language=1;
+				if(language==0)
+				{
+					for(var i=0;i<temp1.length;i++)
+					{
+						$(temp1[i]).className='menu_cn';
+					}
+					for(var j=0;j<temp2.length;j++)
+					{
+						$(temp2[j]).className='submenu_cn';
+					}
+				}
+				else if(language==1)
+				{
+					for(var i=0;i<temp1.length;i++)
+					{
+						$(temp1[i]).className='menu_en';
+					}
+					for(var j=0;j<temp2.length;j++)
+					{
+						$(temp2[j]).className='submenu_en';
+					}
+				}
+				for(var i=1;i<=16;i++)
+				{
+					eval('$(\'N'+(i<10?'0'+i:i)+'\').innerHTML=lang.N'+(i<10?'0'+i:i)+'[language];');
+				}
+				$('N17').innerHTML=lang.N17[language];
+				$('N18').innerHTML=lang.N18[language];
+				$('N19').innerHTML=lang.N19[language];
+				$('N20').innerHTML=lang.N20[language];
+				$('N21').innerHTML=lang.N21[language];
+				$('N22').innerHTML=lang.N22[language];
+				$('N23').innerHTML=lang.N23[language];
+
+				if(Json.ID_0x0390==0x00){$('h_003').style.display='none';$('h_003_blank').style.display='none';}else{$('h_003').style.display='block';$('h_003_blank').style.display='block';}
+				if(Json.ID_0x0391==0x00){$('h_015').style.display='none';$('h_015_blank').style.display='none';}else{$('h_015').style.display='block';$('h_015_blank').style.display='block';}
+				if(Json.ID_0x0393==0x00){$('h_016').style.display='none';$('h_016_blank').style.display='none';}else{$('h_016').style.display='block';$('h_016_blank').style.display='block';}
+				if(Json.ID_0x0392==0x00){$('h_017').style.display='none';$('h_017_blank').style.display='none';}else{$('h_017').style.display='block';$('h_017_blank').style.display='block';}
+				if(Json.ID_0x0394==0x00){$('h_018').style.display='none';$('h_018_blank').style.display='none';}else{$('h_018').style.display='block';$('h_018_blank').style.display='block';}
+				if(Json.ID_0x0395==0x00){$('h_026').style.display='none';$('h_026_blank').style.display='none';}else{$('h_026').style.display='block';$('h_026_blank').style.display='block';}
+				if(Json.ID_0x0396==0x00){$('h_025').style.display='none';$('h_025_blank').style.display='none';}else{$('h_025').style.display='block';$('h_025_blank').style.display='block';}
+				if(Json.ID_0x039A==0x00){$('h_045').style.display='none';$('h_045_blank').style.display='none';}else{$('h_045').style.display='block';$('h_045_blank').style.display='block';}
+
+				if(HaveInitH002==false)
+				{
+					$('h_002').style.background='#007B3E';
+					$('h_002').style.color='#fff';
+				}
+			}
+		};
+		xmlhttp.open('GET',URL,true);
+		xmlhttp.send();			
+		if(HaveInitH002==false)
+		{
+			setTimeout("showurl($('h_002'))",500);
+			HaveInitH002=true;
+		}
+	}
+</script>
+</head>
+	<body onload='Init();'>
+		<div id='menu'>
+			<div id='top1' class='r1 color'></div>
+			<div id='top2' class='r2 color'></div>
+			<div id='top3' class='r3 color'></div>
+			<div id='top4' class='r4 color'></div>
+			<div id='yxxx' class='menu_en' style='cursor:default;'><span id='N01'></span></div>
+			<div class='blank'></div>
+			<div id='h_002' class='submenu_en' style='cursor:pointer;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N02'></span></div>
+			<div class='blank'></div>
+			<div id='h_003' class='submenu_en' style='cursor:pointer; display:block;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N03'></span></div>
+			<div id='h_003_blank' class='blank'></div>			
+			<div id='h_015' class='submenu_en' style='cursor:pointer; display:none;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N13'></span></div>
+			<div id='h_015_blank' class='blank'></div>
+			<div id='h_016' class='submenu_en' style='cursor:pointer; display:none;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N14'></span></div>
+			<div id='h_016_blank' class='blank'></div>
+			<div id='h_017' class='submenu_en' style='cursor:pointer; display:none;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N15'></span></div>
+			<div id='h_017_blank' class='blank'></div>
+			<div id='h_018' class='submenu_en' style='cursor:pointer; display:none;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N16'></span></div>
+			<div id='h_018_blank' class='blank'></div>
+			<div id='h_026' class='submenu_en' style='cursor:pointer; display:none;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N17'></span></div>
+			<div id='h_026_blank' class='blank'></div>
+			<div id='h_025' class='submenu_en' style='cursor:pointer; display:none;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N18'></span></div>
+			<div id='h_025_blank' class='blank'></div>
+			<div id='h_045' class='submenu_en' style='cursor:pointer; display:none;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N23'></span></div>
+			<div id='h_045_blank' class='blank'></div>
+			<div id='h_043' class='submenu_en' style='cursor:pointer;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N22'></span></div>
+			<div id='h_043_blank' class='blank'></div>
+			<div id='cssz' class='menu_en' style='cursor:default;'><span id='N04'></span></div>
+			<div class='blank'></div>
+			<div id='h_004' class='submenu_en' style='cursor:pointer;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N05'></span></div>
+			<div class='blank'></div>
+			<div id='h_005' class='submenu_en' style='cursor:pointer;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N06'></span></div>
+			<div class='blank'></div>
+			<div id='h_006' class='submenu_en' style='cursor:pointer;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N07'></span></div>
+			<div class='blank'></div>
+			<div id='h_027' class='submenu_en' style='cursor:pointer;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N19'></span></div>
+			<div class='blank'></div>
+			<div id='h_028' class='submenu_en' style='cursor:pointer;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N20'></span></div>
+			<div class='blank'></div>
+			<div id='lsjl' class='menu_en' style='cursor:default;'><span id='N08'></span></div>
+			<div class='blank'></div>
+			<div id='h_007' class='submenu_en' style='cursor:pointer;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N09'></span></div>
+			<div class='blank'></div>
+			<div id='h_008' class='submenu_en' style='cursor:pointer;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N10'></span></div>
+			<div class='blank'></div>
+			<div id='h_009' class='submenu_en' style='cursor:pointer;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N11'></span></div>
+			<div class='blank'></div>
+			<div id='h_029' class='submenu_en' style='cursor:pointer;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N21'></span></div>
+			<div class='blank'></div>
+			<div id='h_010' class='menu_en' style='cursor:pointer;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N12'></span></div>
+			<div id='btm4' class='r4 color'></div>
+			<div id='btm3' class='r3 color'></div>
+			<div id='btm2' class='r2 color'></div>
+			<div id='btm1' class='r1 color'></div>
+		</div>
+		<!--[if IE 6]><script type='text/javascript'>document.execCommand('BackgroundImageCache',false,true);</script><![endif]-->
+	</body>
+</html>

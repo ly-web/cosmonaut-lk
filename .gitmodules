@@ -1,0 +1,3 @@
+[submodule "deps/multipart-parser-c"]
+	path = deps/multipart-parser-c
+	url = https://iafonov@github.com/iafonov/multipart-parser-c.git

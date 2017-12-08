@@ -1,0 +1,297 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+    <head>
+        <meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>
+        <link type='text/css' href='c_000.css' rel='stylesheet'/>
+        <style type='text/css'>
+            .td1{padding-left:40px;text-align:left;}
+            .td_val{text-align:right;padding-right:40px;}
+			.td2{text-align:center;}
+            .td3{padding-right:10px;text-align:right;}
+			.pwd{text-align:center;}
+            .m_btn{width:100px;height:24px;float: right;}
+        </style>
+        <script type='text/javascript'>
+            var $=function(o){return document.getElementById(o);};
+            function lang_init_ex(st,end){for(var i=st;i<=end;i++)eval('$(\'N'+(i<10?'0'+i:i)+'\').innerHTML=lang.N'+(i<10?'0'+i:i)+'[language];');}
+            function show_tip(obj){$('tip').innerHTML=obj;}
+            function show_T(tid)
+            {
+                var str='';
+                str+="<div class='title' style='width:90%;'><div class='r1 color'></div><div class='r2 color'></div><div class='r3 color'></div><div class='r4 color'></div>";
+                str+="<div class='content color'><span id='"+tid+"'></span></div>";
+                str+="<div class='r4 color'></div><div class='r3 color'></div><div class='r2 color'></div><div class='r1 color'></div></div><div class='blank'></div>";
+                document.write(str);
+            }
+            function show_sT(tid)
+            {
+                var str='';
+                str+="<div class='title' style='width:90%;'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+                str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+                str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+                document.write(str);
+            }
+            function show_sT_ex(tid, id)
+            {
+                var str='';
+                str+="<div class='title' id='"+id+"' style='display:none;width:90%'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+                str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+                str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+                document.write(str);
+            }      
+        </script>   
+    </head>
+    <body onload='Init()'>
+        <script type='text/javascript'>
+            show_T('N01');
+            show_sT_ex('N02', 'title1');
+        </script>
+        <table width='90%' border='0' id='pwds_operator'>
+            <tr>
+                <td width='50%' class='td1 odd'><span id='N03'></span></td>
+                <td width='50%' class='td1 odd'><input id='oldpwd_operator' class='pwd' maxlength='8' type='password'/></td>
+                <td width='30%' class='td1 odd'><span></span></td>
+            </tr>
+            <tr>
+                <td width='50%' class='td1 even'><span id='N04'></span></td>
+                <td width='50%' class='td1 even'><input id='newpwd1_operator' class='pwd' maxlength='8' type='password'/></td>
+                <td width='30%' class='td1 even'><span></span></td>
+            </tr>
+            <tr>
+                <td width='50%' class='td1 odd'><span id='N05'></span></td>
+                <td width='50%' class='td1 odd'><input id='newpwd2_operator' class='pwd' maxlength='8' type='password'/></td>
+                <td width='30%' class='td1 odd' style='text-align:right;'><button class='m_btn' onclick='ModifyPassword($("oldpwd_operator"),$("newpwd1_operator"),$("newpwd2_operator"),0)'><span id='N06'></span></button></td>
+            </tr>
+        </table>
+        <script type='text/javascript'>
+            show_sT_ex('N07', 'title2');
+        </script>
+        <table width='90%' border='0' id='pwds_admin'>
+            <tr>
+                <td width='50%' class='td1 odd'><span id='N08'></span></td>
+                <td width='50%' class='td1 odd'><input id='oldpwd_admin' class='pwd' maxlength='8' type='password'/></td>
+                <td width='30%' class='td1 odd'><span></span></td>
+            </tr>
+            <tr>
+                <td width='50%' class='td1 even'><span id='N09'></span></td>
+                <td width='50%' class='td1 even'><input id='newpwd1_admin' class='pwd' maxlength='8' type='password'/></td>
+                <td width='30%' class='td1 even'><span></span></td>
+            </tr>
+            <tr>
+                <td width='50%' class='td1 odd'><span id='N10'></span></td>
+                <td width='50%' class='td1 odd'><input id='newpwd2_admin' class='pwd' maxlength='8' type='password'/></td>
+                <td width='30%' class='td1 odd' style='text-align:right;'><button class='m_btn' onclick='ModifyPassword($("oldpwd_admin"),$("newpwd1_admin"),$("newpwd2_admin"),1)'><span id='N11'></span></button></td>
+            </tr>
+        </table>
+        <script type='text/javascript'>
+            show_sT_ex('N12', 'title3');
+        </script>
+        <table width='90%' border='0' id='pwds_maintriner'>
+            <tr>
+                <td width='50%' class='td1 odd'><span id='N13'></span></td>
+                <td width='50%' class='td1 odd'><input id='oldpwd_maintriner' class='pwd' maxlength='8' type='password'/></td>
+                <td width='30%' class='td1 odd'><span></span></td>
+            </tr>
+            <tr>
+                <td width='50%' class='td1 even'><span id='N14'></span></td>
+                <td width='50%' class='td1 even'><input id='newpwd1_maintriner' class='pwd' maxlength='8' type='password'/></td>
+                <td width='30%' class='td1 even'><span></span></td>
+            </tr>
+            <tr>
+                <td width='50%' class='td1 odd'><span id='N15'></span></td>
+                <td width='50%' class='td1 odd'><input id='newpwd2_maintriner' class='pwd' maxlength='8' type='password'/></td>
+                <td width='30%' class='td1 odd' style='text-align:right;'><button class='m_btn' onclick='ModifyPassword($("oldpwd_maintriner"),$("newpwd1_maintriner"),$("newpwd2_maintriner"),2)'><span id='N16'></span></button></td>
+            </tr>
+        </table>
+        <div class='blank'></div>
+        <script type='text/javascript'>
+            show_sT('N30');
+        </script>
+        <table width='90%' border='0'>
+            <tr>
+                <td class='td1 odd' width='50%'><span id='N31'></span></td>
+                <td class='td_val odd' width='50%'><span id='ID_0x0203'></span></td>
+            </tr>
+            <tr>
+                <td class='td1 even'><span id='N32'></span></td>
+                <td class='td_val even'><span id='ID_0x0204'></span></td>
+            </tr>
+            <tr style='display:none;'>
+                <td class='td1 odd'><span id='N33'></span></td>
+                <td class='td_val odd'><span id='ID_0x0205'></span></td>
+            </tr>
+        </table>
+        <div class='line_long'></div>
+        <div class='tip' id='tip' style='width:90%;'>&nbsp;</div>
+        <!--[if IE 6]><script type='text/javascript'>document.execCommand('BackgroundImageCache',false,true);</script><![endif]-->
+    </body>
+    <script type='text/javascript'>
+        window.history.forward(1);
+        var language=1;
+        var Json;
+        var lang=
+        {
+            N01:['系统信息','System Information'],
+
+            N02:['修改操作员密码','Change Opt-Pwd'],
+            N03:['原始密码','Old Password'],
+            N04:['更新密码','New Password'],
+            N05:['确认密码','Repeat Password'],
+            N06:['修改','Modify'],
+
+            N07:['修改管理员密码','Change Admin-Pwd'],
+            N08:['原始密码','Old Password'],
+            N09:['更新密码','New Password'],
+            N10:['确认密码','Repeat Password'],
+            N11:['修改','Modify'],
+
+            N12:['修改维护员密码','Change Maint-Pwd'],
+            N13:['原始密码','Old Password'],
+            N14:['更新密码','New Password'],
+            N15:['确认密码','Repeat Password'],
+            N16:['修改','Modify'],
+            
+            N18:['请输入原密码！','Please enter the original password!'],
+            N19:['请输入新密码！','Please enter your new password!'],
+            N20:['请再次输入新密码！','Please re-enter the new password!'],
+            N21:['密码格式错误，请输入4-7位的仅包含字母与数字的密码！','Password format error, please enter 4-7 only contain letters and numbers password!'],
+            N22:['两次输入的新密码不同，请重新输入！','The two input new passwords are different, please re-enter!'],
+            N23:['新密码与原密码相同，请重新输入新密码！','The new password is identical with the original password, please re-enter the new password!'],
+            N24:['原密码错误，请重新输入！','The original password is incorrect, please re-enter it!'],
+            N25:['密码修改成功！','Password changed successfully!'],
+            N26:['密码修改失败！','Password changed failure!'],
+
+            N30:['版本信息','Version Information'],
+            N31:['LCD版本号','LCD Version'],
+            N32:['Web版本号','Web Version'],
+            N33:['TOUCH版本号','TOUCH Version']
+        };
+        function Init()
+        {
+            var URL='s_010.html?time='+new Date();
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            //xmlhttp.onreadystatechange=function()
+            {
+                //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    //测试
+        			Json={ID_0x0301:85,ID_0x0203:'LCD_SC50-V21_V1_A_M',ID_0x0204:'V1.0.2017 0901',ID_0x0205:'TOUCH_SC50-V21_V1_A_M',ID_0x0282:0x22};
+        			
+                    //eval('Json='+xmlhttp.responseText);
+                    if(Json.ID_0x0301==0x55)language=0; else language=1;
+        			lang_init_ex(1,16);
+                    lang_init_ex(30,33);
+
+                    $('oldpwd_operator').value='9999';
+                    $('newpwd1_operator').value='9999';
+                    $('newpwd2_operator').value='9999';
+
+                    $('oldpwd_admin').value='9999';
+                    $('newpwd1_admin').value='9999';
+                    $('newpwd2_admin').value='9999';
+
+                    $('oldpwd_maintriner').value='9999';
+                    $('newpwd1_maintriner').value='9999';
+                    $('newpwd2_maintriner').value='9999';
+
+                    if(Json.ID_0x0282 != 0x22){
+                        $('title1').style.display='none';
+                        $('title2').style.display='none';
+                        $('title3').style.display='none';
+                        $('pwds_operator').style.display='none';
+                        $('pwds_admin').style.display='none';
+                        $('pwds_maintriner').style.display='none';
+                    }else{
+                        $('title1').style.display='block';
+                        $('title2').style.display='block';
+                        $('title3').style.display='block';
+                        $('pwds_operator').style.display='block';
+                        $('pwds_admin').style.display='block';
+                        $('pwds_maintriner').style.display='block';                      
+                    }
+
+        			$('ID_0x0203').innerHTML=Json.ID_0x0203;
+        			$('ID_0x0204').innerHTML=Json.ID_0x0204;
+        			$('ID_0x0205').innerHTML=Json.ID_0x0205;
+                }
+            };
+            xmlhttp.open('GET',URL,true);
+            xmlhttp.send();
+        }
+        function ModifyPassword(A,B,C, USER)
+        {
+            var reg =/^[A-Za-z0-9]{4,7}$/;
+            var a=A;
+            var b=B;
+            var c=C;
+            var user = USER;
+            if(a.value=='')
+            {
+                show_tip(lang.N18[language]);;a.focus();
+            }
+            else if(b.value=='')
+            {
+                show_tip(lang.N19[language]);b.focus();
+            }
+            else if(c.value=='')
+            {
+                show_tip(lang.N20[language]);c.focus();
+            }
+            else if(!(a.value.match(reg)&&b.value.match(reg)&&c.value.match(reg)))
+            {
+                show_tip(lang.N21[language]);
+                if(!c.value.match(reg))
+                {
+                    c.value='9999';c.focus();
+                }
+                if(!b.value.match(reg))
+                {
+                    b.value='9999';b.focus();
+                }
+                if(!a.value.match(reg))
+                {
+                    a.value='9999';a.focus();
+                }
+            }
+            else if(b.value!=c.value)
+            {
+                show_tip(lang.N22[language]);c.select();
+            }
+            else if(a.value==b.value)
+            {
+                show_tip(lang.N23[language]);b.value='';c.value='';b.focus();
+            }
+            else
+            {
+                var URL='PDM.html?'
+                +'0x0282='+user 
+                +'&0x0283='+a.value
+                +'&0x0284='+c.value
+                +'&time='+new Date();
+                var xmlhttp;
+                if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+                else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+                xmlhttp.onreadystatechange=function()
+                {
+                    if(xmlhttp.readyState==4&&xmlhttp.status==200)
+                    {
+                        if(xmlhttp.responseText=='1')
+                        {
+                            show_tip('&nbsp;');
+                            setTimeout('show_tip(lang.N25[language])',500);
+                        }
+                        else
+                        {
+                            a.value='9999';b.value='9999';c.value='9999';
+                            show_tip(lang.N26[language]);
+                        }
+                    }
+                };
+                xmlhttp.open('GET',URL,true);
+                xmlhttp.send();
+            }
+        }
+    </script>
+</html>

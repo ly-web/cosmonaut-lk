@@ -1,0 +1,450 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>
+		<link type='text/css' href='c_000.css' rel='stylesheet'/>
+		<script type='text/javascript'>
+            var $=function(o){return document.getElementById(o);};
+            function lang_init_ex(st,end){for(var i=st;i<=end;i++)eval('$(\'N'+(i<10?'0'+i:i)+'\').innerHTML=lang.N'+(i<10?'0'+i:i)+'[language];');}
+            function show_tip_ex(id, obj){eval('$(\'tip'+id+'\').innerHTML=obj;');}
+            function show_T(tid)
+            {
+                var str='';
+                str+="<div class='title' style='width:90%;'><div class='r1 color'></div><div class='r2 color'></div><div class='r3 color'></div><div class='r4 color'></div>";
+                str+="<div class='content color'><span id='"+tid+"'></span></div>";
+                str+="<div class='r4 color'></div><div class='r3 color'></div><div class='r2 color'></div><div class='r1 color'></div></div><div class='blank'></div>";
+                document.write(str);
+            }
+            function show_sT(tid)
+            {
+                var str='';
+                str+="<div class='title' style='width:90%;'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+                str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+                str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+                document.write(str);
+            }
+            function show_sT_ex(tid, id)
+            {
+                var str='';
+                str+="<div class='title' id='"+id+"' style='display:none;width:90%'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+                str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+                str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+                document.write(str);
+            }
+            function sendHttpReq(url, successFn)
+            {
+                //alert(url);   
+                var xmlhttp;
+                if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+                else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+                xmlhttp.onreadystatechange=function()
+                {
+                    if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                    {
+                        if(xmlhttp.responseText=='1'){successFn();}
+                    }
+                };
+                xmlhttp.open('GET',url,true);
+                xmlhttp.send();
+            }
+        </script>
+		<style type='text/css'>
+			tr{height:27px;}
+			.td1{padding-left:40px;text-align:left;}
+			.td2{text-align:left;}
+			.td3{padding-right:40px;text-align:right;}
+			.txt{width:100px;text-align:right;}
+		</style>
+	</head>
+	<body onload='Init()'>
+		<script type='text/javascript'>
+			show_T('N01');
+			show_sT('N02');
+		</script>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='30%' class='td1 odd'><input name='Peak-Sel' type='radio' value='85' id='Peak-DIS'/><span id='N03'></span></td>
+				<td width='30%' class='td1 odd'><input name='Peak-Sel' type='radio' value='170' id='Peak-EN'/><span id='N04'></span></td>
+			</tr>
+	   </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even tip'><span id='tip1'>&nbsp;</span></td>
+                <td width='50%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn1' style='display:block;'><span id='N400'>Save</span></button></td>
+            </tr>
+        </table>
+		<div class='line_long'></div>
+        <script type='text/javascript'>
+            show_sT('N05');
+        </script>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='30%' class='td1 odd'><input name='AcLimite-Sel' type='radio' value='85' id='AcLimite-DIS'/><span id='N06'></span></td>
+                <td width='30%' class='td1 odd'><input name='AcLimite-Sel' type='radio' value='170' id='AcLimite-EN'/><span id='N07'></span></td>
+            </tr>
+       </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even tip'><span id='tip2'>&nbsp;</span></td>
+                <td width='50%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn2' style='display:block;'><span id='N401'>Save</span></button></td>
+            </tr>
+        </table>
+        <div class='line_long'></div>
+        <script type='text/javascript'>
+            show_sT('N08');
+        </script>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='30%' class='td1 odd'><input name='Smooth-Sel' type='radio' value='85' id='Smooth-DIS'/><span id='N09'></span></td>
+                <td width='30%' class='td1 odd'><input name='Smooth-Sel' type='radio' value='170' id='Smooth-EN'/><span id='N10'></span></td>
+            </tr>
+       </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even tip'><span id='tip3'>&nbsp;</span></td>
+                <td width='50%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn3' style='display:block;'><span id='N402'>Save</span></button></td>
+            </tr>
+        </table>
+        <div class='line_long'></div>
+        <script type='text/javascript'>
+            show_sT('N11');
+        </script>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='30%' class='td1 odd'><input name='FM-Sel' type='radio' value='85' id='FM-DIS'/><span id='N12'></span></td>
+                <td width='30%' class='td1 odd'><input name='FM-Sel' type='radio' value='170' id='FM-EN'/><span id='N13'></span></td>
+            </tr>
+       </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even tip'><span id='tip4'>&nbsp;</span></td>
+                <td width='50%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn4' style='display:block;'><span id='N403'>Save</span></button></td>
+            </tr>
+        </table>
+        <div class='line_long'></div>
+		<div class='blank'></div>
+		<div class='btm_blank'></div>
+		<div id='trans'></div>
+		<!--[if IE 6]><script type='text/javascript'>document.execCommand('BackgroundImageCache',false,true);</script><![endif]-->
+	</body>
+    <script type='text/javascript'>
+        window.history.forward(1);
+        var language=0;
+        var Json;	 
+        var lang=
+        {
+            N01:['高级设置','Advanced Settings'],
+            N02:['削峰填谷','Peak Load Shifting'],
+			N03:['禁止','DISABLE'],
+			N04:['允许','ENABLE'],
+            N05:['交流限发','AC Limited Produce'],
+            N06:['禁止','DISABLE'],
+            N07:['允许','ENABLE'],
+            N08:['输出平滑','Ramp Rate Control'],
+            N09:['禁止','DISABLE'],
+            N10:['允许','ENABLE'],
+            N11:['调频','FR'],  
+            N12:['禁止','DISABLE'],
+            N13:['允许','ENABLE'],
+
+            N400:['设&nbsp;&nbsp;置','Set'], 
+            N401:['设&nbsp;&nbsp;置','Set'], 
+            N402:['设&nbsp;&nbsp;置','Set'],           
+            N403:['设&nbsp;&nbsp;置','Set'], 
+
+            N499:['设置成功！','Set successfully!'],
+            N500:['设置失败！','Set Failed!'],
+            N501:['格式错误！','Format error!'],
+            N502:['范围错误！','Range error!']    
+        };
+        function Init()
+        {
+            var URL='s_037.html?0x0000&time='+new Date();
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            //xmlhttp.onreadystatechange=function()
+            {
+                //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {             
+                   	//eval('Json='+xmlhttp.responseText);				
+                    //测试
+                    Json = {ID_0x0301:85, ID_0x0282:0x22, ID_0x03B1:0x55, ID_0x03B5:0x55, ID_0x03B8:0x55, ID_0x03C0:0x55};
+
+    				if(Json.ID_0x0301==0x55)language=0;else language=1;
+
+                    //初始化语言
+                    lang_init_ex(1,13); 
+    				lang_init_ex(400,403);       
+    				doSetValue(Json);
+
+    				//user用户不能配置，install用户可以配置
+    				if(Json.ID_0x0282==0x11)
+    				{
+    					$('btn1').style.display='none';
+                        $('btn2').style.display='none';
+                        $('btn2').style.display='none';
+    					$('trans').style.zIndex=9999;
+    				}
+    				else
+    				{
+    					$('btn1').style.display='inline';
+                        $('btn2').style.display='inline';
+                        $('btn3').style.display='inline';
+    					$('trans').style.zIndex=-9999;
+    				}
+			     }
+            };
+            xmlhttp.open('GET',URL,true);
+            xmlhttp.send();
+        }
+        function read_back(addr)
+        {
+            var url='s_037.html?';
+            url=url+'&time='+new Date();
+
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            //xmlhttp.onreadystatechange=function()
+            {
+                //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    //eval('Json='+xmlhttp.responseText); 
+                    if(addr == 0x03B1)
+                    {
+                        var pr=0,fe=0;
+                        if($('Peak-DIS').checked){pr=$('Peak-DIS').value;}
+                        else if($('Peak-EN').checked){pr=$('Peak-EN').value;} 
+                        fe=Json.ID_0x03B1;
+                        if(pr!=fe)
+                        {
+                            if(Json.ID_0x03B1==0x55)
+                            {
+                                $('Peak-DIS').checked=true;
+                                $('Peak-EN').checked=false;
+                            }
+                            else if(Json.ID_0x03B1==0xAA)
+                            {
+                                $('Peak-DIS').checked=false;
+                                $('Peak-EN').checked=true;         
+                            }
+                        }
+                        else
+                        {
+                            if(Json.ID_0x03B1==0xAA)
+                            {
+                                $('AcLimite-DIS').checked=true;
+                                $('AcLimite-EN').checked=false; 
+                                $('Smooth-DIS').checked=true;
+                                $('Smooth-EN').checked=false;    
+                                $('FM-DIS').checked=true;
+                                $('FM-EN').checked=false;    
+                            }
+                        }
+                        show_tip_ex(1,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(1,lang.N500[language])',500);}
+                        else {setTimeout('show_tip_ex(1,lang.N499[language])',500);}
+                        setTimeout('show_tip_ex(1,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x03B5)
+                    {
+                        var pr=0,fe=0;
+                        if($('AcLimite-DIS').checked){pr=$('AcLimite-DIS').value;}
+                        else if($('AcLimite-EN').checked){pr=$('AcLimite-EN').value;} 
+                        fe=Json.ID_0x03B5;
+                        if(pr!=fe)
+                        {
+                            if(Json.ID_0x03B5==0x55)
+                            {
+                                $('AcLimite-DIS').checked=true;
+                                $('AcLimite-EN').checked=false;
+                            }
+                            else if(Json.ID_0x03B5==0xAA)
+                            {
+                                $('AcLimite-DIS').checked=false;
+                                $('AcLimite-EN').checked=true; 
+                            }
+                        }
+                        else
+                        {
+                            if(Json.ID_0x03B5==0xAA)
+                            {
+                                $('Peak-DIS').checked=true;
+                                $('Peak-EN').checked=false;
+                                $('Smooth-DIS').checked=true;
+                                $('Smooth-EN').checked=false;    
+                                $('FM-DIS').checked=true;
+                                $('FM-EN').checked=false;  
+                            }
+                        }
+                        show_tip_ex(2,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(2,lang.N500[language])',500);}
+                        else {setTimeout('show_tip_ex(2,lang.N499[language])',500);}
+                        setTimeout('show_tip_ex(2,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x03B8)
+                    {
+                        var pr=0,fe=0;
+                        if($('Smooth-DIS').checked){pr=$('Smooth-DIS').value;}
+                        else if($('Smooth-EN').checked){pr=$('Smooth-EN').value;} 
+                        fe=Json.ID_0x03B8;
+                        if(pr!=fe)
+                        {
+                            if(Json.ID_0x03B8==0x55)
+                            {
+                                $('Smooth-DIS').checked=true;
+                                $('Smooth-EN').checked=false;
+                            }
+                            else if(Json.ID_0x03B8==0xAA)
+                            {
+                                $('Smooth-DIS').checked=false;
+                                $('Smooth-EN').checked=true;     
+                            }
+                        }
+                        else
+                        {
+                            if(Json.ID_0x03B8==0xAA)
+                            {
+                                $('Peak-DIS').checked=true;
+                                $('Peak-EN').checked=false;
+                                $('AcLimite-DIS').checked=true;
+                                $('AcLimite-EN').checked=false;
+                                $('FM-DIS').checked=true;
+                                $('FM-EN').checked=false;   
+                            }
+                        }
+                        show_tip_ex(3,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(3,lang.N500[language])',500);}
+                        else {setTimeout('show_tip_ex(3,lang.N499[language])',500);}
+                        setTimeout('show_tip_ex(3,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x03C0)
+                    {
+                        var pr=0,fe=0;
+                        if($('FM-DIS').checked){pr=$('FM-DIS').value;}
+                        else if($('FM-EN').checked){pr=$('FM-EN').value;} 
+                        fe=Json.ID_0x03C0;
+                        if(pr!=fe)
+                        {
+                            if(Json.ID_0x03C0==0x55)
+                            {
+                                $('FM-DIS').checked=true;
+                                $('FM-EN').checked=false;
+                            }
+                            else if(Json.ID_0x03C0==0xAA)
+                            {
+                                $('FM-DIS').checked=false;
+                                $('FM-EN').checked=true;              
+                            }
+                        }
+                        else
+                        {
+                            if(Json.ID_0x03C0==0xAA)
+                            {
+                                $('Peak-DIS').checked=true;
+                                $('Peak-EN').checked=false;
+                                $('AcLimite-DIS').checked=true;
+                                $('AcLimite-EN').checked=false;
+                                $('Smooth-DIS').checked=true;
+                                $('Smooth-EN').checked=false;
+                            }
+                        }
+                        show_tip_ex(4,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(4,lang.N500[language])',500);}
+                        else {setTimeout('show_tip_ex(4,lang.N499[language])',500);}
+                        setTimeout('show_tip_ex(4,\'&nbsp;\')',2500);
+                    }
+                }
+            };
+            xmlhttp.open('GET',url,true);
+            xmlhttp.send();  
+        }
+        function doSubmit(obj)
+        {
+            var peak_en, aclimit_en, smooth_en, fm_en;
+            var URL='a_037.html?';
+            switch(obj.id)
+            {
+            	case 'btn1': 
+            	 	if($('Peak-DIS').checked){peak_en=$('Peak-DIS').value;}
+            	 	else if($('Peak-EN').checked){peak_en=$('Peak-EN').value;} 
+					URL=URL+'&0x03B1='+peak_en;
+                    readBack=0x03B1;
+            	break;
+                case 'btn2': 
+                    if($('AcLimite-DIS').checked){aclimit_en=$('AcLimite-DIS').value;}
+                    else if($('AcLimite-EN').checked){aclimit_en=$('AcLimite-EN').value;} 
+                    URL=URL+'&0x03B5='+aclimit_en;
+                    readBack=0x03B5;
+                break;
+                case 'btn3': 
+                    if($('Smooth-DIS').checked){smooth_en=$('Smooth-DIS').value;}
+                    else if($('Smooth-EN').checked){smooth_en=$('Smooth-EN').value;} 
+                    URL=URL+'&0x03B8='+smooth_en;
+                    readBack=0x03B8;
+                break;
+                case 'btn4': 
+                    if($('FM-DIS').checked){fm_en=$('FM-DIS').value;}
+                    else if($('FM-EN').checked){fm_en=$('FM-EN').value;} 
+                    URL=URL+'&0x03C0='+fm_en;
+                    readBack=0x03C0;
+                break;
+            	default:break;
+            }
+            URL=URL+'&time='+new Date();
+            //alert(URL);
+
+            function success()
+            {
+                setTimeout('read_back('+readBack+')', 100);            			
+            }
+            //测试
+            //success();            
+			sendHttpReq(URL, success);
+        }
+        function doSetValue(Json)
+        {
+        	if(Json.ID_0x03B1==0x55)
+        	{
+        		$('Peak-DIS').checked=true;
+        		$('Peak-EN').checked=false;
+        	}
+        	else if(Json.ID_0x03B1==0xAA)
+        	{
+         		$('Peak-DIS').checked=false;
+        		$('Peak-EN').checked=true;       		
+        	}
+            if(Json.ID_0x03B5==0x55)
+            {
+                $('AcLimite-DIS').checked=true;
+                $('AcLimite-EN').checked=false;
+            }
+            else if(Json.ID_0x03B5==0xAA)
+            {
+                $('AcLimite-DIS').checked=false;
+                $('AcLimite-EN').checked=true;              
+            }
+            if(Json.ID_0x03B8==0x55)
+            {
+                $('Smooth-DIS').checked=true;
+                $('Smooth-EN').checked=false;
+            }
+            else if(Json.ID_0x03B8==0xAA)
+            {
+                $('Smooth-DIS').checked=false;
+                $('Smooth-EN').checked=true;              
+            }
+            if(Json.ID_0x03C0==0x55)
+            {
+                $('FM-DIS').checked=true;
+                $('FM-EN').checked=false;
+            }
+            else if(Json.ID_0x03C0==0xAA)
+            {
+                $('FM-DIS').checked=false;
+                $('FM-EN').checked=true;              
+            }
+        }
+    </script
+</html>

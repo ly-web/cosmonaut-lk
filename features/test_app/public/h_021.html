@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>
+<script src='j_001.js' type='text/javascript'></script>
+<style type='text/css'>
+	body{margin:0;padding:0;background-color:#fff;font-family:'微软雅黑',Arial,'宋体',sans-serif;}
+	#menu{margin:5px 0 0 0;width:245px;float:right;}
+	.menu_cn{line-height:36px;padding-left:65px;width:180px;height:36px;color:#000;background-color:#F58E03;font-weight:bold;font-size:16px;;}
+	.submenu_cn{line-height:32px;padding-left:65px;width:180px;height:32px;color:#000;background-color:#eee;font-weight:normal;font-size:14px;}
+	.menu_en{line-height:36px;padding-left:45px;width:200px;height:36px;color:#000;background-color:#F58E03;font-weight:bold;font-size:16px;}
+	.submenu_en{line-height:32px;padding-left:45px;width:200px;height:32px;color:#000;background-color:#eee;font-weight:normal;font-size:14px;}
+	.color{background-color:#F58E03;}
+	.change_color{background-color:#007B3E;}
+	.r1{margin:0 5px;height:1px;overflow:hidden;}
+	.r2{margin:0 3px;height:1px;overflow:hidden;}
+	.r3{margin:0 2px;height:1px;overflow:hidden;}
+	.r4{margin:0 1px;height:2px;overflow:hidden;}
+	.blank{height:1px;overflow:hidden;background-color:#fff;width:213px;}
+</style>
+<script language='javascript' type='text/javascript'>
+	var $=function(o){return document.getElementById(o);};
+	var current_id='h_022';
+	var language=1;
+	var Json;
+	var HaveInitH022=false;
+	var lang=
+	{
+		N01:['系统配置','System Config'],
+		N02:['基本设置','Basic Settings'],
+		N03:['功能设置','Function Settings'],
+		N04:['运行设置','Running Settings'],
+		N05:['专家设置','Proficient Settings'],
+		N06:['高级设置','Advanced Settings'],
+		N07:['辅助设置','Auxiliary Settings']
+	};
+	var temp1=new Array('xtpz');
+	var temp2=new Array('h_022','h_023','h_024','h_030','h_37');
+	function change_color(obj)
+	{
+		if(current_id!=obj.id)
+		{
+			for(var i=1;i<=1;i++)
+			{
+				if(obj.id=='xtpz')
+				$('top'+i).className='r'+i+' change_color';
+			}
+			obj.style.background='#007b3e';
+			obj.style.color='#fff';
+		}
+	}
+	function resume_color(obj)
+	{
+		if(current_id!=obj.id)
+		{
+			for(var i=1;i<=1;i++)
+			{
+				if(obj.id=='xtpz')
+				$('top'+i).className='r'+i+' color';
+			}
+			switch(obj.id)
+			{
+				case 'xtpz':
+					obj.style.background='#F58E03';
+					obj.style.color='#000';
+				break;
+				default:
+					obj.style.background='#eee';
+					obj.style.color='#000';
+				break;
+			}
+		}
+	}
+	function showurl(obj)
+	{
+		$('h_022').style.background='#eeeeee';
+		$('h_022').style.color='#000';
+		$('h_023').style.background='#eeeeee';
+		$('h_023').style.color='#000';
+		$('h_024').style.background='#eeeeee';
+		$('h_024').style.color='#000';
+		$('h_030').style.background='#eeeeee';
+		$('h_030').style.color='#000'
+		$('h_037').style.background='#eeeeee';
+		$('h_037').style.color='#000'
+		$('h_044').style.background='#eeeeee';
+		$('h_044').style.color='#000'
+		obj.style.background='#007B3E';
+		obj.style.color='#fff';
+		for(var i=1;i<=1;i++)
+		{
+			$('btm'+i).className='r'+i+' color';
+		}
+		current_id=obj.id;
+		var SURL='';
+
+		if(document.all)
+		{
+			//IE浏览器  '.html' 改为 '.IExx'
+			SURL=current_id+'.html';
+		}
+		else
+		{
+			//非IE浏览器 '.html' 改为 '.NIEx'
+			SURL=current_id+'.html';
+		}
+		 top.main.location.href=SURL;
+	}
+	function Init()
+	{
+        var URL='s_021.html?time='+new Date();
+        var xmlhttp;
+        if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+        else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+        //xmlhttp.onreadystatechange=function()
+        {
+            //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+            {
+				var num,temp;
+				//------------------测试---------------------------------------------------
+				Json={ID_0x0301:85, ID_0x0390:0, ID_0x0391:0,ID_0x0392:0,ID_0x0393:1,ID_0x0394:1,ID_0x0395:0};
+				//-------------------------------------------------------------------------
+
+				//eval('Json='+xmlhttp.responseText);
+
+				if(Json.ID_0x0301==0x55)language=0;else language=1;
+				if(language==0)
+				{
+					for(var i=0;i<temp1.length;i++)
+					{
+						$(temp1[i]).className='menu_cn';
+					}
+					$('h_022').className='submenu_cn';
+					$('h_023').className='submenu_cn';
+					$('h_024').className='submenu_cn';
+					$('h_030').className='submenu_cn';
+					$('h_037').className='submenu_cn';
+					$('h_044').className='submenu_cn';
+				}
+				else if(language==1)
+				{
+					for(var i=0;i<temp1.length;i++)
+					{
+						$(temp1[i]).className='menu_en';
+					}
+					$('h_022').className='submenu_en';
+					$('h_023').className='submenu_en';
+					$('h_024').className='submenu_en';
+					$('h_030').className='submenu_en';
+					$('h_037').className='submenu_en';
+					$('h_044').className='submenu_en';
+				}
+				
+				lang_init_ex(1,7);
+
+				if(HaveInitH022==false)
+				{
+					$('h_022').style.background='#007B3E';
+					$('h_022').style.color='#fff';
+				}
+	    	}
+        };
+        xmlhttp.open('GET',URL,true);
+        xmlhttp.send();	
+		if(HaveInitH022==false)
+		{
+			setTimeout("showurl($('h_022'))",500);
+			HaveInitH022=true;
+		}
+	}
+</script>
+</head>
+	<body onload='Init();'>
+		<div id='menu'>
+			<div id='top1' class='r1 color'></div>
+			<div id='top2' class='r2 color'></div>
+			<div id='top3' class='r3 color'></div>
+			<div id='top4' class='r4 color'></div>
+			<div id='xtpz' class='menu_en' style='cursor:default;'><span id='N01'></span></div>
+			<div class='blank'></div>
+			<div id='h_022' class='submenu_en' style='cursor:pointer;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N02'></span></div>
+			<div class='blank'></div>
+			<div id='h_023' class='submenu_en' style='cursor:pointer; display:block;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N03'></span></div>
+			<div id='h_023_blank' class='blank'></div>			
+			<div id='h_024' class='submenu_en' style='cursor:pointer; display:block;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N04'></span></div>
+			<div id='h_024_blank' class='blank'></div>
+			<div id='h_030' class='submenu_en' style='cursor:pointer; display:block;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N05'></span></div>
+			<div id='h_030_blank' class='blank'></div>
+			<div id='h_037' class='submenu_en' style='cursor:pointer; display:block;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N06'></span></div>
+			<div id='h_037_blank' class='blank'></div>
+			<div id='h_044' class='submenu_en' style='cursor:pointer; display:block;' onmousemove='change_color(this)' onmouseout='resume_color(this)' onclick='showurl(this)'><span id='N07'></span></div>
+			<div id='h_044_blank' class='blank'></div>
+			<div class='menu_en' style='cursor:pointer;'<span></span></div>
+			<div id='btm4' class='r4 color'></div>
+			<div id='btm3' class='r3 color'></div>
+			<div id='btm2' class='r2 color'></div>
+			<div id='btm1' class='r1 color'></div>
+		</div>
+		<!--[if IE 6]><script type='text/javascript'>document.execCommand('BackgroundImageCache',false,true);</script><![endif]-->
+	</body>
+</html>

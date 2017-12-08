@@ -1,0 +1,424 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+    <head>
+        <meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>
+        <link type='text/css' href='c_000.css' rel='stylesheet'/>
+        <script src='j_001.js' type='text/javascript'></script>
+        <style type='text/css'>
+        tr{height:27px;}
+        .td1{text-align:left;padding-left:40px;}
+        .td2{text-align:right;padding-right:5px;}
+        .td3{text-align:right;padding-right:40px;}
+        .div_tab{width:780px;height:45px;margin:0 auto;}
+        .div_btn{width:80px;margin:0 auto;height:30px;text-align:right;margin-top:8px;float:left;}
+        .div_text{width:80px;margin:0 auto;height:25px;text-align:right;margin-top:10px;float:left;}
+        .div_span{width:40px;margin:0 auto;height:25px;font-size:16px;font-weight:bold;text-align:right;margin-top:12px;float:left;}
+        .btn{width:75px;height:30px;}
+        .PagerView{font-size:14px;font-family:tahoma,arial;font-weight:bold;color:#333;text-align:center;padding:8px;line-height:100%;}
+        .PagerView span{color:#999;margin:0 1px;padding:3px 6px;border:1px solid #ccc;}
+        .PagerView span.on{color:#fff;font-weight:bold;border:1px solid #666;background:#888;} 
+        .PagerView a{color:#00f;text-decoration:none;}
+        .PagerView a span{color:#33f;border:1px solid #888;}
+        .pager{width:780px;margin:0 auto;}
+        </style>
+        <script type='text/javascript'>
+            var DC1=new Array('N003','N004','N005','N006','N007','','N008','');
+            var DC2=new Array('ID_0x0041','ID_0x0042','ID_0x0043','ID_0x0044','ID_0x0045','','ID_0x0046','');
+            var DC3=new Array('V','A','W','Wh','kWh','','℃','');
+
+            var ST1=new Array('N032','N033','N035','N036','N037','N038','N039','N040','N043');
+            var ST2=new Array('ID_ST1','ID_ST2','ID_ST3','ID_ST4','ID_ST5','ID_ST6','ID_ST7','ID_ST8','ID_ST9');
+            var ST3=new Array('','','','','','','','','');
+              
+            function show_SUB(TR1,TR2,TR3)
+            {
+                var str='';
+                str+="<table width='90%' border='0'>";
+                for(var i=0;i<TR1.length;i+=2)
+                {
+                    str+="<tr id='"+TR1[i]+i+"'>";
+                        str+="<td width='253' class='td1 "+(i%4?"even":"odd")+"'><span id='"+TR1[i]+"'></span></td>";
+                        str+="<td width='80' class='td2 "+(i%4?"even":"odd")+"'><span id='"+TR2[i]+"'></span></td>";
+                        str+="<td width='34' class='td3 "+(i%4?"even":"odd")+"'>"+TR3[i]+"</td>";
+                        if(i+1!=TR1.length)
+                        {
+                            str+="<td width='253' class='td1 "+(i%4?"even":"odd")+"'><span id='"+TR1[i+1]+"'></span></td>";
+                            str+="<td width='80' class='td2 "+(i%4?"even":"odd")+"'><span id='"+TR2[i+1]+"'></span></td>";
+                            str+="<td width='34' class='td3 "+(i%4?"even":"odd")+"'>"+TR3[i+1]+"</td>";
+                        }
+                        else
+                        {
+                            str+="<td width='253' class='td1 "+(i%4?"even":"odd")+"'></td>";
+                            str+="<td width='80' class='td2 "+(i%4?"even":"odd")+"'></td>";
+                            str+="<td width='34' class='td3 "+(i%4?"even":"odd")+"'></td>";
+                        }
+                        
+                    str+="</tr>";
+                }
+                str+="</table>";
+                document.write(str);
+            }
+        var PagerView=function(id,AAA,BBB,CCC)
+            {
+                var self=this;
+                this.id=id;
+                this._pageCount=0;
+                this._start=1;
+                this._end=1;
+                this.container=null;
+                this.index=1;
+                this.size=10;
+                this.maxButtons=18;
+                this.itemCount=0;
+                this.onclick=function(index){return true;};
+                this._onclick=function(index)
+                {
+                    var old=self.index;
+                    self.index=index;
+                    if(self.onclick(index)!==false)self.render();
+                    else self.index=old;
+                };
+                this._calculate=function()
+                {
+                    self._pageCount=parseInt(Math.ceil(self.itemCount/self.size));
+                    self.index=parseInt(self.index);
+                    if(self.index>self._pageCount)self.index=self._pageCount;
+                    if(self.index<1)self.index=1;
+                    self._start=Math.max(1,self.index-parseInt(self.maxButtons/2));
+                    self._end=Math.min(self._pageCount,self._start+self.maxButtons-1);
+                    self._start=Math.max(1,self._end-self.maxButtons+1);
+                };
+                this.page=function(rows)
+                {
+                    self._calculate();
+                    var s_num=(self.index-1)*self.size ;
+                    var e_num=self.index*self.size;
+                    return rows.slice(s_num,e_num);
+                };
+                this.render=function()
+                {
+                    var div=document.getElementById(self.id);
+                    div.view=self;
+                    self.container=div;
+                    self._calculate();
+                    var str='';
+                    str+='<div class="PagerView">\n';
+                    if(self._pageCount>1)
+                    {
+                        if(self.index!=1)
+                        {
+                            str+='<a href="javascript://1"><span>|&lt;</span></a>';
+                            str+='<a href="javascript://'+(self.index-1)+'"><span>&lt;&lt;</span></a>';
+                        }
+                        else
+                        {
+                            str+='<span>|&lt;</span>';
+                            str+='<span>&lt;&lt;</span>';
+                        }
+                    }
+                    for(var i=self._start;i<=self._end;i++)
+                    {
+                        if(i==this.index)
+                        {
+                            if(i<10)str+='<span class="on">'+'0'+i+"</span>";
+                            else str+='<span class="on">'+i+"</span>";
+                        }
+                        else
+                        {
+                            if(i<10)str+='<a href="javascript://'+i+'"><span>'+'0'+i+"</span></a>";
+                            else str+='<a href="javascript://'+i+'"><span>'+i+"</span></a>";
+                        }
+                    }
+                    if(self._pageCount>1)
+                    {
+                        if(self.index!=self._pageCount)
+                        {
+                            str+='<a href="javascript://'+(self.index+1)+'"><span>&gt;&gt;</span></a>';
+                            str+='<a href="javascript://'+self._pageCount+'"><span>&gt;|</span></a>';
+                        }
+                        else
+                        {
+                            str+='<span>&gt;&gt;</span>';
+                            str+='<span>&gt;|</span>';
+                        }
+                    }
+                    str+=AAA+self._pageCount+BBB+self.itemCount+CCC;
+                    str+='</div><!--/.pagerView-->\n';
+                    self.container.innerHTML=str;
+                    var a_list=self.container.getElementsByTagName('a');
+                    for(var i=0;i<a_list.length;i++)
+                    {
+                        a_list[i].onclick=function()
+                        {
+                            var index=this.getAttribute('href');
+                            if(index!=undefined&&index!='')
+                            {
+                                index=parseInt(index.replace('javascript://',''));
+                                self._onclick(index);
+                            }
+                            return false;
+                        };
+                    }
+                };
+            };
+        </script>
+    </head>
+    <body onload='Init();'>
+        <script type='text/javascript'>
+            show_T('N001');
+        </script>        
+        <div id='pager' width='90%' style='padding-left:5%;float:left;'></div>
+        <div class='line_long'></div>
+        <div class='blank'></div>
+        <script type='text/javascript'>
+            show_sT('N002');
+            show_SUB(DC1,DC2,DC3);
+        </script>
+        <div class='line_long'></div>
+        <div class='blank'></div>
+        <script type='text/javascript'>
+            show_sT('N009');
+            show_SUB(ST1,ST2,ST3);
+        </script>
+        <div class='line_long'></div>
+        <div class='blank'></div>
+        <!--[if IE 6]><script type='text/javascript'>document.execCommand('BackgroundImageCache',false,true);</script><![endif]-->
+    </body>
+    <script type='text/javascript'>
+        window.history.forward(1);
+        var $=function(o){return document.getElementById(o);};
+        var language=0;
+        var Json;
+        var CurPvs;
+        var lang=
+        {
+            N001:['光伏汇流箱信息','PVS Information'],
+            N002:['直流信息','DC Information'],
+            N003:['直流电压','DC Voltage'],
+            N004:['直流总电流','DC Total Current'],
+            N005:['直流输出功率','DC Output Power'],
+            N006:['日发电量','E-PVS Day'],
+            N007:['总发电量','E-PVS Total'],
+            N008:['内部温度','Inside Temperature'],
+            N009:['工作状态','Working Status'],
+            N010:['第：','No.：'],
+            N011:['共：','All：'],
+
+            N030:['',''],
+            N031:['',''],
+            N032:['防雷器故障','SPD Fault'],
+            N033:['机箱内温度过高','Inside-T too High'],
+            N034:['',''],
+            N035:['短路','Short Circuit'],
+            N036:['电流过高','Current too High'],
+            N037:['电流过低','Current too Low'],
+            N038:['开路','Open Circuit'],
+            N039:['电流反向','Current Reversed'],
+            N040:['熔丝熔断','Fuse Fusing'],
+            N041:['',''],
+            N042:['',''],
+            N043:['断路器脱扣','Breaker Trip'],
+            N044:['',''],
+            N045:['',''],
+        
+            N060:['故障信息','Fault Information'],
+            N061:['故障&nbsp;','Fault&nbsp;'],
+            N062:['直流过压','DC Voltage High'],
+            N063:['直流欠压','DC Voltage Low'],
+            N064:['直流过流','DC Current High'],
+            N065:['电网过压','AC Voltage High'],
+            N066:['电网欠压','AC Voltage Low'],
+            N067:['电网过频','AC Frequency High'],
+            N068:['电网欠频','AC Frequency Low'],
+            N069:['交流过流','AC Current High'],
+            N070:['交流漏电流保护','I-leak Protection'],
+            N071:['孤岛保护','Island Protection'],
+            N072:['相位异常','Phase Fault'],
+            N073:['独立逆变过压保护','Vind-inv High'],
+            N074:['交流电压不平衡','AC Voltage Unbalanced'],
+            N075:['交流电流不平衡','AC Current Unbalanced'],
+            N076:['环境过温','Temp High'],
+            N077:['模块A1过温','Module A1 Temp High'],
+            N078:['模块B1过温','Module B1 Temp High'],
+            N079:['模块C1过温','Module C1 Temp High'],
+            N080:['变压器过温','Transformer Temp High'],
+            N081:['电抗器1过温','Reactor 1 Temp High'],
+            N082:['电抗器2过温','Reactor 2 Temp High'],
+            N083:['模块故障','Module Fault'],
+            N084:['风扇故障','Fan Fault'],
+            N085:['传感器失效','Sensor Error'],
+            N046:['交流主接触器故障','AC Main Contactor Fault'],
+            N087:['直流主接触器故障','DC Main Contactor Fault'],
+            N088:['AD采样故障','AD Sample Fault'],
+            N089:['B相电流采样故障','AD Sample Fault'],
+            N090:['C相电流采样故障','AD Sample Fault'],
+            N091:['漏电流采样故障','AD Sample Fault'],
+            N092:['',''],
+            N093:['',''],
+            N094:['A相逆变电压采样故障','AD Sample Fault'],
+            N095:['B相逆变电压采样故障','AD Sample Fault'],
+            N096:['C相逆变电压采样故障','AD Sample Fault'],
+            N097:['A相电容电压采样故障','AD Sample Fault'],
+            N098:['B相电容电压采样故障','AD Sample Fault'],
+            N099:['C相电容电压采样故障','AD Sample Fault'],
+            N100:['',''],
+            N101:['',''],
+            N102:['',''],
+            N103:['电池故障','Battery Fault'],
+            N104:['DSP通讯故障','DSP Com-fault'],
+            N105:['电池通讯故障','BMS Com-fault'],
+            N106:['',''],
+            N107:['',''],
+            N108:['',''],
+            N109:['模块A2过温','Module A2 Temp High'],
+            N110:['模块B2过温','Module B2 Temp High'],
+            N111:['模块C2过温','Module C2 Temp High'],
+            N112:['交流防雷器故障','AC SPD Fault'],
+            N113:['直流熔断器故障','DC Fuse Fault'],
+            N114:['检测熔断器故障','Detc. Fuse Fault'],
+            N115:['极性反接故障','Reversed Polarity Fault'],
+            N116:['',''],
+            N117:['',''],
+            N118:['',''],
+            N119:['',''],
+            N120:['',''],
+            N121:['',''],
+            N122:['',''],
+            N123:['',''],
+            N124:['',''],
+            N125:['',''],
+
+            N500:['一共','Total '],
+            N501:['页，共',' Pages, '],
+            N502:['页，共',' Page, '],
+            N503:['台',' Nums'],
+            N504:['台',' Num']
+        };
+        var FaultStatus=
+        {
+            N0:['正常','Normal'],
+            N1:['故障','Fault']
+        };
+        var AlarmStatus=
+        {
+            N0:['正常','Normal'],
+            N1:['告警','Alarm']
+        };
+        var BreakerStatus=
+        {
+            N0:['正常','Normal'],
+            N1:['脱扣','Trip']
+        };
+        //获取串口PVS数据
+        function Get_PVS_Index(index)
+        {
+            eval('var URL=\'s_016.html?0x'+(0+index).toString(16).toUpperCase()+'&time=\'+new Date();');
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            //xmlhttp.onreadystatechange=function()
+            {
+                //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    //eval('Json='+xmlhttp.responseText);           
+                    $('ID_0x0041').innerHTML=(Json.ID_0x0041/10.0).toFixed(1);
+                    $('ID_0x0042').innerHTML=(Json.ID_0x0042/10.0).toFixed(1);
+                    $('ID_0x0043').innerHTML=(Json.ID_0x0043/10.0).toFixed(1);
+                    $('ID_0x0044').innerHTML=(Json.ID_0x0044/10.0).toFixed(1);
+                    $('ID_0x0045').innerHTML=(Json.ID_0x0045/10.0).toFixed(1);
+                    $('ID_0x0046').innerHTML=(Json.ID_0x0046/10.0).toFixed(1);
+
+                    //工作状态
+                    for(var i=0;i<16;i++)
+                    {
+                        if(((Json.ID_0x0047>>i)&1)==1)
+                        {
+                            if(i==2) {$('ID_ST1').innerHTML=FaultStatus.N1[language];$('ID_ST1').style.color='#F00';}
+                            if(i==3) {$('ID_ST2').innerHTML=FaultStatus.N1[language];$('ID_ST2').style.color='#F00';}
+                            if(i==5) {$('ID_ST3').innerHTML=AlarmStatus.N1[language];$('ID_ST3').style.color='#FF9500';}
+                            if(i==6) {$('ID_ST4').innerHTML=AlarmStatus.N1[language];$('ID_ST4').style.color='#FF9500';}
+                            if(i==7) {$('ID_ST5').innerHTML=AlarmStatus.N1[language];$('ID_ST5').style.color='#FF9500';}
+                            if(i==8) {$('ID_ST6').innerHTML=AlarmStatus.N1[language];$('ID_ST6').style.color='#FF9500';}
+                            if(i==9) {$('ID_ST7').innerHTML=FaultStatus.N1[language];$('ID_ST7').style.color='#F00';}
+                            if(i==10) {$('ID_ST8').innerHTML=FaultStatus.N1[language];$('ID_ST8').style.color='#F00';}
+                            if(i==13) {$('ID_ST9').innerHTML=BreakerStatus.N1[language];$('ID_ST9').style.color='#000';}
+                        }
+                        else
+                        {
+                            if(i==2) {$('ID_ST1').innerHTML=FaultStatus.N0[language];$('ID_ST1').style.color='#000';}
+                            if(i==3) {$('ID_ST2').innerHTML=FaultStatus.N0[language];$('ID_ST2').style.color='#000';}
+                            if(i==5) {$('ID_ST3').innerHTML=AlarmStatus.N0[language];$('ID_ST3').style.color='#000';}
+                            if(i==6) {$('ID_ST4').innerHTML=AlarmStatus.N0[language];$('ID_ST4').style.color='#000';}
+                            if(i==7) {$('ID_ST5').innerHTML=AlarmStatus.N0[language];$('ID_ST5').style.color='#000';}
+                            if(i==8) {$('ID_ST6').innerHTML=AlarmStatus.N0[language];$('ID_ST6').style.color='#000';}
+                            if(i==9) {$('ID_ST7').innerHTML=FaultStatus.N0[language];$('ID_ST7').style.color='#000';}
+                            if(i==10) {$('ID_ST8').innerHTML=FaultStatus.N0[language];$('ID_ST8').style.color='#000';}
+                            if(i==13) {$('ID_ST9').innerHTML=BreakerStatus.N0[language];$('ID_ST9').style.color='#000';}
+                        }
+                    }
+                }
+            };
+            //xmlhttp.open('GET',URL,true);
+            //xmlhttp.send();
+            //alert(URL);   
+        }     
+        function ajax()
+        {
+            Json={ID_0x0301:85,ID_0x0041:6500,ID_0x0042:1000,ID_0x0043:50000,ID_0x0044:50000,ID_0x0045:50000,ID_0x0046:300,ID_0x0047:0xffff,ID_0x0040:1,ID_0x0353:48};
+            var URL='s_016.html?time='+new Date();
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            //xmlhttp.onreadystatechange=function()
+            {
+                //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    //eval('Json='+xmlhttp.responseText);           
+                    if(Json.ID_0x0301==0x55)language=0;else language=1;
+                    for(var i=1;i<=9;i++)
+                    {
+                        eval('$(\'N0'+(i<10?'0'+i:i)+'\').innerHTML=lang.N0'+(i<10?'0'+i:i)+'[language];');
+                    }
+
+                    $('N032').innerHTML=lang.N032[language];
+                    $('N033').innerHTML=lang.N033[language];
+                    $('N035').innerHTML=lang.N035[language];
+                    $('N036').innerHTML=lang.N036[language];
+                    $('N037').innerHTML=lang.N037[language];
+                    $('N038').innerHTML=lang.N038[language];
+                    $('N039').innerHTML=lang.N039[language];
+                    $('N040').innerHTML=lang.N040[language];
+                    $('N043').innerHTML=lang.N043[language];
+
+                    if(Json.ID_0x0353==0){
+                        $('pager').style.display='none';
+                    }else{
+                        $('pager').style.display='block';
+                        mpager=new PagerView('pager',lang.N500[language],lang.N502[language],lang.N503[language]);
+                    }
+  
+                    mpager.itemCount=Json.ID_0x0353;
+                    mpager.size=1;
+                    mpager.index=1; 
+                    CurPvs = mpager.index;
+                    Get_PVS_Index(CurPvs);               
+                    mpager.onclick=function(index)
+                    {  
+                        CurPvs = index;
+                        //获取PCS储能逆变器信息
+                        Get_PVS_Index(index);
+                    };
+                    //index显示更新
+                    mpager.render(); 
+                }
+            };
+            xmlhttp.open('GET',URL,true);
+            xmlhttp.send();
+        }        
+        function Init()
+        {
+            ajax();
+            setInterval('Get_PVS_Index(CurPvs)', 2000);
+        }
+    </script>
+</html>

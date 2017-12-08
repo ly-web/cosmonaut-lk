@@ -1,0 +1,654 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>
+		<link type='text/css' href='c_000.css' rel='stylesheet'/>
+		<script type='text/javascript'>
+            var $=function(o){return document.getElementById(o);};
+            function lang_init_ex(st,end){for(var i=st;i<=end;i++)eval('$(\'N'+(i<10?'0'+i:i)+'\').innerHTML=lang.N'+(i<10?'0'+i:i)+'[language];');}
+            function show_tip_ex(id, obj){eval('$(\'tip'+id+'\').innerHTML=obj;');}
+            function show_T(tid)
+            {
+                var str='';
+                str+="<div class='title' style='width:90%;'><div class='r1 color'></div><div class='r2 color'></div><div class='r3 color'></div><div class='r4 color'></div>";
+                str+="<div class='content color'><span id='"+tid+"'></span></div>";
+                str+="<div class='r4 color'></div><div class='r3 color'></div><div class='r2 color'></div><div class='r1 color'></div></div><div class='blank'></div>";
+                document.write(str);
+            }
+            function show_sT(tid)
+            {
+                var str='';
+                str+="<div class='title' style='width:90%;'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+                str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+                str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+                document.write(str);
+            }
+            function show_sT_ex(tid, id)
+            {
+                var str='';
+                str+="<div class='title' id='"+id+"' style='display:none;width:90%'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+                str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+                str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+                document.write(str);
+            }
+            function sendHttpReq(url, successFn)
+            {
+                //alert(url);   
+                var xmlhttp;
+                if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+                else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+                xmlhttp.onreadystatechange=function()
+                {
+                    if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                    {
+                        if(xmlhttp.responseText=='1'){successFn();}
+                    }
+                };
+                xmlhttp.open('GET',url,true);
+                xmlhttp.send();
+            }
+        </script>
+		<style type='text/css'>
+			tr{height:27px;}
+			.td1{padding-left:40px;text-align:left;}
+			.td2{text-align:left;}
+			.td3{padding-right:40px;text-align:right;}
+			.txt{width:50px;text-align:right;}
+		</style>
+	</head>
+	<body onload='Init()'>
+		<script type='text/javascript'>
+			show_T('N01');
+		</script>
+        <!-- 储能逆变器型号设置 -->
+        <script type='text/javascript'>
+            show_sT('N14');
+        </script>
+        <table width='90%' border='0'>
+            <tr>
+              <td width='30%' class='td1 odd'><input name='PCS-Type' type='radio' value='0' id='SC30-50'/><span id='N15'></span></td>
+              <td width='30%' class='td1 odd'><input name='PCS-Type' type='radio' value='1' id='SC100'/><span id='N16'></span></td>
+              <td width='30%' class='td1 odd'><input name='PCS-Type' type='radio' value='2' id='SC250'/><span id='N17'></span></td>
+            </tr>
+            <tr>
+              <td width='30%' class='td1 even'><input name='PCS-Type' type='radio' value='3' id='SC500'/><span id='N18'></span></td>
+              <td width='30%' class='td1 even'><input name='PCS-Type' type='radio' value='4' id='SC500TL'/><span id='N19'></span></td>
+              <td width='30%' class='td1 even'><input name='PCS-Type' type='radio' value='5' id='SC1000'/><span id='N20'></span></td>
+            </tr>           
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even tip'><span id='tip5'>&nbsp;</span></td>
+                <!-- 保存 -->
+                <td width='50%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn5' style='display:block;'><span id='N404'>Save</span></button></td>
+            </tr>
+        </table>
+        <div class='line_long'></div>
+        <div class='blank'></div>
+        <script type='text/javascript'>
+            show_sT('N02');
+        </script>
+		<!-- 协议选择 -->
+		<table width='90%' border='0'>
+			<tr>
+				<td width='30%' class='td1 odd'><input name='Protocol-Sel' type='radio' value='0' id='NewProtocol'/><span id='N03'></span></td>
+				<td width='30%' class='td1 odd'><input name='Protocol-Sel' type='radio' value='1' id='OldProtocol'/><span id='N04'></span></td>
+			</tr>
+	   </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even tip'><span id='tip1'>&nbsp;</span></td>
+                <!-- 保存 -->
+                <td width='50%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn1' style='display:block;'><span id='N400'>Save</span></button></td>
+            </tr>
+        </table>
+		<div class='line_long'></div>
+		<div class='blank'></div>
+		<!-- 总线类型 -->
+		<script type='text/javascript'>
+			show_sT('N05');
+		</script>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='30%' class='td1 odd'><input name='BusType' type='radio' value='1' id='AC-Bus'/><span id='N07'></span></td>
+				<td width='30%' class='td1 odd'><input name='BusType' type='radio' value='0' id='DC-Bus'/><span id='N06'></span></td>
+			</tr>
+	   </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even tip'><span id='tip2'>&nbsp;</span></td>
+                <!-- 保存 -->
+                <td width='50%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn2' style='display:block;'><span id='N401'>Save</span></button></td>
+            </tr>
+        </table>
+		<div class='line_long'></div>
+		<div class='blank'></div>
+		<!-- 并网类型 -->
+		<script type='text/javascript'>
+			show_sT('N08');
+		</script>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='30%' class='td1 odd'><input name='GridConected' type='radio' value='0' id='GC-NO'/><span id='N09'></span></td>
+				<td width='30%' class='td1 odd'><input name='GridConected' type='radio' value='1' id='GC-YES'/><span id='N10'></span></td>
+			</tr>
+		</table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even tip'><span id='tip3'>&nbsp;</span></td>
+                <!-- 保存 -->
+                <td width='50%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn3' style='display:block;'><span id='N402'>Save</span></button></td>
+            </tr>
+        </table>
+		<div class='line_long'></div>
+		<div class='blank'></div>
+		<!-- 直流母线充电使能 -->		
+		<script type='text/javascript'>
+			show_sT('N11');
+		</script>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='30%' class='td1 odd'><input name='ChargePermit' type='radio' value='0' id='CP-DIS'/><span id='N12'></span></td>
+				<td width='30%' class='td1 odd'><input name='ChargePermit' type='radio' value='1' id='CP-EN'/><span id='N13'></span></td>
+			</tr>
+		</table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even tip'><span id='tip4'>&nbsp;</span></td>
+                <!-- 保存 -->
+                <td width='50%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn4' style='display:block;'><span id='N403'>Save</span></button></td>
+            </tr>
+        </table>
+		<div class='line_long'></div>
+		<div class='blank'></div>	
+		<!-- 优先级选择 -->
+		<script type='text/javascript'>
+			show_sT('N21');
+		</script>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='30%' class='td1 odd'><input name='Priority-Type' type='radio' value='0' id='Gird-First'/><span id='N22'></span></td>
+				<td width='30%' class='td1 odd'><input name='Priority-Type' type='radio' value='1' id='Micro-Grid First'/><span id='N23'></span></td>
+			</tr>
+		</table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even tip'><span id='tip6'>&nbsp;</span></td>
+                <!-- 保存 -->
+                <td width='50%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn6' style='display:block;'><span id='N405'>Save</span></button></td>
+            </tr>
+        </table>
+        <div class='line_long'></div>
+        <div class='blank'></div>
+		<div id='trans'></div>
+		<!--[if IE 6]><script type='text/javascript'>document.execCommand('BackgroundImageCache',false,true);</script><![endif]-->
+	</body>
+    <script type='text/javascript'>
+        window.history.forward(1);
+        var language=0;
+        var Json;
+        //需要将'\'转换为'\\'
+        //正整数、带一位小数的正浮点数
+        var reg1=/^[1-9]\d*$/;	
+        //正负整数、带1位小数的正负浮点数
+        var reg4=/^((-?0(\.\d{1})?)|(-?[1-9]\d*(\.\d{1})?))$/;	 
+        var lang=
+        {
+            N01:['基本设置','System-Config'],
+            N02:['协议选择','Protocol-Sel'],
+			N03:['新协议','New-Protocol'],
+			N04:['旧协议','Old-Protocol'],
+			N05:['母线类型','BusType'],
+			N06:['直流母线','DC-Bus'],
+			N07:['交流母线','AC-Bus'],
+			N08:['是否并网','Grid Connected'],
+			N09:['非并网','No'],
+			N10:['并网','Yes'],
+			N11:['直流母线充电使能','DC Bus Charge Permit'],
+			N12:['禁止','DISABLE'],
+			N13:['允许','ENABLE'],
+
+			N14:['储能逆变器型号','PCS Type'],
+            N15:['SC50','SC50'],
+            N16:['SC100','SC100'],
+            N17:['SC250','SC250'],
+            N18:['SC500','SC500'],
+            N19:['SC500TL','SC500TL'],
+            N20:['SC1000','SC1000'],
+            N21:['优先级选择','Priority-Sel'],
+            N22:['电网优先','Gird-First'],
+            N23:['微网优先','Micro-Grid First'],
+
+            N400:['设&nbsp;&nbsp;置','Set'], 
+            N401:['设&nbsp;&nbsp;置','Set'], 
+            N402:['设&nbsp;&nbsp;置','Set'], 
+            N403:['设&nbsp;&nbsp;置','Set'], 
+            N404:['设&nbsp;&nbsp;置','Set'], 
+            N405:['设&nbsp;&nbsp;置','Set'],  	          
+
+            N499:['设置成功！','Set successfully!'],
+            N500:['设置失败！','Set Failed!'],
+            N501:['格式错误！','Format error!'],
+            N502:['范围错误！','Range error!']    
+        };
+        function Init()
+        {
+            var URL='s_022.html?time='+new Date();
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            //xmlhttp.onreadystatechange=function()
+            {
+                //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    //测试
+                    Json={ID_0x0301:85,ID_0x0380:0,ID_0x0381:0,ID_0x0382:0,ID_0x0383:0,ID_0x0384:100,ID_0x0385:5,ID_0x0386:0,ID_0x020B:1,ID_0x0282:34};                
+                   	//eval('Json='+xmlhttp.responseText);				
+
+    				if(Json.ID_0x0301==0x55)language=0;else language=1;
+                    //初始化语言
+                    lang_init_ex(1,13); 
+    				lang_init_ex(14,23);  
+    				lang_init_ex(400,405);       
+    				doSetValue(Json);
+
+    				//user用户不能配置，install用户可以配置
+    				if(Json.ID_0x0282==0x11)
+    				{
+    					$('btn1').style.display='none';
+    					$('trans').style.zIndex=9999;
+    				}
+    				else
+    				{
+    					$('btn1').style.display='inline';
+    					$('trans').style.zIndex=-9999;
+    				}
+			     }
+            };
+            xmlhttp.open('GET',URL,true);
+            xmlhttp.send();
+        }
+        function read_back(addr)
+        {
+            var url='s_022.html?';
+            url=url+'&time='+new Date();
+
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            //xmlhttp.onreadystatechange=function()
+            {
+                //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    //eval('Json='+xmlhttp.responseText); 
+                    if(addr == 0x0380)
+                    {
+                        var pr=0,fe=0;
+                        if($('NewProtocol').checked){pr=$('NewProtocol').value;}
+                        else if($('OldProtocol').checked){pr=$('OldProtocol').value;} 
+                        fe=Json.ID_0x0380;
+                        if(pr!=fe)
+                        {
+                            if(Json.ID_0x0380==0)
+                            {
+                                $('NewProtocol').checked=true;
+                                $('OldProtocol').checked=false;
+                            }
+                            else
+                            {
+                                $('NewProtocol').checked=false;
+                                $('OldProtocol').checked=true;              
+                            }
+                        }
+                        show_tip_ex(1,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(1,lang.N500[language])',500);}
+                        else {setTimeout('show_tip_ex(1,lang.N499[language])',500);}
+                        setTimeout('show_tip_ex(1,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x0381)
+                    {
+                        var pr=0,fe=0;
+                        if($('AC-Bus').checked){pr=$('AC-Bus').value;} 
+                        else if($('DC-Bus').checked){pr=$('DC-Bus').value;}
+                        fe=Json.ID_0x0381;
+                        if(pr!=fe)
+                        {
+                            if(Json.ID_0x0381==1)
+                            {
+                                $('AC-Bus').checked=true;
+                                $('DC-Bus').checked=false;
+                            }
+                            else
+                            {
+                                $('AC-Bus').checked=false;
+                                $('DC-Bus').checked=true;               
+                            }
+                        }
+                        show_tip_ex(2,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(2,lang.N500[language])',500);}
+                        else {setTimeout('show_tip_ex(2,lang.N499[language])',500);}
+                        setTimeout('show_tip_ex(2,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x0382)
+                    {
+                        var pr=0,fe=0;
+                        if($('GC-NO').checked){pr=$('GC-NO').value;}  
+                        else if($('GC-YES').checked){pr=$('GC-YES').value;} 
+                        fe=Json.ID_0x0382;
+                        if(pr!=fe)
+                        {
+                            if(Json.ID_0x0382==0)
+                            {
+                                $('GC-NO').checked=true;
+                                $('GC-YES').checked=false;
+                            }
+                            else
+                            {
+                                $('GC-NO').checked=false;
+                                $('GC-YES').checked=true;               
+                            }
+                        }
+                        show_tip_ex(3,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(3,lang.N500[language])',500);}
+                        else {setTimeout('show_tip_ex(3,lang.N499[language])',500);}
+                        setTimeout('show_tip_ex(3,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x0383)
+                    {
+                        var pr=0,fe=0;
+                        if($('CP-DIS').checked){pr=$('CP-DIS').value;}  
+                        else if($('CP-EN').checked){pr=$('CP-EN').value;}
+                        fe=Json.ID_0x0383;
+                        if(pr!=fe)
+                        {
+                            if(Json.ID_0x0383==0)
+                            {
+                                $('CP-DIS').checked=true;
+                                $('CP-EN').checked=false;
+                            }
+                            else
+                            {
+                                $('CP-DIS').checked=false;
+                                $('CP-EN').checked=true;            
+                            }
+                        }
+                        show_tip_ex(4,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(4,lang.N500[language])',500);}
+                        else {setTimeout('show_tip_ex(4,lang.N499[language])',500);}
+                        setTimeout('show_tip_ex(4,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x0385)
+                    {
+                        var pr=0,fe=0;
+                        if($('SC30-50').checked){pr=$('SC30-50').value;}   
+                        else if($('SC100').checked){pr=$('SC100').value;}
+                        else if($('SC250').checked){pr=$('SC250').value;}  
+                        else if($('SC500').checked){pr=$('SC500').value;}  
+                        else if($('SC500TL').checked){pr=$('SC500TL').value;}
+                        else if($('SC1000').checked){pr=$('SC1000').value;}
+                        fe=Json.ID_0x0385;
+                        if(pr!=fe)
+                        {
+                            if(Json.ID_0x0385==0)
+                            {
+                                $('SC30-50').checked=true;
+                                $('SC100').checked=false;
+                                $('SC250').checked=false;
+                                $('SC500').checked=false;
+                                $('SC500TL').checked=false;
+                                $('SC1000').checked=false;
+                            }
+                            else if(Json.ID_0x0385==1)
+                            {
+                                $('SC30-50').checked=false;
+                                $('SC100').checked=true;
+                                $('SC250').checked=false;
+                                $('SC500').checked=false;
+                                $('SC500TL').checked=false; 
+                                $('SC1000').checked=false;        
+                            }
+                            else if(Json.ID_0x0385==2)
+                            {
+                                $('SC30-50').checked=false;
+                                $('SC100').checked=false;
+                                $('SC250').checked=true;
+                                $('SC500').checked=false;
+                                $('SC500TL').checked=false;  
+                                $('SC1000').checked=false;   
+                            }
+                            else if(Json.ID_0x0385==3)
+                            {
+                                $('SC30-50').checked=false;
+                                $('SC100').checked=false;
+                                $('SC250').checked=false;
+                                $('SC500').checked=true;
+                                $('SC500TL').checked=false;
+                                $('SC1000').checked=false;
+                            }
+                            else if(Json.ID_0x0385==4)
+                            {
+                                $('SC30-50').checked=false;
+                                $('SC100').checked=false;
+                                $('SC250').checked=false;
+                                $('SC500').checked=false;
+                                $('SC500TL').checked=true;
+                                $('SC1000').checked=false;
+                            }
+                            else if(Json.ID_0x0385==5)
+                            {
+                                $('SC30-50').checked=false;
+                                $('SC100').checked=false;
+                                $('SC250').checked=false;
+                                $('SC500').checked=false;
+                                $('SC500TL').checked=false;
+                                $('SC1000').checked=true;                                
+                            }
+                        }
+                        show_tip_ex(5,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(5,lang.N500[language])',500);}
+                        else {setTimeout('show_tip_ex(5,lang.N499[language])',500);}
+                        setTimeout('show_tip_ex(5,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x0386)
+                    {
+                        var pr=0,fe=0;
+                        if($('Gird-First').checked){pr=$('Gird-First').value;}
+                        else if($('Micro-Grid First').checked){pr=$('Micro-Grid First').value;}
+                        fe=Json.ID_0x0386;
+                        if(pr!=fe)
+                        {
+                            if(Json.ID_0x0386==0)
+                            {
+                                $('Gird-First').checked=true;
+                                $('Micro-Grid First').checked=false;
+                            }
+                            else
+                            {
+                                $('Gird-First').checked=false;
+                                $('Micro-Grid First').checked=true;             
+                            }   
+                        }
+                        show_tip_ex(6,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(6,lang.N500[language])',500);}
+                        else {setTimeout('show_tip_ex(6,lang.N499[language])',500);}
+                        setTimeout('show_tip_ex(6,\'&nbsp;\')',2500);
+                    }
+                }
+            };
+            xmlhttp.open('GET',url,true);
+            xmlhttp.send();  
+        }
+        function doSubmit(obj)
+        {
+            var Protocol,BusType,Grid,DBusCharge,SC_Type,DCDC_Type,Priority,VSG,MacLock;
+            var URL='a_022.html?';
+            switch(obj.id)
+            {
+            	case 'btn1': 
+            	 	if($('NewProtocol').checked){Protocol=$('NewProtocol').value;}
+            	 	else if($('OldProtocol').checked){Protocol=$('OldProtocol').value;} 
+					URL=URL+'&0x0380='+Protocol;
+                    readBack=0x0380;
+            	break;
+            	case 'btn2':
+     				if($('AC-Bus').checked){BusType=$('AC-Bus').value;}	
+					else if($('DC-Bus').checked){BusType=$('DC-Bus').value;}
+					URL=URL+'&0x0381='+BusType;
+                    readBack=0x0381;
+            	break;
+            	case 'btn3': 
+       				if($('GC-NO').checked){Grid=$('GC-NO').value;}	
+					else if($('GC-YES').checked){Grid=$('GC-YES').value;} 
+					URL=URL+'&0x0382='+Grid;
+                    readBack=0x0382;
+            	break;
+            	case 'btn4': 
+ 					if($('CP-DIS').checked){DBusCharge=$('CP-DIS').value;}	
+					else if($('CP-EN').checked){DBusCharge=$('CP-EN').value;}
+            		URL=URL+'&0x0383='+DBusCharge;
+                    readBack=0x0383;
+            	break;
+            	case 'btn5': 
+			 		if($('SC30-50').checked){SC_Type=$('SC30-50').value;}	
+					else if($('SC100').checked){SC_Type=$('SC100').value;}
+					else if($('SC250').checked){SC_Type=$('SC250').value;}	
+					else if($('SC500').checked){SC_Type=$('SC500').value;}	
+					else if($('SC500TL').checked){SC_Type=$('SC500TL').value;}
+                    else if($('SC1000').checked){SC_Type=$('SC1000').value;}
+					URL=URL+'&0x0385='+SC_Type;
+                    readBack=0x0385;
+            	break;
+            	case 'btn6': 
+		 			if($('Gird-First').checked){Priority=$('Gird-First').value;}
+		 			else if($('Micro-Grid First').checked){Priority=$('Micro-Grid First').value;}
+					URL=URL+'&0x0386='+Priority;
+                    readBack=0x0386;	
+            	break;
+            	default:break;
+            }
+            URL=URL+'&time='+new Date();
+            //alert(URL);
+
+            function success()
+            {
+                setTimeout('read_back('+readBack+')', 100);            			
+            }
+            //测试
+            success();            
+			sendHttpReq(URL, success);
+        }
+        function doSetValue(Json)
+        {
+        	//协议选择
+        	if(Json.ID_0x0380==0)
+        	{
+        		$('NewProtocol').checked=true;
+        		$('OldProtocol').checked=false;
+        	}
+        	else
+        	{
+         		$('NewProtocol').checked=false;
+        		$('OldProtocol').checked=true;       		
+        	}
+        	//母线类型
+        	if(Json.ID_0x0381==1)
+        	{
+        		$('AC-Bus').checked=true;
+        		$('DC-Bus').checked=false;
+        	}
+        	else
+        	{
+         		$('AC-Bus').checked=false;
+        		$('DC-Bus').checked=true;       		
+        	}
+        	//是否并网
+        	if(Json.ID_0x0382==0)
+        	{
+        		$('GC-NO').checked=true;
+        		$('GC-YES').checked=false;
+        	}
+        	else
+        	{
+         		$('GC-NO').checked=false;
+        		$('GC-YES').checked=true;       		
+        	}
+        	//直流母线充电使能
+        	if(Json.ID_0x0383==0)
+        	{
+        		$('CP-DIS').checked=true;
+        		$('CP-EN').checked=false;
+        	}
+        	else
+        	{
+         		$('CP-DIS').checked=false;
+        		$('CP-EN').checked=true;       		
+        	}
+        	//储能逆变器型号
+        	if(Json.ID_0x0385==0)
+        	{
+        		$('SC30-50').checked=true;
+        		$('SC100').checked=false;
+        		$('SC250').checked=false;
+        		$('SC500').checked=false;
+        		$('SC500TL').checked=false;
+                $('SC1000').checked=false;
+        	}
+        	else if(Json.ID_0x0385==1)
+        	{
+         		$('SC30-50').checked=false;
+        		$('SC100').checked=true;
+        		$('SC250').checked=false;
+        		$('SC500').checked=false;
+        		$('SC500TL').checked=false;
+                $('SC1000').checked=false;  		
+        	}
+        	else if(Json.ID_0x0385==2)
+        	{
+           		$('SC30-50').checked=false;
+        		$('SC100').checked=false;
+        		$('SC250').checked=true;
+        		$('SC500').checked=false;
+        		$('SC500TL').checked=false;	
+                $('SC1000').checked=false;	
+        	}
+        	else if(Json.ID_0x0385==3)
+        	{
+   		        $('SC30-50').checked=false;
+        		$('SC100').checked=false;
+        		$('SC250').checked=false;
+        		$('SC500').checked=true;
+        		$('SC500TL').checked=false;
+                $('SC1000').checked=false;
+        	}
+        	else if(Json.ID_0x0385==4)
+        	{
+   		        $('SC30-50').checked=false;
+        		$('SC100').checked=false;
+        		$('SC250').checked=false;
+        		$('SC500').checked=false;
+        		$('SC500TL').checked=true;
+                $('SC1000').checked=false;
+        	}
+            else if(Json.ID_0x0385==5)
+            {
+                $('SC30-50').checked=false;
+                $('SC100').checked=false;
+                $('SC250').checked=false;
+                $('SC500').checked=false;
+                $('SC500TL').checked=false;
+                $('SC1000').checked=true;
+            }
+        	//优先级选择
+        	if(Json.ID_0x0386==0)
+        	{
+        		$('Gird-First').checked=true;
+        		$('Micro-Grid First').checked=false;
+        	}
+        	else
+        	{
+         		$('Gird-First').checked=false;
+        		$('Micro-Grid First').checked=true;       		
+        	}
+        }
+    </script>
+</html>

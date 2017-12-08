@@ -1,0 +1,433 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+    <head>
+        <meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>
+        <link type='text/css' href='c_000.css' rel='stylesheet'/>
+        <style type='text/css'>
+            tr{height:27px;}
+            .select{width:180px;_width:150px;}
+            .time{width:65px;_width:100px;}
+            .txt{width:70px;text-align:center;}
+            .short_txt{width:50px;}
+            .td_value{text-align:right;padding-right:20px;}
+            .td1{padding-left:20px;padding-right:20px;text-align:left;}
+            .td2{padding-left:0px;text-align:center;}
+            .td3{padding-left:60px;text-align:left;}
+            .td4{padding-right:5px;text-align:right;}
+            .td5{padding-right:10px;text-align:right;}
+            .radio{padding-left:30px;}
+            .btnStyle{width:70px;height:24px;}
+            .submenu{line-height:32px;padding-left:20px;width:225px;height:32px;color:#000;background-color:#eee;font-weight:normal;font-size:14px;}
+        </style>    
+        <script type='text/javascript'>
+            var $=function(o){return document.getElementById(o);};
+            function lang_init_ex(st,end){for(var i=st;i<=end;i++)eval('$(\'N'+(i<10?'0'+i:i)+'\').innerHTML=lang.N'+(i<10?'0'+i:i)+'[language];');}
+            function show_tip(obj){$('tip').innerHTML=obj;}
+            function show_T(tid)
+            {
+                var str='';
+                str+="<div class='title' style='width:90%;'><div class='r1 color'></div><div class='r2 color'></div><div class='r3 color'></div><div class='r4 color'></div>";
+                str+="<div class='content color'><span id='"+tid+"'></span></div>";
+                str+="<div class='r4 color'></div><div class='r3 color'></div><div class='r2 color'></div><div class='r1 color'></div></div><div class='blank'></div>";
+                document.write(str);
+            }
+            function show_sT(tid)
+            {
+                var str='';
+                str+="<div class='title' style='width:90%;'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+                str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+                str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+                document.write(str);
+            }
+            function show_sT_ex(tid, id)
+            {
+                var str='';
+                str+="<div class='title' id='"+id+"' style='display:none;width:90%'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+                str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+                str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+                document.write(str);
+            }
+            function sendHttpReq(url, successFn)
+            {
+                //alert(url);   
+                var xmlhttp;
+                if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+                else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+                xmlhttp.onreadystatechange=function()
+                {
+                    if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                    {
+                        if(xmlhttp.responseText=='1'){successFn();}
+                    }
+                };
+                xmlhttp.open('GET',url,true);
+                xmlhttp.send();
+            }
+        </script>
+        <script type='text/javascript'>
+            var language=0;
+            //正整数+0
+            var reg=/^(0|[1-9]\d*)$/;
+            var Json;
+            var flg_pcs = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+            var lang=
+            {
+                //PCS 串口
+                N1100:['设&nbsp;&nbsp;置','Set'],
+                N1101:['设&nbsp;&nbsp;置','Set'],
+                N1102:['设&nbsp;&nbsp;置','Set'],
+                N1103:['设&nbsp;&nbsp;置','Set'],
+                N1104:['设&nbsp;&nbsp;置','Set'],
+                N1105:['设&nbsp;&nbsp;置','Set'],
+                N1106:['设&nbsp;&nbsp;置','Set'],
+                N1107:['设&nbsp;&nbsp;置','Set'],
+                N1108:['设&nbsp;&nbsp;置','Set'],
+                N1109:['设&nbsp;&nbsp;置','Set'],
+                N1110:['设&nbsp;&nbsp;置','Set'],
+                N1111:['设&nbsp;&nbsp;置','Set'],
+                N1112:['设&nbsp;&nbsp;置','Set'],
+                N1113:['设&nbsp;&nbsp;置','Set'],
+                N1114:['设&nbsp;&nbsp;置','Set'],
+                N1115:['设&nbsp;&nbsp;置','Set'],
+                N1116:['设&nbsp;&nbsp;置','Set'],
+                N1117:['设&nbsp;&nbsp;置','Set'],
+                N1118:['设&nbsp;&nbsp;置','Set'],
+                N1119:['设&nbsp;&nbsp;置','Set'],
+                N1120:['设&nbsp;&nbsp;置','Set'],
+                N1121:['设&nbsp;&nbsp;置','Set'],
+                N1122:['设&nbsp;&nbsp;置','Set'],
+                N1123:['设&nbsp;&nbsp;置','Set'],
+                N1124:['设&nbsp;&nbsp;置','Set'],
+                N1125:['设&nbsp;&nbsp;置','Set'],
+                N1126:['设&nbsp;&nbsp;置','Set'],
+                N1127:['设&nbsp;&nbsp;置','Set'],
+                N1128:['设&nbsp;&nbsp;置','Set'],
+                N1129:['设&nbsp;&nbsp;置','Set'],
+                N1130:['设&nbsp;&nbsp;置','Set'],
+                N1131:['设&nbsp;&nbsp;置','Set'],
+                N1132:['设&nbsp;&nbsp;置','Set'],
+                N1133:['设&nbsp;&nbsp;置','Set'],
+                N1134:['设&nbsp;&nbsp;置','Set'],
+                N1135:['设&nbsp;&nbsp;置','Set'],
+                N1136:['设&nbsp;&nbsp;置','Set'],
+                N1137:['设&nbsp;&nbsp;置','Set'],
+                N1138:['设&nbsp;&nbsp;置','Set'],
+                N1139:['设&nbsp;&nbsp;置','Set'],
+                N1140:['设&nbsp;&nbsp;置','Set'],
+                N1141:['设&nbsp;&nbsp;置','Set'],
+                N1142:['设&nbsp;&nbsp;置','Set'],
+                N1143:['设&nbsp;&nbsp;置','Set'],
+                N1144:['设&nbsp;&nbsp;置','Set'],
+                N1145:['设&nbsp;&nbsp;置','Set'],
+                N1146:['设&nbsp;&nbsp;置','Set'],
+                N1147:['设&nbsp;&nbsp;置','Set'],
+                N1148:['设&nbsp;&nbsp;置','Set'],
+                N1149:['设&nbsp;&nbsp;置','Set'],
+                N1150:['设&nbsp;&nbsp;置','Set'],
+                N1151:['设&nbsp;&nbsp;置','Set'],
+                N1152:['设&nbsp;&nbsp;置','Set'],
+                N1153:['设&nbsp;&nbsp;置','Set'],
+                N1154:['设&nbsp;&nbsp;置','Set'],
+                N1155:['设&nbsp;&nbsp;置','Set'],
+                N1156:['设&nbsp;&nbsp;置','Set'],
+                N1157:['设&nbsp;&nbsp;置','Set'],
+                N1158:['设&nbsp;&nbsp;置','Set'],
+                N1159:['设&nbsp;&nbsp;置','Set'],
+
+                N500:['一共','Total '],
+                N501:['页，共',' Pages, '],
+                N502:['页，共',' Page, '],
+                N503:['台',' Nums'],
+                N504:['台',' Num'],
+
+                N541:['设置失败！','Set failed!'],
+                N542:['设置成功！','Set successfully!'],
+                N543:['格式错误！','Format error!'],
+                N544:['范围错误！','Range error!'],
+
+                N550:['设&nbsp;&nbsp;置','Set'],
+                N551:['设&nbsp;&nbsp;置','Set']
+            };
+
+            //显示设置Mdobus地址设置框 nid -- text框id(实际的)，bid -- 确认按钮id(>=1)，tid -- 提示信息区id(>=1), num -- 添加的个数
+            function show_Set(nid,bid,tid,num)
+            {
+                var loop=0;
+                var str='';
+                var style="odd";
+                var more=0, all=0;
+                var line=0;
+                more=num%4;
+                if(more!=0){all=num+(4-more);}
+                else{all=num;}
+                str+="<tr id='t"+(bid+line)+"' style='display:none'>";
+                for(var i=0; i<all; i++)
+                {
+                    if(i%8<4){style="odd"}else{style="even"}
+                    if(i>=num){
+                        str+="<td width='12%' class='td1 odd "+style+"'><span id='text"+(bid+i)+"'>No.Na</span></td><td width='9%' class='td2 "+style+"'><input class='txt' type='text' value='Na' disabled='true'/></td><td width='8%' class='td2 "+style+"'><button class='btnStyle' disabled='true' style='display:block;'></td>";
+                    }else{                      
+                        str+="<td width='12%' class='"+style+"'><span id='text"+(bid+i)+"'>No."+(i<9?'0'+(i+1):(i+1))+"</span></td><td width='9%' class='td2 "+style+"'><input class='txt' id='ID_0x0"+(nid+i).toString(16).toUpperCase()+"' value='"+(i+1)+"' maxlength='3' onkeyup='doRangeCheck(this,reg)' type='text'/></td><td width='%8' class='td2 "+style+"'><button class='btnStyle' onclick='doSubmit(this)' id='N"+(bid+i)+"' style='display:block;'></td>"; 
+                    }   
+                    if(i%4==3){
+                        loop=0;
+                        line++;
+                        if(i!=all-1){str+="</tr><tr id='t"+(bid+line)+"' style='display:none'>"};
+
+                    }
+                    loop++;
+                }
+                str+="</tr>";
+                document.write(str);
+            }               
+        </script>
+    </head>
+    <body onload='Init()'>
+        <!-- PCS -->
+        <table id='tbl_pcs' width='90%' border='1' bordercolor="#E0E0E0" style='display:none;'>
+            <script type='text/javascript'>
+            show_Set(0x640, 1100, 1, 60);
+            </script>
+        </table>
+        <div class='tip' id='tip' style='width:90%;'><span>&nbsp;</span></div>  
+        <div class='btm_blank'></div>
+        <div id='trans'></div>
+        <!--[if IE 6]><script type='text/javascript'>document.execCommand('BackgroundImageCache',false,true);</script><![endif]-->
+    </body>
+    <script language='javascript' type='text/javascript'>
+
+        Json={  ID_0x0301:85,ID_0x0282:0x22,ID_0x0390:1,ID_0x0391:1,ID_0x0392:1,ID_0x0393:1,ID_0x0394:1,ID_0x0395:1,ID_0x039A:1,ID_0x0350:60,
+
+                ID_0x0640:1,ID_0x0641:2,ID_0x0642:3,ID_0x0643:4,ID_0x0644:5,ID_0x0645:6,ID_0x0646:7,ID_0x0647:8,ID_0x0648:9,ID_0x0649:10,
+                ID_0x064A:11,ID_0x064B:12,ID_0x064C:13,ID_0x064D:14,ID_0x064E:15,ID_0x064F:16,ID_0x0650:17,ID_0x0651:18,ID_0x0652:19,ID_0x0653:20,
+                ID_0x0654:21,ID_0x0655:22,ID_0x0656:23,ID_0x0657:24,ID_0x0658:25,ID_0x0659:26,ID_0x065A:27,ID_0x065B:28,ID_0x065C:29,ID_0x065D:30,
+                ID_0x065E:31,ID_0x065F:32,ID_0x0660:33,ID_0x0661:34,ID_0x0662:35,ID_0x0663:36,ID_0x0664:37,ID_0x0665:38,ID_0x0666:39,ID_0x0667:40,
+                ID_0x0668:41,ID_0x0669:42,ID_0x066A:43,ID_0x066B:44,ID_0x066C:45,ID_0x066D:46,ID_0x066E:47,ID_0x066F:48,ID_0x0670:49,ID_0x0671:50,
+                ID_0x0672:51,ID_0x0673:52,ID_0x0674:53,ID_0x0675:54,ID_0x0676:55,ID_0x0677:56,ID_0x0678:57,ID_0x0679:58,ID_0x067A:59,ID_0x067B:60
+            };
+  
+        function change_color(obj)
+        {
+            if(current_id!=obj.id)
+            {
+                obj.style.background='#007b3e';
+                obj.style.color='#fff';
+            }
+        }
+        function resume_color(obj)
+        {
+            if(current_id!=obj.id)
+            {
+                obj.style.background='#aaa';
+                obj.style.color='#000';
+            }
+        }
+
+        //pcs
+        function choose_pcs()
+        {
+            var lin=0;
+            if(Json.ID_0x0390==1){ 
+                $('tbl_pcs').style.display='table';
+                $('tip').style.display='block';
+            } else { 
+                $('tbl_pcs').style.display='none';
+                $('tip').style.display='none';
+            }
+            //pcs 串口
+            for(var i=0; i<60; i++){
+                if(i>=Json.ID_0x0350){
+                    eval('$(\'ID_0x0'+(0x640+i).toString(16).toUpperCase()+'\').value=\'\';');
+                    eval('$(\'ID_0x0'+(0x640+i).toString(16).toUpperCase()+'\').disabled=true;');
+                }else{  
+                    if(Json.ID_0x0282==0x22){ 
+                        eval('$(\'N'+(1100+i)+'\').disabled=false;');
+                        eval('$(\'N'+(1100+i)+'\').style.background="#99D9EA";');
+                    }else{
+                        eval('$(\'N'+(1100+i)+'\').style.background="#F0F0F0";');                           
+                    } 
+                }
+            }
+
+            if(Json.ID_0x0350%4==0){lin=parseInt(Json.ID_0x0350/4);}
+            else {lin=parseInt(Json.ID_0x0350/4)+1;}
+            for(var j=0; j<15; j++)
+            {
+                if(j>=lin) eval('$(\'t'+(1100+j)+'\').style.display=\'none\';');
+                else eval('$(\'t'+(1100+j)+'\').style.display=\'table\';');
+            }
+            Set_PCS_For_Serial();
+        }
+        //设置串口PCS数据, 获取所有PCS 串口modbus参数
+        function Set_PCS_For_Serial()
+        {
+            var URL='s_027.html?0x0640&time='+new Date();
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            //xmlhttp.onreadystatechange=function()
+            {
+                //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    //eval('Json='+xmlhttp.responseText);           
+                    for(var i=0; i<Json.ID_0x0350; i++)
+                    {
+                        eval('$(\'ID_0x0'+(0x640+i).toString(16).toUpperCase()+'\').value=Json.ID_0x0'+(0x640+i).toString(16).toUpperCase()+';');
+                    }
+                }
+            };
+            //xmlhttp.open('GET',URL,true);
+            //xmlhttp.send();   
+            //alert(URL);       
+        }
+
+        function Init()
+        {
+            //参数=0读所有设备地址
+            var URL='s_027.html?0x0000&time='+new Date();
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            //xmlhttp.onreadystatechange=function()
+            {
+                //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    //eval('Json='+xmlhttp.responseText);
+
+                    if(Json.ID_0x0301==0x55)language=0;else language=1;
+                    lang_init_ex(1100,1159);
+
+                    //设备选择
+                    choose_pcs();
+
+                    if(Json.ID_0x0282==0x11)
+                    {
+                        $('trans').style.zIndex=-9999;
+                    }
+                    else
+                    {
+                        $('trans').style.zIndex=-9999;
+                    }                   
+                }
+            };
+            xmlhttp.open('GET',URL,true);
+            xmlhttp.send();
+        }
+        function read_back(addr)
+        { 
+            var url='s_027.html?';
+
+            url=url+'0xFFFF'+'&0x0'+addr.toString(16).toUpperCase();
+            url=url+'&time='+new Date();
+            //alert(url);
+
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            //xmlhttp.onreadystatechange=function()
+            {
+                //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    //eval('Json='+xmlhttp.responseText);
+                    //回读PCS modbus地址    
+                    if(addr >= 0x640 && addr <= 0x67B)
+                    {
+                        var pr,fe;
+                        eval('pr=$(\'ID_0x0'+addr.toString(16).toUpperCase()+'\').value;');
+                        eval('fe=Json.ID_0x0'+addr.toString(16).toUpperCase()+';');
+                        if(pr!=fe) eval('$(\'ID_0x0'+addr.toString(16).toUpperCase()+'\').value=Json.ID_0x0'+addr.toString(16).toUpperCase()+';');                      
+                        show_tip('&nbsp;');
+                        if(pr==fe){setTimeout('show_tip(lang.N542[language])',500);}
+                        else {setTimeout('show_tip(lang.N541[language])',500);}
+                        setTimeout('show_tip(\'&nbsp;\')',2500);
+                    }
+                }
+            };
+            xmlhttp.open('GET',url,true);
+            xmlhttp.send();     
+        }   
+
+        function doSubmit(obj)
+        {
+            var URL='a_027.html?';
+
+            var readBack=0;
+            switch(obj.id)
+            {                 
+                //serial pcs 设置
+                case 'N1100': case 'N1101': case 'N1102': case 'N1103': case 'N1104': case 'N1105': case 'N1106': case 'N1107': case 'N1108': case 'N1109':
+                case 'N1110': case 'N1111': case 'N1112': case 'N1113': case 'N1114': case 'N1115': case 'N1116': case 'N1117': case 'N1118': case 'N1119':
+                case 'N1120': case 'N1121': case 'N1122': case 'N1123': case 'N1124': case 'N1125': case 'N1126': case 'N1127': case 'N1128': case 'N1129':
+                case 'N1130': case 'N1131': case 'N1132': case 'N1133': case 'N1134': case 'N1135': case 'N1136': case 'N1137': case 'N1138': case 'N1139':
+                case 'N1140': case 'N1141': case 'N1142': case 'N1143': case 'N1144': case 'N1145': case 'N1146': case 'N1147': case 'N1148': case 'N1149':
+                case 'N1150': case 'N1151': case 'N1152': case 'N1153': case 'N1154': case 'N1155': case 'N1156': case 'N1157': case 'N1158': case 'N1159':
+                var str = obj.id;
+                var cutstr = str.substring(str.length-4,str.length);
+                var index = parseInt(cutstr)-1100;
+                if(flg_pcs[index]){return;}
+                eval('URL=URL+\'&0x0'+(0x640+index).toString(16).toUpperCase()+'=\'+$(\'ID_0x0'+(0x640+index).toString(16).toUpperCase()+'\').value;');
+                eval('readBack=0x0'+(0x640+index).toString(16).toUpperCase()+';');
+                break;  
+                default:break;
+            }
+
+            URL=URL+'&time='+new Date();
+            //alert(URL);          
+
+            function success()
+            {
+                if((readBack >= 0x640 && readBack <= 0x67B) || (readBack >= 0x1000 && readBack <= 0x112B))
+                {
+                    show_tip('&nbsp;');
+                    setTimeout('read_back('+readBack+')', 100);
+                    setTimeout('show_tip(\'&nbsp;\')',2500);                    
+                }       
+            } 
+
+            //测试
+            success();  
+
+            sendHttpReq(URL, success);
+        }
+
+        function show_tip_ex(id, obj){eval('$(\'tip'+id+'\').innerHTML=obj;');}
+        function doRangeCheck(obj,reg)
+        {
+            var range=parseInt(obj.value);
+            var err, err2;          
+
+            if(!obj.value.match(reg)){err=2;}
+            else if(range<1||range>247){err=1;}
+            else{err=0;}
+          
+            //pcs 串口                    
+            switch(obj.id)
+            {
+                case "ID_0x0640": case "ID_0x0641": case "ID_0x0642": case "ID_0x0643": case "ID_0x0644": case "ID_0x0645": case "ID_0x0646": case "ID_0x0647": case "ID_0x0648": case "ID_0x0649": 
+                case "ID_0x064A": case "ID_0x064B": case "ID_0x064C": case "ID_0x064D": case "ID_0x064E": case "ID_0x064F": case "ID_0x0650": case "ID_0x0651": case "ID_0x0652": case "ID_0x0653": 
+                case "ID_0x0654": case "ID_0x0655": case "ID_0x0656": case "ID_0x0657": case "ID_0x0658": case "ID_0x0659": case "ID_0x065A": case "ID_0x065B": case "ID_0x065C": case "ID_0x065D": 
+                case "ID_0x065E": case "ID_0x065F": case "ID_0x0660": case "ID_0x0661": case "ID_0x0662": case "ID_0x0663": case "ID_0x0664": case "ID_0x0665": case "ID_0x0666": case "ID_0x0667": 
+                case "ID_0x0668": case "ID_0x0669": case "ID_0x066A": case "ID_0x066B": case "ID_0x066C": case "ID_0x066D": case "ID_0x066E": case "ID_0x066F": case "ID_0x0670": case "ID_0x0671": 
+                case "ID_0x0672": case "ID_0x0673": case "ID_0x0674": case "ID_0x0675": case "ID_0x0676": case "ID_0x0677": case "ID_0x0678": case "ID_0x0679": case "ID_0x067A": case "ID_0x067B":
+                if(err==1||err==2){ 
+                    for(var i=0; i<Json.ID_0x0350; i++)
+                    {
+                        if(eval('$(\'ID_0x0'+(0x640+i).toString(16).toUpperCase()+'\').id')==obj.id) {flg_pcs[i]=1;eval('$(\'N'+(1100+i)+'\').disabled=true;');break;}
+                    }                       
+                }
+                if(err==1) show_tip(lang.N544[language]);                       
+                else if(err==2) show_tip(lang.N543[language]);                      
+                else{
+                    for(var i=0; i<Json.ID_0x0350; i++)
+                    {
+                        if(eval('$(\'ID_0x0'+(0x640+i).toString(16).toUpperCase()+'\').id')==obj.id) {flg_pcs[i]=0;eval('$(\'N'+(1100+i)+'\').disabled=false;');break;}
+                    }                           
+                    var a=0;
+                    for(var i=0; i<60; i++) a|=flg_pcs[i];
+                    if(a==0)show_tip("&nbsp;");
+                }
+                break;
+            }
+        }
+    </script>
+</html>

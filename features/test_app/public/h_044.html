@@ -1,0 +1,467 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>
+		<link type='text/css' href='c_000.css' rel='stylesheet'/>
+		<script type='text/javascript'>
+            var $=function(o){return document.getElementById(o);};
+            function lang_init_ex(st,end){for(var i=st;i<=end;i++)eval('$(\'N'+(i<10?'0'+i:i)+'\').innerHTML=lang.N'+(i<10?'0'+i:i)+'[language];');}
+            function show_tip_ex(id, obj){eval('$(\'tip'+id+'\').innerHTML=obj;');}
+            function show_T(tid)
+            {
+                var str='';
+                str+="<div class='title' style='width:90%;'><div class='r1 color'></div><div class='r2 color'></div><div class='r3 color'></div><div class='r4 color'></div>";
+                str+="<div class='content color'><span id='"+tid+"'></span></div>";
+                str+="<div class='r4 color'></div><div class='r3 color'></div><div class='r2 color'></div><div class='r1 color'></div></div><div class='blank'></div>";
+                document.write(str);
+            }
+            function show_sT(tid)
+            {
+                var str='';
+                str+="<div class='title' style='width:90%;'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+                str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+                str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+                document.write(str);
+            }
+            function show_sT_ex(tid, id)
+            {
+                var str='';
+                str+="<div class='title' id='"+id+"' style='display:none;width:90%'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+                str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+                str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+                document.write(str);
+            }
+            function sendHttpReq(url, successFn)
+            {
+                //alert(url);   
+                var xmlhttp;
+                if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+                else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+                xmlhttp.onreadystatechange=function()
+                {
+                    if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                    {
+                        if(xmlhttp.responseText=='1'){successFn();}
+                    }
+                };
+                xmlhttp.open('GET',url,true);
+                xmlhttp.send();
+            }
+        </script>
+		<style type='text/css'>
+			tr{height:27px;}
+			.td1{padding-left:40px;text-align:left;}
+			.td2{text-align:left;}
+			.td3{padding-right:40px;text-align:right;}
+			.txt{width:100px;text-align:right;}
+		</style>
+	</head>
+	<body onload='Init()'>
+		<script type='text/javascript'>
+			show_T('N01');
+			show_sT('N02');
+		</script>
+        <table width='90%' border='1' id='tab1' style='border-collapse:collapse;border-spacing:0px;border-color:#e0e0e0;'>  
+            <tr id='tr0'>
+                <!-- 电表名称 -->
+                <td width='25%' class='tab_header_color'><span id='N03' style="font-weight:bold;"></span></td>
+                <!-- 使能 -->
+                <td width='50%' class='tab_header_color'><span id='N07' style="font-weight:bold;"></span></td>
+                <!-- 地址 -->
+                <td width='25%' class='tab_header_color'><span id='N15' style="font-weight:bold;"></span></td>
+            </tr>
+            <tr id='tr1'>
+                <td width='25%' class='even'><span id='N04'></span></td>
+                <td width='50%' class='even'><select style='width:200px;text-align:center;' id='Select0'></select></td>
+                <td width='25%' class='even'><select style='width:135px;text-align:center;' id='ID0'></select></td>
+            </tr>
+            <tr id='tr2'>
+                <td width='25%' class='odd'><span id='N05'></span></td>
+                <td width='50%' class='odd'><select style='width:200px;text-align:center;' id='Select1'></select></td>
+                <td width='25%' class='odd'><select style='width:135px;text-align:center;' id='ID1'></select></td>
+            </tr>
+            <tr id='tr3'>
+                <td width='25%' class='even'><span id='N06'></span></td>
+                <td width='50%' class='even'><select style='width:200px;text-align:center;' id='Select2'></select></td>
+                <td width='25%' class='even'><select style='width:135px;text-align:center;' id='ID2'></select></td>
+            </tr> 
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even' align='left'><span id='tip1' class='tip'>&nbsp;</span></td>
+                <td width='50%' class='even' align='right'>
+                    <button class='btn' onclick='doSubmit(this)' id='btn1' style='display:block;'><span id='N400'></span></button>
+                </td>
+            </tr>
+        </table>
+        <div class='line_long'></div>
+        <div class='blank'></div>
+        <script type='text/javascript'>
+            show_sT('N50');
+        </script>
+        <table width='90%' border='1' id='tab2' style='border-collapse:collapse;border-spacing:0px;border-color:#e0e0e0;'>  
+            <tr id='tr0'>
+                <!-- 引脚名称 -->
+                <td width='25%' class='tab_header_color'><span id='N51' style="font-weight:bold;"></span></td>
+                <!-- 功能 -->
+                <td width='50%' class='tab_header_color'><span id='N63' style="font-weight:bold;"></span></td>
+                <!-- 模式 -->
+                <td width='25%' class='tab_header_color'><span id='N64' style="font-weight:bold;"></span></td>
+            </tr>
+            <tr id='tr1'>
+                <td width='25%' class='even'><span id='N52'></span></td>
+                <td width='50%' class='even'><select style='width:200px;text-align:center;' id='FUNCTION0'></select></td>
+                <td width='25%' class='even'><select style='width:135px;text-align:center;' id='MODE0'></select></td>
+            </tr>
+            <tr id='tr2'>
+                <td width='25%' class='odd'><span id='N53'></span></td>
+                <td width='50%' class='odd'><select style='width:200px;text-align:center;' id='FUNCTION1'></select></td>
+                <td width='25%' class='odd'><select style='width:135px;text-align:center;' id='MODE1'></select></td>
+            </tr>
+            <tr id='tr3'>
+                <td width='25%' class='even'><span id='N54'></span></td>
+                <td width='50%' class='even'><select style='width:200px;text-align:center;' id='FUNCTION2'></select></td>
+                <td width='25%' class='even'><select style='width:135px;text-align:center;' id='MODE2'></select></td>
+            </tr> 
+            <tr id='tr4'>
+                <td width='25%' class='odd'><span id='N55'></span></td>
+                <td width='50%' class='odd'><select style='width:200px;text-align:center;' id='FUNCTION3'></select></td>
+                <td width='25%' class='odd'><select style='width:135px;text-align:center;' id='MODE3'></select></td>
+            </tr> 
+            <tr id='tr5'>
+                <td width='25%' class='even'><span id='N56'></span></td>
+                <td width='50%' class='even'><select style='width:200px;text-align:center;' id='FUNCTION4'></select></td>
+                <td width='25%' class='even'><select style='width:135px;text-align:center;' id='MODE4'></select></td>
+            </tr> 
+            <tr id='tr6'>
+                <td width='25%' class='odd'><span id='N57'></span></td>
+                <td width='50%' class='odd'><select style='width:200px;text-align:center;' id='FUNCTION5'></select></td>
+                <td width='25%' class='odd'><select style='width:135px;text-align:center;' id='MODE5'></select></td>
+            </tr> 
+            <tr id='tr7'>
+                <td width='25%' class='even'><span id='N58'></span></td>
+                <td width='50%' class='even'><select style='width:200px;text-align:center;' id='FUNCTION6'></select></td>
+                <td width='25%' class='even'><select style='width:135px;text-align:center;' id='MODE6'></select></td>
+            </tr> 
+            <tr id='tr8'>
+                <td width='25%' class='odd'><span id='N59'></span></td>
+                <td width='50%' class='odd'><select style='width:200px;text-align:center;' id='FUNCTION7'></select></td>
+                <td width='25%' class='odd'><select style='width:135px;text-align:center;' id='MODE7'></select></td>
+            </tr> 
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even' align='left'><span id='tip2' class='tip'>&nbsp;</span></td>
+                <td width='50%' class='even' align='right'>
+                    <button class='btn' onclick='doSubmit(this)' id='btn2' style='display:block;'><span id='N401'></span></button>
+                </td>
+            </tr>
+        </table>
+        <div class='line_long'></div>
+		<div class='btm_blank'></div>
+		<div id='trans'></div>
+		<!--[if IE 6]><script type='text/javascript'>document.execCommand('BackgroundImageCache',false,true);</script><![endif]-->
+	</body>
+    <script type='text/javascript'>
+        window.history.forward(1);
+        var language=0;
+        var Json;	 
+        var lang=
+        {
+            N01:['辅助设置','Auxiliary Settings'],
+            N02:['电表配置','Ammeter Settings'],
+            N03:['名称','Name'],
+            N04:['电网侧电表','Grid Side Ammeter'],
+            N05:['负载侧电表','Load Side Ammeter'],
+            N06:['光伏侧电表','PV Side Ammeter'],
+            N07:['使能','Enable'],
+            N08:['是','Yes'],
+            N09:['否','No'],
+            N10:['是','Yes'],
+            N11:['否','No'],
+            N12:['是','Yes'],
+            N13:['否','No'],
+            N14:['设备号','Number'],
+            N15:['地址','Address'],
+
+            N50:['节点配置','Nodes Settings'],
+            N51:['名称','Name'],
+            N52:['DIN06','DIN06'],
+            N53:['DIN07','DIN07'],
+            N54:['DIN08','DIN08'],
+            N55:['DIN09','DIN09'],
+            N56:['DIN10','DIN10'],
+            N57:['DIN11','DIN11'],
+            N58:['DIN12','DIN12'],
+            N59:['DIN13','DIN13'],
+            N60:['DIN14','DIN14'],
+            N61:['DIN15','DIN15'],
+            N62:['DIN16','DIN16'],
+            N63:['功能','Funtion'],
+            N64:['模式','Mode'],
+            N65:['禁用','Disable'],
+            N66:['告警','Alarm'],
+            N67:['故障','Fault'],
+            N68:['禁用','Disable'],
+            N69:['告警','Alarm'],
+            N70:['故障','Fault'],
+            N71:['禁用','Disable'],
+            N72:['告警','Alarm'],
+            N73:['故障','Fault'],
+            N74:['禁用','Disable'],
+            N75:['告警','Alarm'],
+            N76:['故障','Fault'],
+            N77:['禁用','Disable'],
+            N78:['告警','Alarm'],
+            N79:['故障','Fault'],
+            N80:['禁用','Disable'],
+            N81:['告警','Alarm'],
+            N82:['故障','Fault'],
+            N83:['禁用','Disable'],
+            N84:['告警','Alarm'],
+            N85:['故障','Fault'],
+            N86:['禁用','Disable'],
+            N87:['告警','Alarm'],
+            N88:['故障','Fault'],
+
+            N100:['常开','Normally Open'],
+            N101:['常闭','Normally Closed'],
+            N102:['常开','Normally Open'],
+            N103:['常闭','Normally Closed'],
+            N104:['常开','Normally Open'],
+            N105:['常闭','Normally Closed'],
+            N106:['常开','Normally Open'],
+            N107:['常闭','Normally Closed'],
+            N108:['常开','Normally Open'],
+            N109:['常闭','Normally Closed'],
+            N110:['常开','Normally Open'],
+            N111:['常闭','Normally Closed'],
+            N112:['常开','Normally Open'],
+            N113:['常闭','Normally Closed'],
+            N114:['常开','Normally Open'],
+            N115:['常闭','Normally Closed'],
+
+            N400:['设&nbsp;&nbsp;置','Set'], 
+            N401:['设&nbsp;&nbsp;置','Set'], 
+
+            N499:['设置成功！','Set successfully!'],
+            N500:['设置失败！','Set Failed!'],
+            N501:['格式错误！','Format error!'],
+            N502:['范围错误！','Range error!']    
+        };
+        function Init()
+        {
+            var URL='s_044.html?0x0000&time='+new Date();
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            //xmlhttp.onreadystatechange=function()
+            {
+                //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {             
+                   	//eval('Json='+xmlhttp.responseText);				
+                    //测试
+                    Json = {ID_0x0301:85, ID_0x0282:0x22, ID_0x03B1:0x55, ID_0x03B5:0x55, ID_0x03B8:0x55, ID_0x03C0:0x55,
+                        ID_0x0470:0x55,ID_0x0471:0x55,ID_0x0472:0x55,ID_0x0750:11,ID_0x0751:22,ID_0x0752:33,
+                        ID_0x0490:1,ID_0x0491:0x55,ID_0x0492:1,ID_0x0493:0x55,ID_0x0494:2,ID_0x0495:0x55,ID_0x0496:1,ID_0x0497:0x55,ID_0x0498:1,ID_0x0499:0x55,ID_0x049A:1,ID_0x049B:0x55,ID_0x049C:1,ID_0x049D:0x55,ID_0x049E:1,ID_0x049F:0xaa};
+
+    				if(Json.ID_0x0301==0x55)language=0;else language=1;
+
+                    //初始化语言
+                    lang_init_ex(1,7); 
+                    lang_init_ex(15,15); 
+                    lang_init_ex(50,59); 
+                    lang_init_ex(63,64);
+    				lang_init_ex(400,401);      
+
+                    //删除所有option, 动态切换语言时必须操作
+                    for(var i=0;i<3;i++)
+                    {
+                        eval('$(\'Select'+i+'\').options.length=0;');
+                        eval('$(\'ID'+i+'\').options.length=0;');
+                    }   
+
+                    for(var i=0;i<8;i++)
+                    {
+                        eval('$(\'FUNCTION'+i+'\').options.length=0;');
+                        eval('$(\'MODE'+i+'\').options.length=0;');
+                    } 
+
+                    //初始化
+                    $('Select0').options.add(new Option(lang.N08[language],0));
+                    $('Select0').options.add(new Option(lang.N09[language],1));
+                    $('Select1').options.add(new Option(lang.N10[language],0));
+                    $('Select1').options.add(new Option(lang.N11[language],1));
+                    $('Select2').options.add(new Option(lang.N12[language],0));
+                    $('Select2').options.add(new Option(lang.N13[language],1));
+                    for(var i=0;i<3;i++)
+                    {
+                        for(var k=0; k<247; k++)eval('$(\'ID'+i+'\').options.add(new Option('+(k+1)+','+k+'));');                 
+                    }
+                    $('ID0').options[0].selected=true;
+                    $('ID1').options[1].selected=true;
+                    $('ID2').options[2].selected=true;
+
+                    //初始化
+                    for(var i=0;i<8;i++)
+                    {
+                        eval('$(\'FUNCTION'+i+'\').options.add(new Option(lang.N'+(65+i*3+0)+'[language],0));');
+                        eval('$(\'FUNCTION'+i+'\').options.add(new Option(lang.N'+(65+i*3+1)+'[language],1));');
+                        eval('$(\'FUNCTION'+i+'\').options.add(new Option(lang.N'+(65+i*3+2)+'[language],2));');  
+                        eval('$(\'MODE'+i+'\').options.add(new Option(lang.N'+(100+i*2+0)+'[language],0));');
+                        eval('$(\'MODE'+i+'\').options.add(new Option(lang.N'+(100+i*2+1)+'[language],1));');            
+                    }
+
+    				doSetValue(Json);
+
+    				//user用户不能配置，install用户可以配置
+    				if(Json.ID_0x0282==0x11)
+    				{
+    					$('btn1').style.display='none';
+                        $('btn2').style.display='none';
+    					$('trans').style.zIndex=9999;
+    				}
+    				else
+    				{
+    					$('btn1').style.display='inline';
+                        $('btn2').style.display='inline';
+    					$('trans').style.zIndex=-9999;
+    				}
+			     }
+            };
+            xmlhttp.open('GET',URL,true);
+            xmlhttp.send();
+        }
+        function read_back(addr)
+        {
+            var url='s_044.html?';
+            if(addr==0x470){url=url+'0x0470'+'&0x0471'+'&0x0472'+'&0x0750'+'&0x0751'+'&0x0752';}
+            else if(addr==0x490){url=url+'0x0490'+'&0x0491'+'&0x0492'+'&0x0493'+'&0x0494'+'&0x0495'+'&0x0496'+'&0x0497'+'&0x0498'+'&0x0499'+'&0x049A'+'&0x049B'+'&0x049C'+'&0x049D'+'&0x049E'+'&0x049F';}
+            else{url=url+'0x0'+addr.toString(16).toUpperCase();}
+            url=url+'&time='+new Date();
+
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            //xmlhttp.onreadystatechange=function()
+            {
+                //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    //eval('Json='+xmlhttp.responseText); 
+                    if(addr == 0x0470)
+                    {
+                        var pr_sel=[0,0,0],pr_addr=[0,0,0],fe_sel=[0,0,0],fe_addr=[0,0,0];
+                        for(var i=0;i<3;i++) 
+                        {
+                            eval('pr_addr['+i+']=$(\'ID'+i+'\').selectedIndex+1;');
+                            if(eval('$(\'Select'+i+'\').selectedIndex;')==0) pr_sel[i]=0xaa;
+                            else pr_sel[i]=0x55;
+                            eval('fe_addr['+i+']=Json.ID_0x0'+(0x0750+i).toString(16).toUpperCase()+'');
+                            eval('fe_sel['+i+']=Json.ID_0x0'+(0x0470+i).toString(16).toUpperCase()+'');
+                        }
+                        for(j=0;j<3;j++)
+                        {
+                            if(pr_addr[j]!=fe_addr[j] || pr_sel[j]!=fe_sel[j])
+                            {
+                                for(var i=0; i<3; i++)
+                                {
+                                    eval('$(\'Select'+i+'\').options[(Json.ID_0x0'+(0x0470+i).toString(16).toUpperCase()+')==0xaa?0:1].selected=true;');
+                                    eval('$(\'ID'+i+'\').options[(Json.ID_0x0'+(0x0750+i).toString(16).toUpperCase()+')-1].selected=true;');
+                                }
+                                setTimeout('show_tip_ex(1,lang.N500[language])',500);
+                                break;
+                            }         
+                        } 
+                        show_tip_ex(1,'&nbsp;');
+                        if(j >= 3) setTimeout('show_tip_ex(1,lang.N499[language])',500);
+                        setTimeout('show_tip_ex(1,\'&nbsp;\')',2500);  
+                    }
+                    else if(addr == 0x0490)
+                    {
+                        var pr_function=[0,0,0,0,0,0,0,0],pr_mode=[0,0,0,0,0,0,0,0],fe_function=[0,0,0,0,0,0,0,0,0],fe_mode=[0,0,0,0,0,0,0,0,0];
+                        for(var i=0;i<8;i++) 
+                        {
+                            eval('pr_function['+i+']=$(\'FUNCTION'+i+'\').selectedIndex;');
+                            if(eval('$(\'MODE'+i+'\').selectedIndex;')==0) pr_mode[i]=0xaa;
+                            else pr_mode[i]=0x55;
+                            eval('fe_function['+i+']=Json.ID_0x0'+(0x0490+i*2).toString(16).toUpperCase()+'');
+                            eval('fe_mode['+i+']=Json.ID_0x0'+(0x0491+i*2).toString(16).toUpperCase()+'');
+                        }
+                        var j=0;
+                        for(j=0;j<8;j++) 
+                        {
+                            if(pr_function[j] != fe_function[j] || pr_mode[j] != fe_mode[j])
+                            {
+                                for(var i=0; i<8; i++)
+                                {
+                                    eval('$(\'FUNCTION'+i+'\').options[Json.ID_0x0'+(0x0490+i*2).toString(16).toUpperCase()+'].selected=true;');
+                                    eval('$(\'MODE'+i+'\').options[(Json.ID_0x0'+(0x0491+i*2).toString(16).toUpperCase()+')==0xaa?0:1].selected=true;');
+                                }
+                                setTimeout('show_tip_ex(2,lang.N500[language])',500);
+                                break;
+                            }
+                        }
+                        show_tip_ex(2,'&nbsp;');
+                        if(j >= 8) setTimeout('show_tip_ex(2,lang.N499[language])',500);
+                        setTimeout('show_tip_ex(2,\'&nbsp;\')',2500);  
+                    }
+                }
+            };
+            xmlhttp.open('GET',url,true);
+            xmlhttp.send();  
+        }
+        function doSubmit(obj)
+        {
+            var func=[0,0,0,0,0,0,0,0],mode=[0,0,0,0,0,0,0,0];
+            var sel=[0,0,0,],addr=[0,0,0];
+            var URL='a_044.html?';
+            switch(obj.id)
+            {
+            	case 'btn1': 
+                    for(var i=0;i<3;i++) 
+                    {
+                        eval('addr['+i+']=$(\'ID'+i+'\').selectedIndex+1;');
+                        if(eval('$(\'Select'+i+'\').selectedIndex;')==0) sel[i]=0xaa;
+                        else sel[i]=0x55;
+                    }
+                    URL=URL+'&0x0470='+sel[0]+'&0x0471='+sel[1]+'&0x0472='+sel[2]+'&0x0750='+addr[0]+'&0x0751='+addr[1]+'&0x0752='+addr[2];
+                    readBack=0x0470;
+            	   break;
+                case 'btn2': 
+                    for(var i=0;i<8;i++) 
+                    {
+                        eval('func['+i+']=$(\'FUNCTION'+i+'\').selectedIndex;');
+                        if(eval('$(\'MODE'+i+'\').selectedIndex;')==0) mode[i]=0xaa;
+                        else mode[i]=0x55;
+                    }
+                    URL=URL+'&0x0490='+func[0]+'&0x0491='+mode[0]+'&0x0492='+func[1]+'&0x0493='+mode[1]+'&0x0494='+func[2]+'&0x0495='+mode[2]+'&0x0496='+func[3]+'&0x0497='+mode[3]+'&0x0498='+func[4]+'&0x0499='+mode[4]+'&0x049A='+func[5]+'&0x049B='+mode[5]+'&0x049C='+func[6]+'&0x049D='+mode[6]+'&0x049E='+func[7]+'&0x049F='+mode[7];
+                    readBack=0x0490;
+                    break;
+            	default:break;
+            }
+            URL=URL+'&time='+new Date();
+            //alert(URL);
+
+            function success()
+            {
+                setTimeout('read_back('+readBack+')', 100);            			
+            }
+            //测试
+            success();            
+			sendHttpReq(URL, success);
+        }
+        function doSetValue(Json)
+        {
+            for(var i=0; i<3; i++)
+            {
+                eval('$(\'Select'+i+'\').options[(Json.ID_0x0'+(0x0470+i).toString(16).toUpperCase()+')==0xaa?0:1].selected=true;');
+                eval('$(\'ID'+i+'\').options[(Json.ID_0x0'+(0x0750+i).toString(16).toUpperCase()+')-1].selected=true;');
+            }
+            for(var i=0; i<8; i++)
+            {
+                eval('$(\'FUNCTION'+i+'\').options[Json.ID_0x0'+(0x0490+i*2).toString(16).toUpperCase()+'].selected=true;');
+                eval('$(\'MODE'+i+'\').options[(Json.ID_0x0'+(0x0491+i*2).toString(16).toUpperCase()+')==0xaa?0:1].selected=true;');
+            }
+        }
+    </script
+</html>

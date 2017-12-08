@@ -1,0 +1,361 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>	
+		<link type='text/css' href='c_000.css' rel='stylesheet'/>
+        <script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="j_highcharts.js"></script>
+	</head>
+	<body onload='Init()'>
+		<div id="curver" width='100%' style="height: 445px;min-width: 780px;"></div>
+	</body>
+	<script type='text/javascript'>
+		window.history.forward(1);
+
+		var language=1;
+		var Json;
+		var lang=
+		{
+			N01:['实时数据','RealTime Data'],
+
+			//下面由图表使用
+			N02:['储能总有功功率(kW)','PCS Total Active Power(kW)'],
+			N03:['储能直流电压(V)','PCS DC Voltage(V)'],
+			N04:['储能交流电压(V)','PCS AC Voltage(V)'],
+			N05:['微网频率(Hz)','MGrid Freq(Hz)'],
+			N06:['光伏总有功功率','PV Total Active Power'],
+			N07:['光伏直流电压(V)','PV DC Voltage(V)'],
+			N08:['光伏交流电压(V)','PV AC Voltage(V)'],
+			N09:['负载功率(kW)','Load Power(kW)']
+		};		
+
+        var interval_time = 2000;
+        var chart;
+        //超过1000个点时提示错误: error #12: www.highcharts.com/errors/12
+        //解决方法： 1，设置 turboThreshold:0    2, 把传入的点的数据改为数组或者数列
+        var range = 300;
+      
+        function ConfigureChart()
+        {
+            Highcharts.setOptions({
+                global: {
+                    useUTC: false
+                },
+                chart:{
+                    renderTo: 'curver',
+                    //'spline' 'line' 'area'
+                    //type: 'spline',
+                    //背景渐变
+                    //backgroundColor: {
+                    //    linearGradient: [0, 0, 500, 500],
+                    //    stops: [
+                    //        [0, 'rgb(230, 230, 230)'],
+                    //        [1, 'rgb(180, 180, 180)']
+                    //    ]
+                    //}
+                },
+                title: {
+                    text: ''
+                },
+                xAxis: {
+                    //X轴标题
+                    title: {
+                        text:'Range(10 min)'
+                    }, 
+                    type: 'datetime',         
+                    showFirstLable: true,
+                    showLastLabel: true,   
+                    lineWidth: 2,
+                    lineColor: '#808080',
+                    tickColor: '#e0e0e0',
+                    tickPixelInterval: 150,
+                    //垂直网格粗细 
+                    //gridLineWidth: 1,
+                    labels: {
+                        formatter: function() {
+                            return Highcharts.dateFormat('%H:%M:%S', this.value);
+                        }
+                    } 
+                },
+                yAxis: {
+                    //Y轴标题
+                    title: {
+                        text: ''
+                    },
+                    //showEmpty: false,
+                    lineWidth: 2,
+                    lineColor: '#808080',
+                    gridLineColor: '#e0e0e0',
+                    //隔行显示颜色
+                    //alternateGridColor: '#FDFFD5',
+                    //网格线颜色
+                    gridLineColor: '#e0e0e0',
+                    gridLineWidth: 1,
+                    labels: {
+                        formatter: function() {
+                            return  this.value;
+                        }
+                    },
+                    //max: 500,
+                    //min: -500,
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                plotOptions: {
+                     //针对图形类型的设置 'spline' 'line' 'area'
+                     spline: {
+                          marker:{
+                                enabled: false,
+                                states: {
+                                hover: {
+                                    enabled: true,
+                                    symbol: 'circle',
+                                    radius: 2,
+                                    lineWidth: 1
+                                }
+                            }
+                        }
+                    },
+                    series: {
+                        animation: false,
+                        marker:{
+                            enabled: false
+                        },
+	                    //set 0 to disable the cheack
+	                    turboThreshold:0 
+                    }
+                },
+                tooltip: {
+                    formatter: function() {
+                            return '<b><span style="color:'+this.series.color+'">'+ this.series.name +'</span></b><br/>'+
+                            Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
+                            Highcharts.numberFormat(this.y, 2);
+                    }
+                },
+                //版本信息
+                credits: {
+                    text: ''
+                },
+                //图例
+                legend: {
+                    backgroundColor: '#FCFFC5',
+                    borderColor: '#C98657',
+                    borderWidth: 1,
+                    layout: 'vertical',
+                    //layout: 'horizontal',
+                    itemDistance: 10,
+                    backgroundColor: '#FFFFFF',
+                    floating: true,
+                    align: 'left',
+                    verticalAlign: 'top',
+                    x: 50,
+                    y: 0,
+                    labelFormatter: function () {
+                        return this.name;
+                    }
+                }
+            });
+        }
+
+        function CreateChart()
+        {
+            chart = new Highcharts.Chart({
+                chart: {
+                    events: {
+                        load: function() {
+                            var series1 = this.series[0];
+                            var series2 = this.series[1];
+                            var series3 = this.series[2];
+                            var series4 = this.series[3];
+                            var series5 = this.series[4];
+                            var series6 = this.series[5];
+                            var series7 = this.series[6];
+                            var series8 = this.series[7];
+                            setInterval(function() {
+                                var x = (new Date()).getTime();
+                                var y1 = Json.ID_0x02A0;
+                                var y2 = Json.ID_0x02A1;
+                                var y3 = Json.ID_0x02A2;
+                                var y4 = Json.ID_0x02A3;
+                                var y5 = Json.ID_0x02A4;
+                                var y6 = Json.ID_0x02A5;
+                                var y7 = Json.ID_0x02A6;
+                                var y8 = Json.ID_0x02A7;
+                                var shift = series1.data.length > range;
+                                series1.addPoint([x, y1], false, shift);
+                                series2.addPoint([x, y2], false, shift);
+                                series3.addPoint([x, y3], false, shift);
+                                series4.addPoint([x, y4], false, shift);
+                                series5.addPoint([x, y5], false, shift);
+                                series6.addPoint([x, y6], false, shift);
+                                series7.addPoint([x, y7], false, shift);
+                                series8.addPoint([x, y8], false, shift);
+                                chart.redraw();
+                            }, interval_time);
+                        }
+                    }
+                },
+                //数据段
+                series: 
+                [
+                    {
+                        //数据段1名称
+                        name: lang.N02[language],
+                        //数据段1初始化
+                        data: (function() {
+                            var data = [],time = (new Date()).getTime(),i;
+                            for (i = -range; i <= 0; i++) {
+                                data.push({
+                                    x: time + i * interval_time,
+                                    y: 0
+                                });
+                            }
+                            return data;
+                        })()
+                    },
+                    {
+                        //数据段2名称
+                        name: lang.N03[language],
+                        data: (function() {
+                            var data = [],time = (new Date()).getTime(),i;
+                            for (i = -range; i <= 0; i++) {
+                                data.push({
+                                    x: time + i * interval_time,
+                                    y: 0
+                                });
+                            }
+                            return data;
+                        })()
+                    },
+                    {
+                        //数据段3名称
+                        name: lang.N04[language],
+                        data: (function() {
+                            var data = [],time = (new Date()).getTime(),i;
+                            for (i = -range; i <= 0; i++) {
+                                data.push({
+                                    x: time + i * interval_time,
+                                    y: 0
+                                });
+                            }
+                            return data;
+                        })()
+                    },
+                    {
+                        //数据段4名称
+                        name: lang.N05[language],
+                        data: (function() {
+                            var data = [],time = (new Date()).getTime(),i;
+                            for (i = -range; i <= 0; i++) {
+                                data.push({
+                                    x: time + i * interval_time,
+                                    y: 0
+                                });
+                            }
+                            return data;
+                        })()
+                    },
+                    {
+                        //数据段5名称
+                        name: lang.N06[language],
+                        data: (function() {
+                            var data = [],time = (new Date()).getTime(),i;
+                            for (i = -range; i <= 0; i++) {
+                                data.push({
+                                    x: time + i * interval_time,
+                                    y: 0
+                                });
+                            }
+                            return data;
+                        })()
+                    },
+                    {
+                        //数据段6名称
+                        name: lang.N07[language],
+                        data: (function() {
+                            var data = [],time = (new Date()).getTime(),i;
+                            for (i = -range; i <= 0; i++) {
+                                data.push({
+                                    x: time + i * interval_time,
+                                    y: 0
+                                });
+                            }
+                            return data;
+                        })()
+                    },
+                    {
+                        //数据段7名称
+                        name: lang.N08[language],
+                        data: (function() {
+                            var data = [],time = (new Date()).getTime(),i;
+                            for (i = -range; i <= 0; i++) {
+                                data.push({
+                                    x: time + i * interval_time,
+                                    y: 0
+                                });
+                            }
+                            return data;
+                        })()
+                    },
+                    {
+                        //数据段8名称
+                        name: lang.N09[language],
+                        data: (function() {
+                            var data = [],time = (new Date()).getTime(),i;
+                            for (i = -range; i <= 0; i++) {
+                                data.push({
+                                    x: time + i * interval_time,
+                                    y: 0
+                                });
+                            }
+                            return data;
+                        })()
+                    }
+                ]
+            });              
+        }
+		function Init()
+		{
+			var URL='s_025.html?time='+new Date();
+	        var xmlhttp;
+	        if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+	        else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+	        //xmlhttp.onreadystatechange=function()
+	        {
+	            //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+	            {
+			        //测试
+					Json={ID_0x0301:85,ID_0x02A0:30.1,ID_0x02A1:650.3,ID_0x02A2:381.2,ID_0x02A3:49.89,ID_0x02A4:701.0,ID_0x02A5:403.1,ID_0x02A6:42.2,ID_0x02A7:12.1};
+					
+					//eval('Json='+xmlhttp.responseText);
+					if(Json.ID_0x0301==0x55)language=0;else language=1;
+		            ConfigureChart();
+		            CreateChart();
+
+		            setInterval('update()', 2000);
+	            }
+	        };
+	        xmlhttp.open('GET',URL,true);
+	        xmlhttp.send();
+		}	
+		function update() 
+		{		
+			var URL='s_025.html?time='+new Date();
+	        var xmlhttp;
+	        if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+	        else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+	        xmlhttp.onreadystatechange=function()
+	        {
+	            if(xmlhttp.readyState==4 && xmlhttp.status==200)
+	            {
+		            eval('Json='+xmlhttp.responseText);          	
+	            }
+	        };
+	        xmlhttp.open('GET',URL,true);
+	        xmlhttp.send();
+		}
+	</script>
+</html>

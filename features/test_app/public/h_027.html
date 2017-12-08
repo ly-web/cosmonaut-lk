@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>
+		<link type='text/css' href='c_000.css' rel='stylesheet'/>
+		<style type='text/css'>
+			tr{height:27px;}
+			.select{width:180px;_width:150px;}
+			.time{width:65px;_width:100px;}
+			.txt{width:70px;text-align:center;}
+			.short_txt{width:50px;}
+			.td_value{text-align:right;padding-right:20px;}
+			.td1{padding-left:20px;padding-right:20px;text-align:left;}
+			.td2{padding-left:0px;text-align:center;}
+			.td3{padding-left:60px;text-align:left;}
+			.td4{padding-right:5px;text-align:right;}
+			.td5{padding-right:10px;text-align:right;}
+			.radio{padding-left:30px;}
+			.btnStyle{width:70px;height:24px;}
+			.submenu{line-height:32px;padding-left:20px;width:225px;height:32px;color:#000;background-color:#eee;font-weight:normal;font-size:14px;}
+	 		.color{background-color:#F58E03;}
+	 		.color2{background-color:#aaa;}
+            .Ftab{width:100%;height:22px;line-height:26px;padding-left:20px;color:#EEE;text-align:center;}
+            .Ftab span{margin:0;padding:0;width:90%;float:left;width:14%;height:22px;line-height:22px;font-size:18px;color:#EEE;}
+            .Ftab .select{background: #007B3E;}
+            .Frame{width:100%; height:680px;}
+		</style>	
+		<script type="text/javascript" src="j_001.js"></script>
+	</head>
+	<body onload='Init()'>
+		<script type='text/javascript'>
+			show_T('N01');
+		</script>
+		<div class='title' style='width:90%;'>
+		<div class='r1 color2'></div><div class='r2 color2'></div><div class='r3 color2'></div><div class='r4 color2'></div>
+        <div class='Ftab color2' id="tabFunc">
+            <span class='select' style='width:13%;' id='N02'></span><span style='width:13%;' id='N03'></span><span style='width:13%;' id='N04'></span><span style='width:13%;' id='N05'></span><span style='width:13%;' id='N06'></span><span style='width:13%;' id='N07'></span><span style='width:20%;' id='N08'></span>
+        </div>	
+        <div class='r4 color2'></div><div class='r3 color2'></div><div class='r2 color2'></div><div class='r1 color2'></div>
+    	</div>
+    	<div class='blank'></div>
+        <iframe class='Frame' frameborder="0" id="frame"></iframe>	
+		<div class='btm_blank'></div>
+		<!--[if IE 6]><script type='text/javascript'>document.execCommand('BackgroundImageCache',false,true);</script><![endif]-->
+	</body>
+	<script type='text/javascript'>
+		var language=0;
+		//正整数+0
+		var reg=/^(0|[1-9]\d*)$/;
+		var Json;
+		var pcs_mode=0, pv_mode=0;
+		var lang=
+		{
+			N01:['从设备通讯参数','Salve Modbus Setting'],
+			N02:['储能逆变器','PCS'],
+			N03:['光伏逆变器','PV'],
+			N04:['光伏控制器','DCDC'],
+			N05:['电池','BMS'],
+			N06:['电表','Ammeter'],
+			N07:['汇流箱','PVS'],
+			N08:['环境仪','Env-Detector']
+		};
+		//h_048.html -- pcs net
+		//h_049.html -- pv net
+		//h_050.html -- pcs uart
+		//h_051.html -- pv uart
+		//h_052.html -- dcdc
+		//h_053.html -- bms
+		//h_054.html -- ammeter
+		//h_055.html -- pvs
+		//h_056.html -- env
+        var tab_index=0;
+        var btns = document.getElementById('tabFunc').getElementsByTagName('span');
+        var frame = document.getElementById('frame');
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].index = i;
+            btns[i].onclick = function(){
+                tab_index = this.index;
+               	Switch_Tab(tab_index, pcs_mode, pv_mode);
+            }
+        };
+
+        function Switch_Tab(index, pcs_mode, pv_mode)
+        {
+            for (var i = 0; i < btns.length; i++) { btns[i].className = ''; };
+            btns[index].className = 'select';
+            if(tab_index <= 6){
+            	if(tab_index == 0)
+            	{
+            		if(pcs_mode == 0){
+            			//pcs 串口
+            			frame.src = 'h_050.html';   
+            		}else{
+            			//pcs 网口
+            			frame.src = 'h_048.html'; 
+            		}
+            	}
+            	else if(tab_index == 1)
+            	{
+            		if(pv_mode == 0){
+            			//pv 串口
+            			frame.src = 'h_051.html';   
+            		}else{
+            			//pv 网口
+            			frame.src = 'h_049.html'; 
+            		}
+            	}
+            	else
+            	{
+            		frame.src = 'h_0'+(btns[tab_index].index+50)+'.html';
+            	}               
+            }
+        }
+    </script>
+	<script language='javascript' type='text/javascript'>
+
+		Json={ID_0x0301:85,ID_0x0282:0x22,ID_0x0390:1,ID_0x0391:1,ID_0x0392:1,ID_0x0393:1,ID_0x0394:1,ID_0x0395:1,ID_0x039A:1,ID_0x038D:1,ID_0x0387:1};
+		
+		function Init()
+		{
+			//参数=0读所有设备地址
+			var URL='s_027.html?0x0000&time='+new Date();
+			var xmlhttp;
+			if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+			else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+			//xmlhttp.onreadystatechange=function()
+			{
+				//if(xmlhttp.readyState==4 && xmlhttp.status==200)
+				{
+					//eval('Json='+xmlhttp.responseText);
+
+					if(Json.ID_0x0301==0x55)language=0;else language=1;
+					lang_init_ex(1,8);
+					pcs_mode = Json.ID_0x038D;
+					pv_mode = Json.ID_0x0387;
+					//设备选择
+					Switch_Tab(tab_index, pcs_mode, pv_mode);
+
+					if(Json.ID_0x0390==1){$('N02').style.display='block';}else{$('N02').style.display='none';}
+					if(Json.ID_0x0391==1){$('N03').style.display='block';}else{$('N03').style.display='none';}
+					if(Json.ID_0x0392==1){$('N04').style.display='block';}else{$('N04').style.display='none';}
+					if(Json.ID_0x0394==1){$('N05').style.display='block';}else{$('N05').style.display='none';}
+					if(Json.ID_0x0395==1){$('N06').style.display='block';}else{$('N06').style.display='none';}
+					if(Json.ID_0x0393==1){$('N07').style.display='block';}else{$('N07').style.display='none';}
+					if(Json.ID_0x039A==1){$('N08').style.display='block';}else{$('N08').style.display='none';}				
+				}
+			};
+			xmlhttp.open('GET',URL,true);
+			xmlhttp.send();
+		}
+	</script>
+</html>

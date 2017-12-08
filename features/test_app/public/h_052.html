@@ -1,0 +1,533 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>
+		<link type='text/css' href='c_000.css' rel='stylesheet'/>
+		<style type='text/css'>
+			tr{height:27px;}
+			.select{width:180px;_width:150px;}
+			.time{width:65px;_width:100px;}
+			.txt{width:70px;text-align:center;}
+			.short_txt{width:50px;}
+			.td_value{text-align:right;padding-right:20px;}
+			.td1{padding-left:20px;padding-right:20px;text-align:left;}
+			.td2{padding-left:0px;text-align:center;}
+			.td3{padding-left:60px;text-align:left;}
+			.td4{padding-right:5px;text-align:right;}
+			.td5{padding-right:10px;text-align:right;}
+			.radio{padding-left:30px;}
+			.btnStyle{width:70px;height:24px;}
+			.submenu{line-height:32px;padding-left:20px;width:225px;height:32px;color:#000;background-color:#eee;font-weight:normal;font-size:14px;}
+			.PagerView{font-size:12px;font-family:tahoma,arial;color:#333;text-align:center;padding:8px;line-height:100%;}
+	 		.PagerView span{color:#999;margin:0 1px;padding:3px 6px;border:1px solid #ccc;}
+	 		.PagerView span.on{color:#fff;font-weight:bold;border:1px solid #666;background:#39f;}
+	 		.PagerView a{color:#00f;text-decoration:none;}
+	 		.PagerView a span{color:#33f;border:1px solid #66c;}
+	 		.pager{width:780px;margin:0 auto;}
+		</style>	
+		<script type='text/javascript'>
+			var $=function(o){return document.getElementById(o);};
+			function lang_init_ex(st,end){for(var i=st;i<=end;i++)eval('$(\'N'+(i<10?'0'+i:i)+'\').innerHTML=lang.N'+(i<10?'0'+i:i)+'[language];');}
+			function show_tip(obj){$('tip').innerHTML=obj;}
+			function show_T(tid)
+			{
+				var str='';
+				str+="<div class='title' style='width:90%;'><div class='r1 color'></div><div class='r2 color'></div><div class='r3 color'></div><div class='r4 color'></div>";
+				str+="<div class='content color'><span id='"+tid+"'></span></div>";
+				str+="<div class='r4 color'></div><div class='r3 color'></div><div class='r2 color'></div><div class='r1 color'></div></div><div class='blank'></div>";
+				document.write(str);
+			}
+			function show_sT(tid)
+			{
+				var str='';
+				str+="<div class='title' style='width:90%;'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+				str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+				str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+				document.write(str);
+			}
+			function show_sT_ex(tid, id)
+			{
+				var str='';
+				str+="<div class='title' id='"+id+"' style='display:none;width:90%'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+				str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+				str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+				document.write(str);
+			}
+			function sendHttpReq(url, successFn)
+			{
+				//alert(url);	
+		        var xmlhttp;
+		        if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+		        else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+		        xmlhttp.onreadystatechange=function()
+		        {
+		            if(xmlhttp.readyState==4 && xmlhttp.status==200)
+		            {
+		                if(xmlhttp.responseText=='1'){successFn();}
+		            }
+		        };
+		        xmlhttp.open('GET',url,true);
+		        xmlhttp.send();
+			}	
+		var PagerView=function(id,AAA,BBB,CCC)
+			{
+				var self=this;
+				this.id=id;
+				this._pageCount=0;
+				this._start=1;
+				this._end=1;
+				this.container=null;
+				this.index=1;
+				this.size=10;
+				this.maxButtons=10;
+				this.itemCount=0;
+				this.onclick=function(index){return true;};
+				this._onclick=function(index)
+				{
+					var old=self.index;
+					self.index=index;
+					if(self.onclick(index)!==false)self.render();
+					else self.index=old;
+				};
+				this._calculate=function()
+				{
+					self._pageCount=parseInt(Math.ceil(self.itemCount/self.size));
+					self.index=parseInt(self.index);
+					if(self.index>self._pageCount)self.index=self._pageCount;
+					if(self.index<1)self.index=1;
+					self._start=Math.max(1,self.index-parseInt(self.maxButtons/2));
+					self._end=Math.min(self._pageCount,self._start+self.maxButtons-1);
+					self._start=Math.max(1,self._end-self.maxButtons+1);
+				};
+				this.page=function(rows)
+				{
+					self._calculate();
+					var s_num=(self.index-1)*self.size ;
+					var e_num=self.index*self.size;
+					return rows.slice(s_num,e_num);
+				};
+				this.render=function()
+				{
+					var div=document.getElementById(self.id);
+					div.view=self;
+					self.container=div;
+					self._calculate();
+					var str='';
+					str+='<div class="PagerView">\n';
+					if(self._pageCount>1)
+					{
+						if(self.index!=1)
+						{
+							str+='<a href="javascript://1"><span>|&lt;</span></a>';
+							str+='<a href="javascript://'+(self.index-1)+'"><span>&lt;&lt;</span></a>';
+						}
+						else
+						{
+							str+='<span>|&lt;</span>';
+							str+='<span>&lt;&lt;</span>';
+						}
+					}
+					for(var i=self._start;i<=self._end;i++)
+					{
+						if(i==this.index)
+						{
+							if(i<10)str+='<span class="on">'+'0'+i+"</span>";
+							else str+='<span class="on">'+i+"</span>";
+						}
+						else
+						{
+							if(i<10)str+='<a href="javascript://'+i+'"><span>'+'0'+i+"</span></a>";
+							else str+='<a href="javascript://'+i+'"><span>'+i+"</span></a>";
+						}
+					}
+					if(self._pageCount>1)
+					{
+						if(self.index!=self._pageCount)
+						{
+							str+='<a href="javascript://'+(self.index+1)+'"><span>&gt;&gt;</span></a>';
+							str+='<a href="javascript://'+self._pageCount+'"><span>&gt;|</span></a>';
+						}
+						else
+						{
+							str+='<span>&gt;&gt;</span>';
+							str+='<span>&gt;|</span>';
+						}
+					}
+					str+=AAA+self._pageCount+BBB+self.itemCount+CCC;
+					str+='</div><!--/.pagerView-->\n';
+					self.container.innerHTML=str;
+					var a_list=self.container.getElementsByTagName('a');
+					for(var i=0;i<a_list.length;i++)
+					{
+						a_list[i].onclick=function()
+						{
+							var index=this.getAttribute('href');
+							if(index!=undefined&&index!='')
+							{
+								index=parseInt(index.replace('javascript://',''));
+								self._onclick(index);
+							}
+							return false;
+						};
+					}
+				};
+			};
+		</script>
+		<script type='text/javascript'>
+			var language=0;
+			//正整数+0
+			var reg=/^(0|[1-9]\d*)$/;
+			var Json;
+			var flg_dcdc = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+			var lang=
+			{
+				//DCDC, bnt ID 从200开始
+				N3200:['设&nbsp;&nbsp;置','Set'],
+				N3201:['设&nbsp;&nbsp;置','Set'],
+				N3202:['设&nbsp;&nbsp;置','Set'],
+				N3203:['设&nbsp;&nbsp;置','Set'],
+				N3204:['设&nbsp;&nbsp;置','Set'],
+				N3205:['设&nbsp;&nbsp;置','Set'],
+				N3206:['设&nbsp;&nbsp;置','Set'],
+				N3207:['设&nbsp;&nbsp;置','Set'],
+				N3208:['设&nbsp;&nbsp;置','Set'],
+				N3209:['设&nbsp;&nbsp;置','Set'],
+				N3210:['设&nbsp;&nbsp;置','Set'],
+				N3211:['设&nbsp;&nbsp;置','Set'],
+				N3211:['设&nbsp;&nbsp;置','Set'],
+				N3212:['设&nbsp;&nbsp;置','Set'],
+				N3213:['设&nbsp;&nbsp;置','Set'],
+				N3214:['设&nbsp;&nbsp;置','Set'],
+				N3215:['设&nbsp;&nbsp;置','Set'],
+				N3216:['设&nbsp;&nbsp;置','Set'],
+				N3217:['设&nbsp;&nbsp;置','Set'],
+				N3218:['设&nbsp;&nbsp;置','Set'],
+				N3219:['设&nbsp;&nbsp;置','Set'],
+				N3220:['设&nbsp;&nbsp;置','Set'],
+				N3221:['设&nbsp;&nbsp;置','Set'],
+				N3222:['设&nbsp;&nbsp;置','Set'],
+				N3223:['设&nbsp;&nbsp;置','Set'],
+				N3224:['设&nbsp;&nbsp;置','Set'],
+				N3225:['设&nbsp;&nbsp;置','Set'],
+				N3226:['设&nbsp;&nbsp;置','Set'],
+				N3227:['设&nbsp;&nbsp;置','Set'],
+				N3228:['设&nbsp;&nbsp;置','Set'],
+				N3229:['设&nbsp;&nbsp;置','Set'],
+				N3230:['设&nbsp;&nbsp;置','Set'],
+				N3231:['设&nbsp;&nbsp;置','Set'],
+				N3232:['设&nbsp;&nbsp;置','Set'],
+				N3233:['设&nbsp;&nbsp;置','Set'],
+				N3234:['设&nbsp;&nbsp;置','Set'],
+				N3235:['设&nbsp;&nbsp;置','Set'],
+				N3236:['设&nbsp;&nbsp;置','Set'],
+				N3237:['设&nbsp;&nbsp;置','Set'],
+				N3238:['设&nbsp;&nbsp;置','Set'],
+				N3239:['设&nbsp;&nbsp;置','Set'],
+				N3240:['设&nbsp;&nbsp;置','Set'],
+				N3241:['设&nbsp;&nbsp;置','Set'],
+				N3242:['设&nbsp;&nbsp;置','Set'],
+				N3243:['设&nbsp;&nbsp;置','Set'],
+				N3244:['设&nbsp;&nbsp;置','Set'],
+				N3245:['设&nbsp;&nbsp;置','Set'],
+				N3246:['设&nbsp;&nbsp;置','Set'],
+				N3247:['设&nbsp;&nbsp;置','Set'],
+				N3248:['设&nbsp;&nbsp;置','Set'],
+				N3249:['设&nbsp;&nbsp;置','Set'],
+				N3250:['设&nbsp;&nbsp;置','Set'],
+				N3251:['设&nbsp;&nbsp;置','Set'],
+
+	 			N500:['一共','Total '],
+	 			N501:['页，共',' Pages, '],
+	 			N502:['页，共',' Page, '],
+	 			N503:['台',' Nums'],
+	 			N504:['台',' Num'],
+
+				N541:['设置失败！','Set failed!'],
+				N542:['设置成功！','Set successfully!'],
+				N543:['格式错误！','Format error!'],
+				N544:['范围错误！','Range error!'],
+
+				N550:['设&nbsp;&nbsp;置','Set'],
+				N551:['设&nbsp;&nbsp;置','Set']
+			};
+
+			//显示设置Mdobus地址设置框 nid -- text框id(实际的)，bid -- 确认按钮id(>=1)，tid -- 提示信息区id(>=1), num -- 添加的个数
+			function show_Set(nid,bid,tid,num)
+			{
+				var loop=0;
+				var str='';
+				var style="odd";
+				var more=0, all=0;
+				var line=0;
+				more=num%4;
+				if(more!=0){all=num+(4-more);}
+				else{all=num;}
+				str+="<tr id='t"+(bid+line)+"' style='display:none'>";
+				for(var i=0; i<all; i++)
+				{
+					if(i%8<4){style="odd"}else{style="even"}
+					if(i>=num){
+						str+="<td width='12%' class='td1 odd "+style+"'><span id='text"+(bid+i)+"'>No.Na</span></td><td width='9%' class='td2 "+style+"'><input class='txt' type='text' value='Na' disabled='true'/></td><td width='8%' class='td2 "+style+"'><button class='btnStyle' disabled='true' style='display:block;'></td>";
+					}else{						
+						str+="<td width='12%' class='"+style+"'><span id='text"+(bid+i)+"'>No."+(i<9?'0'+(i+1):(i+1))+"</span></td><td width='9%' class='td2 "+style+"'><input class='txt' id='ID_0x0"+(nid+i).toString(16).toUpperCase()+"' value='"+(i+1)+"' maxlength='3' onkeyup='doRangeCheck(this,reg)' type='text'/></td><td width='%8' class='td2 "+style+"'><button class='btnStyle' onclick='doSubmit(this)' id='N"+(bid+i)+"' style='display:block;'></td>";	
+					}	
+					if(i%4==3){
+						loop=0;
+						line++;
+						if(i!=all-1){str+="</tr><tr id='t"+(bid+line)+"' style='display:none'>"};
+
+					}
+					loop++;
+				}
+				str+="</tr>";
+				document.write(str);
+			}				
+		</script>
+	</head>
+	<body onload='Init()'>	
+		<!-- DCDC -->
+		<table id='tbl_dcdc' width='90%' border='1' bordercolor="#E0E0E0" style='display:none;'>
+			<script type='text/javascript'>
+			show_Set(0x6F0, 3200, 3, 52);
+			lang_init_ex(3200,3251);
+			</script>
+		</table>
+		<div class='tip' id='tip2' style='width:90%;'><span>&nbsp;</span></div>	
+		<div class='btm_blank'></div>
+		<div id='trans'></div>
+		<!--[if IE 6]><script type='text/javascript'>document.execCommand('BackgroundImageCache',false,true);</script><![endif]-->
+	</body>
+	<script language='javascript' type='text/javascript'>
+
+		Json={	ID_0x0301:85,ID_0x0282:0x22,ID_0x0390:1,ID_0x0391:1,ID_0x0392:1,ID_0x0393:1,ID_0x0394:1,ID_0x0395:1,ID_0x039A:1,ID_0x0352:50,
+
+				ID_0x06F0:22,ID_0x06F1:23,ID_0x06F2:24,ID_0x06F3:25,ID_0x06F4:27,ID_0x06F5:27,ID_0x06F6:27,ID_0x06F7:27,ID_0x06F8:27,ID_0x06F9:27,
+				ID_0x06FA:27,ID_0x06FB:30,ID_0x06FC:22,ID_0x06FD:23,ID_0x06FE:24,ID_0x06FF:25,ID_0x0700:27,ID_0x0701:27,ID_0x0702:27,ID_0x0703:27,
+				ID_0x0704:27,ID_0x0705:27,ID_0x0706:27,ID_0x0707:27,ID_0x0708:27,ID_0x0709:27,ID_0x070A:27,ID_0x070B:30,ID_0x070C:27,ID_0x070D:30,
+				ID_0x070E:27,ID_0x070F:30,ID_0x0710:27,ID_0x0711:30,ID_0x0712:24,ID_0x0713:25,ID_0x0714:27,ID_0x0715:27,ID_0x0716:27,ID_0x0717:27,
+				ID_0x0718:27,ID_0x0719:27,ID_0x071A:27,ID_0x071B:30,ID_0x071C:22,ID_0x071D:23,ID_0x071E:24,ID_0x071F:25,ID_0x0720:27,ID_0x0721:27		
+			};
+		
+		function change_color(obj)
+		{
+			if(current_id!=obj.id)
+			{
+				obj.style.background='#007b3e';
+				obj.style.color='#fff';
+			}
+		}
+		function resume_color(obj)
+		{
+			if(current_id!=obj.id)
+			{
+				obj.style.background='#aaa';
+				obj.style.color='#000';
+			}
+		}
+		
+		//dcdc
+		function choose_dcdc()
+		{
+			var lin=0;
+			if(Json.ID_0x0392==1){ $('tbl_dcdc').style.display='table'; $('tip2').style.display='block';} else { $('tbl_dcdc').style.display='none';  $('tip2').style.display='none';}
+			//dcdc
+			for(var i=0; i<52; i++){
+				if(i>=Json.ID_0x0352){
+					eval('$(\'ID_0x0'+(0x6F0+i).toString(16).toUpperCase()+'\').value=\'\';');
+					eval('$(\'ID_0x0'+(0x6F0+i).toString(16).toUpperCase()+'\').disabled=\'true\';');
+					eval('$(\'N'+(3200+i)+'\').disabled=true;');
+					eval('$(\'N'+(3200+i)+'\').style.background="#F0F0F0";');
+					eval('$(\'text'+(3200+i)+'\').innerHTML=\'No.--\';');
+				}else{
+					if(Json.ID_0x0282==0x22){
+						eval('$(\'N'+(3200+i)+'\').disabled=false;');
+						eval('$(\'N'+(3200+i)+'\').style.background="#99D9EA";');
+					}else{
+						eval('$(\'N'+(3200+i)+'\').style.background="#F0F0F0";');
+					} 
+				}
+			}
+			if(Json.ID_0x0352%4==0){lin=parseInt(Json.ID_0x0352/4);}
+			else {lin=parseInt(Json.ID_0x0352/4)+1;}
+			for(var j=0; j<13; j++)
+			{
+				if(j>=lin) eval('$(\'t'+(3200+j)+'\').style.display=\'none\';');
+				else eval('$(\'t'+(3200+j)+'\').style.display=\'table\';');
+			}
+			Set_DCDC_For_Serial();	
+		}
+	
+		//设置串口DCDC数据
+		function Set_DCDC_For_Serial()
+		{
+			var URL='s_027.html?0x06F0&time='+new Date();
+			var xmlhttp;
+			if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+			else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+			//xmlhttp.onreadystatechange=function()
+			{
+				//if(xmlhttp.readyState==4 && xmlhttp.status==200)
+				{
+					//eval('Json='+xmlhttp.responseText);			
+					for(var i=0; i<Json.ID_0x0352; i++)
+					{
+						eval('$(\'ID_0x0'+(0x6F0+i).toString(16).toUpperCase()+'\').value=Json.ID_0x0'+(0x6F0+i).toString(16).toUpperCase()+';');
+					}
+				}
+			};
+			//xmlhttp.open('GET',URL,true);
+			//xmlhttp.send();		
+		}
+		
+		function Init()
+		{
+			//参数=0读所有设备地址
+			var URL='s_027.html?0x0000&time='+new Date();
+			var xmlhttp;
+			if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+			else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+			//xmlhttp.onreadystatechange=function()
+			{
+				//if(xmlhttp.readyState==4 && xmlhttp.status==200)
+				{
+					//eval('Json='+xmlhttp.responseText);
+
+					if(Json.ID_0x0301==0x55)language=0;else language=1;
+					lang_init_ex(3200,3251);
+
+					//设备选择
+					choose_dcdc();
+
+					if(Json.ID_0x0282==0x11)
+					{
+						$('trans').style.zIndex=-9999;
+					}
+					else
+					{
+						$('trans').style.zIndex=-9999;
+					}					
+				}
+			};
+			xmlhttp.open('GET',URL,true);
+			xmlhttp.send();
+		}
+	 	function read_back(addr)
+		{ 
+			var url='s_027.html?';
+
+			url=url+'0xFFFF'+'&0x0'+addr.toString(16).toUpperCase();
+			url=url+'&time='+new Date();
+			//alert(url);
+
+			var xmlhttp;
+			if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+			else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+			//xmlhttp.onreadystatechange=function()
+			{
+				//if(xmlhttp.readyState==4 && xmlhttp.status==200)
+				{
+					//eval('Json='+xmlhttp.responseText);
+	            	//回读DCDC modbus地址
+	                if(addr >= 0x6F0 && addr <= 0x721)
+	            	{
+						var pr,fe;
+						eval('pr=$(\'ID_0x0'+addr.toString(16).toUpperCase()+'\').value;');
+						eval('fe=Json.ID_0x0'+addr.toString(16).toUpperCase()+';');
+						if(pr!=fe) eval('$(\'ID_0x0'+addr.toString(16).toUpperCase()+'\').value=Json.ID_0x0'+addr.toString(16).toUpperCase()+';');	
+		     			show_tip_ex(2, '&nbsp;');
+		    			if(pr==fe){setTimeout('show_tip_ex(2,lang.N542[language])',500);}
+		    			else {setTimeout('show_tip_ex(2,lang.N541[language])',500);}
+			            setTimeout('show_tip_ex(2, \'&nbsp;\')',2500);               		
+	            	}		
+				}
+			};
+			xmlhttp.open('GET',url,true);
+			xmlhttp.send();     
+        } 	
+
+		function doSubmit(obj)
+		{
+            var URL='a_027.html?';
+
+            var readBack=0;
+            switch(obj.id)
+           	{
+            	//serial dcdc设置
+            	case 'N3200': case 'N3201': case 'N3202': case 'N3203': case 'N3204': case 'N3205': case 'N3206': case 'N3207': case 'N3208': case 'N3209': 
+            	case 'N3210': case 'N3211': case 'N3212': case 'N3213': case 'N3214': case 'N3215': case 'N3216': case 'N3217': case 'N3218': case 'N3219':
+            	case 'N3220': case 'N3221': case 'N3222': case 'N3223': case 'N3224': case 'N3225': case 'N3226': case 'N3227': case 'N3228': case 'N3229':
+            	case 'N3230': case 'N3231': case 'N3232': case 'N3233': case 'N3234': case 'N3235': case 'N3236': case 'N3237': case 'N3238': case 'N3239':
+            	case 'N3240': case 'N3241': case 'N3242': case 'N3243': case 'N3244': case 'N3245': case 'N3246': case 'N3247': case 'N3248': case 'N3249':
+            	var str = obj.id;
+           		var cutstr = str.substring(str.length-4,str.length);
+           		var index = parseInt(cutstr)-3200;
+            	if(flg_dcdc[index]){return;}
+            	eval('URL=URL+\'&0x0'+(0x6F0+index).toString(16).toUpperCase()+'=\'+$(\'ID_0x0'+(0x6F0+index).toString(16).toUpperCase()+'\').value;');
+            	eval('readBack=0x0'+(0x6F0+index).toString(16).toUpperCase()+';');
+            	break;
+            	default:break;
+           	}
+
+            URL=URL+'&time='+new Date();
+            //alert(URL);          
+
+            function success()
+            {
+            	if(readBack >= 0x6F0 && readBack <= 0x721)
+            	{
+	     			show_tip_ex(2, '&nbsp;');
+	    			setTimeout('read_back('+readBack+')', 100);
+		            setTimeout('show_tip_ex(2, \'&nbsp;\')',2500);               		
+            	}			
+            } 
+
+            //测试
+            success();  
+
+			sendHttpReq(URL, success);
+		}
+
+		function show_tip_ex(id, obj){eval('$(\'tip'+id+'\').innerHTML=obj;');}
+		function doRangeCheck(obj,reg)
+		{
+			var range=parseInt(obj.value);
+			var err, err2;			
+
+			if(!obj.value.match(reg)){err=2;}
+			else if(range<1||range>247){err=1;}
+			else{err=0;}
+	
+			//dcdc	
+			switch(obj.id)
+			{
+				case "ID_0x06F0": case "ID_0x06F1": case "ID_0x06F2": case "ID_0x06F3": case "ID_0x06F4": case "ID_0x06F5":
+				case "ID_0x06F6": case "ID_0x06F7": case "ID_0x06F8": case "ID_0x06F9": case "ID_0x06FA": case "ID_0x06FB": case "ID_0x06FC": case "ID_0x06FD": case "ID_0x06FE": case "ID_0x06FF": 
+				case "ID_0x0700": case "ID_0x0701": case "ID_0x0702": case "ID_0x0703": case "ID_0x0704": case "ID_0x0705":
+				case "ID_0x0706": case "ID_0x0707": case "ID_0x0708": case "ID_0x0709": case "ID_0x070A": case "ID_0x070B": case "ID_0x070C": case "ID_0x070D": case "ID_0x070E": case "ID_0x070F": 
+				case "ID_0x0710": case "ID_0x0711": case "ID_0x0712": case "ID_0x0713": case "ID_0x0714": case "ID_0x0715":
+				case "ID_0x0716": case "ID_0x0717": case "ID_0x0718": case "ID_0x0719": case "ID_0x071A": case "ID_0x071B": case "ID_0x071C": case "ID_0x071D": case "ID_0x071E": case "ID_0x071F": 
+				case "ID_0x0720": case "ID_0x0721":
+				if(err==1||err==2)
+				{
+					for(var i=0; i<Json.ID_0x0352; i++)
+					{
+						if(eval('$(\'ID_0x0'+(0x6F0+i).toString(16).toUpperCase()+'\').id')==obj.id) {flg_dcdc[i]=1;eval('$(\'N'+(3200+i)+'\').disabled=true;');break;}
+					}					
+				}
+				if(err==1)show_tip_ex(2,lang.N544[language]);
+				else if(err==2)show_tip_ex(2,lang.N543[language]);
+				else
+				{
+					for(var i=0; i<Json.ID_0x0352; i++)
+					{
+						if(eval('$(\'ID_0x0'+(0x6F0+i).toString(16).toUpperCase()+'\').id')==obj.id) {flg_dcdc[i]=0;eval('$(\'N'+(3200+i)+'\').disabled=false;');break;}
+					}						
+					var a=0;
+					for(var i=0; i<50; i++) a|=flg_dcdc[i];
+					if(a==0)show_tip_ex(2,"&nbsp;");						
+				}
+				break;
+			}
+		}
+	</script>
+</html>

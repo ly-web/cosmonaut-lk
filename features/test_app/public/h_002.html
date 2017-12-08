@@ -1,0 +1,366 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+    <head>
+        <meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>
+        <style type='text/css'>
+            html{_overflow-y:scroll;}
+            body{margin:0;padding:0;text-align:center;font-size:14px;font-family:'微软雅黑',Verdana,'宋体',sans-serif;min-width:867px;-moz-user-select:none;}
+            img{vertical-align: top; display: block;}
+            .title{margin:5px auto;width:80%;text-align:left;}
+            .r1{margin:0 5px;height:1px;overflow:hidden;}
+            .r2{margin:0 3px;height:1px;overflow:hidden;}
+            .r3{margin:0 2px;height:1px;overflow:hidden;}
+            .r4{margin:0 1px;height:2px;overflow:hidden;}
+            .color{background-color:#F58E03;}
+            .color2{background-color:#888;}
+            .color3{background-color:#f00;}
+            .color4{background-color:#fff200;}
+            * {box-sizing: content-box;-moz-box-sizing: inherit;-webkit-box-sizing: inherit;}
+            .content{height:24px;line-height:24px;padding-left:20px;font-size:24px;color:#EEE;text-align:left;}
+            .blank{height:4px;overflow:hidden;}
+            .btm_blank{height:15px;overflow:hidden;}
+            .back_color{background-color:#efefff;}
+            .back_high1{width:100%;height:80px;margin:0 2;}
+            .back_high2{width:100%;height:150px;margin:0 2;}
+            .line_long{height:2px;overflow:hidden;margin:2px auto;background-color:#ccc; width:90%;}
+            .img_common{float:right;margin-right:12px;width:32px;height:32px;}
+            .bg1{background:transparent url(i_037.png) no-repeat;}
+            .bg2{background:transparent url(i_038.png) no-repeat;}
+            .name{padding-left:10%;text-align:left;font-size:14px;font-weight:bold;color:#666;}
+            .value{padding-left:10%;text-align:left;font-size:18px;font-weight:bold;color:#00a2e8;font-style:normal;}
+            .Ftab{height:26px;line-height:26px;padding-left:20px;color:#EEE;text-align:center;}
+            .Ftab span{margin:0;padding:0;width:90%;float:left;width:20%;height:26px;line-height:26px;font-size:20px;color:#EEE;}
+            .Ftab .select{background: #007B3E;}
+            .Frame{width:100%; height:680px;}
+        </style>
+        <script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="j_zDialog.js"></script>
+        <script type='text/javascript'>
+            function show_T(tid)
+            {
+                var str='';
+                str+="<div class='title' style='width:90%;'><div class='r1 color'></div><div class='r2 color'></div><div class='r3 color'></div><div class='r4 color'></div>";
+                str+="<div class='content color'><span id='"+tid+"'></span></div>";
+                str+="<div class='r4 color'></div><div class='r3 color'></div><div class='r2 color'></div><div class='r1 color'></div></div><div class='blank'></div>";
+                document.write(str);
+            }
+        </script> 
+    </head>
+    <body onload='Init()'>
+        <script type='text/javascript'>
+            show_T('N01');
+        </script>  
+        <div class='title' style='width:90%;'>
+            <div class='back_high1 back_color'>
+                <table width='100%' border='0'>
+                    <tr>
+                        <td class='name' width='30%' height='32'><span id='N02'></span></td>    
+                        <td class='name' width='30%' height='32'><span id='N03'></span></td>
+                        <td class='name' width='30%' height='32'><span id='N04'></span></td>
+                        <td width='10%'><div id='fault_block' class='img_common bg1'></div></td>
+                    </tr>
+                    <tr>
+                        <td class='value' width='30%' height='32'><span id='ID_0x014F'></span></td>
+                        <td class='value' width='30%' height='32'><span id='ID_0x0182'></span></td>
+                        <td class='value' width='30%' height='32'><span id='ID_0x018B'></span></td>
+                        <td width='10%'><div id='alarm_block' class='img_common bg2'></div></td>                        
+                    </tr>
+              </table>
+            </div>
+        </div>
+        <div class='blank'></div>
+        <script type='text/javascript'>
+            show_T('N05');
+        </script> 
+        <div class='title' style='width:90%;'>
+            <div class='back_high2 back_color'>
+                <table width='100%' border='0'>
+                    <tr>
+                        <td class='name' width='30%' height='25'><span id='N06'></span></td>
+                        <td class='name' width='30%' height='25'><span id='N07'></span></td>
+                        <td class='name' width='30%' height='25'><div></div></td>
+                        <td width='10%'><div class='img_common'></div></td>
+                    </tr>
+                    <tr>
+                        <td class='value' width='30%' height='25'><span id='ID_0x0016'></span></td>
+                        <td class='value' width='30%' height='25'><span id='ID_0x0017'></span></td>
+                        <td class='value' width='30%' height='25'><div></div></td>
+                        <td width='10%'><div class='img_common'></div></td>
+                    </tr>
+                    <tr>
+                        <td class='name' width='30%' height='25'><span id='N09'></span></td>
+                        <td class='name' width='30%' height='25'><span id='N10'></span></td>
+                        <td class='name' width='30%' height='25'><span id='N11'></span></td>
+                        <td width='10%'><div class='img_common'></div></td>
+                    </tr>
+                    <tr>
+                        <td class='value' width='30%' height='25'><span id='ID_0x0005'></span></td>
+                        <td class='value' width='30%' height='25'><span id='ID_0x000B'></span></td>
+                        <td class='value' width='30%' height='25'><span id='ID_0x0008'></span></td>
+                        <td width='10%'><div class='img_common'></div></td>
+                    </tr>     
+                </table>
+            </div>
+        </div> 
+        <div class='blank'></div>
+        <div class='title' style='width:90%;'><div class='r1 color'></div><div class='r2 color'></div><div class='r3 color'></div><div class='r4 color'></div>
+        <div class='Ftab color' id="tabFunc">
+            <span class='select' id='N100'></span><span id='N101'></span><span id='N102'></span><span id='N103'></span><span id='N104'></span><span id='N105'></span><span id='N106'></span>
+        </div>
+        <div class='r4 color'></div><div class='r3 color'></div><div class='r2 color'></div><div class='r1 color'></div></div><div class='blank'></div>
+        <iframe class='Frame' frameborder="0" id="frame1"></iframe>
+        <!--[if IE 6]><script type='text/javascript'>document.execCommand('BackgroundImageCache',false,true);</script><![endif]-->
+    </body>
+    <script>
+        var tab_index=0;
+        var btns = document.getElementById('tabFunc').getElementsByTagName('span');
+        var frame1 = document.getElementById('frame1');
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].index = i;
+            btns[i].onclick = function(){
+                tab_index = this.index;
+                for (var i = 0; i < btns.length; i++) { btns[i].className = ''; };
+                this.className = 'select';
+                if(tab_index <= 5){
+                    if(document.all){
+                        frame1.src = 'h_0'+(btns[tab_index].index+31)+'.html';
+                    }else{
+                        frame1.src = 'h_0'+(btns[tab_index].index+31)+'.html';
+                    }                    
+                }else{
+                    if(document.all){
+                        frame1.src = 'h_042.html';
+                    }else{
+                        frame1.src = 'h_042.html';
+                    } 
+                }
+
+                // 进行高度控制和处理
+                //setTimeout(function(){
+                //    frame1.style.height = frame1.contentWindow.document.body.offsetHeight+'px';
+                //    console.log(frame1.contentWindow.document.body.offsetHeight);
+                //},100);
+            }
+        };
+        function Switch_Tab(index)
+        {
+            for (var i = 0; i < btns.length; i++) { btns[i].className = ''; };
+            btns[index].className = 'select';
+            if(tab_index <= 5){
+                if(document.all){
+                    frame1.src = 'h_0'+(btns[index].index+31)+'.html';
+                }else{
+                    frame1.src = 'h_0'+(btns[index].index+31)+'.html';
+                }
+            }else{
+                if(document.all){
+                    frame1.src = 'h_042.html';
+                }else{
+                    frame1.src = 'h_042.html';
+                } 
+            }
+        }
+    </script>
+    <script type='text/javascript'>
+        window.history.forward(1);
+        var FromMobileDevice=false;
+        function FromWhichDevice()
+        {
+            var sUserAgent=navigator.userAgent.toLowerCase();
+            var Ipad=sUserAgent.match(/ipad/i)=='ipad';
+            var IphoneOs=sUserAgent.match(/iphone os/i)=='iphone os';
+            var Android=sUserAgent.match(/android/i)=='android';
+            var WindowsPhone=sUserAgent.match(/windows phone/i)=='windows phone';
+            if(Ipad||IphoneOs||Android||WindowsPhone)FromMobileDevice=true;
+            else FromMobileDevice=false;
+        }
+        function lang_init_ex(st,end){for(var i=st;i<=end;i++)eval('document.getElementById(\'N'+(i<10?'0'+i:i)+'\').innerHTML=lang.N'+(i<10?'0'+i:i)+'[language];');}
+        //使用了jquery,下面的不能使用
+        //var $=function(o){return document.getElementById(o);};
+        var language=0;
+        var Json;
+        var lang=
+        {
+            N01:['系统状态','System State'],
+            N02:['系统工作状态','Work State'],
+            N03:['工作模式','Work Mode'],
+            N04:['并网控制模式','Grid Control Mode'],
+            N05:['系统功率','System Power'],
+            N06:['微网电压','Mgrid Voltage'],
+            N07:['微网频率','Mgrid Frequency'],
+            N08:['电网状态','Grid Status'],
+            N09:['PCS总有功功率','PCS Total Active Power'],
+            N10:['负载有功功率','Load Active Power'],
+            N11:['PV总有功功率','PV Total Active Power'],
+
+            N20:['固定功率','Const Power'],
+            N21:['跟踪负载功率','Tracking Load'],
+            N22:['PCC点功率控制','PCC Control'],
+            N23:['防逆流','Anti Reflux'], 
+            N24:[' ',' '], 
+            N25:[' ',' '], 
+            N26:[' ',' '], 
+            N27:[' ',' '], 
+            N28:[' ',' '], 
+            N29:[' ',' '], 
+            N30:['削峰填谷','Peak Load Shifting'], 
+            N31:['交流限发','AC Limited Produce'], 
+            N32:['输出平滑','Ramp Rate Control'],
+            N33:['调频','FR'],  
+
+            N64:['并网','Grid'],
+            N65:['离网','Island'],
+            N66:['并离网切换','Grid & Island'],
+            N67:['主动模式','Active Mode'],
+            N68:['被动模式','Passive Mode'],
+            N69:['电网优先','Grid First'],
+            N70:['微网优先','MGrid First'],
+            N71:['无电','Missed'],
+            N72:['有电','Exist'],
+
+            N100:['运行状态','Running Status'],
+            N101:['分时电价','Time Of Use'],
+            N102:['削峰填谷','Peak Load Shifting'],
+            N103:['交流限发','AC Limited Produce'],
+            N104:['输出平滑','Ramp Rate Control'],
+            N105:['调频','FR'],
+            N106:['微网','MGrid'],
+
+			N132:['<span style=color:#000>初始状态</span>','<span style=color:#000>Initial Status</span>'],
+            N133:['<span style=color:#000>自检过程</span>','<span style=color:#000>Self Checking</span>'],
+            N134:['<span style=color:#007B3E>微网供电启动</span>','<span style=color:#007B3E>MG Starting</span>'],
+            N135:['<span style=color:#007B3E>电网供电启动</span>','<span style=color:#007B3E>Grid Starting</span>'],
+            N136:['<span style=color:#007B3E>微网供电运行</span>','<span style=color:#007B3E>MG Running</span>'],
+            N137:['<span style=color:#007B3E>电网供电运行</span>','<span style=color:#007B3E>Grid Running</span>'],
+            N138:['<span style=color:#F00>故障</span>','<span style=color:#F00>Fault</span>'],
+            N139:['<span style=color:#007B3E>停机中</span>','<span style=color:#007B3E>Stopping</span>'],
+            N140:['<span style=color:#000>停机</span>','<span style=color:#000>Stopped</span>'],
+			N141:['<span style=color:#F00>紧急停机</span>','<span style=color:#F00>Emergency Stop</span>'],
+            N142:['<span style=color:#007B3E></span>','<span style=color:#007B3E></span>'],
+            N143:['<span style=color:#007B3E></span>','<span style=color:#007B3E></span>'],
+            N144:['<span style=color:#007B3E></span>','<span style=color:#007B3E></span>'],
+            N145:['<span style=color:#007B3E></span>','<span style=color:#007B3E></span>'],
+            N146:['<span style=color:#007B3E></span>','<span style=color:#007B3E></span>'],
+            N147:['<span style=color:#007B3E></span>','<span style=color:#007B3E></span>'],
+            N148:['<span style=color:#007B3E></span>','<span style=color:#007B3E></span>'],
+            N149:['<span style=color:#007B3E></span>','<span style=color:#007B3E></span>'],
+            N150:['<span style=color:#007B3E>启动中</span>','<span style=color:#007B3E>Starting</span>'],
+            N151:['<span style=color:#007B3E>正在同步</span>','<span style=color:#007B3E>Synchronizing</span>'],
+            N152:['<span style=color:#007B3E></span>','<span style=color:#007B3E></span>'],
+            N153:['<span style=color:#007B3E></span>','<span style=color:#007B3E></span>'],
+            N154:['<span style=color:#007B3E></span>','<span style=color:#007B3E></span>'],
+            N155:['<span style=color:#007B3E></span>','<span style=color:#007B3E></span>'],
+            N156:['<span style=color:#007B3E></span>','<span style=color:#007B3E></span>'],
+            N157:['<span style=color:#007B3E></span>','<span style=color:#007B3E></span>'],
+            N158:['<span style=color:#007B3E></span>','<span style=color:#007B3E></span>'],
+            N159:['<span style=color:#007B3E></span>','<span style=color:#007B3E></span>'],
+            N160:['<span style=color:#007B3E></span>','<span style=color:#007B3E></span>'],
+            N161:['<span style=color:#007B3E></span>','<span style=color:#007B3E></span>'],
+            N162:['<span style=color:#007B3E></span>','<span style=color:#007B3E></span>'],
+            N163:['<span style=color:#007B3E></span>','<span style=color:#007B3E></span>']
+        };
+		var E_id=new Array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31);
+		var E_name=new Array('132','133','134','135','136','137','138','139','140','141','142','143','144','145','146','147','148','149','150','151','152','153','154','155','156','157','158','159','160','161','162','163');
+        var all_color=new Array('#3CF','#ABFF5D');
+        var o_grid_contactor;
+        var o_mgrid_contactor;
+        var o_grid_direction;
+        var o_mgrid_direction;
+        var o_pv_direction;
+        var o_load_direction;
+    
+        function Init()
+        {
+            FromWhichDevice();
+
+            document.getElementById('fault_block').onclick= function(){
+                if(Json.ID_0x0152!=0||Json.ID_0x0153!=0)
+                {
+                    var diag = new Dialog();
+                    diag.Width = 900;
+                    diag.Height = 520;
+                    if(document.all){
+                        diag.URL = "h_038.html";
+                    }else{
+                        diag.URL = "h_038.html";
+                    }
+                    diag.show();                   
+                }
+            }
+
+            document.getElementById('alarm_block').onclick= function(){
+                if(Json.ID_0x0154!=0)
+                {
+                    var diag = new Dialog();
+                    diag.Width = 900;
+                    diag.Height = 520;
+                    if(document.all){
+                        diag.URL = "h_039.html";
+                    }else{
+                        diag.URL = "h_039.html";
+                    }
+                    diag.show();
+                }
+            }
+
+            Switch_Tab(tab_index);
+            ajax_2s();
+            setInterval('ajax_2s()',2000);
+        }
+        function ajax_2s()
+        {
+			Json={ID_0x0301:85,ID_0x014F:4,ID_0x0152:0,ID_0x0153:0,ID_0x0154:1,ID_0x0182:0,ID_0x0150:0,ID_0x0151:0,ID_0x0016:4000,ID_0x0017:5000,ID_0x0004:0,ID_0x0005:1000,ID_0x0008:1000,ID_0x000B:1000,ID_0x0310:1,ID_0x0311:1,ID_0x0312:1,ID_0x0313:1,ID_0x0314:1,ID_0x0315:1,ID_0x0316:1,ID_0x0317:4013,ID_0x0318:3811,ID_0x0319:10002,ID_0x031A:3900,ID_0x031B:10003,ID_0x031C:7001,ID_0x031D:10004,ID_0x031E:979,ID_0x031F:999,ID_0x0320:6501,ID_0x0381:1,ID_0x018B:13,ID_0x0389:0,ID_0x050B:2}
+            var URL='s_002.html?time='+new Date();
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            //xmlhttp.onreadystatechange=function() 
+            {
+                //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    //eval('Json='+xmlhttp.responseText);
+        			if(Json.ID_0x0301==0x55)language=0;else language=1;
+        			lang_init_ex(1,7);
+                    lang_init_ex(9,11);
+                    lang_init_ex(100,106);
+        			for(var k=0;k<E_id.length;k++)if(Json.ID_0x014F==E_id[k])eval("document.getElementById('ID_0x014F').innerHTML=lang.N"+E_name[k]+"[language];");
+                    if(Json.ID_0x0152!=0||Json.ID_0x0153!=0) document.getElementById('fault_block').style.display='block'; 
+                    else document.getElementById('fault_block').style.display='none'; 
+                    if(Json.ID_0x0154!=0) document.getElementById('alarm_block').style.display='block';
+                    else document.getElementById('alarm_block').style.display='none';
+                    eval("document.getElementById('ID_0x018B').innerHTML=lang.N"+String(Json.ID_0x018B+20)+"[language];");
+                    eval("document.getElementById('ID_0x0182').innerHTML=lang.N"+String(Json.ID_0x0182+64)+"[language];");
+                    document.getElementById('ID_0x0016').innerHTML=(Json.ID_0x0016/10.0).toFixed(1)+'V';
+                    document.getElementById('ID_0x0017').innerHTML=(Json.ID_0x0017/100.0).toFixed(2)+'Hz';
+                    //eval("document.getElementById('ID_0x0004').innerHTML=lang.N"+String(Json.ID_0x0004+71)+"[language];");
+        			document.getElementById('ID_0x0005').innerHTML=(Json.ID_0x0005/10.0).toFixed(1)+'kW';
+        			document.getElementById('ID_0x0008').innerHTML=(Json.ID_0x0008/10.0).toFixed(1)+'kW';
+                    document.getElementById('ID_0x000B').innerHTML=(Json.ID_0x000B/10.0).toFixed(1)+'kW';
+                    //高级功能曲线
+                    if(Json.ID_0x050B >=10){
+                        document.getElementById('N101').style.display='none';
+                        document.getElementById('N106').style.display='none';
+                        if(Json.ID_0x050B==10){ document.getElementById('N102').style.display='block'; }else{ document.getElementById('N102').style.display='none'; }
+                        if(Json.ID_0x050B==11){ document.getElementById('N103').style.display='block'; }else{ document.getElementById('N103').style.display='none'; }
+                        if(Json.ID_0x050B==12){ document.getElementById('N104').style.display='block'; }else{ document.getElementById('N104').style.display='none'; }
+                        if(Json.ID_0x050B==13){ document.getElementById('N105').style.display='block'; }else{ document.getElementById('N105').style.display='none'; }                        
+                    }else{
+                        document.getElementById('N102').style.display='none';
+                        document.getElementById('N103').style.display='none';
+                        document.getElementById('N104').style.display='none';
+                        document.getElementById('N105').style.display='none';  
+                        if(Json.ID_0x0389==0){ 
+                            document.getElementById('N106').style.display='block';
+                            document.getElementById('N101').style.display='none';                          
+                        }else{
+                            document.getElementById('N101').style.display='block';
+                            document.getElementById('N106').style.display='none';  
+                        }
+                    }
+                }
+            };
+            xmlhttp.open('GET',URL,true);
+            xmlhttp.send();
+        }
+    </script>
+</html>

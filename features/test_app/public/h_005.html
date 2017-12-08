@@ -1,0 +1,2535 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>
+		<link type='text/css' href='c_000.css' rel='stylesheet'/>
+		<script type='text/javascript'>
+			var $=function(o){return document.getElementById(o);};
+			function lang_init_ex(st,end){for(var i=st;i<=end;i++)eval('$(\'N'+(i<10?'0'+i:i)+'\').innerHTML=lang.N'+(i<10?'0'+i:i)+'[language];');}
+			function show_tip(obj){$('tip').innerHTML=obj;}
+			function show_T(tid)
+			{
+				var str='';
+				str+="<div class='title' style='width:90%;'><div class='r1 color'></div><div class='r2 color'></div><div class='r3 color'></div><div class='r4 color'></div>";
+				str+="<div class='content color'><span id='"+tid+"'></span></div>";
+				str+="<div class='r4 color'></div><div class='r3 color'></div><div class='r2 color'></div><div class='r1 color'></div></div><div class='blank'></div>";
+				document.write(str);
+			}
+			function show_sT(tid)
+			{
+				var str='';
+				str+="<div class='title' style='width:90%;'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+				str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+				str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+				document.write(str);
+			}
+			function show_sT_ex(tid, id)
+			{
+				var str='';
+				str+="<div class='title' id='"+id+"' style='display:none;width:90%'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+				str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+				str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+				document.write(str);
+			}		
+		</script>		
+		<style type='text/css'>
+			tr{height:27px;}
+			.td1{padding-left:40px;text-align:left;}
+			.td2{text-align:left;}
+			.td3{padding-right:40px;text-align:right;}
+			.txt{width:100px;text-align:right;}
+			.btnStyle1{float:left;border-width:0px;height:20px;width:20px;border-radius:10px;}
+			.btnStyle2{float:left;margin-left:10px;border-width:0px;height:20px;width:20px;border-radius:10px;}
+		</style>
+	</head>
+	<body onload='Init()'>
+		<script type='text/javascript'>
+			show_T('N01');
+			<!-- show_sT('N02'); -->
+		</script>		
+		<!-- 分时段控制 -->
+		<script type='text/javascript'>
+			show_sT_ex('N40', 'tipmode1');
+		</script>
+		<script type='text/javascript'>
+			show_sT_ex('N200', 'tipmode2');
+		</script>
+		<div class='div_btn' style='width:88%;display:none;' id='addsubBtn'>
+			<button class='btnStyle1' id='btn4' onclick='Add()' style='display:none;'><span id='N41' style="font-weight:bold;"></span></button>
+			<button class='btnStyle2' id='btn5' onclick='Sub()' style='display:none;'><span id='N42' style="font-weight:bold;"></span></button>
+		</div>
+		<table width='90%' border='1' id='tab1' style='border-collapse:collapse;border-spacing:0px;display:none;border-color:#e0e0e0;'>		
+			<tr id='tr0' style='display:none;'>
+				<!-- check框 -->
+				<!-- <td width='50' class='odd'><input type='checkbox' value='0' id='CHK0' onclick="TrDisplayControl(this)"/></td> -->
+				<!-- 序号 -->
+				<td width='100' class='odd'><span id='N43' style="font-weight:bold;"></span></td>
+				<!-- 开始时间 -->
+				<td width='16%' class='odd'><span id='N44' style="font-weight:bold;"></span></td>
+				<!-- 结束时间 -->
+				<td width='16%' class='odd'><span id='N45' style="font-weight:bold;"></span></td>
+				<!-- 运行模式 -->
+				<td width='21%' class='odd'><span id='N46' style="font-weight:bold;"></span></td>
+				<!-- 功率控制模式 -->
+				<td width='21%' class='odd'><span id='N47' style="font-weight:bold;"></span></td>
+				<!-- 并网运行功率 -->
+				<td width='11%' class='odd'><span id='N48' style="font-weight:bold;"></span></td>
+				<!-- 离网运行功率 -->
+				<td width='11%' class='odd'><span id='N61' style="font-weight:bold;"></span></td>
+			</tr>
+			<tr id='tr1' style='display:none;'>
+				<!-- <td width='50' class='even'><input type='checkbox' value='1' id='CHK1' onclick="TrDisplayControl(this)"/></td> -->
+				<td width='100' class='even'><span>1</span></td>
+				<!-- <td width='180' class='even'><input type="text" id='ST0' value="2016-01-01 00:00" onclick="SelectDate(this,'yyyy-MM-dd hh:mm')" readonly="true" style="width:110px;cursor:pointer"/></td> -->
+				<!-- <td width='180' class='even'><input type="text" id='END0' value="2016-01-01 00:00" onclick="SelectDate(this,'yyyy-MM-dd hh:mm')" readonly="true" style="width:110px;cursor:pointer"/></td> -->
+				<!-- 起始时间 -->
+				<td width='16%' class='even'><select style='width:60px;text-align:center;' id='ST0'></select><span id='N300'>&nbsp;:&nbsp;</span><select style='width:60px;text-align:center;' id='ST100'></select></td>
+				<!-- 结束时间 -->
+				<td width='16%' class='even'><select style='width:60px;text-align:center;' id='END0'></select><span>&nbsp;:&nbsp;</span><select style='width:60px;text-align:center;' id='END100'></select></td>
+				<!-- 运行模式 -->
+				<td width='21%' class='even'><select style='width:135px;text-align:center;' id='RUNNING_MODE0' name='0' onchange='mode_change(this)'></select></td>
+				<!-- 功率控制模式 -->
+				<td width='21%' class='even'><select style='width:135px;text-align:center;' id='POWER_CTROL_MODE0'></select></td>
+				<!-- 并网运行功率 -->
+				<td width='11%' class='even'><input class='txt' id='POWER0' onkeyup='Verify(this)' type='text' maxlength='6'/>kW</td>
+				<!-- 离网运行功率 -->
+				<td width='11%' class='even'><input class='txt' id='M-POWER0' onkeyup='Verify(this)' type='text' maxlength='6'/>kW</td>
+			</tr>
+			<tr id='tr2' style='display:none;'>
+				<!-- <td width='50' class='even'><input type='checkbox' value='2' id='CHK2' onclick="TrDisplayControl(this)"/></td> -->
+				<td width='100' class='even'><span>2</span></td>
+				<!-- <td width='180' class='even'><input type="text" id='ST1' value="2016-01-01 00:00" onclick="SelectDate(this,'yyyy-MM-dd hh:mm')" readonly="true" style="width:110px;cursor:pointer"/></td> -->
+				<!-- <td width='180' class='even'><input type="text" id='END1' value="2016-01-01 00:00" onclick="SelectDate(this,'yyyy-MM-dd hh:mm')" readonly="true" style="width:110px;cursor:pointer"/></td> -->
+				<!-- 起始时间 -->
+				<td width='16%' class='even'><select style='width:60px;text-align:center;' id='ST1'></select><span id='N301'>&nbsp;:&nbsp;</span><select style='width:60px;text-align:center;' id='ST101'></select></td>
+				<!-- 结束时间 -->
+				<td width='16%' class='even'><select style='width:60px;text-align:center;' id='END1'></select><span>&nbsp;:&nbsp;</span><select style='width:60px;text-align:center;' id='END101'></select></td>
+				<!-- 运行模式 -->
+				<td width='21%' class='even'><select style='width:135px;text-align:center;' id='RUNNING_MODE1' name='1' onchange='mode_change(this)'></select></td>
+				<!-- 功率控制模式 -->
+				<td width='21%' class='even'><select style='width:135px;text-align:center;' id='POWER_CTROL_MODE1'></select></td>
+				<!-- 并网运行功率 -->
+				<td width='11%' class='even'><input class='txt' id='POWER1' onkeyup='Verify(this)' type='text' maxlength='6'/>kW</td>
+				<!-- 离网运行功率 -->
+				<td width='11%' class='even'><input class='txt' id='M-POWER1' onkeyup='Verify(this)' type='text' maxlength='6'/>kW</td>
+			</tr>
+			<tr id='tr3' style='display:none;'>
+				<!-- <td width='50' class='even'><input type='checkbox' value='3' id='CHK3' onclick="TrDisplayControl(this)"/></td> -->
+				<td width='100' class='even'><span>3</span></td>
+				<!-- <td width='180' class='even'><input type="text" id='ST2' value="2016-01-01 00:00" onclick="SelectDate(this,'yyyy-MM-dd hh:mm')" readonly="true" style="width:110px;cursor:pointer"/></td> -->
+				<!-- <td width='180' class='even'><input type="text" id='END2' value="2016-01-01 00:00" onclick="SelectDate(this,'yyyy-MM-dd hh:mm')" readonly="true" style="width:110px;cursor:pointer"/></td> -->
+				<!-- 起始时间 -->
+				<td width='16%' class='even'><select style='width:60px;text-align:center;' id='ST2'></select><span id='N302'>&nbsp;:&nbsp;</span><select style='width:60px;text-align:center;' id='ST102'></select></td>
+				<!-- 结束时间 -->
+				<td width='16%' class='even'><select style='width:60px;text-align:center;' id='END2'></select><span>&nbsp;:&nbsp;</span><select style='width:60px;text-align:center;' id='END102'></select></td>
+				<!-- 运行模式 -->
+				<td width='21%' class='even'><select style='width:135px;text-align:center;' id='RUNNING_MODE2' name='2' onchange='mode_change(this)'></select></td>
+				<!-- 功率控制模式 -->
+				<td width='21%' class='even'><select style='width:135px;text-align:center;' id='POWER_CTROL_MODE2'></select></td>
+				<!-- 并网运行功率 -->
+				<td width='11%' class='even'><input class='txt' id='POWER2' onkeyup='Verify(this)' type='text' maxlength='6'/>kW</td>
+				<!-- 离网运行功率 -->
+				<td width='11%' class='even'><input class='txt' id='M-POWER2' onkeyup='Verify(this)' type='text' maxlength='6'/>kW</td>
+			</tr>
+			<tr id='tr4' style='display:none;'>
+				<!-- <td width='50' class='even'><input type='checkbox' value='4' id='CHK4' onclick="TrDisplayControl(this)"/></td> -->
+				<td width='100' class='even'><span>4</span></td>
+				<!-- <td width='180' class='even'><input type="text" id='ST3' value="2016-01-01 00:00" onclick="SelectDate(this,'yyyy-MM-dd hh:mm')" readonly="true" style="width:110px;cursor:pointer"/></td> -->
+				<!-- <td width='180' class='even'><input type="text" id='END3' value="2016-01-01 00:00" onclick="SelectDate(this,'yyyy-MM-dd hh:mm')" readonly="true" style="width:110px;cursor:pointer"/></td> -->
+				<!-- 起始时间 -->
+				<td width='16%' class='even'><select style='width:60px;text-align:center;' id='ST3'></select><span id='N303'>&nbsp;:&nbsp;</span><select style='width:60px;text-align:center;' id='ST103'></select></td>
+				<!-- 结束时间 -->
+				<td width='16%' class='even'><select style='width:60px;text-align:center;' id='END3'></select><span>&nbsp;:&nbsp;</span><select style='width:60px;text-align:center;' id='END103'></select></td>
+				<!-- 运行模式 -->
+				<td width='21%' class='even'><select style='width:135px;text-align:center;' id='RUNNING_MODE3' name='3' onchange='mode_change(this)'></select></td>
+				<!-- 功率控制模式 -->
+				<td width='21%' class='even'><select style='width:135px;text-align:center;' id='POWER_CTROL_MODE3'></select></td>
+				<!-- 并网运行功率 -->
+				<td width='11%' class='even'><input class='txt' id='POWER3' onkeyup='Verify(this)' type='text' maxlength='6'/>kW</td>
+				<!-- 离网运行功率 -->
+				<td width='11%' class='even'><input class='txt' id='M-POWER3' onkeyup='Verify(this)' type='text' maxlength='6'/>kW</td>
+			</tr>
+			<tr id='tr5' style='display:none;'>
+				<!-- <td width='50' class='even'><input type='checkbox' value='5' id='CHK5' onclick="TrDisplayControl(this)"/></td> -->
+				<td width='100' class='even'><span>5</span></td>
+				<!-- <td width='180' class='even'><input type="text" id='ST4' value="2016-01-01 00:00" onclick="SelectDate(this,'yyyy-MM-dd hh:mm')" readonly="true" style="width:110px;cursor:pointer"/></td> -->
+				<!-- <td width='180' class='even'><input type="text" id='ST4' value="2016-01-01 00:00" onclick="SelectDate(this,'yyyy-MM-dd hh:mm')" readonly="true" style="width:110px;cursor:pointer"/></td> -->
+				<!-- 起始时间 -->
+				<td width='16%' class='even'><select style='width:60px;text-align:center;' id='ST4'></select><span id='N304'>&nbsp;:&nbsp;</span><select style='width:60px;text-align:center;' id='ST104'></select></td>
+				<!-- 结束时间 -->
+				<td width='16%' class='even'><select style='width:60px;text-align:center;' id='END4'></select><span>&nbsp;:&nbsp;</span><select style='width:60px;text-align:center;' id='END104'></select></td>
+				<!-- 运行模式 -->
+				<td width='21%' class='even'><select style='width:135px;text-align:center;' id='RUNNING_MODE4' name='4' onchange='mode_change(this)'></select></td>
+				<!-- 功率控制模式 -->
+				<td width='21%' class='even'><select style='width:135px;text-align:center;' id='POWER_CTROL_MODE4'></select></td>
+				<!-- 并网运行功率 -->
+				<td width='11%' class='even'><input class='txt' id='POWER4' onkeyup='Verify(this)' type='text' maxlength='6'/>kW</td>
+				<!-- 离网运行功率 -->
+				<td width='11%' class='even'><input class='txt' id='M-POWER4' onkeyup='Verify(this)' type='text' maxlength='6'/>kW</td>
+			</tr>
+			<tr id='tr6' style='display:none;'>
+				<!-- <td width='50' class='even'><input type='checkbox' value='6' id='CHK6' onclick="TrDisplayControl(this)"/></td> -->
+				<td width='100' class='even'><span>6</span></td>
+				<!-- <td width='180' class='even'><input type="text" id='ST5' value="2016-01-01 00:00" onclick="SelectDate(this,'yyyy-MM-dd hh:mm')" readonly="true" style="width:110px;cursor:pointer"/></td> -->
+				<!-- <td width='180' class='even'><input type="text" id='END5' value="2016-01-01 00:00" onclick="SelectDate(this,'yyyy-MM-dd hh:mm')" readonly="true" style="width:110px;cursor:pointer"/></td> -->
+				<!-- 起始时间 -->
+				<td width='16%' class='even'><select style='width:60px;text-align:center;' id='ST5'></select><span id='N305'>&nbsp;:&nbsp;</span><select style='width:60px;text-align:center;' id='ST105'></select></td>
+				<!-- 结束时间 -->
+				<td width='16%' class='even'><select style='width:60px;text-align:center;' id='END5'></select><span>&nbsp;:&nbsp;</span><select style='width:60px;text-align:center;' id='END105'></select></td>
+				<!-- 运行模式 -->
+				<td width='21%' class='even'><select style='width:135px;text-align:center;' id='RUNNING_MODE5' name='5' onchange='mode_change(this)'></select></td>
+				<!-- 功率控制模式 -->
+				<td width='21%' class='even'><select style='width:135px;text-align:center;' id='POWER_CTROL_MODE5'></select></td>
+				<!-- 并网运行功率 -->
+				<td width='11%' class='even'><input class='txt' id='POWER5' onkeyup='Verify(this)' type='text' maxlength='6'/>kW</td>
+				<!-- 离网运行功率 -->
+				<td width='11%' class='even'><input class='txt' id='M-POWER5' onkeyup='Verify(this)' type='text' maxlength='6'/>kW</td>
+			</tr>
+			<tr id='tr7' style='display:none;'>
+				<!-- <td width='50' class='even'><input type='checkbox' value='7' id='CHK7' onclick="TrDisplayControl(this)"/></td> -->
+				<td width='100' class='even'><span>7</span></td>
+				<!-- <td width='180' class='even'><input type="text" id='ST6' value="2016-01-01 00:00" onclick="SelectDate(this,'yyyy-MM-dd hh:mm')" readonly="true" style="width:110px;cursor:pointer"/></td> -->
+				<!-- <td width='180' class='even'><input type="text" id='END6' value="2016-01-01 00:00" onclick="SelectDate(this,'yyyy-MM-dd hh:mm')" readonly="true" style="width:110px;cursor:pointer"/></td> -->
+				<!-- 起始时间 -->
+				<td width='16%' class='even'><select style='width:60px;text-align:center;' id='ST6'></select><span id='N306'>&nbsp;:&nbsp;</span><select style='width:60px;text-align:center;' id='ST106'></select></td>
+				<!-- 结束时间 -->
+				<td width='16%' class='even'><select style='width:60px;text-align:center;' id='END6'></select><span>&nbsp;:&nbsp;</span><select style='width:60px;text-align:center;' id='END106'></select></td>
+				<!-- 运行模式 -->
+				<td width='21%' class='even'><select style='width:135px;text-align:center;' id='RUNNING_MODE6' name='6' onchange='mode_change(this)'></select></td>
+				<!-- 功率控制模式 -->
+				<td width='21%' class='even'><select style='width:135px;text-align:center;' id='POWER_CTROL_MODE6'></select></td>
+				<!-- 并网运行功率 -->
+				<td width='11%' class='even'><input class='txt' id='POWER6' onkeyup='Verify(this)' type='text' maxlength='6'/>kW</td>
+				<!-- 离网运行功率 -->
+				<td width='11%' class='even'><input class='txt' id='M-POWER6' onkeyup='Verify(this)' type='text' maxlength='6'/>kW</td>
+			</tr>
+			<tr id='tr8' style='display:none;'>
+				<!-- <td width='50' class='even'><input type='checkbox' value='8' id='CHK8' onclick="TrDisplayControl(this)"/></td> -->
+				<td width='100' class='even'><span>8</span></td>
+				<!-- <td width='180' class='even'><input type="text" id='ST7' value="2016-01-01 00:00" onclick="SelectDate(this,'yyyy-MM-dd hh:mm')" readonly="true" style="width:110px;cursor:pointer"/></td> -->
+				<!-- <td width='180' class='even'><input type="text" id='END7' value="2016-01-01 00:00" onclick="SelectDate(this,'yyyy-MM-dd hh:mm')" readonly="true" style="width:110px;cursor:pointer"/></td> -->
+				<!-- 起始时间 -->
+				<td width='16%' class='even'><select style='width:60px;text-align:center;' id='ST7'></select><span>&nbsp;:&nbsp;</span><select style='width:60px;text-align:center;' id='ST107'></select></td>
+				<!-- 结束时间 -->
+				<td width='16%' class='even'><select style='width:60px;text-align:center;' id='END7'></select><span>&nbsp;:&nbsp;</span><select style='width:60px;text-align:center;' id='END107'></select></td>
+				<!-- 运行模式 -->
+				<td width='21%' class='even'><select style='width:135px;text-align:center;' id='RUNNING_MODE7' name='7' onchange='mode_change(this)'></select></td>
+				<!-- 功率控制模式 -->
+				<td width='21%' class='even'><select style='width:135px;text-align:center;' id='POWER_CTROL_MODE7'></select></td>
+				<!-- 并网运行功率 -->
+				<td width='11%' class='even'><input class='txt' id='POWER7' onkeyup='Verify(this)' type='text' maxlength='6'/>kW</td>
+				<!-- 离网运行功率 -->
+				<td width='11%' class='even'><input class='txt' id='M-POWER7' onkeyup='Verify(this)' type='text' maxlength='6'/>kW</td>
+			</tr>
+			<tr id='tr9' style='display:none;'>
+				<!-- <td width='50' class='even'><input type='checkbox' value='9' id='CHK9' onclick="TrDisplayControl(this)"/></td> -->
+				<td width='100' class='even'><span>9</span></td>
+				<!-- <td width='180' class='even'><input type="text" id='ST8' value="2016-01-01 00:00" onclick="SelectDate(this,'yyyy-MM-dd hh:mm')" readonly="true" style="width:110px;cursor:pointer"/></td> -->
+				<!-- <td width='180' class='even'><input type="text" id='END8' value="2016-01-01 00:00" onclick="SelectDate(this,'yyyy-MM-dd hh:mm')" readonly="true" style="width:110px;cursor:pointer"/></td> -->
+				<!-- 起始时间 -->
+				<td width='16%' class='even'><select style='width:60px;text-align:center;' id='ST8'></select><span>&nbsp;:&nbsp;</span><select style='width:60px;text-align:center;' id='ST108'></select></td>
+				<!-- 结束时间 -->
+				<td width='16%' class='even'><select style='width:60px;text-align:center;' id='END8'></select><span>&nbsp;:&nbsp;</span><select style='width:60px;text-align:center;' id='END108'></select></td>
+				<!-- 运行模式 -->
+				<td width='21%' class='even'><select style='width:135px;text-align:center;' id='RUNNING_MODE8' name='8' onchange='mode_change(this)'></select></td>
+				<!-- 功率控制模式 -->
+				<td width='21%' class='even'><select style='width:135px;text-align:center;' id='POWER_CTROL_MODE8'></select></td>
+				<!-- 并网运行功率 -->
+				<td width='11%' class='even'><input class='txt' id='POWER8' onkeyup='Verify(this)' type='text' maxlength='6'/>kW</td>
+				<!-- 离网运行功率 -->
+				<td width='11%' class='even'><input class='txt' id='M-POWER8' onkeyup='Verify(this)' type='text' maxlength='6'/>kW</td>
+			</tr>
+			<tr id='tr10' style='none;'>
+				<!-- <td width='50' class='even'><input type='checkbox' value='10' id='CHK10' onclick="TrDisplayControl(this)"/></td> -->
+				<td width='100' class='even'><span>10</span></td>
+				<!-- <td width='180' class='even'><input type="text" id='ST9' value="2016-01-01 00:00" onclick="SelectDate(this,'yyyy-MM-dd hh:mm')" readonly="true" style="width:110px;cursor:pointer"/></td> -->
+				<!-- <td width='180' class='even'><input type="text" id='END9' value="2016-01-01 00:00" onclick="SelectDate(this,'yyyy-MM-dd hh:mm')" readonly="true" style="width:110px;cursor:pointer"/></td> -->
+				<!-- 起始时间 -->
+				<td width='16%' class='even'><select style='width:60px;text-align:center;' id='ST9'></select><span>&nbsp;:&nbsp;</span><select style='width:60px;text-align:center;' id='ST109'></select></td>
+				<!-- 结束时间 -->
+				<td width='16%' class='even'><select style='width:60px;text-align:center;' id='END9'></select><span>&nbsp;:&nbsp;</span><select style='width:60px;text-align:center;' id='END109'></select></td>
+				<!-- 运行模式 -->
+				<td width='21%' class='even'><select style='width:135px;text-align:center;' id='RUNNING_MODE9' name='9' onchange='mode_change(this)'></select></td>
+				<!-- 功率控制模式 -->
+				<td width='21%' class='even'><select style='width:135px;text-align:center;' id='POWER_CTROL_MODE9'></select></td>
+				<!-- 并网运行功率 -->
+				<td width='11%' class='even'><input class='txt' id='POWER9' onkeyup='Verify(this)' type='text' maxlength='6'/>kW</td>
+				<!-- 离网运行功率 -->
+				<td width='11%' class='even'><input class='txt' id='M-POWER9' onkeyup='Verify(this)' type='text' maxlength='6'/>kW</td>				
+			</tr>
+			<tr id='tr11' style='display:none;'>
+				<!-- <td width='50' class='even'><input type='checkbox' value='11' id='CHK11' onclick="TrDisplayControl(this)"/></td> -->
+				<td width='100' class='even'><span>11</span></td>
+				<!-- <td width='180' class='even'><input type="text" id='ST10' value="2016-01-01 00:00" onclick="SelectDate(this,'yyyy-MM-dd hh:mm')" readonly="true" style="width:110px;cursor:pointer"/></td> -->
+				<!-- <td width='180' class='even'><input type="text" id='END10' value="2016-01-01 00:00" onclick="SelectDate(this,'yyyy-MM-dd hh:mm')" readonly="true" style="width:110px;cursor:pointer"/></td> -->
+				<!-- 起始时间 -->
+				<td width='16%' class='even'><select style='width:60px;text-align:center;' id='ST10'></select><span>&nbsp;:&nbsp;</span><select style='width:60px;text-align:center;' id='ST110'></select></td>
+				<!-- 结束时间 -->
+				<td width='16%' class='even'><select style='width:60px;text-align:center;' id='END10'></select><span>&nbsp;:&nbsp;</span><select style='width:60px;text-align:center;' id='END110'></select></td>
+				<!-- 运行模式 -->
+				<td width='21%' class='even'><select style='width:135px;text-align:center;' id='RUNNING_MODE10' name='10' onchange='mode_change(this)'></select></td>
+				<!-- 功率控制模式 -->
+				<td width='21%' class='even'><select style='width:135px;text-align:center;' id='POWER_CTROL_MODE10'></select></td>
+				<!-- 并网运行功率 -->
+				<td width='11%' class='even'><input class='txt' id='POWER10' onkeyup='Verify(this)' type='text' maxlength='6'/>kW</td>
+				<!-- 离网运行功率 -->
+				<td width='11%' class='even'><input class='txt' id='M-POWER10' onkeyup='Verify(this)' type='text' maxlength='6'/>kW</td>
+			</tr>
+			<tr id='tr12' style='display:none;'>
+				<!-- <td width='50' class='even'><input type='checkbox' value='12' id='CHK12' onclick="TrDisplayControl(this)"/></td> -->
+				<td width='100' class='even'><span>12</span></td>
+				<!-- <td width='180' class='even'><input type="text" id='ST11' value="2016-01-01 00:00" onclick="SelectDate(this,'yyyy-MM-dd hh:mm')" readonly="true" style="width:110px;cursor:pointer"/></td> -->
+				<!-- <td width='180' class='even'><input type="text" id='END11' value="2016-01-01 00:00" onclick="SelectDate(this,'yyyy-MM-dd hh:mm')" readonly="true" style="width:110px;cursor:pointer"/></td> -->
+				<!-- 起始时间 -->
+				<td width='16%' class='even'><select style='width:60px;text-align:center;' id='ST11'></select><span>&nbsp;:&nbsp;</span><select style='width:60px;text-align:center;' id='ST111'></select></td>
+				<!-- 结束时间 -->
+				<td width='16%' class='even'><select style='width:60px;text-align:center;' id='END11'></select><span>&nbsp;:&nbsp;</span><select style='width:60px;text-align:center;' id='END111'></select></td>
+				<!-- 运行模式 -->
+				<td width='21%' class='even'><select style='width:135px;text-align:center;' id='RUNNING_MODE11' name='11' onchange='mode_change(this)'></select></td>
+				<!-- 功率控制模式 -->
+				<td width='21%' class='even'><select style='width:135px;text-align:center;' id='POWER_CTROL_MODE11'></select></td>
+				<!-- 并网运行功率 -->
+				<td width='11%' class='even'><input class='txt' id='POWER11' onkeyup='Verify(this)' type='text' maxlength='6'/>Kw</td>
+				<!-- 离网运行功率 -->
+				<td width='11%' class='even'><input class='txt' id='M-POWER11' onkeyup='Verify(this)' type='text' maxlength='6'/>kW</td>
+			</tr>			
+		</table>
+		<table width='90%' border='1' id='tab2' style='border-collapse:collapse;border-spacing:0px;display:none;border-color:#e0e0e0;'>	
+			<!-- 非分时段控制 -->	
+			<tr id='tr0'>
+				<!-- 运行模式 -->
+				<td width='420' class='td1 odd'><span id='N201'></span>&nbsp<select style='width:105px;text-align:center;' id='SINGLE_RUNNING_MODE' onchange='single_mode_change(this)'></select></td>
+				<!-- 功率控制模式 -->
+				<td width='25%' class='td1 odd'><span id='N202'></span>&nbsp<select style='width:115px;text-align:center;' id='SINGLE_POWER_CTROL_MODE'></select></td>
+				<!-- 并网运行功率 -->
+				<td width='25%' class='td1 odd'><span id='N203'></span>&nbsp<input class='txt' id='SINGLE_POWER' onkeyup='Verify(this)' type='text' maxlength='6'/>&nbsp(<span id='SysP_7'></span>, <span id='SysP_8'></span>)kW</td>
+				<!-- 离网运行功率 -->
+				<td width='25%' class='td1 odd'><span id='N204'></span>&nbsp<input class='txt' id='SINGLE_M-POWER' onkeyup='Verify(this)' type='text' maxlength='6'/>&nbsp(<span id='SysP_9'></span>, <span id='SysP_10'></span>)kW</td>	
+			</tr>
+		</table>
+		<table width='90%' border='0' id='tTime'>
+			<tr>
+				<td width='50%' class='even' align='left'><span id='tip4' class='tip'>&nbsp;</span></td>
+				<td width='50%' class='even' align='right'>
+					<button class='btn' onclick='doSubmit(this)' id='btn6' style='display:block;'><span id='N49'></span></button>
+				</td>
+			</tr>
+		</table>
+	 	<!-- 削峰填谷 -->
+	 	<script type='text/javascript'>
+	 		show_sT_ex('N400', 'title_peak');
+	 	</script>
+	        <table width='90%' border='0' id='tab_peak' style='display:none;'>
+	            <tr>
+	                <td width='30%' class='td1 odd'><span id='N401'></span></td>
+	                <td width='30%' class='td1 odd'><input class='txt' id='ID_0x03B2' onkeyup='Verify(this)' type='text' maxlength='7'/>&nbsp;</td>
+	                <td width='30%' class='td2 odd'>(0, 30000)kW</td>
+	            </tr>
+	            <tr>
+					<td width='30%' class='even tip'><span id='tip9'>&nbsp;</span></td>
+					<td width='30%' class='even tip'></td>
+	                <td width='30%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn9' style='display:block;'><span id='N450'>Save</span></button></td>
+	            </tr>
+	            <tr>
+	                <td width='30%' class='td1 odd'><span id='N402'></span></td>
+	                <td width='30%' class='td1 odd'><input class='txt' id='ID_0x03B3' onkeyup='Verify(this)' type='text' maxlength='7'/>&nbsp;</td>
+	                <td width='30%' class='td2 odd'>(0, 30000)kW</td>
+	            </tr>
+	            <tr>
+					<td width='30%' class='even tip'><span id='tip10'>&nbsp;</span></td>
+					<td width='30%' class='even tip'></td>
+	                <td width='30%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn10' style='display:block;'><span id='N451'Save</span></button></td>
+	            </tr>
+	        </table>
+	 	<!-- 交流限发 -->
+	 	<script type='text/javascript'>
+	 		show_sT_ex('N403', 'title_limite');
+	 	</script>
+        <table width='90%' border='0' id='tab_limite' style='display:none;'>
+            <tr>
+                <td width='30%' class='td1 odd'><span id='N404'></span></td>
+                <td width='30%' class='td1 odd'><input class='txt' id='ID_0x03B6' onkeyup='Verify(this)' type='text' maxlength='7'/>&nbsp;</td>
+                <td width='30%' class='td2 odd'>(0, 30000)kW</td>
+            </tr>
+            <tr>
+				<td width='30%' class='even tip'><span id='tip11'>&nbsp;</span></td>
+				<td width='30%' class='even tip'></td>
+				<td width='30%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn11' style='display:block;'><span id='N452'>Save</span></button></td>
+            </tr>
+        </table>
+	 	<!-- 输出平滑 -->
+	 	<script type='text/javascript'>
+	 		show_sT_ex('N405', 'title_smooth');
+	 	</script>
+        <table width='90%' border='0' id='tab_smooth' style='display:none;'>
+            <tr>
+                <td width='30%' class='td1 odd'><span id='N406'></span></td>
+                <td width='30%' class='td1 odd'><input class='txt' id='ID_0x03B9' onkeyup='Verify(this)' type='text' maxlength='7'/>&nbsp;</td>
+                <td width='30%' class='td2 odd'>(0, 1000000)kW</td>
+            </tr>
+            <tr>
+				<td width='30%' class='even tip'><span id='tip12'>&nbsp;</span></td>
+				<td width='30%' class='even tip'></td>
+                <td width='30%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn12' style='display:block;'><span id='N453'>Save</span></button></td>
+            </tr>
+            <tr>
+                <td width='30%' class='td1 odd'><span id='N407'></span></td>
+                <td width='30%' class='td1 odd'><input class='txt' id='ID_0x03BA' onkeyup='Verify(this)' type='text' maxlength='3'/>&nbsp;</td>
+                <td width='30%' class='td2 odd'>(1, 100)%</td>
+            </tr>
+            <tr>
+				<td width='30%' class='even tip'><span id='tip13'>&nbsp;</span></td>
+				<td width='30%' class='even tip'></td>
+                <td width='30%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn13' style='display:block;'><span id='N454'>Save</span></button></td>
+            </tr>
+            <tr>
+                <td width='30%' class='td1 odd'><span id='N408'></span></td>
+                <td width='30%' class='td1 odd'><input class='txt' id='ID_0x03BB' onkeyup='Verify(this)' type='text' maxlength='3'/>&nbsp;</td>
+                <td width='30%' class='td2 odd'>(1, 60)MIN</td>
+            </tr>
+            <tr>
+				<td width='30%' class='even tip'><span id='tip14'>&nbsp;</span></td>
+				<td width='30%' class='even tip'></td>
+                <td width='30%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn14' style='display:block;'><span id='N455'>Save</span></button></td>
+            </tr>
+            <tr id='soc_u'>
+                <td width='30%' class='td1 odd'><span id='N409'></span></td>
+                <td width='30%' class='td1 odd'><input class='txt' id='ID_0x03BC' onkeyup='Verify(this)' type='text' maxlength='5'/>&nbsp;</td>
+                <td width='30%' class='td2 odd'>(1, 100.0)%</td>
+            </tr>
+            <tr id='soc_ub'>
+				<td width='30%' class='even tip'><span id='tip15'>&nbsp;</span></td>
+				<td width='30%' class='even tip'></td>
+                <td width='30%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn15' style='display:block;'><span id='N456'>Save</span></button></td>
+            </tr>
+            <tr id='soc_l'>
+                <td width='30%' class='td1 odd'><span id='N410'></span></td>
+                <td width='30%' class='td1 odd'><input class='txt' id='ID_0x03BD' onkeyup='Verify(this)' type='text' maxlength='5'/>&nbsp;</td>
+                <td width='30%' class='td2 odd'>(1, 100.0)%</td>
+            </tr>
+            <tr id='soc_lb'>
+				<td width='30%' class='even tip'><span id='tip16'>&nbsp;</span></td>
+				<td width='30%' class='even tip'></td>
+                <td width='30%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn16' style='display:block;'><span id='N457'>Save</span></button></td>
+            </tr>
+            <tr id='bat_u'>
+                <td width='30%' class='td1 odd'><span id='N411'></span></td>
+                <td width='30%' class='td1 odd'><input class='txt' id='ID_0x03BE' onkeyup='Verify(this)' type='text' maxlength='5'/>&nbsp;</td>
+                <td width='30%' class='td2 odd'>(<span id='ID_0x045A_1'></span>, <span id='ID_0x045B_1'></span>)V</td>
+            </tr>
+            <tr id='bat_ub'>
+				<td width='30%' class='even tip'><span id='tip17'>&nbsp;</span></td>
+				<td width='30%' class='even tip'></td>
+                <td width='30%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn17' style='display:block;'><span id='N458'>Save</span></button></td>
+            </tr>
+            <tr id='bat_l'>
+                <td width='30%' class='td1 odd'><span id='N412'></span></td>
+                <td width='30%' class='td1 odd'><input class='txt' id='ID_0x03BF' onkeyup='Verify(this)' type='text' maxlength='5'/>&nbsp;</td>
+                <td width='30%' class='td2 odd'>(<span id='ID_0x045A_2'></span>, <span id='ID_0x045B_2'></span>)V</td>
+            </tr>
+            <tr id='bat_lb'>
+				<td width='30%' class='even tip'><span id='tip18'>&nbsp;</span></td>
+				<td width='30%' class='even tip'></td>
+                <td width='30%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn18' style='display:block;'><span id='N459'>Save</span></button></td>
+            </tr>
+            <tr id='nc'>
+                <td width='30%' class='td1 odd'><span id='N419'></span></td>
+                <td width='30%' class='td1 odd'><input class='txt' id='ID_0x03B7' onkeyup='Verify(this)' type='text' maxlength='7'/>&nbsp;</td>
+                <td width='30%' class='td2 odd'>(0, <span id='SysP_5'></span>)kW</td>
+            </tr>
+            <tr id='nb'>
+				<td width='30%' class='even tip'><span id='tip23'>&nbsp;</span></td>
+				<td width='30%' class='even tip'></td>
+                <td width='30%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn23' style='display:block;'><span id='N464'>Save</span></button></td>
+            </tr>
+        </table>
+	 	<!-- 调频 -->
+	 	<script type='text/javascript'>
+	 		show_sT_ex('N413', 'title_fm');
+	 	</script>
+		<table width='90%' border='0' id='tab_fm' style='display:none;'>
+            <tr>
+                <td width='30%' class='td1 odd'><input name='FM-Adjust' type='radio' value='0' id='Digit-Adjust'/><span id='N414'></span></td>
+                <td width='30%' class='td1 odd'><input name='FM-Adjust' type='radio' value='1' id='Analogy-Adjust'/><span id='N415'></span></td>
+                <td width='30%' class='td1 odd'></td>
+            </tr>
+            <tr>
+             	<td width='30%' class='even tip'><span id='tip19'>&nbsp;</span></td>
+             	<td width='30%' class='even tip'></td>
+                <td width='30%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn19' style='display:block;'><span id='N460'>Save</span></button></td>
+            </tr>
+        </table>
+        <table width='90%' border='0' id='tab_fm_2' style='display:none;'>
+            <tr>
+                <td width='30%' class='td1 odd'><span id='N416'></span></td>
+                <td width='30%' class='td1 odd'><input class='txt' id='ID_0x03C2' onkeyup='Verify(this)' type='text' maxlength='2'/>&nbsp;</td>
+                <td width='30%' class='td2 odd'>(0, 10)V</td>
+            </tr>
+            <tr>
+				<td width='30%' class='even tip'><span id='tip20'>&nbsp;</span></td>
+				<td width='30%' class='even tip'></td>
+                <td width='30%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn20' style='display:block;'><span id='N461'>Save</span></button></td>
+            </tr>
+            <tr>
+                <td width='30%' class='td1 odd'><span id='N417'></span></td>
+                <td width='30%' class='td1 odd'><input class='txt' id='ID_0x03C3' onkeyup='Verify(this)' type='text' maxlength='2'/>&nbsp;</td>
+                <td width='30%' class='td2 odd'>(0, 10)V</td>
+            </tr>
+            <tr>
+				<td width='30%' class='even tip'><span id='tip21'>&nbsp;</span></td>
+				<td width='30%' class='even tip'></td>
+                <td width='30%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn21' style='display:block;'><span id='N462'>Save</span></button></td>
+            </tr>
+		</table>
+		<table width='90%' border='0' id='tab_fm_3' style='display:none;'>
+			<tr>
+				<td width='30%' class='td1 odd'><span id='N418'></span></td>
+				<td width='30%' class='td1 odd'><input id='ID_0x050C' class='txt' onkeyup='Verify(this)' type='text' maxlength='6'/></td>	
+				<td width='30%' class='td1 odd'>(0, <span id='SysP_6'></span>)kW</td>
+			</tr>
+            <tr>
+             	<td width='30%' class='even tip'><span id='tip22'>&nbsp;</span></td>
+             	<td width='30%' class='even tip'></td>
+                <td width='30%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn22' style='display:block;'><span id='N463'>Save</span></button></td>
+            </tr>
+		</table>
+	 	<div class='line_long' id='vsgLine'></div>
+	 	<div class='blank'></div>
+		<!-- VSG -->
+		<script type='text/javascript'>
+			show_sT_ex('N30', 'vsgTitle');
+		</script>
+		<table width='90%' border='0' id='vsgTab1' style='display:none;'>
+			<!-- 输出电压给定值 -->
+			<!-- <tr> -->
+				<!-- <td width='177' class='td1 odd'><span id='N33'></span></td> -->
+				<!-- <td width='100' class='td2 odd'><input class='txt' id='ID_0x018C' onkeyup='Verify(this,reg1)' type='text' maxlength='7'/>V</td> -->
+				<!-- <td width='110' class='td3 odd'>(<span id='ID_0x0418'></span>~<span id='ID_0x0419'></span>)</td> -->
+				<!-- <td width='177' class='td1 odd'></td> -->
+				<!-- <td width='90' class='td2 odd'></td> -->
+				<!-- <td width='100' class='td3 odd'></td> -->
+			<!-- </tr> -->
+			<!-- 输出频率给定值 -->
+			<!-- <tr> -->
+			<!-- 	<td width='177' class='td1 even'><span id='N34'></span></td> -->
+			<!-- 	<td width='100' class='td2 even'><input class='txt' id='ID_0x018D' onkeyup='Verify(this,reg2)' type='text' maxlength='7'/>Hz</td> -->
+			<!-- 	<td width='110' class='td3 even'>(<span id='ID_0x041A'></span>~<span id='ID_0x041B'></span>)</td> -->
+			<!-- 	<td width='177' class='td1 even'></td> -->
+			<!-- 	<td width='90' class='td2 even'></td> -->
+			<!-- 	<td width='100' class='td3 even'></td> -->
+			<!-- </tr> -->
+			<!-- 有功-频率下垂系数 -->
+			<tr>
+				<td width='20%' class='td1 odd'><span id='N35'></span></td>
+			  <td width='10%' class='td2 odd'><input class='txt' id='ID_0x018E' onkeyup='Verify(this)' type='text' maxlength='7'/></td>
+				<td width='20%' class='td3 odd'>(<span id='ID_0x041C'></span>~<span id='ID_0x041D'></span>)</td>
+				<td width='50%' class='td1 odd'></td>
+			</tr>
+			<!-- 二次调频给定值 -->
+			<tr>
+				<td width='20%' class='td1 even'><span id='N36'></span></td>
+			  <td width='10%' class='td2 even'><input class='txt' id='ID_0x0190' onkeyup='Verify(this)' type='text' maxlength='7'/></td>
+				<td width='20%' class='td3 even'>(<span id='ID_0x0420'></span>~<span id='ID_0x0421'></span>)kW</td>
+				<td width='50%' class='td1 even'></td>
+			</tr>
+			<!-- 无功下发给定值 -->
+			<tr>
+				<td width='20%' class='td1 odd'><span id='N37'></span></td>
+			  <td width='10%' class='td2 odd'><input class='txt' id='ID_0x0191' onkeyup='Verify(this)' type='text' maxlength='7'/></td>
+				<td width='20%' class='td3 odd'>(<span id='ID_0x0422'></span>~<span id='ID_0x0423'></span>)kVar</td>
+				<td width='50%' class='td1 odd'></td>
+			</tr>
+		</table>
+		<table width='90%' border='0' id='vsgTab2' style='display:none;'>
+			<tr>
+				<td width='50%' class='even' align='left'><span id='tip5' class='tip'>&nbsp;</span></td>
+				<td width='50%' class='even' align='right'>
+					<button class='btn' onclick='doSubmit(this)' id='btn7' style='display:block;'><span id='N50'></span></button>
+				</td>
+			</tr>
+		</table>
+		<div class='line_long' id='vsgLine'></div>
+		<div class='blank'></div>
+		<!-- 无功调节方式 -->
+		<script type='text/javascript'>
+			show_sT('N23');
+		</script>
+		<table width='90%' border='0'>
+			<tr>
+				<!-- 关闭 -->
+				<td width='30%' class='td1 odd'><input name='QVar' type='radio' value='85' id='QVar1' onclick='ChangeQVar(this)'/><span id='N24'></span></td>
+				<!-- 功率因数 -->
+				<td width='30%' class='td1 odd'><input name='QVar' type='radio' value='161' id='QVar2' onclick='ChangeQVar(this)'/><span id='N25'></span></td>
+				<!-- 无功比例 -->
+				<td width='30%' class='td1 odd'><input name='QVar' type='radio' value='162' id='QVar3' onclick='ChangeQVar(this)'/><span id='N26'></span></td>
+			</tr>
+		</table>
+		<table width='90%' border='0'>
+			<tr>
+				<!-- 功率因数设置 -->
+				<td width='15%' class='td1 even'><span id='N27'></span></td>
+			  <td width='5%' align='left' class='even'><input class='txt' id='ID_0x0185' onkeyup='Verify(this)' type='text' maxlength='6'/></td>
+				<!-- 功率因数上下限 -->
+				<td width='27%' class='td2 even' align='left'>(<span id='ID_0x0414'></span>~-0.900,0.900~<span id='ID_0x0415'></span>)</td>
+				<!-- 无功功率设置 -->
+				<td width='13%' class='td1 even'><span id='N28'></span></td>
+			  <td width='6%' class='even' align='left'><input class='txt' id='ID_0x0186' onkeyup='Verify(this)' type='text' maxlength='6'/></td>
+				<!-- 无功功率上下限 -->
+				<td width='34%' class='td2 even' align='left'>(<span id='ID_0x0416'></span>~<span id='ID_0x0417'></span>)kVar</td>
+			</tr>
+		</table>
+		<table width='90%' border='0'>
+			<tr style='width:100%;'>
+				<td width='50%' class='odd' align='left'><span id='tip' class='tip'>&nbsp;</span></td>
+				<td width='50%' class='odd' align='right'>
+					<button class='btn' onclick='doSubmit(this)' id='btn1' style='display:block;'><span id='N29'></span></button>
+				</td>
+			</tr>
+		</table>	
+		<div class='line_long'></div>
+		<div class='blank'></div>
+		<!-- BMS控制 -->
+		<script type='text/javascript'>
+			show_sT_ex('N16', 'bmsTitle');
+		</script>
+		<table width='90%' border='0' id='bmsTab1'>
+			<tr>
+				<!-- 关 -->
+				<td width='30%' class='td1 odd'><input name='BMS_CTROL' type='radio' value='1' id='BMS_OFF'/><span id='N17'></span></td>
+				<!-- 开 -->
+				<td width='30%' class='td1 odd'><input name='BMS_CTROL' type='radio' value='2' id='BMS_ON'/><span id='N18'></span></td>
+				<!-- 复位 -->
+				<td width='30%' class='td1 odd'><input name='BMS_CTROL' type='radio' value='3' id='BMS_RESET'/><span id='N19'></span></td>
+			</tr>
+		</table>
+		<table width='90%' border='0' id='bmsTab2'>
+			<tr>
+				<td width='50%' class='even' align='left'><span id='tip8' class='tip'>&nbsp;</span></td>
+				<td width='50%' class='even' align='right'>
+					<button class='btn' onclick='doSubmit(this)' id='btn8' style='display:block;'><span id='N20'></span></button>
+				</td>
+			</tr>
+		</table>
+		<div class='line_long' id='bmsLine'></div>
+		<div class='blank'></div>
+		<!-- 启动类型 -->
+		<script type='text/javascript'>
+			show_sT('N31');
+		</script>
+		<table width='90%' border='0'>
+			<tr>
+				<!-- 主动 -->
+				<td width='30%' class='td1 odd'><input name='Offgrid_POWER_CTROL_MODE' type='radio' value='0' id='ACTIVE'/><span id='N12'></span></td>
+				<!-- 被动 -->
+				<td width='30%' class='td1 odd'><input name='Offgrid_POWER_CTROL_MODE' type='radio' value='1' id='PASSIVE'/><span id='N13'></span></td>
+				<!-- 空 -->
+				<td width='30%' class='td1 odd'></span></span></td>
+			</tr>
+		</table>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='50%' class='even' align='left'><span id='tip2' class='tip'>&nbsp;</span></td>
+				<td width='50%' class='even' align='right'>
+					<button class='btn' onclick='doSubmit(this)' id='btn2' style='display:block;'><span id='N38'></span></button>
+				</td>
+			</tr>
+		</table>
+		<div class='line_long'></div>
+		<div class='blank'></div>
+		<!-- 优先级选择 -->
+		<script type='text/javascript'>
+			show_sT('N55');
+		</script>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='30%' class='td1 odd'><input name='Priority-Type' type='radio' value='0' id='Gird-First'/><span id='N56'></span></td>
+				<td width='30%' class='td1 odd'><input name='Priority-Type' type='radio' value='1' id='Micro-Grid First'/><span id='N57'></span></td>
+				<td width='30%' class='td1 odd'></span></span></td>
+			</tr>
+		</table>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='50%' class='even' align='left'><span id='tip24' class='tip'>&nbsp;</span></td>
+				<td width='50%' class='even' align='right'>
+					<button class='btn' onclick='doSubmit(this)' id='btn24' style='display:block;'><span id='N58'></span></button>
+				</td>
+			</tr>
+		</table>
+        <div class='line_long'></div>
+        <div class='blank'></div>
+		<!-- 起停控制 -->
+		<script type='text/javascript'>
+			show_sT('N32');
+		</script>
+		<table width='90%' border='0'>
+			<tr>
+				<!-- 启动 -->
+				<td width='30%' class='td1 odd'><input name='Start_Stop' type='radio' value='1' id='OFF_START'/><span id='N14'></span></td>
+				<!-- 停止 -->
+				<td width='30%' class='td1 odd'><input name='Start_Stop' type='radio' value='2' id='OFF_STOP'/><span id='N15'></span></td>
+				<!-- 空 -->
+				<td width='30%' class='td1 odd'></span></span></td>
+			</tr>
+		</table>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='50%' class='even' align='left'><span id='tip3' class='tip'>&nbsp;</span></td>
+				<td width='50%' class='even' align='right'>
+					<button class='btn' onclick='doSubmit(this)' id='btn3' style='display:block;'><span id='N39'></span></button>
+				</td>
+			</tr>
+		</table>
+		<div class='line_long'></div>
+		<div class='btm_blank'></div>
+		<div id='trans'></div>
+		<!--[if IE 6]><script type='text/javascript'>document.execCommand('BackgroundImageCache',false,true);</script><![endif]-->
+	</body>
+    <script type='text/javascript'>
+        window.history.forward(1);
+        var language=0;
+        var Json;
+        //复选状态
+        var chk=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+        //用于指示当前行的显示状态
+        var flg=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+        var timeSlotNum=0;
+        var lang=
+        {
+            N01:['运行参数','Operating Parameters'],
+
+			N12:['主动模式','Active Mode'],
+			N13:['被动模式','Passive Mode'],
+			N14:['启动','Start'],
+			N15:['停机','Stop'],
+
+			N16:['BMS控制','BMS Control'],
+			N17:['断开','Cut Off'],
+			N18:['闭合','Closed'],
+			N19:['故障复位','Fault Reset'],
+			N20:['设&nbsp;&nbsp;置','Set'],
+
+            N23:['无功调节方式','Q-ac Regulation'],
+            N24:['关闭','Close'],
+            N25:['功率因数','Power Factor'],
+            N26:['无功功率','Q-ac Power'],
+            N27:['功率因数','Power Factor'],
+            N28:['无功功率','Q-ac Power'],
+            N29:['设&nbsp;&nbsp;置','Set'],
+            N30:['VSG模式设置','VSG MODE SETTING'],
+            N31:['启动类型','Start Type'],
+            N32:['起停控制','Start-Stop'],
+            //N33:['输出电压给定值','Output Setpoint'],
+            //N34:['输出频率给定值','Output F Setpoint'],
+            N35:['有功-频率下垂系数','F Droop Coeffi'],
+            N36:['二次调频给定值','2nd FR Setpoint'],
+            N37:['无功下发给定值','Q Setpoint'],
+            N38:['设&nbsp;&nbsp;置','Set'],
+            N39:['设&nbsp;&nbsp;置','Set'],
+
+            //模式控制:分时
+            N40:['分时段模式设置','Time Slot Mode Setting'],
+            N41:['+','+'],
+            N42:['-','-'], 
+            N43:['序号','No.'],
+            N44:['开始时间(h:mm)','Start Time(h:mm)'],
+            N45:['结束时间(h:mm)','End Time(h:mm)'],
+            N46:['运行模式','Running Power'],
+            N47:['功率控制模式','Power Ctrol Mode'],         
+            N48:['并网功率','Grid Power'],
+
+            N49:['设&nbsp;&nbsp;置','Set'],
+            N50:['设&nbsp;&nbsp;置','Set'],
+			N51:['设置失败！','Set failed!'],
+			N52:['设置成功！','Set successfully!'], 
+			N53:['格式错误！','Format error!'],
+			N54:['范围错误！','Range error!'],   
+
+            N55:['优先级选择','Priority-Sel'],
+            N56:['电网优先','Gird-First'],
+            N57:['微网优先','Micro-Grid First'],
+		 	N58:['设&nbsp;&nbsp;置','Set'],
+
+			N60:['星期','Week'], 
+			N61:['离网功率','Off-Grid Power'], 
+
+            N70:['并网','Grid'],
+            N71:['离网','Off-Grid'],
+            N72:['并离网切换','Grid-OnOFF'],
+			N74:['固定功率','Const Power'],
+            N75:['跟踪负载功率','Tracking Load'],
+            N76:['PCC点功率控制','PCC Control'],
+            N77:['防逆流','Anti Reflux'],          
+
+            N80:['并网','Grid'],
+            N81:['离网','Off-Grid'],
+            N82:['并离网切换','Grid-OnOFF'],
+			N84:['固定功率','Const Power'],
+            N85:['跟踪负载功率','Tracking Load'],
+            N86:['PCC点功率控制','PCC Control'],
+            N87:['防逆流','Anti Reflux'], 
+
+            N90:['并网','Grid'],
+            N91:['离网','Off-Grid'],
+            N92:['并离网切换','Grid-OnOFF'],
+			N94:['固定功率','Const Power'],
+            N95:['跟踪负载功率','Tracking Load'],
+            N96:['PCC点功率控制','PCC Control'],
+            N97:['防逆流','Anti Reflux'], 
+
+            N100:['并网','Grid'],
+            N101:['离网','Off-Grid'],
+            N102:['并离网切换','Grid-OnOFF'],
+			N104:['固定功率','Const Power'],
+            N105:['跟踪负载功率','Tracking Load'],
+            N106:['PCC点功率控制','PCC Control'],
+            N107:['防逆流','Anti Reflux'], 
+
+            N110:['并网','Grid'],
+            N111:['离网','Off-Grid'],
+            N112:['并离网切换','Grid-OnOFF'],
+			N114:['固定功率','Const Power'],
+            N115:['跟踪负载功率','Tracking Load'],
+            N116:['PCC点功率控制','PCC Control'],
+            N117:['防逆流','Anti Reflux'], 
+
+            N120:['并网','Grid'],
+            N121:['离网','Off-Grid'],
+            N122:['并离网切换','Grid-OnOFF'],
+			N124:['固定功率','Const Power'],
+            N125:['跟踪负载功率','Tracking Load'],
+            N126:['PCC点功率控制','PCC Control'],
+            N127:['防逆流','Anti Reflux'], 
+
+            N130:['并网','Grid'],
+            N131:['离网','Off-Grid'],
+            N132:['并离网切换','Grid-OnOFF'],
+			N134:['固定功率','Const Power'],
+            N135:['跟踪负载功率','Tracking Load'],
+            N136:['PCC点功率控制','PCC Control'],
+            N137:['防逆流','Anti Reflux'], 
+
+            N140:['并网','Grid'],
+            N141:['离网','Off-Grid'],
+            N142:['并离网切换','Grid-OnOFF'],
+			N144:['固定功率','Const Power'],
+            N145:['跟踪负载功率','Tracking Load'],
+            N146:['PCC点功率控制','PCC Control'],
+            N147:['防逆流','Anti Reflux'], 
+
+            N150:['并网','Grid'],
+            N151:['离网','Off-Grid'],
+            N152:['并离网切换','Grid-OnOFF'],
+			N154:['固定功率','Const Power'],
+            N155:['跟踪负载功率','Tracking Load'],
+            N156:['PCC点功率控制','PCC Control'],
+            N157:['防逆流','Anti Reflux'], 
+
+            N160:['并网','Grid'],
+            N161:['离网','Off-Grid'],
+            N162:['并离网切换','Grid-OnOFF'],
+			N164:['固定功率','Const Power'],
+            N165:['跟踪负载功率','Tracking Load'],
+            N166:['PCC点功率控制','PCC Control'],
+            N167:['防逆流','Anti Reflux'], 
+
+            N170:['并网','Grid'],
+            N171:['离网','Off-Grid'],
+            N172:['并离网切换','Grid-OnOFF'],
+			N174:['固定功率','Const Power'],
+            N175:['跟踪负载功率','Tracking Load'],
+            N176:['PCC点功率控制','PCC Control'],
+            N177:['防逆流','Anti Reflux'], 
+
+            N180:['并网','Grid'],
+            N181:['离网','Off-Grid'],
+            N182:['并离网切换','Grid-OnOFF'],
+			N184:['固定功率','Const Power'],
+            N185:['跟踪负载功率','Tracking Load'],
+            N186:['PCC点功率控制','PCC Control'],
+            N187:['防逆流','Anti Reflux'],
+
+            //模式控制:不分时
+            N200:['模式设置','Mode Setting'],
+            N201:['运行模式','Running Power'],
+            N202:['功率控制模式','Power Ctrol Mode'],         
+            N203:['并网功率','Grid Power'],
+            N204:['离网功率','Off-Grid Power'],
+
+            N210:['并网','Grid'],
+            N211:['离网','Off-Grid'],
+            N212:['并离网切换','Grid-OnOFF'],
+            N214:['固定功率','Const Power'],
+            N215:['跟踪负载功率','Tracking Load'],
+            N216:['PCC点功率控制','PCC Control'],
+            N217:['防逆流','Anti Reflux'],    
+
+            //按星期
+            N300:['星期一','Monday'],
+            N301:['星期二','Tuesday'],  
+            N302:['星期三','Wednesday'],  
+            N303:['星期四','Thursday'],  
+            N304:['星期五','Friday'],              
+            N305:['星期六','Saturday'],  
+            N306:['星期日','Sunday'], 
+
+             //高级功能
+            N400:['削峰填谷','Peak Load Shifting'],
+            N401:['峰值','Peak Value'],
+            N402:['谷值','Valley Value'],
+            N403:['交流限发','Acside PVlimit'],
+            N404:['PV限发功率','PVLimited Power'],
+            N405:['输出平滑','Ramp Rate Control'],
+            N406:['额定光伏功率','Rated PV Power'],
+            N407:['斜率','Slope'],
+            N408:['斜率时间','Slope Time'],
+            N409:['SOC 上限','SOC Uplimit'],
+            N410:['SOC 下限','SOC Lowlimit'],
+            N411:['Vbat 上限','Vbat Uplimit'],
+            N412:['Vbat 下限','Vbat Lowlimit'],
+            N413:['调频','Frequency Adjust'],
+            N414:['数字调频','Digit Adjust'],
+            N415:['模拟调频','Analogy Adjust'],
+            N416:['模拟上限','Analogy Uplimit'],
+            N417:['模拟下限','Analogy Lowlimit'],
+            N418:['运行功率','Running Power'],
+            N419:['自充电功率','Self-Charging Power'],
+
+            N450:['设&nbsp;&nbsp;置','Set'],
+            N451:['设&nbsp;&nbsp;置','Set'],
+            N452:['设&nbsp;&nbsp;置','Set'],
+            N453:['设&nbsp;&nbsp;置','Set'],
+            N454:['设&nbsp;&nbsp;置','Set'],
+            N455:['设&nbsp;&nbsp;置','Set'],
+            N456:['设&nbsp;&nbsp;置','Set'],
+            N457:['设&nbsp;&nbsp;置','Set'],
+            N458:['设&nbsp;&nbsp;置','Set'],
+            N459:['设&nbsp;&nbsp;置','Set'],
+            N460:['设&nbsp;&nbsp;置','Set'],
+            N461:['设&nbsp;&nbsp;置','Set'],
+            N462:['设&nbsp;&nbsp;置','Set'],
+            N463:['设&nbsp;&nbsp;置','Set'],
+            N464:['设&nbsp;&nbsp;置','Set'],
+
+            //不需要初始化
+            N498:['限发功率小于逆流功率, 设置失败!','Limited power lt Reflux power, Set Failed!'],
+            N499:['设置失败！','Set Failed!'],
+            N500:['设置成功!','Set up successfully!'],
+            N501:['格式错误!','Format error!'],
+            N502:['范围错误!','Range error!']            
+        };
+        window.onresize = function()
+        {
+            var bodywidth=document.body.clientWidth;
+            //最小宽度867=780/0.9
+            if(bodywidth<867){document.body.style.width="867px";}else{document.body.style.width="auto";}
+        }
+        function ajax()
+        {
+            var URL='s_005.html?0x0000&time='+new Date();
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            xmlhttp.onreadystatechange=function()
+            {
+                if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    eval('Json='+xmlhttp.responseText);           
+                }
+            };
+            xmlhttp.open('GET',URL,true);
+            xmlhttp.send();
+        }
+        function Init()
+        {
+			Json={	ID_0x0301:85,ID_0x0282:0x22,
+					ID_0x0184:0xA1,ID_0x0185:1000,ID_0x0186:-100,
+					ID_0x0188:0,ID_0x0189:0,ID_0x018A:1,
+					ID_0x018C:4005,ID_0x018D:4944,ID_0x018E:2,ID_0x018F:0,ID_0x0190:100,ID_0x0191:500,
+					ID_0x0384:500,ID_0x0386:0,ID_0x0388:0,ID_0x0389:0,ID_0x038A:1,ID_0x038E:0x55,ID_0x038F:0x55,
+					ID_0x03B2:100,ID_0x03B3:200,ID_0x03B6:300,ID_0x03B7:300,ID_0x03B9:100,ID_0x03BA:40,ID_0x03BB:5,ID_0x03BC:1000,ID_0x03BD:10,ID_0x03BE:6506,ID_0x03BF:5000,ID_0x03C1:0,ID_0x03C2:10,ID_0x03C3:3,
+					ID_0x0414:-1000,ID_0x0415:1000,ID_0x0416:-300,ID_0x0417:300,
+					ID_0x0418:3800,ID_0x0419:4100,ID_0x041A:4900,ID_0x041B:5100,ID_0x041C:1,ID_0x041D:4,ID_0x0420:-5000,ID_0x0421:5000,ID_0x0422:-5000,ID_0x0423:5000,ID_0x045A:5000,ID_0x045B:8000,
+					ID_0x0503:1,ID_0x0504:1,ID_0x0508:1,ID_0x0509:1,ID_0x050A:0,ID_0x050B:1,ID_0x050C:121,ID_0x050D:121,
+					ID_0x0513:1,ID_0x0514:1,ID_0x0518:1,ID_0x0519:1,ID_0x051A:1,ID_0x051B:1,ID_0x051C:502,ID_0x051D:502,
+					ID_0x0523:1,ID_0x0524:1,ID_0x0528:1,ID_0x0529:1,ID_0x052A:0,ID_0x052B:1,ID_0x052C:503,ID_0x052D:503,
+					ID_0x0533:1,ID_0x0534:1,ID_0x0538:1,ID_0x0539:1,ID_0x053A:1,ID_0x053B:1,ID_0x053C:504,ID_0x053D:504,
+					ID_0x0543:1,ID_0x0544:1,ID_0x0548:1,ID_0x0549:1,ID_0x054A:0,ID_0x054B:1,ID_0x054C:505,ID_0x054D:505,
+					ID_0x0553:1,ID_0x0554:1,ID_0x0558:1,ID_0x0559:1,ID_0x055A:1,ID_0x055B:1,ID_0x055C:506,ID_0x055D:506,
+					ID_0x0563:1,ID_0x0564:1,ID_0x0568:1,ID_0x0569:1,ID_0x056A:1,ID_0x056B:1,ID_0x056C:507,ID_0x056D:507,
+					ID_0x0573:1,ID_0x0574:1,ID_0x0578:1,ID_0x0579:1,ID_0x057A:1,ID_0x057B:1,ID_0x057C:508,ID_0x057D:508,
+					ID_0x0583:1,ID_0x0584:1,ID_0x0588:1,ID_0x0589:1,ID_0x058A:1,ID_0x058B:1,ID_0x058C:509,ID_0x058D:509,
+					ID_0x0593:1,ID_0x0594:1,ID_0x0598:1,ID_0x0599:1,ID_0x059A:1,ID_0x059B:1,ID_0x059C:500,ID_0x059D:500,
+					ID_0x05A3:0,ID_0x05A4:0,ID_0x05A8:0,ID_0x05A9:0,ID_0x05AA:0,ID_0x05AB:0,ID_0x05AC:510,ID_0x05AD:510,
+					ID_0x05B3:0,ID_0x05B4:0,ID_0x05B8:0,ID_0x05B9:0,ID_0x05BA:0,ID_0x05BB:0,ID_0x05BC:800,ID_0x05BD:800
+				}
+
+            var URL='s_005.html?0x0000&time='+new Date();
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            //xmlhttp.onreadystatechange=function()
+            {
+                //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                   	//eval('Json='+xmlhttp.responseText);			
+
+					if(Json.ID_0x0301==0x55)language=0;else language=1;
+
+					//初始化语言1~48
+					lang_init_ex(1,1);
+					lang_init_ex(12,15);
+					lang_init_ex(16,20);
+					lang_init_ex(23,32);
+					lang_init_ex(35,39);
+					lang_init_ex(40,50);
+					lang_init_ex(55,58);
+					lang_init_ex(61,61);
+					lang_init_ex(200,200);
+ 					lang_init_ex(400,419);
+ 					lang_init_ex(450,464);
+					timeSlotNum=0;
+
+					//是否为分时段控制
+					if(Json.ID_0x050B<10)
+					{
+	 					$('title_peak').style.display='none';
+	 					$('title_limite').style.display='none';
+	 					$('title_smooth').style.display='none';
+	 					$('title_fm').style.display='none';
+	 					$('tab_peak').style.display='none';
+	 					$('tab_limite').style.display='none';
+	 					$('tab_smooth').style.display='none';
+	 					$('tab_fm').style.display='none';
+	 					$('tab_fm_2').style.display='none';
+	 					$('tab_fm_3').style.display='none';
+						if(Json.ID_0x0389==1)
+						{
+							//删除所有option, 动态切换语言时必须操作
+							for(var i=0;i<12;i++)
+							{
+								eval('$(\'ST'+i+'\').options.length=0;');
+								eval('$(\'ST'+(i+100)+'\').options.length=0;');
+								eval('$(\'END'+i+'\').options.length=0;');
+								eval('$(\'END'+(i+100)+'\').options.length=0;');
+								eval('$(\'RUNNING_MODE'+i+'\').options.length=0;');
+								eval('$(\'POWER_CTROL_MODE'+i+'\').options.length=0;');
+							}
+
+							//初始化时间数字和默认功率值
+							for(var i=0;i<12;i++)
+							{
+								for(var j=0; j<24; j++)eval('$(\'ST'+i+'\').options.add(new Option('+j+','+j+'));');
+								for(var k=0; k<60; k++)eval('$(\'ST'+(i+100)+'\').options.add(new Option('+k+','+k+'));');
+								for(var l=0; l<24; l++)eval('$(\'END'+i+'\').options.add(new Option('+l+','+l+'));');
+								for(var m=0; m<60; m++)eval('$(\'END'+(i+100)+'\').options.add(new Option('+m+','+m+'));');	
+								eval('$(\'POWER'+i+'\').value=0;');		
+								eval('$(\'M-POWER'+i+'\').value=0;');					
+							}
+
+							//初始化分时段控制组件
+							for(var i=0;i<12;i++)
+							{
+								//注意eval里的表达式含有变量计算时需要把变量替换为 '+表达式+'
+								eval('$(\'RUNNING_MODE'+i+'\').options.add(new Option(lang.N'+(70+i*10+0)+'[language],0));');
+								eval('$(\'RUNNING_MODE'+i+'\').options.add(new Option(lang.N'+(70+i*10+1)+'[language],1));');
+								if(Json.ID_0x038E==0xAA){
+									eval('$(\'RUNNING_MODE'+i+'\').options.add(new Option(lang.N'+(70+i*10+2)+'[language],2));');
+								}					
+								eval('$(\'POWER_CTROL_MODE'+i+'\').options.add(new Option(lang.N'+(70+i*10+4)+'[language],0));');
+								eval('$(\'POWER_CTROL_MODE'+i+'\').options.add(new Option(lang.N'+(70+i*10+5)+'[language],1));');
+								eval('$(\'POWER_CTROL_MODE'+i+'\').options.add(new Option(lang.N'+(70+i*10+6)+'[language],2));');
+								eval('$(\'POWER_CTROL_MODE'+i+'\').options.add(new Option(lang.N'+(70+i*10+7)+'[language],3));');
+							}
+
+							//$('addsubBtn').style.display='block';
+							$('tab1').style.display='table';
+							$('tab1').rows[0].style.display = $('tab1').rows[0].style.display = 'none';
+							$('tab1').rows[1].style.display = $('tab1').rows[1].style.display = 'none';
+							$('tab1').rows[2].style.display = $('tab1').rows[2].style.display = 'none';
+							$('tab1').rows[3].style.display = $('tab1').rows[3].style.display = 'none';
+							$('tab1').rows[4].style.display = $('tab1').rows[4].style.display = 'none';
+							$('tab1').rows[5].style.display = $('tab1').rows[5].style.display = 'none';
+							$('tab1').rows[6].style.display = $('tab1').rows[6].style.display = 'none';
+							$('tab1').rows[7].style.display = $('tab1').rows[7].style.display = 'none';
+							$('tab1').rows[8].style.display = $('tab1').rows[8].style.display = 'none';
+							$('tab1').rows[9].style.display = $('tab1').rows[9].style.display = 'none';
+							$('tab1').rows[10].style.display = $('tab1').rows[10].style.display = 'none';
+							$('tab1').rows[11].style.display = $('tab1').rows[11].style.display = 'none';
+							$('tab1').rows[12].style.display = $('tab1').rows[12].style.display = 'none';
+							//$('btn4').style.display='block';
+				    		//$('btn5').style.display='block';
+				    		$('btn6').style.display='block'; 
+							$('tab2').style.display='none';		
+							//$('tipmode').innerHTML=lang.N40[language];	
+							$('tTime').style.display='none';
+							$('tipmode2').style.display='none';
+							$('tipmode1').style.display='block';
+						}
+						else if(Json.ID_0x0389==2)
+						{
+							//删除所有option, 动态切换语言时必须操作
+							for(var i=0;i<7;i++)
+							{
+								eval('$(\'ST'+i+'\').style.display=\'none\';');
+								eval('$(\'ST'+(i+100)+'\').style.display=\'none\';');
+								eval('$(\'END'+i+'\').style.display=\'none\';');
+								eval('$(\'END'+(i+100)+'\').style.display=\'none\';');
+								eval('$(\'RUNNING_MODE'+i+'\').options.length=0;');
+								eval('$(\'POWER_CTROL_MODE'+i+'\').options.length=0;');
+							}
+
+							$('N44').innerHTML=lang.N60[language];
+							$('N45').innerHTML='&nbsp;';
+							lang_init_ex(300,306);  
+
+							//初始化分时段控制组件
+							for(var i=0;i<7 ;i++)
+							{
+								//注意eval里的表达式含有变量计算时需要把变量替换为 '+表达式+'
+								eval('$(\'POWER'+i+'\').value=0;');	
+								eval('$(\'M-POWER'+i+'\').value=0;');	
+								eval('$(\'RUNNING_MODE'+i+'\').options.add(new Option(lang.N'+(70+i*10+0)+'[language],0));');
+								eval('$(\'RUNNING_MODE'+i+'\').options.add(new Option(lang.N'+(70+i*10+1)+'[language],1));');
+								if(Json.ID_0x038E==0xAA){
+									eval('$(\'RUNNING_MODE'+i+'\').options.add(new Option(lang.N'+(70+i*10+2)+'[language],2));');
+								}
+								eval('$(\'POWER_CTROL_MODE'+i+'\').options.add(new Option(lang.N'+(70+i*10+4)+'[language],0));');
+								eval('$(\'POWER_CTROL_MODE'+i+'\').options.add(new Option(lang.N'+(70+i*10+5)+'[language],1));');
+								eval('$(\'POWER_CTROL_MODE'+i+'\').options.add(new Option(lang.N'+(70+i*10+6)+'[language],2));');
+								eval('$(\'POWER_CTROL_MODE'+i+'\').options.add(new Option(lang.N'+(70+i*10+7)+'[language],3));');
+							}
+
+							//$('addsubBtn').style.display='none';
+							$('tab1').style.display='table';
+							$('tab1').rows[0].style.display = $('tab1').rows[0].style.display = 'none';
+							$('tab1').rows[1].style.display = $('tab1').rows[1].style.display = 'none';
+							$('tab1').rows[2].style.display = $('tab1').rows[2].style.display = 'none';
+							$('tab1').rows[3].style.display = $('tab1').rows[3].style.display = 'none';
+							$('tab1').rows[4].style.display = $('tab1').rows[4].style.display = 'none';
+							$('tab1').rows[5].style.display = $('tab1').rows[5].style.display = 'none';
+							$('tab1').rows[6].style.display = $('tab1').rows[6].style.display = 'none';
+							$('tab1').rows[7].style.display = $('tab1').rows[7].style.display = 'none';
+							$('tab1').rows[8].style.display = $('tab1').rows[8].style.display = 'none';
+							$('tab1').rows[9].style.display = $('tab1').rows[9].style.display = 'none';
+							$('tab1').rows[10].style.display = $('tab1').rows[10].style.display = 'none';
+							$('tab1').rows[11].style.display = $('tab1').rows[11].style.display = 'none';
+							$('tab1').rows[12].style.display = $('tab1').rows[12].style.display = 'none';
+
+							//隐藏END，从新设置ST列的宽度
+				  			var trs = $('tab1').rows;  
+				            for(var i = 0, len = trs.length; i < len; i++){  
+				                var cell = trs[i].cells[2]; 
+				                trs[i].cells[1].width ='32%';
+				                cell.style.display = 'none';  
+				            }
+
+							//$('btn4').style.display='block';
+				    		//$('btn5').style.display='block';
+				    		$('btn6').style.display='block'; 
+							$('tab2').style.display='none';		
+							$('tTime').style.display='none';
+							$('tipmode2').style.display='none';
+							$('tipmode1').style.display='block';				
+						}
+						else
+						{		
+							$('SINGLE_RUNNING_MODE').options.length=0;
+							$('SINGLE_POWER_CTROL_MODE').options.length=0;						
+				    		//初始化非分时模式控制组件
+				    		lang_init_ex(201,204);
+							//注意eval里的表达式含有变量计算时需要把变量替换为 '+表达式+'
+							//需要将'\'转换为'\\'"
+							eval('$(\'SINGLE_RUNNING_MODE\').options.add(new Option(lang.N210[language],0));');
+							eval('$(\'SINGLE_RUNNING_MODE\').options.add(new Option(lang.N211[language],1));');
+							if(Json.ID_0x038E==0xAA){
+								eval('$(\'SINGLE_RUNNING_MODE\').options.add(new Option(lang.N212[language],2));');
+							}
+							eval('$(\'SINGLE_POWER_CTROL_MODE\').options.add(new Option(lang.N214[language],0));');
+							eval('$(\'SINGLE_POWER_CTROL_MODE\').options.add(new Option(lang.N215[language],1));');
+							eval('$(\'SINGLE_POWER_CTROL_MODE\').options.add(new Option(lang.N216[language],2));');
+							eval('$(\'SINGLE_POWER_CTROL_MODE\').options.add(new Option(lang.N217[language],3));');
+							$('SysP_7').innerHTML=parseInt(-Json.ID_0x0384*1.1);
+							$('SysP_8').innerHTML=parseInt(Json.ID_0x0384*1.1);
+							$('SysP_9').innerHTML=parseInt(-Json.ID_0x0384*1.1);
+							$('SysP_10').innerHTML=parseInt(Json.ID_0x0384*1.1);
+							//$('addsubBtn').style.display='none';
+	        				$('SINGLE_POWER_CTROL_MODE').disabled=false;
+	        				$('SINGLE_POWER').disabled=false;
+	        				$('SINGLE_M-POWER').disabled=false;
+							$('SINGLE_RUNNING_MODE').options[0].selected=true;	
+							$('SINGLE_POWER_CTROL_MODE').options[0].selected=true;
+							$('tab1').style.display='none';	
+							$('tab2').style.display='table';
+							$('tab2').rows[0].style.display = $('tab1').rows[0].style.display = 'table';
+							//$('btn4').style.display='none';
+							//$('btn5').style.display='none';
+							$('btn6').style.display='block';
+							$('tipmode2').style.display='block';
+							$('tipmode1').style.display='none';
+						}
+					}else{
+						$('tipmode2').style.display='none';
+						$('tipmode1').style.display='none';
+						$('tTime').style.display='none';
+						$('tab1').style.display='none';	
+						$('tab2').style.display='none';	
+	 					if(Json.ID_0x050B == 10)
+	 					{
+	 						//削峰填谷
+	 						$('title_peak').style.display='block';
+	 						$('title_limite').style.display='none';
+	 						$('title_smooth').style.display='none';
+	 						$('title_fm').style.display='none';
+	 						$('tab_peak').style.display='block';
+	 						$('tab_limite').style.display='none';
+	 						$('tab_smooth').style.display='none';
+	 						$('tab_fm').style.display='none';
+	 						$('tab_fm_2').style.display='none';
+	 						$('tab_fm_3').style.display='none';	
+					        $('ID_0x03B2').value=Json.ID_0x03B2;
+					        $('ID_0x03B3').value=Json.ID_0x03B3;
+	 					}
+	 					else if(Json.ID_0x050B == 11)
+	 					{
+	 						//交流限发
+	 						$('title_peak').style.display='none';
+	 						$('title_limite').style.display='block';
+	 						$('title_smooth').style.display='none';
+	 						$('title_fm').style.display='none';
+	 						$('tab_peak').style.display='none';
+	 						$('tab_limite').style.display='block';
+	 						$('tab_smooth').style.display='none';
+	 						$('tab_fm').style.display='none';
+	 						$('tab_fm_2').style.display='none';
+	 						$('tab_fm_3').style.display='none';	
+	 						//$('SysP_3').innerHTML=parseInt(Json.ID_0x0384*1.1);
+							$('ID_0x03B6').value=Json.ID_0x03B6;
+	 					}
+	 					else if(Json.ID_0x050B == 12)
+	 					{
+	 						//输出平滑
+	 						$('title_peak').style.display='none';
+	 						$('title_limite').style.display='none';
+	 						$('title_smooth').style.display='block';
+	 						$('title_fm').style.display='none';
+	 						$('tab_peak').style.display='none';
+	 						$('tab_limite').style.display='none';
+	 						$('tab_smooth').style.display='block';
+	 						$('tab_fm').style.display='none';
+	 						$('tab_fm_2').style.display='none';
+	 						$('tab_fm_3').style.display='none';	
+	 						$('ID_0x03B9').value=Json.ID_0x03B9;
+	 						$('ID_0x03BA').value=Json.ID_0x03BA;
+	 						$('ID_0x03BB').value=Json.ID_0x03BB;
+	 						//$('SysP_4').innerHTML=parseInt(Json.ID_0x0384*1.1);
+	 						$('SysP_5').innerHTML=parseInt(Json.ID_0x0384*1.1);
+	 						$('ID_0x03B7').value=Json.ID_0x03B7;	
+	 						if(Json.ID_0x038F == 0xAA){
+	 							$('bat_u').style.display='none';
+	 							$('bat_ub').style.display='none';
+	 							$('bat_l').style.display='none';
+	 							$('bat_lb').style.display='none';
+		 						$('ID_0x03BC').value=(Json.ID_0x03BC/10.0).toFixed(1);
+		 						$('ID_0x03BD').value=(Json.ID_0x03BD/10.0).toFixed(1);	 						
+	 						}else{
+	 							$('soc_u').style.display='none';
+	 							$('soc_ub').style.display='none';
+	 							$('soc_l').style.display='none';
+	 							$('soc_lb').style.display='none';
+		 						$('ID_0x03BE').value=(Json.ID_0x03BE/10.0).toFixed(1);
+		 						$('ID_0x03BF').value=(Json.ID_0x03BF/10.0).toFixed(1);	 
+	 						}						
+	 					}
+	 					else if(Json.ID_0x050B == 13)
+	 					{
+	 						//调频
+	 						$('title_peak').style.display='none';
+	 						$('title_limite').style.display='none';
+	 						$('title_smooth').style.display='none';
+	 						$('title_fm').style.display='block';
+	 						$('tab_peak').style.display='none';
+	 						$('tab_limite').style.display='none';
+	 						$('tab_smooth').style.display='none';
+	 						$('tab_fm').style.display='block';	 	
+	 						if(Json.ID_0x03C1 == 0){
+	 							//数字调频
+				                $('Digit-Adjust').checked=true;
+				                $('Analogy-Adjust').checked=false; 
+	 							$('tab_fm_2').style.display='none';
+	 							$('tab_fm_3').style.display='block';
+	 							$('ID_0x050C').value=Json.ID_0x050C;
+	 							$('SysP_6').innerHTML=parseInt(Json.ID_0x0384*1.1);
+	 						}else{
+	 							//模拟调频
+				                $('Digit-Adjust').checked=false;
+				                $('Analogy-Adjust').checked=true; 
+	 							$('tab_fm_2').style.display='block';
+	 							$('tab_fm_3').style.display='none';
+	 							$('ID_0x03C2').value=Json.ID_0x03C2;
+	 							$('ID_0x03C3').value=Json.ID_0x03C3;
+	 						}				
+	 					}
+	 					else
+	 					{
+	 						$('title_peak').style.display='none';
+	 						$('title_limite').style.display='none';
+	 						$('title_smooth').style.display='none';
+	 						$('title_fm').style.display='none';
+	 						$('tab_peak').style.display='none';
+	 						$('tab_limite').style.display='none';
+	 						$('tab_smooth').style.display='none';	
+	 						$('tab_fm').style.display='none';	
+	 						$('tab_fm_2').style.display='none'; 
+	 						$('tab_fm_3').style.display='none';						
+	 					}
+					}
+					//是否显示VSG参数
+					if(Json.ID_0x0388)
+					{
+						$('vsgTitle').style.display='block';
+						$('vsgTab1').style.display='table';
+						$('vsgTab2').style.display='table';
+						$('vsgLine').style.display='block';	
+					}
+					else
+					{
+						$('vsgTitle').style.display='none';
+						$('vsgTab1').style.display='none';
+						$('vsgTab2').style.display='none';
+						$('vsgLine').style.display='none';
+					}
+
+					//是否显示BMS控制
+					if(Json.ID_0x038A!=0)
+					{
+						$('bmsTitle').style.display='block';
+						$('bmsTab1').style.display='table';
+						$('bmsTab2').style.display='table';		
+						$('bmsLine').style.display='block';
+					}
+					else
+					{
+						$('bmsTitle').style.display='none';
+						$('bmsTab1').style.display='none';
+						$('bmsTab2').style.display='none';
+						$('bmsLine').style.display='none';
+					}
+					
+					
+					//设置获取的参数到界面
+					doSetValue(Json);
+
+					//左下角操作结果提示区清空
+					show_tip('&nbsp;');
+
+					//用户权限限定，user用户无法配置系统参数
+					if(Json.ID_0x0282==0x11)
+					{
+						$('btn1').style.display='none';
+						$('btn2').style.display='none';
+						$('btn3').style.display='none';
+						//$('btn4').style.display='none';
+			    		//$('btn5').style.display='none';
+			    		$('btn6').style.display='none';
+			    		$('btn7').style.display='none';
+			    		$('btn8').style.display='none';
+			    		$('btn9').style.display='none';
+			    		$('btn10').style.display='none';
+			    		$('btn11').style.display='none';
+			    		$('btn12').style.display='none';
+			    		$('btn13').style.display='none';
+			    		$('btn14').style.display='none';
+			    		$('btn15').style.display='none';
+			    		$('btn16').style.display='none';
+			    		$('btn17').style.display='none';
+			    		$('btn18').style.display='none';
+			    		$('btn19').style.display='none';
+			    		$('btn20').style.display='none';
+			    		$('btn21').style.display='none';
+			    		$('btn22').style.display='none';
+			    		$('btn23').style.display='none';
+			    		$('btn24').style.display='none';
+						$('trans').style.zIndex=9999;	
+					}
+					else
+					{
+						$('btn1').style.display='inline';
+						$('btn2').style.display='inline';
+						$('btn3').style.display='inline';
+			    		$('btn6').style.display='inline';
+			    		$('btn7').style.display='inline';
+			    		$('btn8').style.display='inline';
+	 			    	$('btn9').style.display='inline';
+	 			    	$('btn10').style.display='inline';
+	 			    	$('btn11').style.display='inline';
+			    		$('btn12').style.display='inline';
+			    		$('btn13').style.display='inline';
+			    		$('btn14').style.display='inline';
+			    		$('btn15').style.display='inline';
+			    		$('btn16').style.display='inline';
+			    		$('btn17').style.display='inline';
+			    		$('btn18').style.display='inline';
+			    		$('btn19').style.display='inline';
+			    		$('btn20').style.display='inline';
+			    		$('btn21').style.display='inline';
+			    		$('btn22').style.display='inline';
+			    		$('btn23').style.display='inline';
+			    		$('btn24').style.display='inline';
+						$('trans').style.zIndex=-9999;
+					}
+
+					setInterval('ajax()', 2000);
+                }
+            };
+            xmlhttp.open('GET',URL,true);
+            xmlhttp.send();		
+        }
+
+		//增加时间段
+		function Add()
+		{
+			$('tab1').rows[0].style.display = $('tab1').rows[0].style.display = 'table';
+			$('tTime').style.display='table';
+			//if(timeSlotNum<12) timeSlotNum=timeSlotNum+1;
+			if(Json.ID_0x0389==1)
+			{
+				if(timeSlotNum<10) timeSlotNum=timeSlotNum+1;
+				$('tab1').rows[timeSlotNum].style.display = $('tab1').rows[timeSlotNum].style.display = 'table';
+			}
+			else if(Json.ID_0x0389==2)
+			{
+				if(timeSlotNum<7) timeSlotNum=timeSlotNum+1;
+				$('tab1').rows[timeSlotNum].style.display = $('tab1').rows[timeSlotNum].style.display = 'table';
+			}					
+		}
+		//删除时间段
+		function Sub()
+		{
+		    if(timeSlotNum>0)
+		    {
+		    	$('tab1').rows[timeSlotNum].style.display = $('tab1').rows[timeSlotNum].style.display = 'none';
+				timeSlotNum=timeSlotNum-1;	
+				//恢复默认值
+				//需要将'\'转换为'\\'"
+				eval('$(\'ST'+timeSlotNum+'\').options[0].selected=true;');
+				eval('$(\'ST'+(timeSlotNum+100)+'\').options[0].selected=true;');
+				eval('$(\'END'+timeSlotNum+'\').options[0].selected=true;');
+				eval('$(\'END'+(timeSlotNum+100)+'\').options[0].selected=true;');
+				eval('$(\'RUNNING_MODE'+timeSlotNum+'\').disabled=false;');
+				eval('$(\'RUNNING_MODE'+timeSlotNum+'\').options[0].selected=true;');
+        	  	eval('$(\'POWER_CTROL_MODE'+timeSlotNum+'\').disabled=false;');      	
+				eval('$(\'POWER_CTROL_MODE'+timeSlotNum+'\').options[0].selected=true;');
+				eval('$(\'POWER'+timeSlotNum+'\').disabled=false;');	
+				eval('$(\'POWER'+timeSlotNum+'\').value=0;');
+				eval('$(\'M-POWER'+timeSlotNum+'\').disabled=false;');	
+				eval('$(\'M-POWER'+timeSlotNum+'\').value=0;');
+				//alert(timeSlotNum);
+		    }
+		    if(timeSlotNum==0)
+		    {
+		    	$('tab1').rows[0].style.display = $('tab1').rows[0].style.display = 'none';	
+		    	$('tTime').style.display='none';	   	
+		    }
+		}
+		function show_tip_ex(id, obj){eval('$(\'tip'+id+'\').innerHTML=obj;');}
+
+	 	function read_back(addr)
+		{ 
+			var url='s_005.html?';
+			if(addr == 0x0503){url=url+'0x0000';}
+			else if(addr == 0x03C1){url=url+'0x03C1'+'&0x03C2'+'&0x03C3'+'&0x050C';}
+			else if(addr == 0x050A){url=url+'0x050A'+'&0x050B'+'&0x050C'+'&0x050D';}
+			else if(addr == 0x050C){url=url+'0x050C'+'&0x050D';}
+			else if(addr == 0x0184){url=url+'0x0184'+'&0x0185'+'&0x0186'+'&0x0414'+'&0x0415'+'&0x0416'+'&0x0417';}
+			else {url=url+'0x0'+addr.toString(16).toUpperCase();}  
+			url=url+'&time='+new Date();
+			//alert(url);
+
+			var xmlhttp;
+			if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+			else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+			//xmlhttp.onreadystatechange=function()
+			{
+				//if(xmlhttp.readyState==4 && xmlhttp.status==200)
+				{
+					//eval('Json='+xmlhttp.responseText);	
+					var pr=0,fe=0;
+					if(addr == 0x184)
+					{
+						var pr_Qmode,fe_Qmode;
+						var pr_Qfactor,fe_Qfactor;
+						var pr_Qvar, fe_Qvar;
+						if($('QVar1').checked){pr_Qmode=$('QVar1').value;}
+						else if($('QVar2').checked){pr_Qmode=$('QVar2').value;}
+						else {pr_Qmode=$('QVar3').value;}
+						pr_Qfactor=$('ID_0x0185').value*1000;
+						pr_Qvar=$('ID_0x0186').value;
+						fe_Qmode=Json.ID_0x0184;
+						fe_Qfactor=Json.ID_0x0185;
+						fe_Qvar=Json.ID_0x0186;
+						if(pr_Qmode!=fe_Qmode )
+						{
+							if(fe_Qmode == 0x55){
+								$('QVar1').checked = true;
+							}else if(fe_Qmode == 0xA1){
+								$('QVar2').checked = true;
+							}else if(fe_Qmode == 0xA2){
+								$('QVar3').checked = true;
+							}								
+						}
+						if(fe_Qmode == 0xA1 && pr_Qfactor!=fe_Qfactor)
+						{
+							$('ID_0x0185').value=(Json.ID_0x0185/1000.0).toFixed(3);
+						}
+						else if(fe_Qmode == 0xA2 && pr_Qvar!=fe_Qvar)
+						{
+							$('ID_0x0186').value=Json.ID_0x0186;
+						}
+						switch(Json.ID_0x0184)
+						{
+							case 85:$('QVar1').checked=true;$('ID_0x0185').value='1.000';$('ID_0x0185').disabled=true;$('ID_0x0186').value='0';$('ID_0x0186').disabled=true;break;
+							case 161:$('QVar2').checked=true;$('ID_0x0185').disabled=false;$('ID_0x0186').value='0';$('ID_0x0186').disabled=true;break;
+							case 162:$('QVar3').checked=true;$('ID_0x0185').value='1.000';$('ID_0x0185').disabled=true;$('ID_0x0186').disabled=false;break;					
+							default:break;
+						}
+						show_tip('&nbsp;');
+						if(fe_Qmode == 0x55 && pr_Qmode==fe_Qmode){
+							setTimeout('show_tip(lang.N52[language])',500);
+						}else if(fe_Qmode == 0xA1 && pr_Qfactor==fe_Qfactor){
+							setTimeout('show_tip(lang.N52[language])',500);
+						}else if(fe_Qmode == 0xA2 && pr_Qvar==fe_Qvar){
+							setTimeout('show_tip(lang.N52[language])',500);
+						}else{
+							setTimeout('show_tip(lang.N51[language])',500);
+						}
+			            setTimeout('show_tip(\'&nbsp;\')',2500);
+					}
+					else if(addr == 0x188)
+					{
+						if($('ACTIVE').checked){pr=$('ACTIVE').value;}
+						else {pr=$('PASSIVE').value;}
+						fe=Json.ID_0x0188;
+						if(pr!=fe) {
+							if(Json.ID_0x0188==0){$('ACTIVE').checked=true;$('PASSIVE').checked=false;}
+							else if(Json.ID_0x0188==1){$('ACTIVE').checked=false;$('PASSIVE').checked=true;}
+						}
+		    			show_tip_ex(2,'&nbsp;');
+		    			if(pr==fe){setTimeout('show_tip_ex(2,lang.N52[language])',500);}
+		    			else {setTimeout('show_tip_ex(2,lang.N51[language])',500);}
+			            setTimeout('show_tip_ex(2,\'&nbsp;\')',2500);
+					}
+					else if(addr == 0x189)
+					{
+						//if($('OFF_START').checked){pr=$('OFF_START').value;}
+						//else {pr=$('OFF_STOP').value;} 
+						//fe=Json.ID_0x0189;
+						//if(pr!=fe) {
+						//	if(Json.ID_0x0189==0){$('OFF_START').checked=true;$('OFF_STOP').checked=false;}
+						//	else if(Json.ID_0x0189==1){$('OFF_START').checked=false;$('OFF_STOP').checked=true;}
+						//}
+						//直接显示，不判断
+		    			show_tip_ex(3,'&nbsp;');
+		    			if(pr==fe){setTimeout('show_tip_ex(3,lang.N52[language])',500);}
+		    			else {setTimeout('show_tip_ex(3,lang.N51[language])',500);}
+			            setTimeout('show_tip_ex(3,\'&nbsp;\')',2500);
+					}
+					else if(addr == 0x18A)
+					{
+						show_tip_ex(8,'&nbsp;');
+		    			if(pr==fe){setTimeout('show_tip_ex(8,lang.N52[language])',500);}
+		    			else {setTimeout('show_tip_ex(8,lang.N51[language])',500);}
+			            setTimeout('show_tip_ex(8,\'&nbsp;\')',2500);						
+					}
+                   	else if(addr == 0x03B2)
+                    {
+                        var pr=0,fe=0;
+                        pr=$('ID_0x03B2').value;
+                        fe=Json.ID_0x03B2;
+                        if(pr!=fe)
+                        {
+                            $('ID_0x03B2').value=Json.ID_0x03B2;
+                        }
+                        show_tip_ex(9,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(9,lang.N499[language])',500);}
+                        else {setTimeout('show_tip_ex(9,lang.N500[language])',500);}
+                        setTimeout('show_tip_ex(9,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x03B3)
+                    {
+                        var pr=0,fe=0;
+                        pr=$('ID_0x03B3').value;
+                        fe=Json.ID_0x03B3;
+                        if(pr!=fe)
+                        {
+                            $('ID_0x03B3').value=Json.ID_0x03B3;
+                        }
+                        show_tip_ex(10,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(10,lang.N499[language])',500);}
+                        else {setTimeout('show_tip_ex(10,lang.N500[language])',500);}
+                        setTimeout('show_tip_ex(10,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x03B6)
+                    {
+                        var pr=0,fe=0;
+                        pr=$('ID_0x03B6').value;
+                        fe=Json.ID_0x03B6;
+                        if(pr!=fe)
+                        {
+                            $('ID_0x03B6').value=Json.ID_0x03B6;
+                        }
+                        show_tip_ex(11,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(11,lang.N498[language])',500);}
+                        else {setTimeout('show_tip_ex(11,lang.N500[language])',500);}
+                        setTimeout('show_tip_ex(11,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x03B9)
+                    {
+                        var pr=0,fe=0;
+                        pr=$('ID_0x03B9').value;
+                        fe=Json.ID_0x03B9;
+                        if(pr!=fe)
+                        {
+                            $('ID_0x03B9').value=Json.ID_0x03B9;
+                        }
+                        show_tip_ex(12,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(12,lang.N499[language])',500);}
+                        else {setTimeout('show_tip_ex(12,lang.N500[language])',500);}
+                        setTimeout('show_tip_ex(12,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x03BA)
+                    {
+                        var pr=0,fe=0;
+                        pr=$('ID_0x03BA').value;
+                        fe=Json.ID_0x03BA;
+                        if(pr!=fe)
+                        {
+                            $('ID_0x03BA').value=Json.ID_0x03BA;
+                        }
+                        show_tip_ex(13,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(13,lang.N499[language])',500);}
+                        else {setTimeout('show_tip_ex(13,lang.N500[language])',500);}
+                        setTimeout('show_tip_ex(13,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x03BB)
+                    {
+                        var pr=0,fe=0;
+                        pr=$('ID_0x03BB').value;
+                        fe=Json.ID_0x03BB;
+                        if(pr!=fe)
+                        {
+                            $('ID_0x03BB').value=Json.ID_0x03BB;
+                        }
+                        show_tip_ex(14,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(14,lang.N499[language])',500);}
+                        else {setTimeout('show_tip_ex(14,lang.N500[language])',500);}
+                        setTimeout('show_tip_ex(14,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x03BC)
+                    {
+                        var pr=0,fe=0;
+                        pr=$('ID_0x03BC').value*10;
+                        fe=Json.ID_0x03BC;
+                        if(pr!=fe)
+                        {
+                            $('ID_0x03BC').value=(Json.ID_0x03BC/10.0).toFixed(1);
+                        }
+                        show_tip_ex(15,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(15,lang.N499[language])',500);}
+                        else {setTimeout('show_tip_ex(15,lang.N500[language])',500);}
+                        setTimeout('show_tip_ex(15,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x03BD)
+                    {
+                        var pr=0,fe=0;
+                        pr=$('ID_0x03BD').value*10;
+                        fe=Json.ID_0x03BD;
+                        if(pr!=fe)
+                        {
+                            $('ID_0x03BD').value=(Json.ID_0x03BD/10.0).toFixed(1);
+                        }
+                        show_tip_ex(16,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(16,lang.N499[language])',500);}
+                        else {setTimeout('show_tip_ex(16,lang.N500[language])',500);}
+                        setTimeout('show_tip_ex(16,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x03BE)
+                    {
+                        var pr=0,fe=0;
+                        pr=$('ID_0x03BE').value*10;
+                        fe=Json.ID_0x03BE;
+                        if(pr!=fe)
+                        {
+                            $('ID_0x03BE').value=(Json.ID_0x03BE/10.0).toFixed(1);
+                        }
+                        show_tip_ex(17,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(17,lang.N499[language])',500);}
+                        else {setTimeout('show_tip_ex(17,lang.N500[language])',500);}
+                        setTimeout('show_tip_ex(17,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x03BF)
+                    {
+                        var pr=0,fe=0;
+                        pr=$('ID_0x03BF').value*10;
+                        fe=Json.ID_0x03BF;
+                        if(pr!=fe)
+                        {
+                            $('ID_0x03BF').value=(Json.ID_0x03BF/10.0).toFixed(1);
+                        }
+                        show_tip_ex(18,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(18,lang.N499[language])',500);}
+                        else {setTimeout('show_tip_ex(18,lang.N500[language])',500);}
+                        setTimeout('show_tip_ex(18,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x03C1)
+                    {
+                        var pr=0,fe=0;
+	             		if($('Digit-Adjust').checked){pr=$('Digit-Adjust').value;}    
+	                    else if($('Analogy-Adjust').checked){pr=$('Analogy-Adjust').value;}
+                        fe=Json.ID_0x03C1;
+                        if(pr!=fe)
+                        {
+	 						if(fe == 0){
+				                $('Digit-Adjust').checked=true;
+				                $('Analogy-Adjust').checked=false; 
+	 						}else{
+				                $('Digit-Adjust').checked=false;
+				                $('Analogy-Adjust').checked=true; 
+	 						}
+                        }
+                        else
+                        {
+                        	if(fe == 0){
+                        		$('tab_fm_2').style.display='none';
+                        		$('tab_fm_3').style.display='block';
+                        		
+                        	}else{
+                        		$('tab_fm_2').style.display='block';
+                        		$('tab_fm_3').style.display='none';
+                        	}
+                        }
+                        $('ID_0x050C').value=Json.ID_0x050C;
+                    	$('ID_0x03C2').value=Json.ID_0x03C2;
+                    	$('ID_0x03C3').value=Json.ID_0x03C3;
+                        show_tip_ex(19,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(19,lang.N499[language])',500);}
+                        else {setTimeout('show_tip_ex(19,lang.N500[language])',500);}
+                        setTimeout('show_tip_ex(19,\'&nbsp;\')',2500);
+                    }  
+                    else if(addr == 0x03C2)
+                    {
+                        var pr=0,fe=0;
+                        pr=$('ID_0x03C2').value;
+                        fe=Json.ID_0x03C2;
+                        if(pr!=fe)
+                        {
+                            $('ID_0x03C2').value=Json.ID_0x03C2;
+                        }
+                        show_tip_ex(20,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(20,lang.N499[language])',500);}
+                        else {setTimeout('show_tip_ex(20,lang.N500[language])',500);}
+                        setTimeout('show_tip_ex(20,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x03C3)
+                    {
+                        var pr=0,fe=0;
+                        pr=$('ID_0x03C3').value;
+                        fe=Json.ID_0x03C3;
+                        if(pr!=fe)
+                        {
+                            $('ID_0x03C3').value=Json.ID_0x03C3;
+                        }
+                        show_tip_ex(21,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(21,lang.N499[language])',500);}
+                        else {setTimeout('show_tip_ex(21,lang.N500[language])',500);}
+                        setTimeout('show_tip_ex(21,\'&nbsp;\')',2500);
+                    }
+					else if(addr == 0x0503)
+					{
+						var num;
+						var pr = [0,0,0,0,0,0,0,0], fe = [0,0,0,0,0,0,0,0];
+						if(Json.ID_0x0389 == 1) num = 10;
+						else if(Json.ID_0x0389 == 2) num = 7;
+						for(var i=0; i<num; i++)
+						{
+				        	if(Json.ID_0x0389 == 1)eval('pr[0]=$(\'ST'+i+'\').selectedIndex;');
+				        	if(Json.ID_0x0389 == 1)eval('pr[1]=$(\'ST'+(i+100)+'\').selectedIndex;');
+				        	if(Json.ID_0x0389 == 1)eval('pr[2]=$(\'END'+i+'\').selectedIndex;');
+				        	if(Json.ID_0x0389 == 1)eval('pr[3]=$(\'END'+(i+100)+'\').selectedIndex;');
+				        	eval('pr[4]=$(\'RUNNING_MODE'+i+'\').selectedIndex;');
+				        	eval('pr[5]=$(\'POWER_CTROL_MODE'+i+'\').selectedIndex;');
+				        	eval('pr[6]=$(\'POWER'+i+'\').value;');
+				        	eval('pr[7]=$(\'M-POWER'+i+'\').value;');
+
+				        	if(Json.ID_0x0389 == 1)eval('fe[0]=Json.ID_0x05'+i.toString(16).toUpperCase()+'3;');
+				        	if(Json.ID_0x0389 == 1)eval('fe[1]=Json.ID_0x05'+i.toString(16).toUpperCase()+'4;');
+				        	if(Json.ID_0x0389 == 1)eval('fe[2]=Json.ID_0x05'+i.toString(16).toUpperCase()+'8;');
+				        	if(Json.ID_0x0389 == 1)eval('fe[3]=Json.ID_0x05'+i.toString(16).toUpperCase()+'9;');
+				        	eval('fe[4]=Json.ID_0x05'+i.toString(16).toUpperCase()+'A;');
+				        	eval('fe[5]=Json.ID_0x05'+i.toString(16).toUpperCase()+'B;');
+				        	eval('fe[6]=Json.ID_0x05'+i.toString(16).toUpperCase()+'C;');
+				        	eval('fe[7]=Json.ID_0x05'+i.toString(16).toUpperCase()+'D;');
+
+				        	if(pr[0] != fe[0] || pr[1] != fe[1] || pr[2] != fe[2] || pr[3] != fe[3] || pr[4] != fe[4] || pr[5] != fe[5] || pr[6] != fe[6] || pr[7] != fe[7]) break;
+			        	}
+
+			        	show_tip_ex(4,'&nbsp;');
+			        	if(Json.ID_0x0389 == 1){
+				        	if(i < 10) {
+				        		setTimeout('show_tip_ex(4,lang.N499[language])',500);
+				        		doSetValue(Json);
+				        	}else{
+				    			setTimeout('show_tip_ex(4,lang.N500[language])',500);
+				        	}		
+			        	}else if(Json.ID_0x0389 == 2){
+				        	if(i < 7) {
+				        		setTimeout('show_tip_ex(4,lang.N499[language])',500);
+				        		doSetValue(Json);
+				        	}else{
+				    			setTimeout('show_tip_ex(4,lang.N500[language])',500);
+				        	}
+			        	}
+			        	setTimeout('show_tip_ex(4,\'&nbsp;\')',2500); 
+					}
+					else if(addr == 0x050A)
+					{
+						var pr_single_runmode,fe_single_runmode;
+						var pr_single_ctrlmoder,fe_single_ctrlmoder;
+						var pr_power, fe_power;
+						var pr_m_power, fe_m_power;
+
+				        pr_single_runmode = $('SINGLE_RUNNING_MODE').selectedIndex;
+				        pr_single_ctrlmoder = $('SINGLE_POWER_CTROL_MODE').selectedIndex;
+				        pr_power = $('SINGLE_POWER').value;
+				        pr_m_power = $('SINGLE_M-POWER').value;
+
+				        fe_single_runmode = Json.ID_0x050A;
+				        fe_single_ctrlmoder = Json.ID_0x050B;
+				        fe_power = Json.ID_0x050C;
+				        fe_m_power = Json.ID_0x050D;
+
+				        if(pr_single_runmode != fe_single_runmode || pr_single_ctrlmoder != fe_single_ctrlmoder || pr_power != fe_power || pr_m_power != fe_m_power){
+							$('SINGLE_RUNNING_MODE').options[Json.ID_0x050A].selected = true;
+							$('SINGLE_POWER_CTROL_MODE').options[Json.ID_0x050B].selected = true;
+							$('SINGLE_POWER').value=Json.ID_0x050C;
+							$('SINGLE_M-POWER').value=Json.ID_0x050D;	
+							setTimeout('show_tip_ex(4,lang.N499[language])',500);
+				        }else{
+			    			setTimeout('show_tip_ex(4,lang.N500[language])',500);
+				        }
+						setTimeout('show_tip_ex(4,\'&nbsp;\')',2500); 
+					}
+					else if(addr == 0x050C)
+					{
+                        var pr=0,fe=0;
+                        pr=$('ID_0x050C').value;
+                        fe=Json.ID_0x050C;
+                        if(pr!=fe)
+                        {
+                            $('ID_0x050C').value=Json.ID_0x050C;
+                        }
+                        show_tip_ex(22,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(22,lang.N499[language])',500);}
+                        else {setTimeout('show_tip_ex(22,lang.N500[language])',500);}
+                        setTimeout('show_tip_ex(22,\'&nbsp;\')',2500);
+					}
+                    else if(addr == 0x03B7)
+                    {
+                        var pr=0,fe=0;
+                        pr=$('ID_0x03B7').value;
+                        fe=Json.ID_0x03B7;
+                        if(pr!=fe)
+                        {
+                            $('ID_0x03B7').value=Json.ID_0x03B7;
+                        }
+                        show_tip_ex(23,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(23,lang.N499[language])',500);}
+                        else {setTimeout('show_tip_ex(23,lang.N500[language])',500);}
+                        setTimeout('show_tip_ex(23,\'&nbsp;\')',2500);
+                    }
+					else if(addr == 0x0386)
+                    {
+                        var pr=0,fe=0;
+                        if($('Gird-First').checked){pr=$('Gird-First').value;}
+                        else if($('Micro-Grid First').checked){pr=$('Micro-Grid First').value;}
+                        fe=Json.ID_0x0386;
+                        if(pr!=fe)
+                        {
+                            if(Json.ID_0x0386==0)
+                            {
+                                $('Gird-First').checked=true;
+                                $('Micro-Grid First').checked=false;
+                            }
+                            else
+                            {
+                                $('Gird-First').checked=false;
+                                $('Micro-Grid First').checked=true;             
+                            }   
+                        }
+                        show_tip_ex(24,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(24,lang.N499[language])',500);}
+                        else {setTimeout('show_tip_ex(24,lang.N500[language])',500);}
+                        setTimeout('show_tip_ex(24,\'&nbsp;\')',2500);
+                    }
+				}
+			};
+			xmlhttp.open('GET',url,true);
+			xmlhttp.send();     
+        } 		
+		//设置参数
+        function doSubmit(obj)
+        {
+            var URL='a_005.html?';
+            var readBack=0;
+
+        	switch(obj.id)
+        	{
+        		case 'btn1':
+					var Qmode,Qfactor,Qvar;
+					if($('QVar1').checked){Qmode=$('QVar1').value;}
+					else if($('QVar2').checked){Qmode=$('QVar2').value;}
+					else {Qmode=$('QVar3').value;}
+					Qfactor=$('ID_0x0185').value*1000;
+					Qvar=$('ID_0x0186').value;
+		            URL=URL+'&0x0184='+Qmode;
+		            URL=URL+'&0x0185='+Qfactor;
+		            URL=URL+'&0x0186='+Qvar;
+		            readBack=0x0184;
+        		break;
+        		case 'btn2':
+		        	var Active_Passive;
+					if($('ACTIVE').checked){Active_Passive=$('ACTIVE').value;}
+					else {Active_Passive=$('PASSIVE').value;}
+		            URL=URL+'&0x0188='+Active_Passive;
+		            readBack=0x0188;
+        		break;
+        		case 'btn3':
+        			var Start_Stop;
+					if($('OFF_START').checked){Start_Stop=$('OFF_START').value;}
+					else {Start_Stop=$('OFF_STOP').value;} 
+					URL=URL+'&0x0189='+Start_Stop;
+					readBack=0x0189;
+        		break;
+        		case 'btn6':
+					if(Json.ID_0x0389)
+					{
+						var num;
+						if(Json.ID_0x0389 == 1) num = 10;
+						else if(Json.ID_0x0389 == 2) num = 7;
+						for(var i=0; i<num; i++)
+						{
+				        	eval('URL=URL+\'&0x05'+i.toString(16).toUpperCase()+'3=\'+$(\'ST'+i+'\').selectedIndex;');
+				        	eval('URL=URL+\'&0x05'+i.toString(16).toUpperCase()+'4=\'+$(\'ST'+(i+100)+'\').selectedIndex;');
+				        	eval('URL=URL+\'&0x05'+i.toString(16).toUpperCase()+'8=\'+$(\'END'+i+'\').selectedIndex;');
+				        	eval('URL=URL+\'&0x05'+i.toString(16).toUpperCase()+'9=\'+$(\'END'+(i+100)+'\').selectedIndex;');
+				        	eval('URL=URL+\'&0x05'+i.toString(16).toUpperCase()+'A=\'+$(\'RUNNING_MODE'+i+'\').selectedIndex;');
+				        	eval('URL=URL+\'&0x05'+i.toString(16).toUpperCase()+'B=\'+$(\'POWER_CTROL_MODE'+i+'\').selectedIndex;');
+				        	eval('URL=URL+\'&0x05'+i.toString(16).toUpperCase()+'C=\'+$(\'POWER'+i+'\').value;');
+				        	eval('URL=URL+\'&0x05'+i.toString(16).toUpperCase()+'D=\'+$(\'M-POWER'+i+'\').value;');
+			        	}
+			        	readBack=0x0503;
+		        	}
+		        	else
+		        	{
+		        		//分时段禁用时，下发的参数放在一个分段变量中
+				        URL=URL+'&0x050A='+$('SINGLE_RUNNING_MODE').selectedIndex;
+				        URL=URL+'&0x050B='+$('SINGLE_POWER_CTROL_MODE').selectedIndex;
+				        URL=URL+'&0x050C='+$('SINGLE_POWER').value;
+				        URL=URL+'&0x050D='+$('SINGLE_M-POWER').value;
+				        readBack=0x050A;
+		        	}
+        		break;
+        		case 'btn8':
+        			var bmsCtrl;
+        			if($('BMS_OFF').checked)bmsCtrl=$('BMS_OFF').value;
+        			if($('BMS_ON').checked)bmsCtrl=$('BMS_ON').value;
+        			if($('BMS_RESET').checked)bmsCtrl=$('BMS_RESET').value;
+					URL=URL+'&0x018A='+bmsCtrl;
+					readBack=0x018A;
+        		break;
+             	case 'btn9':
+ 					URL=URL+'&0x03B2='+$('ID_0x03B2').value;
+                    readBack=0x03B2;
+             	break;
+             	case 'btn10': 
+        			URL=URL+'&0x03B3='+$('ID_0x03B3').value;
+                    readBack=0x03B3;
+            	break;
+             	case 'btn11': 
+                   	URL=URL+'&0x03B6='+$('ID_0x03B6').value;
+                    readBack=0x03B6;
+                break;
+             	case 'btn12': 
+                   	URL=URL+'&0x03B9='+$('ID_0x03B9').value;
+                    readBack=0x03B9;
+                break;
+             	case 'btn13': 
+                   	URL=URL+'&0x03BA='+$('ID_0x03BA').value;
+                    readBack=0x03BA;
+                break;
+             	case 'btn14': 
+                   	URL=URL+'&0x03BB='+$('ID_0x03BB').value;
+                    readBack=0x03BB;
+                break;
+             	case 'btn15': 
+                   	URL=URL+'&0x03BC='+$('ID_0x03BC').value*10;
+                    readBack=0x03BC;
+                break;
+             	case 'btn16': 
+                   	URL=URL+'&0x03BD='+$('ID_0x03BD').value*10;
+                    readBack=0x03BD;
+                break;
+             	case 'btn17': 
+                   	URL=URL+'&0x03BE='+$('ID_0x03BE').value*10;
+                    readBack=0x03BE;
+                break;
+             	case 'btn18': 
+                   	URL=URL+'&0x03BF='+$('ID_0x03BF').value*10;
+                    readBack=0x03BF;
+                break;
+             	case 'btn19': 
+             		var adjust;
+             		if($('Digit-Adjust').checked){adjust=$('Digit-Adjust').value;}    
+                    else if($('Analogy-Adjust').checked){adjust=$('Analogy-Adjust').value;}
+                   	URL=URL+'&0x03C1='+adjust;
+                    readBack=0x03C1;
+                break;
+             	case 'btn20': 
+                   	URL=URL+'&0x03C2='+$('ID_0x03C2').value;
+                    readBack=0x03C2;
+                break;
+             	case 'btn21': 
+                   	URL=URL+'&0x03C3='+$('ID_0x03C3').value;
+                    readBack=0x03C3;
+                break;
+             	case 'btn22': 
+                   	URL=URL+'&0x050C='+$('ID_0x050C').value;
+                    readBack=0x050C;
+                break;
+             	case 'btn23': 
+                   	URL=URL+'&0x03B7='+$('ID_0x03B7').value;
+                    readBack=0x03B7;
+                break;
+            	case 'btn24': 
+		 			if($('Gird-First').checked){Priority=$('Gird-First').value;}
+		 			else if($('Micro-Grid First').checked){Priority=$('Micro-Grid First').value;}
+					URL=URL+'&0x0386='+Priority;
+                    readBack=0x0386;	
+            	break;
+                default:
+                break;
+        	}
+            URL=URL+'&time='+new Date();
+            //alert(URL);
+
+            function success()
+            {
+	    		setTimeout('read_back('+readBack+')', 100);
+            }            
+
+	 		//测试
+	 		success();
+	 		
+	        var xmlhttp;
+	        if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+	        else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+	        xmlhttp.onreadystatechange=function()
+	        {
+	            if(xmlhttp.readyState==4 && xmlhttp.status==200)
+	            {
+	                if(xmlhttp.responseText=='1'){success();}
+	            }
+	        };
+	        xmlhttp.open('GET',URL,true);
+	        xmlhttp.send();
+        }
+
+        //切换无功调节方式
+		function ChangeQVar(obj)
+		{
+			select_nbps();
+			switch(obj.id)
+			{
+				case 'QVar1':
+					//关闭
+					$('ID_0x0185').value='1.000';
+					$('ID_0x0185').disabled=true;
+					$('ID_0x0186').value='0';
+					$('ID_0x0186').disabled=true;
+				break;
+				case 'QVar2':
+					//功率因数
+					$('ID_0x0185').disabled=false;
+					$('ID_0x0186').value='0';
+					$('ID_0x0186').disabled=true;
+				break;
+				case 'QVar3':
+					//无功功率
+					$('ID_0x0185').value='0';
+					$('ID_0x0185').disabled=true;
+					$('ID_0x0186').disabled=false;
+				break;
+			}
+		}
+        function mode_change(obj)
+        {
+        	//alert(obj.selectedIndex);
+        	//alert(obj.name);
+
+        	//if(obj.selectedIndex==1)
+        	//{
+        		//离网模式下功率控制模式和功率不可设置
+        	//  	eval('$(\'POWER_CTROL_MODE'+obj.name+'\').disabled=true;');  
+        	//  	eval('$(\'POWER'+obj.name+'\').disabled=true;');
+        	//}
+        	//else
+        	//{
+        		//其他模式
+        	//	eval('$(\'POWER_CTROL_MODE'+obj.name+'\').disabled=false;');
+        	//	eval('$(\'POWER'+obj.name+'\').disabled=false;');
+        	//}
+        }
+        function single_mode_change(obj)
+        {
+        	//if(obj.selectedIndex==1)
+        	//{
+        		//离网模式下功率控制模式和功率不可设置
+        	//  	eval('$(\'SINGLE_POWER_CTROL_MODE\').disabled=true;');  
+        	//  	eval('$(\'SINGLE_POWER\').disabled=true;');
+        	//}
+        	//else
+        	//{
+        		//其他模式
+        	//	eval('$(\'SINGLE_POWER_CTROL_MODE\').disabled=false;');
+        	//	eval('$(\'SINGLE_POWER\').disabled=false;');
+        	//}
+        }
+        //根据收到的参数设置界面控件的显示值
+        function doSetValue(Json)
+        {
+			//是否为分时段控制
+			if(Json.ID_0x050B<10)
+			{
+				if(Json.ID_0x0389==1)
+				{
+					//for(var i=0; i<12; i++)
+					for(var i=0; i<10; i++)
+					{
+						//var result=eval('((Json.ID_0x05'+i.toString(16).toUpperCase()+'3>0)||(Json.ID_0x05'+i.toString(16).toUpperCase()+'4>0)||(Json.ID_0x05'+i.toString(16).toUpperCase()+'8>0)||(Json.ID_0x05'+i.toString(16).toUpperCase()+'9>0))?1:0;');
+						//if(result==0)
+						//{
+						//	//eval('$(\'tab1\').rows['+(i+1)+'].style.display = $(\'tab1\').rows['+(i+1)+'].style.display = \'none\';');
+						//	if(i==0) Add();
+						//	break;
+						//}
+						//else
+						{
+							//需要将'\'转换为'\\'"
+							eval('$(\'ST'+i+'\').options[Json.ID_0x05'+i.toString(16).toUpperCase()+'3].selected = true;');
+							eval('$(\'ST'+(i+100)+'\').options[Json.ID_0x05'+i.toString(16).toUpperCase()+'4].selected = true;');
+							eval('$(\'END'+i+'\').options[Json.ID_0x05'+i.toString(16).toUpperCase()+'8].selected = true;');
+							eval('$(\'END'+(i+100)+'\').options[Json.ID_0x05'+i.toString(16).toUpperCase()+'9].selected = true;');
+							eval('$(\'RUNNING_MODE'+i+'\').options[Json.ID_0x05'+i.toString(16).toUpperCase()+'A].selected = true;');
+							eval('$(\'POWER_CTROL_MODE'+i+'\').options[Json.ID_0x05'+i.toString(16).toUpperCase()+'B].selected = true;');
+							eval('$(\'POWER'+i+'\').value=Json.ID_0x05'+i.toString(16).toUpperCase()+'C;');
+							eval('$(\'M-POWER'+i+'\').value=Json.ID_0x05'+i.toString(16).toUpperCase()+'D;');
+							Add();
+							$('tTime').style.display='table';
+						}
+					}
+					//if(Json.ID_0x050A==1){$('POWER_CTROL_MODE0').disabled=true;$('POWER0').disabled=true;}else{$('POWER_CTROL_MODE0').disabled=false;$('POWER0').disabled=false;}
+					//if(Json.ID_0x051A==1){$('POWER_CTROL_MODE1').disabled=true;$('POWER1').disabled=true;}else{$('POWER_CTROL_MODE1').disabled=false;$('POWER1').disabled=false;}
+					//if(Json.ID_0x052A==1){$('POWER_CTROL_MODE2').disabled=true;$('POWER2').disabled=true;}else{$('POWER_CTROL_MODE2').disabled=false;$('POWER2').disabled=false;}
+					//if(Json.ID_0x053A==1){$('POWER_CTROL_MODE3').disabled=true;$('POWER3').disabled=true;}else{$('POWER_CTROL_MODE3').disabled=false;$('POWER3').disabled=false;}
+					//if(Json.ID_0x054A==1){$('POWER_CTROL_MODE4').disabled=true;$('POWER4').disabled=true;}else{$('POWER_CTROL_MODE4').disabled=false;$('POWER4').disabled=false;}
+					//if(Json.ID_0x055A==1){$('POWER_CTROL_MODE5').disabled=true;$('POWER5').disabled=true;}else{$('POWER_CTROL_MODE5').disabled=false;$('POWER5').disabled=false;}
+					//if(Json.ID_0x056A==1){$('POWER_CTROL_MODE6').disabled=true;$('POWER6').disabled=true;}else{$('POWER_CTROL_MODE6').disabled=false;$('POWER6').disabled=false;}
+					//if(Json.ID_0x057A==1){$('POWER_CTROL_MODE7').disabled=true;$('POWER7').disabled=true;}else{$('POWER_CTROL_MODE7').disabled=false;$('POWER7').disabled=false;}
+					//if(Json.ID_0x058A==1){$('POWER_CTROL_MODE8').disabled=true;$('POWER8').disabled=true;}else{$('POWER_CTROL_MODE8').disabled=false;$('POWER8').disabled=false;}
+					//if(Json.ID_0x059A==1){$('POWER_CTROL_MODE9').disabled=true;$('POWER9').disabled=true;}else{$('POWER_CTROL_MODE9').disabled=false;$('POWER9').disabled=false;}
+				}
+				else if(Json.ID_0x0389==2)
+				{
+					for(var i=0; i<7; i++)
+					{
+						eval('$(\'RUNNING_MODE'+i+'\').options[Json.ID_0x05'+i.toString(16).toUpperCase()+'A].selected = true;');
+						eval('$(\'POWER_CTROL_MODE'+i+'\').options[Json.ID_0x05'+i.toString(16).toUpperCase()+'B].selected = true;');
+						eval('$(\'POWER'+i+'\').value=Json.ID_0x05'+i.toString(16).toUpperCase()+'C;');
+						eval('$(\'M-POWER'+i+'\').value=Json.ID_0x05'+i.toString(16).toUpperCase()+'D;');
+						Add();
+						$('tTime').style.display='table';
+					}
+					//if(Json.ID_0x050A==1){$('POWER_CTROL_MODE0').disabled=true;$('POWER0').disabled=true;}else{$('POWER_CTROL_MODE0').disabled=false;$('POWER0').disabled=false;}
+					//if(Json.ID_0x051A==1){$('POWER_CTROL_MODE1').disabled=true;$('POWER1').disabled=true;}else{$('POWER_CTROL_MODE1').disabled=false;$('POWER1').disabled=false;}
+					//if(Json.ID_0x052A==1){$('POWER_CTROL_MODE2').disabled=true;$('POWER2').disabled=true;}else{$('POWER_CTROL_MODE2').disabled=false;$('POWER2').disabled=false;}
+					//if(Json.ID_0x053A==1){$('POWER_CTROL_MODE3').disabled=true;$('POWER3').disabled=true;}else{$('POWER_CTROL_MODE3').disabled=false;$('POWER3').disabled=false;}
+					//if(Json.ID_0x054A==1){$('POWER_CTROL_MODE4').disabled=true;$('POWER4').disabled=true;}else{$('POWER_CTROL_MODE4').disabled=false;$('POWER4').disabled=false;}
+					//if(Json.ID_0x055A==1){$('POWER_CTROL_MODE5').disabled=true;$('POWER5').disabled=true;}else{$('POWER_CTROL_MODE5').disabled=false;$('POWER5').disabled=false;}
+					//if(Json.ID_0x056A==1){$('POWER_CTROL_MODE6').disabled=true;$('POWER6').disabled=true;}else{$('POWER_CTROL_MODE6').disabled=false;$('POWER6').disabled=false;}
+				}
+				else
+				{
+					$('SINGLE_RUNNING_MODE').options[Json.ID_0x050A].selected = true;
+					$('SINGLE_POWER_CTROL_MODE').options[Json.ID_0x050B].selected = true;
+					$('SINGLE_POWER').value=Json.ID_0x050C;
+					$('SINGLE_M-POWER').value=Json.ID_0x050D;
+		        	//if(Json.ID_0x050A==1)
+		        	//{
+		        		//离网模式下功率控制模式和功率不可设置
+		        	//  	eval('$(\'SINGLE_POWER_CTROL_MODE\').disabled=true;');  
+		        	//  	eval('$(\'SINGLE_POWER\').disabled=true;');
+		        	//}
+		        	//else
+		        	//{
+		        		//其他模式
+		        	//	eval('$(\'SINGLE_POWER_CTROL_MODE\').disabled=false;');
+		        	//	eval('$(\'SINGLE_POWER\').disabled=false;');
+		        	//}	
+				}
+			}
+            //VSG输出电压给定值
+            //$('ID_0x018C').value=(Json.ID_0x018C/10.0).toFixed(1); 
+
+            //VSG输出频率给定值
+            //$('ID_0x018D').value=(Json.ID_0x018D/100.0).toFixed(2);
+
+            //有功下垂控制系数
+            $('ID_0x018E').value=Json.ID_0x018E;
+
+            //二次调频给定值
+            $('ID_0x0190').value=(Json.ID_0x0190/10.0).toFixed(1);
+
+            //无功下发给定值
+            $('ID_0x0191').value=(Json.ID_0x0191/10.0).toFixed(1);       
+
+			if(Json.ID_0x0188==0){$('ACTIVE').checked=true;$('PASSIVE').checked=false;}
+			else if(Json.ID_0x0188==1){$('ACTIVE').checked=false;$('PASSIVE').checked=true;}
+
+			if(Json.ID_0x0189==0){$('OFF_START').checked=true;$('OFF_STOP').checked=false;}
+			else if(Json.ID_0x0189==1){$('OFF_START').checked=false;$('OFF_STOP').checked=true;}
+
+			if(Json.ID_0x018A==1){$('BMS_OFF').checked=true;$('BMS_ON').checked=false;$('BMS_RESET').checked=false;}
+			else if(Json.ID_0x018A==2){$('BMS_OFF').checked=false;$('BMS_ON').checked=true;$('BMS_RESET').checked=false;}
+			else if(Json.ID_0x018A==3){$('BMS_OFF').checked=false;$('BMS_ON').checked=false;$('BMS_RESET').checked=true;}
+
+			//无功调节方式
+			switch(Json.ID_0x0184)
+			{
+				case 85:$('QVar1').checked=true;$('ID_0x0185').disabled=true;$('ID_0x0186').disabled=true;break;
+				case 161:$('QVar2').checked=true;$('ID_0x0185').disabled=false;$('ID_0x0186').disabled=true;break;
+				case 162:$('QVar3').checked=true;$('ID_0x0185').disabled=true;$('ID_0x0186').disabled=false;break;
+				default:break;
+			}
+
+            //功率因数
+            $('ID_0x0185').value=(Json.ID_0x0185/1000.0).toFixed(3);
+
+            //无功比例
+            $('ID_0x0186').value=Json.ID_0x0186;
+			
+			//功率因数范围
+            $('ID_0x0414').innerHTML=(Json.ID_0x0414/1000.0).toFixed(3);
+            $('ID_0x0415').innerHTML=(Json.ID_0x0415/1000.0).toFixed(3);
+
+            //无功比例范围
+            $('ID_0x0416').innerHTML=Json.ID_0x0416;
+            $('ID_0x0417').innerHTML=Json.ID_0x0417;
+
+            //输出给定电压上下限
+            //$('ID_0x0418').innerHTML=Json.ID_0x0418/10.0;
+            //$('ID_0x0419').innerHTML=Json.ID_0x0419/10.0;  
+
+            //输出给定频率上下限
+            //$('ID_0x041A').innerHTML=Json.ID_0x041A/100.0;
+            //$('ID_0x041B').innerHTML=Json.ID_0x041B/100.0;   
+
+            //有功下垂控制系数上下限
+            $('ID_0x041C').innerHTML=Json.ID_0x041C;
+            $('ID_0x041D').innerHTML=Json.ID_0x041D;   
+
+             //二次调频给定值上下限
+            $('ID_0x0420').innerHTML=(Json.ID_0x0420/10.0).toFixed(1);
+            $('ID_0x0421').innerHTML=(Json.ID_0x0421/10.0).toFixed(1); 
+
+             //无功下发给定值上下限
+            $('ID_0x0422').innerHTML=(Json.ID_0x0422/10.0).toFixed(1);
+            $('ID_0x0423').innerHTML=(Json.ID_0x0423/10.0).toFixed(1);
+
+            $('ID_0x045A_1').innerHTML=(Json.ID_0x045A/10.0).toFixed(1);
+            $('ID_0x045B_1').innerHTML=(Json.ID_0x045B/10.0).toFixed(1);      
+
+            $('ID_0x045A_2').innerHTML=(Json.ID_0x045A/10.0).toFixed(1);
+            $('ID_0x045B_2').innerHTML=(Json.ID_0x045B/10.0).toFixed(1); 
+
+            $('BMS_OFF').checked=true;
+
+        	//优先级选择
+        	if(Json.ID_0x0386==0)
+        	{
+        		$('Gird-First').checked=true;
+        		$('Micro-Grid First').checked=false;
+        	}
+        	else
+        	{
+         		$('Gird-First').checked=false;
+        		$('Micro-Grid First').checked=true;       		
+        	}
+        }
+        //校验控件设置的值是否在有效范围内
+        var err_tip4=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+        function Verify(obj)
+        {
+	        var reg=/^(-?\d(\.\d{1,3})?)$/;
+	        //正负整数、带1位小数的正负浮点数  
+            var reg2=/^((-?0(\.\d{1})?)|(-?[1-9]\d*(\.\d{1})?))$/; 
+	        //正负整数、带1位小数的正负浮点数  
+	        var reg3=/^((-?0(\.\d{1})?)|(-?[1-9]\d*(\.\d{1})?))$/; 
+	        var reg4=/^((0(\.\d{1})?)|([1-9]\d*(\.\d{1})?))$/;
+	        var reg5=/^[1-9]\d*$/;
+	        var reg6=/^-?[0-9][0-9]*$/;
+			var range=parseInt(obj.value);
+			var range2=parseFloat(obj.value);
+            switch(obj.id)
+            {
+            	case 'ID_0x0185':
+					if(!obj.value.match(reg)){$('btn1').disabled=true;obj.style.color='#F00';show_tip(lang.N53[language]);}
+					else if((range2<-1.0) || ((range2>-0.9)&&(range2<0.9)) || (range2>1.0)){$('btn1').disabled=true;obj.style.color='#F00';show_tip(lang.N54[language]);}
+					else{
+						obj.style.color='#000';
+						$('btn1').disabled=false;
+						show_tip('&nbsp;');
+					}
+            	break;
+            	case 'ID_0x0186':
+					if(!obj.value.match(reg6)){$('btn1').disabled=true;obj.style.color='#F00';show_tip(lang.N53[language]);}
+					else if(range<Json.ID_0x0416||range>Json.ID_0x0417){$('btn1').disabled=true;obj.style.color='#F00';show_tip(lang.N54[language]);}
+					else{
+						obj.style.color='#000';
+						$('btn1').disabled=false;
+						show_tip('&nbsp;');
+					}
+            	break;
+            	case 'POWER0':case 'POWER1':case 'POWER2':case 'POWER3':case 'POWER4':case 'POWER5':case 'POWER6':case 'POWER7':case 'POWER8':case 'POWER9':case 'POWER10':case 'POWER11':case 'SINGLE_POWER':case 'SINGLE_M-POWER':case 'M-POWER0':case 'M-POWER1':case 'M-POWER2':case 'M-POWER3':case 'M-POWER4':case 'M-POWER5':case 'M-POWER6':case 'M-POWER7':case 'M-POWER8':case 'M-POWER9':case 'M-POWER10':case 'M-POWER11':
+            		//运行功率是0.1kw单位 系统匹配功率是kw单位
+					if(!obj.value.match(reg6)){
+						if(obj.id=='POWER0')err_tip4[0]=1;
+						else if(obj.id=='POWER1')err_tip4[1]=1;
+						else if(obj.id=='POWER2')err_tip4[2]=1;
+						else if(obj.id=='POWER3')err_tip4[3]=1;
+						else if(obj.id=='POWER4')err_tip4[4]=1;
+						else if(obj.id=='POWER5')err_tip4[5]=1;
+						else if(obj.id=='POWER6')err_tip4[6]=1;
+						else if(obj.id=='POWER7')err_tip4[7]=1;
+						else if(obj.id=='POWER8')err_tip4[8]=1;
+						else if(obj.id=='POWER9')err_tip4[9]=1;
+						else if(obj.id=='POWER10')err_tip4[10]=1;
+						else if(obj.id=='POWER11')err_tip4[11]=1;
+						else if(obj.id=='SINGLE_POWER')err_tip4[12]=1;
+						else if(obj.id=='SINGLE_M-POWER')err_tip4[13]=1;
+						else if(obj.id=='M-POWER0')err_tip4[14]=1;
+						else if(obj.id=='M-POWER1')err_tip4[15]=1;
+						else if(obj.id=='M-POWER2')err_tip4[16]=1;
+						else if(obj.id=='M-POWER3')err_tip4[17]=1;
+						else if(obj.id=='M-POWER4')err_tip4[18]=1;
+						else if(obj.id=='M-POWER5')err_tip4[19]=1;
+						else if(obj.id=='M-POWER6')err_tip4[20]=1;
+						else if(obj.id=='M-POWER7')err_tip4[21]=1;
+						else if(obj.id=='M-POWER8')err_tip4[22]=1;
+						else if(obj.id=='M-POWER9')err_tip4[23]=1;
+						else if(obj.id=='M-POWER10')err_tip4[24]=1;
+						else if(obj.id=='M-POWER11')err_tip4[25]=1;
+						$('btn6').disabled=true;obj.style.color='#F00';show_tip_ex(4,lang.N53[language]);
+					}else if(range<(-Json.ID_0x0384*1.1)||range>(Json.ID_0x0384*1.1)){
+						if(obj.id=='POWER0')err_tip4[0]=1;
+						else if(obj.id=='POWER1')err_tip4[1]=1;
+						else if(obj.id=='POWER2')err_tip4[2]=1;
+						else if(obj.id=='POWER3')err_tip4[3]=1;
+						else if(obj.id=='POWER4')err_tip4[4]=1;
+						else if(obj.id=='POWER5')err_tip4[5]=1;
+						else if(obj.id=='POWER6')err_tip4[6]=1;
+						else if(obj.id=='POWER7')err_tip4[7]=1;
+						else if(obj.id=='POWER8')err_tip4[8]=1;
+						else if(obj.id=='POWER9')err_tip4[9]=1;
+						else if(obj.id=='POWER10')err_tip4[10]=1;
+						else if(obj.id=='POWER11')err_tip4[11]=1;
+						else if(obj.id=='SINGLE_POWER')err_tip4[12]=1;
+						else if(obj.id=='SINGLE_M-POWER')err_tip4[13]=1;
+						else if(obj.id=='M-POWER0')err_tip4[14]=1;
+						else if(obj.id=='M-POWER1')err_tip4[15]=1;
+						else if(obj.id=='M-POWER2')err_tip4[16]=1;
+						else if(obj.id=='M-POWER3')err_tip4[17]=1;
+						else if(obj.id=='M-POWER4')err_tip4[18]=1;
+						else if(obj.id=='M-POWER5')err_tip4[19]=1;
+						else if(obj.id=='M-POWER6')err_tip4[20]=1;
+						else if(obj.id=='M-POWER7')err_tip4[21]=1;
+						else if(obj.id=='M-POWER8')err_tip4[22]=1;
+						else if(obj.id=='M-POWER9')err_tip4[23]=1;
+						else if(obj.id=='M-POWER10')err_tip4[24]=1;
+						else if(obj.id=='M-POWER11')err_tip4[25]=1;
+						$('btn6').disabled=true;obj.style.color='#F00';show_tip_ex(4,lang.N54[language]);
+					}else{
+						if(obj.id=='POWER0')err_tip4[0]=0;
+						else if(obj.id=='POWER1')err_tip4[1]=0;
+						else if(obj.id=='POWER2')err_tip4[2]=0;
+						else if(obj.id=='POWER3')err_tip4[3]=0;
+						else if(obj.id=='POWER4')err_tip4[4]=0;
+						else if(obj.id=='POWER5')err_tip4[5]=0;
+						else if(obj.id=='POWER6')err_tip4[6]=0;
+						else if(obj.id=='POWER7')err_tip4[7]=0;
+						else if(obj.id=='POWER8')err_tip4[8]=0;
+						else if(obj.id=='POWER9')err_tip4[9]=0;
+						else if(obj.id=='POWER10')err_tip4[10]=0;
+						else if(obj.id=='POWER11')err_tip4[11]=0;
+						else if(obj.id=='SINGLE_POWER')err_tip4[12]=0;
+						else if(obj.id=='SINGLE_M-POWER')err_tip4[13]=0;
+						else if(obj.id=='M-POWER0')err_tip4[14]=0;
+						else if(obj.id=='M-POWER1')err_tip4[15]=0;
+						else if(obj.id=='M-POWER2')err_tip4[16]=0;
+						else if(obj.id=='M-POWER3')err_tip4[17]=0;
+						else if(obj.id=='M-POWER4')err_tip4[18]=0;
+						else if(obj.id=='M-POWER5')err_tip4[19]=0;
+						else if(obj.id=='M-POWER6')err_tip4[20]=0;
+						else if(obj.id=='M-POWER7')err_tip4[21]=0;
+						else if(obj.id=='M-POWER8')err_tip4[22]=0;
+						else if(obj.id=='M-POWER9')err_tip4[23]=0;
+						else if(obj.id=='M-POWER10')err_tip4[24]=0;
+						else if(obj.id=='M-POWER11')err_tip4[25]=0;
+						obj.style.color='#000';
+						if((err_tip4[0]|err_tip4[1]|err_tip4[2]|err_tip4[3]|err_tip4[4]|err_tip4[5]|err_tip4[6]|
+							err_tip4[7]|err_tip4[8]|err_tip4[9]|err_tip4[10]|err_tip4[11]|err_tip4[12]|err_tip4[13]|
+							err_tip4[14]|err_tip4[15]|err_tip4[16]|err_tip4[17]|err_tip4[18]|err_tip4[19]|err_tip4[20]|
+							err_tip4[21]|err_tip4[22]|err_tip4[23]|err_tip4[24]|err_tip4[25])==0){
+							$('btn6').disabled=false;
+							show_tip_ex(4,'&nbsp;');
+						}
+					}
+            	break;
+                case 'ID_0x03B2':
+                    if(!obj.value.match(reg6)){$('btn9').disabled=true;obj.style.color='#F00';show_tip_ex(9,lang.N501[language]);}
+                    else if(range<0||range>30000){$('btn9').disabled=true;obj.style.color='#F00';show_tip_ex(9,lang.N502[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn9').disabled=false;
+                        show_tip_ex(9,'&nbsp;');
+                    }
+                break;
+                case 'ID_0x03B3':
+                    if(!obj.value.match(reg6)){$('btn10').disabled=true;obj.style.color='#F00';show_tip_ex(10,lang.N501[language]);}
+                    else if(range<0||range>30000){$('btn10').disabled=true;obj.style.color='#F00';show_tip_ex(10,lang.N502[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn10').disabled=false;
+                        show_tip_ex(10,'&nbsp;');
+                    }
+                break;
+                case 'ID_0x03B6':
+                    if(!obj.value.match(reg6)){$('btn11').disabled=true;obj.style.color='#F00';show_tip_ex(11,lang.N501[language]);}
+                    else if(range<0||range>30000){$('btn11').disabled=true;obj.style.color='#F00';show_tip_ex(11,lang.N502[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn11').disabled=false;
+                        show_tip_ex(11,'&nbsp;');
+                    }
+                break;
+                case 'ID_0x03B9':
+                    if(!obj.value.match(reg6)){$('btn12').disabled=true;obj.style.color='#F00';show_tip_ex(12,lang.N501[language]);}
+                    else if(range<0||range>1000000){$('btn12').disabled=true;obj.style.color='#F00';show_tip_ex(12,lang.N502[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn12').disabled=false;
+                        show_tip_ex(12,'&nbsp;');
+                    }
+                break;
+                case 'ID_0x03BA':
+                    if(!obj.value.match(reg5)){$('btn13').disabled=true;obj.style.color='#F00';show_tip_ex(13,lang.N501[language]);}
+                    else if(range<1||range>100){$('btn13').disabled=true;obj.style.color='#F00';show_tip_ex(13,lang.N502[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn13').disabled=false;
+                        show_tip_ex(13,'&nbsp;');
+                    }
+                break;
+                case 'ID_0x03BB':
+                    if(!obj.value.match(reg5)){$('btn14').disabled=true;obj.style.color='#F00';show_tip_ex(14,lang.N501[language]);}
+                    else if(range<1||range>60){$('btn14').disabled=true;obj.style.color='#F00';show_tip_ex(14,lang.N502[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn14').disabled=false;
+                        show_tip_ex(14,'&nbsp;');
+                    }
+                break;
+                case 'ID_0x03BC':
+                    if(!obj.value.match(reg4)){$('btn15').disabled=true;obj.style.color='#F00';show_tip_ex(15,lang.N501[language]);}
+                    else if(range2<1||range2>100){$('btn15').disabled=true;obj.style.color='#F00';show_tip_ex(15,lang.N502[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn15').disabled=false;
+                        show_tip_ex(15,'&nbsp;');
+                    }
+                break;
+                case 'ID_0x03BD':
+                    if(!obj.value.match(reg4)){$('btn16').disabled=true;obj.style.color='#F00';show_tip_ex(16,lang.N501[language]);}
+                    else if(range2<1||range2>100){$('btn16').disabled=true;obj.style.color='#F00';show_tip_ex(16,lang.N502[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn16').disabled=false;
+                        show_tip_ex(16,'&nbsp;');
+                    }
+                break;
+				case 'ID_0x03BE':
+					if(!obj.value.match(reg2)){$('btn17').disabled=true;obj.style.color='#F00';show_tip_ex(17,lang.N501[language]);}
+					else if(range2<(Json.ID_0x045A/10.0).toFixed(1)||range2>(Json.ID_0x045B/10.0).toFixed(1)){$('btn17').disabled=true;obj.style.color='#F00';show_tip_ex(17,lang.N502[language]);}
+					else{
+                        obj.style.color='#000';
+                        $('btn17').disabled=false;
+                        show_tip_ex(17,'&nbsp;');
+					}
+				break;
+				case 'ID_0x03BF':
+					if(!obj.value.match(reg2)){$('btn18').disabled=true;obj.style.color='#F00';show_tip_ex(18,lang.N501[language]);}
+					else if(range2<(Json.ID_0x045A/10.0).toFixed(1)||range2>(Json.ID_0x045B/10.0).toFixed(1)){$('btn18').disabled=true;obj.style.color='#F00';show_tip_ex(18,lang.N502[language]);}
+					else{
+                        obj.style.color='#000';
+                        $('btn18').disabled=false;
+                        show_tip_ex(18,'&nbsp;');
+					}
+				break;
+                case 'ID_0x03C2':
+                    if(!obj.value.match(reg4)){$('btn20').disabled=true;obj.style.color='#F00';show_tip_ex(20,lang.N501[language]);}
+                    else if(range<0||range>10){$('btn20').disabled=true;obj.style.color='#F00';show_tip_ex(20,lang.N502[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn20').disabled=false;
+                        show_tip_ex(20,'&nbsp;');
+                    }
+                break;
+                case 'ID_0x03C3':
+                    if(!obj.value.match(reg4)){$('btn21').disabled=true;obj.style.color='#F00';show_tip_ex(21,lang.N501[language]);}
+                    else if(range<0||range>10){$('btn21').disabled=true;obj.style.color='#F00';show_tip_ex(21,lang.N502[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn21').disabled=false;
+                        show_tip_ex(21,'&nbsp;');
+                    }
+                break;
+                case 'ID_0x050C':
+                    if(!obj.value.match(reg6)){$('btn22').disabled=true;obj.style.color='#F00';show_tip_ex(22,lang.N501[language]);}
+                    else if(range<parseInt(-Json.ID_0x0384*1.1)||range>parseInt(Json.ID_0x0384*1.1)){$('btn22').disabled=true;obj.style.color='#F00';show_tip_ex(22,lang.N502[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn22').disabled=false;
+                        show_tip_ex(22,'&nbsp;');
+                    }
+                break;
+                case 'ID_0x03B7':
+                    if(!obj.value.match(reg6)){$('btn23').disabled=true;obj.style.color='#F00';show_tip_ex(22,lang.N501[language]);}
+                    else if(range<0||range>parseInt(Json.ID_0x0384*1.1)){$('btn23').disabled=true;obj.style.color='#F00';show_tip_ex(23,lang.N502[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn23').disabled=false;
+                        show_tip_ex(23,'&nbsp;');
+                    }
+                break;
+            }
+        }
+    </script>
+</html>

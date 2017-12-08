@@ -1,0 +1,938 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>
+		<link type='text/css' href='c_000.css' rel='stylesheet'/>
+		<style type='text/css'>
+			tr{height:27px;}
+			.select{width:180px;_width:150px;}
+			.time{width:65px;_width:100px;}
+			.txt{width:70px;text-align:center;}
+			.short_txt{width:50px;}
+			.td_value{text-align:right;padding-right:20px;}
+			.td1{padding-left:20px;padding-right:20px;text-align:left;}
+			.td2{padding-left:0px;text-align:center;}
+			.td3{padding-left:60px;text-align:left;}
+			.td4{padding-right:5px;text-align:right;}
+			.td5{padding-right:10px;text-align:right;}
+			.radio{padding-left:30px;}
+			.btnStyle{width:70px;height:24px;}
+			.submenu{line-height:32px;padding-left:20px;width:225px;height:32px;color:#000;background-color:#eee;font-weight:normal;font-size:14px;}
+			.PagerView{font-size:12px;font-family:tahoma,arial;color:#333;text-align:center;padding:8px;line-height:100%;}
+	 		.PagerView span{color:#999;margin:0 1px;padding:3px 6px;border:1px solid #ccc;}
+	 		.PagerView span.on{color:#fff;font-weight:bold;border:1px solid #666;background:#39f;}
+	 		.PagerView a{color:#00f;text-decoration:none;}
+	 		.PagerView a span{color:#33f;border:1px solid #66c;}
+	 		.pager{width:780px;margin:0 auto;}
+		</style>	
+		<script type='text/javascript'>
+			var $=function(o){return document.getElementById(o);};
+			function lang_init_ex(st,end){for(var i=st;i<=end;i++)eval('$(\'N'+(i<10?'0'+i:i)+'\').innerHTML=lang.N'+(i<10?'0'+i:i)+'[language];');}
+			function show_tip(obj){$('tip').innerHTML=obj;}
+			function show_T(tid)
+			{
+				var str='';
+				str+="<div class='title' style='width:90%;'><div class='r1 color'></div><div class='r2 color'></div><div class='r3 color'></div><div class='r4 color'></div>";
+				str+="<div class='content color'><span id='"+tid+"'></span></div>";
+				str+="<div class='r4 color'></div><div class='r3 color'></div><div class='r2 color'></div><div class='r1 color'></div></div><div class='blank'></div>";
+				document.write(str);
+			}
+			function show_net_pv()
+			{
+				var str='';
+				str+="<table id='tbl_net_pv' width='90%' border='1' bordercolor='#E0E0E0' style='display:none;'>";
+				for(var i=0; i<60; i++)
+				{
+					if(i%2==0){
+						str+="<tr id='trPVSrv"+i+"' style='display:none;'>";
+						str+="<td width='28%' class='td1 odd' style='text-align:center;'><span id='N"+(764+i*3)+"'></span></td>";
+						str+="<td width='17%' class='td1 odd' style='text-align:center;'><input style='width:135px;text-align:center;' id='PVSerIP"+i+"' onkeyup='IPverifyForPV(this)' type='text'/></td>";
+						str+="<td width='17%' class='td1 odd' style='text-align:center;'><span id='N"+(764+i*3+1)+"'></span></td>";
+						str+="<td width='13%' class='td1 odd' style='text-align:center;'><input style='width:80px;text-align:center;' id='PVPORT"+i+"' onkeyup='doRangeCheck(this,reg)' type='text'/></td>";
+						str+="<td width='13%' class='td1 odd' style='text-align:center;'><span id='N"+(764+i*3+2)+"'></span></td>";
+						str+="<td width='13%' class='td1 odd' style='text-align:center;'><select style='width:80px;text-align:center;' id='PVID"+i+"'></select></td>";
+						str+="<td width='10%' align='right' class='odd'><button class='btnStyle' onclick='doSubmit(this)' id='N"+(1000+i)+"' style='display:block;'></button></td>";
+						str+="</tr>";
+					}else{
+						str+="<tr id='trPVSrv"+i+"' style='display:none;'>";
+						str+="<td width='28%' class='td1 even' style='text-align:center;'><span id='N"+(764+i*3)+"'></span></td>";
+						str+="<td width='17%' class='td1 even' style='text-align:center;'><input style='width:135px;text-align:center;' id='PVSerIP"+i+"' onkeyup='IPverifyForPV(this)' type='text'/></td>";
+						str+="<td width='17%' class='td1 even' style='text-align:center;'><span id='N"+(764+i*3+1)+"'></span></td>";
+						str+="<td width='13%' class='td1 even' style='text-align:center;'><input style='width:80px;text-align:center;' id='PVPORT"+i+"' onkeyup='doRangeCheck(this,reg)' type='text'/></td>";
+						str+="<td width='13%' class='td1 even' style='text-align:center;'><span id='N"+(764+i*3+2)+"'></span></td>";
+						str+="<td width='13%' class='td1 even' style='text-align:center;'><select style='width:80px;text-align:center;' id='PVID"+i+"'></select></td>";
+						str+="<td width='10%' align='right' class='even'><button class='btnStyle' onclick='doSubmit(this)' id='N"+(1000+i)+"' style='display:block;'></button></td>";
+						str+="</tr>";						
+					}
+				}
+				str+="</table>";
+				document.write(str);
+			}
+			function show_sT(tid)
+			{
+				var str='';
+				str+="<div class='title' style='width:90%;'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+				str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+				str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+				document.write(str);
+			}
+			function show_sT_ex(tid, id)
+			{
+				var str='';
+				str+="<div class='title' id='"+id+"' style='display:none;width:90%'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+				str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+				str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+				document.write(str);
+			}
+			function sendHttpReq(url, successFn)
+			{
+				//alert(url);	
+		        var xmlhttp;
+		        if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+		        else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+		        xmlhttp.onreadystatechange=function()
+		        {
+		            if(xmlhttp.readyState==4 && xmlhttp.status==200)
+		            {
+		                if(xmlhttp.responseText=='1'){successFn();}
+		            }
+		        };
+		        xmlhttp.open('GET',url,true);
+		        xmlhttp.send();
+			}	
+		var PagerView=function(id,AAA,BBB,CCC)
+			{
+				var self=this;
+				this.id=id;
+				this._pageCount=0;
+				this._start=1;
+				this._end=1;
+				this.container=null;
+				this.index=1;
+				this.size=10;
+				this.maxButtons=10;
+				this.itemCount=0;
+				this.onclick=function(index){return true;};
+				this._onclick=function(index)
+				{
+					var old=self.index;
+					self.index=index;
+					if(self.onclick(index)!==false)self.render();
+					else self.index=old;
+				};
+				this._calculate=function()
+				{
+					self._pageCount=parseInt(Math.ceil(self.itemCount/self.size));
+					self.index=parseInt(self.index);
+					if(self.index>self._pageCount)self.index=self._pageCount;
+					if(self.index<1)self.index=1;
+					self._start=Math.max(1,self.index-parseInt(self.maxButtons/2));
+					self._end=Math.min(self._pageCount,self._start+self.maxButtons-1);
+					self._start=Math.max(1,self._end-self.maxButtons+1);
+				};
+				this.page=function(rows)
+				{
+					self._calculate();
+					var s_num=(self.index-1)*self.size ;
+					var e_num=self.index*self.size;
+					return rows.slice(s_num,e_num);
+				};
+				this.render=function()
+				{
+					var div=document.getElementById(self.id);
+					div.view=self;
+					self.container=div;
+					self._calculate();
+					var str='';
+					str+='<div class="PagerView">\n';
+					if(self._pageCount>1)
+					{
+						if(self.index!=1)
+						{
+							str+='<a href="javascript://1"><span>|&lt;</span></a>';
+							str+='<a href="javascript://'+(self.index-1)+'"><span>&lt;&lt;</span></a>';
+						}
+						else
+						{
+							str+='<span>|&lt;</span>';
+							str+='<span>&lt;&lt;</span>';
+						}
+					}
+					for(var i=self._start;i<=self._end;i++)
+					{
+						if(i==this.index)
+						{
+							if(i<10)str+='<span class="on">'+'0'+i+"</span>";
+							else str+='<span class="on">'+i+"</span>";
+						}
+						else
+						{
+							if(i<10)str+='<a href="javascript://'+i+'"><span>'+'0'+i+"</span></a>";
+							else str+='<a href="javascript://'+i+'"><span>'+i+"</span></a>";
+						}
+					}
+					if(self._pageCount>1)
+					{
+						if(self.index!=self._pageCount)
+						{
+							str+='<a href="javascript://'+(self.index+1)+'"><span>&gt;&gt;</span></a>';
+							str+='<a href="javascript://'+self._pageCount+'"><span>&gt;|</span></a>';
+						}
+						else
+						{
+							str+='<span>&gt;&gt;</span>';
+							str+='<span>&gt;|</span>';
+						}
+					}
+					str+=AAA+self._pageCount+BBB+self.itemCount+CCC;
+					str+='</div><!--/.pagerView-->\n';
+					self.container.innerHTML=str;
+					var a_list=self.container.getElementsByTagName('a');
+					for(var i=0;i<a_list.length;i++)
+					{
+						a_list[i].onclick=function()
+						{
+							var index=this.getAttribute('href');
+							if(index!=undefined&&index!='')
+							{
+								index=parseInt(index.replace('javascript://',''));
+								self._onclick(index);
+							}
+							return false;
+						};
+					}
+				};
+			};
+		</script>
+		<script type='text/javascript'>
+			var language=0;
+			//正整数+0
+			var reg=/^(0|[1-9]\d*)$/;
+			var Json;
+			var flg_pv = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+			var lang=
+			{
+	 			N500:['一共','Total '],
+	 			N501:['页，共',' Pages, '],
+	 			N502:['页，共',' Page, '],
+	 			N503:['台',' Nums'],
+	 			N504:['台',' Num'],
+
+				N541:['设置失败！','Set failed!'],
+				N542:['设置成功！','Set successfully!'],
+				N543:['格式错误！','Format error!'],
+				N544:['范围错误！','Range error!'],
+
+				N550:['设&nbsp;&nbsp;置','Set'],
+				N551:['设&nbsp;&nbsp;置','Set'],
+
+				N764:['光伏逆变器01 IP','Server01 IP'],
+				N765:['端口号','Port'],
+				N766:['ID','ID'],
+				N767:['光伏逆变器02 IP','Server02 IP'],
+				N768:['端口号','Port'],
+				N769:['ID','ID'],
+				N770:['光伏逆变器03 IP','Server03 IP'],
+				N771:['端口号','Port'],
+				N772:['ID','ID'],
+				N773:['光伏逆变器04 IP','Server04 IP'],
+				N774:['端口号','Port'],
+				N775:['ID','ID'],
+				N776:['光伏逆变器05 IP','Server05 IP'],
+				N777:['端口号','Port'],
+				N778:['ID','ID'],
+				N779:['光伏逆变器06 IP','Server06 IP'],
+				N780:['端口号','Port'],
+				N781:['ID','ID'],
+				N782:['光伏逆变器07 IP','Server07 IP'],
+				N783:['端口号','Port'],
+				N784:['ID','ID'],
+				N785:['光伏逆变器08 IP','Server08 IP'],
+				N786:['端口号','Port'],
+				N787:['ID','ID'],
+				N788:['光伏逆变器09 IP','Server09 IP'],
+				N789:['端口号','Port'],
+				N790:['ID','ID'],
+				N791:['光伏逆变器10 IP','Server10 IP'],
+				N792:['端口号','Port'],
+				N793:['ID','ID'],
+				N794:['光伏逆变器11 IP','Server11 IP'],
+				N795:['端口号','Port'],
+				N796:['ID','ID'],
+				N797:['光伏逆变器12 IP','Server12 IP'],
+				N798:['端口号','Port'],
+				N799:['ID','ID'],
+				N800:['光伏逆变器13 IP','Server13 IP'],
+				N801:['端口号','Port'],
+				N802:['ID','ID'],
+				N803:['光伏逆变器14 IP','Server14 IP'],
+				N804:['端口号','Port'],
+				N805:['ID','ID'],
+				N806:['光伏逆变器15 IP','Server15 IP'],
+				N807:['端口号','Port'],
+				N808:['ID','ID'],
+				N809:['光伏逆变器16 IP','Server16 IP'],
+				N810:['端口号','Port'],
+				N811:['ID','ID'],
+				N812:['光伏逆变器17 IP','Server17 IP'],
+				N813:['端口号','Port'],
+				N814:['ID','ID'],
+				N815:['光伏逆变器18 IP','Server18 IP'],
+				N816:['端口号','Port'],
+				N817:['ID','ID'],
+				N818:['光伏逆变器19 IP','Server19 IP'],
+				N819:['端口号','Port'],
+				N820:['ID','ID'],
+				N821:['光伏逆变器20 IP','Server20 IP'],
+				N822:['端口号','Port'],
+				N823:['ID','ID'],
+				N824:['光伏逆变器21 IP','Server21 IP'],
+				N825:['端口号','Port'],
+				N826:['ID','ID'],
+				N827:['光伏逆变器22 IP','Server22 IP'],
+				N828:['端口号','Port'],
+				N829:['ID','ID'],
+				N830:['光伏逆变器23 IP','Server23 IP'],
+				N831:['端口号','Port'],
+				N832:['ID','ID'],
+				N833:['光伏逆变器24 IP','Server24 IP'],
+				N834:['端口号','Port'],
+				N835:['ID','ID'],
+				N836:['光伏逆变器25 IP','Server25 IP'],
+				N837:['端口号','Port'],
+				N838:['ID','ID'],
+				N839:['光伏逆变器26 IP','Server26 IP'],
+				N840:['端口号','Port'],
+				N841:['ID','ID'],
+				N842:['光伏逆变器27 IP','Server27 IP'],
+				N843:['端口号','Port'],
+				N844:['ID','ID'],				
+				N845:['光伏逆变器28 IP','Server28 IP'],
+				N846:['端口号','Port'],
+				N847:['ID','ID'],			
+				N848:['光伏逆变器29 IP','Server29 IP'],
+				N849:['端口号','Port'],
+				N850:['ID','ID'],	
+				N851:['光伏逆变器30IP','Server30 IP'],
+				N852:['端口号','Port'],
+				N853:['ID','ID'],
+				N854:['光伏逆变器31 IP','Server31 IP'],
+				N855:['端口号','Port'],
+				N856:['ID','ID'],	
+				N857:['光伏逆变器32 IP','Server32 IP'],
+				N858:['端口号','Port'],
+				N859:['ID','ID'],
+				N860:['光伏逆变器33 IP','Server33 IP'],
+				N861:['端口号','Port'],
+				N862:['ID','ID'],
+				N863:['光伏逆变器34 IP','Server34 IP'],
+				N864:['端口号','Port'],
+				N865:['ID','ID'],
+				N866:['光伏逆变器35 IP','Server35 IP'],
+				N867:['端口号','Port'],
+				N868:['ID','ID'],
+				N869:['光伏逆变器36 IP','Server36 IP'],
+				N870:['端口号','Port'],
+				N871:['ID','ID'],
+				N872:['光伏逆变器37 IP','Server37 IP'],
+				N873:['端口号','Port'],
+				N874:['ID','ID'],				
+				N875:['光伏逆变器38 IP','Server38 IP'],
+				N876:['端口号','Port'],
+				N877:['ID','ID'],			
+				N878:['光伏逆变器39 IP','Server39 IP'],
+				N879:['端口号','Port'],
+				N880:['ID','ID'],	
+				N881:['光伏逆变器40 IP','Server40 IP'],
+				N882:['端口号','Port'],
+				N883:['ID','ID'],	
+				N884:['光伏逆变器41 IP','Server41 IP'],
+				N885:['端口号','Port'],
+				N886:['ID','ID'],	
+				N887:['光伏逆变器42 IP','Server42 IP'],
+				N888:['端口号','Port'],
+				N889:['ID','ID'],
+				N890:['光伏逆变器43 IP','Server43 IP'],
+				N891:['端口号','Port'],
+				N892:['ID','ID'],
+				N893:['光伏逆变器44 IP','Server44 IP'],
+				N894:['端口号','Port'],
+				N895:['ID','ID'],
+				N896:['光伏逆变器45 IP','Server45 IP'],
+				N897:['端口号','Port'],
+				N898:['ID','ID'],
+				N899:['光伏逆变器46 IP','Server46 IP'],
+				N900:['端口号','Port'],
+				N901:['ID','ID'],
+				N902:['光伏逆变器47 IP','Server47 IP'],
+				N903:['端口号','Port'],
+				N904:['ID','ID'],				
+				N905:['光伏逆变器48 IP','Server48 IP'],
+				N906:['端口号','Port'],
+				N907:['ID','ID'],			
+				N908:['光伏逆变器49 IP','Server49 IP'],
+				N909:['端口号','Port'],
+				N910:['ID','ID'],	
+				N911:['光伏逆变器50 IP','Server50 IP'],
+				N912:['端口号','Port'],
+				N913:['ID','ID'],
+				N914:['光伏逆变器51 IP','Server51 IP'],
+				N915:['端口号','Port'],
+				N916:['ID','ID'],	
+				N917:['光伏逆变器52 IP','Server52 IP'],
+				N918:['端口号','Port'],
+				N919:['ID','ID'],
+				N920:['光伏逆变器53 IP','Server53 IP'],
+				N921:['端口号','Port'],
+				N922:['ID','ID'],
+				N923:['光伏逆变器54 IP','Server54 IP'],
+				N924:['端口号','Port'],
+				N925:['ID','ID'],
+				N926:['光伏逆变器55 IP','Server55 IP'],
+				N927:['端口号','Port'],
+				N928:['ID','ID'],
+				N929:['光伏逆变器56 IP','Server56 IP'],
+				N930:['端口号','Port'],
+				N931:['ID','ID'],
+				N932:['光伏逆变器57 IP','Server57 IP'],
+				N933:['端口号','Port'],
+				N934:['ID','ID'],				
+				N935:['光伏逆变器58 IP','Server58 IP'],
+				N936:['端口号','Port'],
+				N937:['ID','ID'],			
+				N938:['光伏逆变器59 IP','Server59 IP'],
+				N939:['端口号','Port'],
+				N940:['ID','ID'],	
+				N941:['光伏逆变器60 IP','Server60 IP'],
+				N942:['端口号','Port'],
+				N943:['ID','ID'],
+
+				//PV 网口
+				N1000:['设&nbsp;&nbsp;置','Set'],
+				N1001:['设&nbsp;&nbsp;置','Set'],
+				N1002:['设&nbsp;&nbsp;置','Set'],
+				N1003:['设&nbsp;&nbsp;置','Set'],
+				N1004:['设&nbsp;&nbsp;置','Set'],
+				N1005:['设&nbsp;&nbsp;置','Set'],
+				N1006:['设&nbsp;&nbsp;置','Set'],
+				N1007:['设&nbsp;&nbsp;置','Set'],
+				N1008:['设&nbsp;&nbsp;置','Set'],
+				N1009:['设&nbsp;&nbsp;置','Set'],
+				N1010:['设&nbsp;&nbsp;置','Set'],
+				N1011:['设&nbsp;&nbsp;置','Set'],
+				N1012:['设&nbsp;&nbsp;置','Set'],
+				N1013:['设&nbsp;&nbsp;置','Set'],
+				N1014:['设&nbsp;&nbsp;置','Set'],
+				N1015:['设&nbsp;&nbsp;置','Set'],
+				N1016:['设&nbsp;&nbsp;置','Set'],
+				N1017:['设&nbsp;&nbsp;置','Set'],
+				N1018:['设&nbsp;&nbsp;置','Set'],
+				N1019:['设&nbsp;&nbsp;置','Set'],
+				N1020:['设&nbsp;&nbsp;置','Set'],
+				N1021:['设&nbsp;&nbsp;置','Set'],
+				N1022:['设&nbsp;&nbsp;置','Set'],
+				N1023:['设&nbsp;&nbsp;置','Set'],
+				N1024:['设&nbsp;&nbsp;置','Set'],
+				N1025:['设&nbsp;&nbsp;置','Set'],
+				N1026:['设&nbsp;&nbsp;置','Set'],
+				N1027:['设&nbsp;&nbsp;置','Set'],
+				N1028:['设&nbsp;&nbsp;置','Set'],
+				N1029:['设&nbsp;&nbsp;置','Set'],
+				N1030:['设&nbsp;&nbsp;置','Set'],
+				N1031:['设&nbsp;&nbsp;置','Set'],
+				N1032:['设&nbsp;&nbsp;置','Set'],
+				N1033:['设&nbsp;&nbsp;置','Set'],
+				N1034:['设&nbsp;&nbsp;置','Set'],
+				N1035:['设&nbsp;&nbsp;置','Set'],
+				N1036:['设&nbsp;&nbsp;置','Set'],
+				N1037:['设&nbsp;&nbsp;置','Set'],
+				N1038:['设&nbsp;&nbsp;置','Set'],
+				N1039:['设&nbsp;&nbsp;置','Set'],
+				N1040:['设&nbsp;&nbsp;置','Set'],
+				N1041:['设&nbsp;&nbsp;置','Set'],
+				N1042:['设&nbsp;&nbsp;置','Set'],
+				N1043:['设&nbsp;&nbsp;置','Set'],
+				N1044:['设&nbsp;&nbsp;置','Set'],
+				N1045:['设&nbsp;&nbsp;置','Set'],
+				N1046:['设&nbsp;&nbsp;置','Set'],
+				N1047:['设&nbsp;&nbsp;置','Set'],
+				N1048:['设&nbsp;&nbsp;置','Set'],
+				N1049:['设&nbsp;&nbsp;置','Set'],
+				N1050:['设&nbsp;&nbsp;置','Set'],
+				N1051:['设&nbsp;&nbsp;置','Set'],
+				N1052:['设&nbsp;&nbsp;置','Set'],
+				N1053:['设&nbsp;&nbsp;置','Set'],
+				N1054:['设&nbsp;&nbsp;置','Set'],
+				N1055:['设&nbsp;&nbsp;置','Set'],
+				N1056:['设&nbsp;&nbsp;置','Set'],
+				N1057:['设&nbsp;&nbsp;置','Set'],
+				N1058:['设&nbsp;&nbsp;置','Set'],
+				N1059:['设&nbsp;&nbsp;置','Set']
+			};
+
+			//显示设置Mdobus地址设置框 nid -- text框id(实际的)，bid -- 确认按钮id(>=1)，tid -- 提示信息区id(>=1), num -- 添加的个数
+			function show_Set(nid,bid,tid,num)
+			{
+				var loop=0;
+				var str='';
+				var style="odd";
+				var more=0, all=0;
+				var line=0;
+				more=num%4;
+				if(more!=0){all=num+(4-more);}
+				else{all=num;}
+				str+="<tr id='t"+(bid+line)+"' style='display:none'>";
+				for(var i=0; i<all; i++)
+				{
+					if(i%8<4){style="odd"}else{style="even"}
+					if(i>=num){
+						str+="<td width='12%' class='td1 odd "+style+"'><span id='text"+(bid+i)+"'>No.Na</span></td><td width='9%' class='td2 "+style+"'><input class='txt' type='text' value='Na' disabled='true'/></td><td width='8%' class='td2 "+style+"'><button class='btnStyle' disabled='true' style='display:block;'></td>";
+					}else{						
+						str+="<td width='12%' class='"+style+"'><span id='text"+(bid+i)+"'>No."+(i<9?'0'+(i+1):(i+1))+"</span></td><td width='9%' class='td2 "+style+"'><input class='txt' id='ID_0x0"+(nid+i).toString(16).toUpperCase()+"' value='"+(i+1)+"' maxlength='3' onkeyup='doRangeCheck(this,reg)' type='text'/></td><td width='%8' class='td2 "+style+"'><button class='btnStyle' onclick='doSubmit(this)' id='N"+(bid+i)+"' style='display:block;'></td>";	
+					}	
+					if(i%4==3){
+						loop=0;
+						line++;
+						if(i!=all-1){str+="</tr><tr id='t"+(bid+line)+"' style='display:none'>"};
+
+					}
+					loop++;
+				}
+				str+="</tr>";
+				document.write(str);
+			}				
+		</script>
+	</head>
+	<body onload='Init()'>
+		<!-- PV -->
+		<div id='pager2' width='90%' style='padding-left:5%;float:left;'></div>
+		<table id='tbl_pv' width='90%' border='1' bordercolor="#E0E0E0" style='display:none;'>
+			<script type='text/javascript'>
+			show_net_pv();
+			</script>
+		</table>
+		<div class='tip' id='tip1' style='width:90%;'><span>&nbsp;</span></div>	
+		<div class='btm_blank'></div>
+		<div id='trans'></div>
+		<!--[if IE 6]><script type='text/javascript'>document.execCommand('BackgroundImageCache',false,true);</script><![endif]-->
+	</body>
+	<script language='javascript' type='text/javascript'>
+
+		Json={	ID_0x0301:85,ID_0x0282:0x22,ID_0x0390:1,ID_0x0391:1,ID_0x0392:1,ID_0x0393:1,ID_0x0394:1,ID_0x0395:1,ID_0x039A:1,
+				ID_0x0351:60,ID_0x0387:1,
+
+				ID_0x06B0:1,ID_0x06B1:23,ID_0x06B2:24,ID_0x06B3:25,ID_0x06B4:27,ID_0x06B5:27,ID_0x06B6:27,ID_0x06B7:27,ID_0x06B8:27,ID_0x06B9:27,
+				ID_0x06BA:27,ID_0x06BB:30,ID_0x06BC:22,ID_0x06BD:23,ID_0x06BE:24,ID_0x06BF:25,ID_0x06C0:27,ID_0x06C1:27,ID_0x06C2:27,ID_0x06C3:27,
+				ID_0x06C4:27,ID_0x06C5:27,ID_0x06C6:27,ID_0x06C7:27,ID_0x06C8:27,ID_0x06C9:27,ID_0x06CA:27,ID_0x06CB:30,ID_0x06CC:27,ID_0x06CD:30,
+				ID_0x06CE:27,ID_0x06CF:30,ID_0x06D0:27,ID_0x06D1:30,ID_0x06D2:24,ID_0x06D3:25,ID_0x06D4:27,ID_0x06D5:27,ID_0x06D6:27,ID_0x06D7:27,
+				ID_0x06D8:27,ID_0x06D9:27,ID_0x06DA:27,ID_0x06DB:30,ID_0x06DC:22,ID_0x06DD:23,ID_0x06DE:24,ID_0x06DF:25,ID_0x06E0:27,ID_0x06E1:27,
+				ID_0x06E2:27,ID_0x06E3:27,ID_0x06E4:27,ID_0x06E5:27,ID_0x06E6:27,ID_0x06E7:27,ID_0x06E8:27,ID_0x06E9:27,ID_0x06EA:27,ID_0x06EB:27,
+
+				ID_0x3000:192,ID_0x3001:168,ID_0x3002:1,ID_0x3003:1,ID_0x3004:502,ID_0x3005:192,ID_0x3006:168,ID_0x3007:1,ID_0x3008:2,ID_0x3009:502,
+				ID_0x300A:192,ID_0x300B:168,ID_0x300C:1,ID_0x300D:3,ID_0x300E:502,ID_0x300F:192,ID_0x3010:168,ID_0x3011:1,ID_0x3012:4,ID_0x3013:502,
+				ID_0x3014:192,ID_0x3015:168,ID_0x3016:1,ID_0x3017:5,ID_0x3018:502,ID_0x3019:192,ID_0x301A:168,ID_0x301B:1,ID_0x301C:6,ID_0x301D:502,
+				ID_0x301E:192,ID_0x301F:168,ID_0x3020:1,ID_0x3021:7,ID_0x3022:502,ID_0x3023:192,ID_0x3024:168,ID_0x3025:1,ID_0x3026:8,ID_0x3027:502,
+				ID_0x3028:192,ID_0x3029:168,ID_0x302A:1,ID_0x302B:9,ID_0x302C:502,ID_0x302D:192,ID_0x302E:168,ID_0x302F:1,ID_0x3030:10,ID_0x3031:502,
+				ID_0x3032:192,ID_0x3033:168,ID_0x3034:1,ID_0x3035:11,ID_0x3036:502,ID_0x3037:192,ID_0x3038:168,ID_0x3039:1,ID_0x303A:12,ID_0x303B:502,
+				ID_0x303C:192,ID_0x303D:168,ID_0x303E:1,ID_0x303F:13,ID_0x3040:502,ID_0x3041:192,ID_0x3042:168,ID_0x3043:1,ID_0x3044:14,ID_0x3045:502,
+				ID_0x3046:192,ID_0x3047:168,ID_0x3048:1,ID_0x3049:15,ID_0x304A:502,ID_0x304B:192,ID_0x304C:168,ID_0x304D:1,ID_0x304E:16,ID_0x304F:502,
+				ID_0x3050:192,ID_0x3051:168,ID_0x3052:1,ID_0x3053:17,ID_0x3054:502,ID_0x3055:192,ID_0x3056:168,ID_0x3057:1,ID_0x3058:18,ID_0x3059:502,
+				ID_0x305A:192,ID_0x305B:168,ID_0x305C:1,ID_0x305D:19,ID_0x305E:502,ID_0x305F:192,ID_0x3060:168,ID_0x3061:1,ID_0x3062:20,ID_0x3063:502,
+				ID_0x3064:192,ID_0x3065:168,ID_0x3066:1,ID_0x3067:21,ID_0x3068:502,ID_0x3069:192,ID_0x306A:168,ID_0x306B:1,ID_0x306C:22,ID_0x306D:502,
+				ID_0x306E:192,ID_0x306F:168,ID_0x3070:1,ID_0x3071:23,ID_0x3072:502,ID_0x3073:192,ID_0x3074:168,ID_0x3075:1,ID_0x3076:24,ID_0x3077:502,
+				ID_0x3078:192,ID_0x3079:168,ID_0x307A:1,ID_0x307B:25,ID_0x307C:502,ID_0x307D:192,ID_0x307E:168,ID_0x307F:1,ID_0x3080:26,ID_0x3081:502,
+				ID_0x3082:192,ID_0x3083:168,ID_0x3084:1,ID_0x3085:27,ID_0x3086:502,ID_0x3087:192,ID_0x3088:168,ID_0x3089:1,ID_0x308A:28,ID_0x308B:502,
+				ID_0x308C:192,ID_0x308D:168,ID_0x308E:1,ID_0x308F:29,ID_0x3090:502,ID_0x3091:192,ID_0x3092:168,ID_0x3093:1,ID_0x3094:30,ID_0x3095:502,
+				ID_0x3096:192,ID_0x3097:168,ID_0x3098:1,ID_0x3099:31,ID_0x309A:502,ID_0x309B:192,ID_0x309C:168,ID_0x309D:1,ID_0x309E:32,ID_0x309F:502,
+				ID_0x30A0:192,ID_0x30A1:168,ID_0x30A2:1,ID_0x30A3:33,ID_0x30A4:502,ID_0x30A5:192,ID_0x30A6:168,ID_0x30A7:1,ID_0x30A8:34,ID_0x30A9:502,
+				ID_0x30AA:192,ID_0x30AB:168,ID_0x30AC:1,ID_0x30AD:35,ID_0x30AE:502,ID_0x30AF:192,ID_0x30B0:168,ID_0x30B1:1,ID_0x30B2:36,ID_0x30B3:502,
+				ID_0x30B4:192,ID_0x30B5:168,ID_0x30B6:1,ID_0x30B7:37,ID_0x30B8:502,ID_0x30B9:192,ID_0x30BA:168,ID_0x30BB:1,ID_0x30BC:38,ID_0x30BD:502,
+				ID_0x30BE:192,ID_0x30BF:168,ID_0x30C0:1,ID_0x30C1:39,ID_0x30C2:502,ID_0x30C3:192,ID_0x30C4:168,ID_0x30C5:1,ID_0x30C6:40,ID_0x30C7:502,
+				ID_0x30C8:192,ID_0x30C9:168,ID_0x30CA:1,ID_0x30CB:41,ID_0x30CC:502,ID_0x30CD:192,ID_0x30CE:168,ID_0x30CF:1,ID_0x30D0:42,ID_0x30D1:502,
+				ID_0x30D2:192,ID_0x30D3:168,ID_0x30D4:1,ID_0x30D5:43,ID_0x30D6:502,ID_0x30D7:192,ID_0x30D8:168,ID_0x30D9:1,ID_0x30DA:44,ID_0x30DB:502,
+				ID_0x30DC:192,ID_0x30DD:168,ID_0x30DE:1,ID_0x30DF:45,ID_0x30E0:502,ID_0x30E1:192,ID_0x30E2:168,ID_0x30E3:1,ID_0x30E4:46,ID_0x30E5:502,
+				ID_0x30E6:192,ID_0x30E7:168,ID_0x30E8:1,ID_0x30E9:47,ID_0x30EA:502,ID_0x30EB:192,ID_0x30EC:168,ID_0x30ED:1,ID_0x30EE:48,ID_0x30EF:502,
+				ID_0x30F0:192,ID_0x30F1:168,ID_0x30F2:1,ID_0x30F3:49,ID_0x30F4:502,ID_0x30F5:192,ID_0x30F6:168,ID_0x30F7:1,ID_0x30F8:50,ID_0x30F9:502,
+				ID_0x30FA:192,ID_0x30FB:168,ID_0x30FC:1,ID_0x30FD:51,ID_0x30FE:502,ID_0x30FF:192,ID_0x3100:168,ID_0x3101:1,ID_0x3102:52,ID_0x3103:502,
+				ID_0x3104:192,ID_0x3105:168,ID_0x3106:1,ID_0x3107:53,ID_0x3108:502,ID_0x3109:192,ID_0x310A:168,ID_0x310B:1,ID_0x310C:54,ID_0x310D:502,
+				ID_0x310E:192,ID_0x310F:168,ID_0x3110:1,ID_0x3111:55,ID_0x3112:502,ID_0x3113:192,ID_0x3114:168,ID_0x3115:1,ID_0x3116:56,ID_0x3117:502,
+				ID_0x3118:192,ID_0x3119:168,ID_0x311A:1,ID_0x311B:57,ID_0x311C:502,ID_0x311D:192,ID_0x311E:168,ID_0x311F:1,ID_0x3120:58,ID_0x3121:502,
+				ID_0x3122:192,ID_0x3123:168,ID_0x3124:1,ID_0x3125:59,ID_0x3126:512,ID_0x3127:192,ID_0x3128:168,ID_0x3129:1,ID_0x312A:60,ID_0x312B:522			
+			};
+
+		function IPverifyForPV(obj)
+		{
+			var reg=/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])(\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])){3}$/;
+       		var str = obj.id;
+       		var cutstr;
+       		switch(obj.id)
+       		{
+       			case 'PVSerIP0':case 'PVSerIP1':case 'PVSerIP2':case 'PVSerIP3':case 'PVSerIP4':case 'PVSerIP5':case 'PVSerIP6':case 'PVSerIP7':case 'PVSerIP8':case 'PVSerIP9':
+       			cutstr = str.substring(str.length-1,str.length);
+       			break;
+       			default:
+       			cutstr = str.substring(str.length-2,str.length);
+       			break;
+       		}
+       		var index = parseInt(cutstr)+1000;
+			if(!obj.value.match(reg))
+			{
+				eval('$(\'N'+index+'\').disabled=true;');
+				obj.style.color='#F00';
+				show_tip_ex(1,lang.N543[language]);
+			}
+			else
+			{
+				eval('$(\'N'+index+'\').disabled=false;');
+				obj.style.color='#000';
+				show_tip_ex(1,'&nbsp;');
+			}
+		}		
+		function change_color(obj)
+		{
+			if(current_id!=obj.id)
+			{
+				obj.style.background='#007b3e';
+				obj.style.color='#fff';
+			}
+		}
+		function resume_color(obj)
+		{
+			if(current_id!=obj.id)
+			{
+				obj.style.background='#aaa';
+				obj.style.color='#000';
+			}
+		}
+		
+		//pv
+		function choose_pv()
+		{
+			var lin=0;
+			if(Json.ID_0x0391==1){
+				$('tbl_net_pv').style.display='table';$('pager2').style.display='block';			
+				$('tip1').style.display='block';
+			} else { 
+				$('tbl_net_pv').style.display='none'; 
+				$('tip1').style.display='none';
+			}
+			
+			if(Json.ID_0x0351<=10){
+				if(Json.ID_0x0351==0){$('pager2').style.display='none';}
+				else if(Json.ID_0x0351==1){
+					$('pager2').style.display='block';
+					tpager=new PagerView('pager2',lang.N500[language],lang.N502[language],lang.N504[language]);
+				}else{
+					$('pager2').style.display='block';
+					tpager=new PagerView('pager2',lang.N500[language],lang.N502[language],lang.N503[language]);
+				}
+			}else{
+				$('pager2').style.display='block';
+				tpager=new PagerView('pager2',lang.N500[language],lang.N501[language],lang.N503[language]);
+			}	
+			tpager.itemCount=Json.ID_0x0351;
+			tpager.size=10;
+			tpager.index=1; 
+			Set_PV_For_Net(tpager.index);				
+			tpager.onclick=function(index)
+			{
+				//获取PV光伏逆变器器配置数据
+				Set_PV_For_Net(index);
+			};
+			//index显示更新
+			tpager.render();	
+		}
+		
+		//设置网口PV数据, 获取PV 单页net参数
+		function Set_PV_For_Net(index)
+		{
+			eval('var URL=\'s_027.html?0x'+(0x3000+(index-1)*50).toString(16).toUpperCase()+'&time=\'+new Date();');
+			var xmlhttp;
+			if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+			else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+			//xmlhttp.onreadystatechange=function()
+			{
+				//if(xmlhttp.readyState==4 && xmlhttp.status==200)
+				{
+					//eval('Json='+xmlhttp.responseText);		
+ 					for(var i=0,cnt=0; i<tpager.itemCount; i++)
+ 					{
+ 						if(i>=(index-1)*10 && cnt < 10)
+ 						{
+ 							cnt++;
+						    eval('$(\'trPVSrv'+i+'\').style.display=\'block\';');
+						}
+						else
+						{
+							eval('$(\'trPVSrv'+i+'\').style.display=\'none\';');
+						}
+					}	
+					for(var i=(index-1)*10,cnt=0; i<Json.ID_0x0351&&cnt<10; i++,cnt++)
+					{	
+						eval('$(\'PVSerIP'+i+'\').value=String(Json.ID_0x'+(0x3000+i*5).toString(16).toUpperCase()+')+\'.\'+String(Json.ID_0x'+(0x3000+i*5+1).toString(16).toUpperCase()+')+\'.\'+String(Json.ID_0x'+(0x3000+i*5+2).toString(16).toUpperCase()+')+\'.\'+String(Json.ID_0x'+(0x3000+i*5+3).toString(16).toUpperCase()+');');
+						eval('$(\'PVSerIP'+i+'\').disabled=false;');
+						eval('$(\'PVSerIP'+i+'\').style.color=\'#000\';');
+						eval('$(\'PVPORT'+i+'\').value=Json.ID_0x'+(0x3000+i*5+4).toString(16).toUpperCase()+';');
+						var temp;
+						temp=eval('Json.ID_0x0'+(0x6B0+i).toString(16).toUpperCase()+'')-1;
+						if(temp>=0)eval('$(\'PVID'+i+'\').options[temp].selected=true;');
+					}
+					show_tip_ex(1,'&nbsp;');
+				}
+			};
+			//xmlhttp.open('GET',URL,true);
+			//xmlhttp.send();
+			//alert(URL);	
+		}		
+
+		function Init()
+		{
+			//参数=0读所有设备地址
+			var URL='s_027.html?0x0000&time='+new Date();
+			var xmlhttp;
+			if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+			else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+			//xmlhttp.onreadystatechange=function()
+			{
+				//if(xmlhttp.readyState==4 && xmlhttp.status==200)
+				{
+					//eval('Json='+xmlhttp.responseText);
+
+					if(Json.ID_0x0301==0x55)language=0;else language=1;
+					lang_init_ex(764,943);
+					lang_init_ex(1000,1059);
+
+					//pv net id
+					for(var i=0;i<60;i++)
+					{ 
+					    for(var j=0; j<247; j++)eval('$(\'PVID'+i+'\').options.add(new Option('+(j+1)+','+j+'));');           
+					}
+
+					//设备选择
+					choose_pv();
+
+					if(Json.ID_0x0282==0x11)
+					{
+						$('trans').style.zIndex=-9999;
+					}
+					else
+					{
+						$('trans').style.zIndex=-9999;
+					}					
+				}
+			};
+			xmlhttp.open('GET',URL,true);
+			xmlhttp.send();
+		}
+	 	function read_back(addr)
+		{ 
+			var url='s_027.html?';
+
+			if(addr==0x3000){url=url+'0xFFFF'+'&0x3000'+'&0x3001'+'&0x3002'+'&0x3003'+'&0x3004'+'&0x06B0';}
+			else if(addr==0x3005){url=url+'0xFFFF'+'&0x3005'+'&0x3006'+'&0x3007'+'&0x3008'+'&0x3009'+'&0x06B1';}
+			else if(addr==0x300A){url=url+'0xFFFF'+'&0x300A'+'&0x300B'+'&0x300C'+'&0x300D'+'&0x300E'+'&0x06B2';}
+			else if(addr==0x300F){url=url+'0xFFFF'+'&0x300F'+'&0x3010'+'&0x3011'+'&0x3012'+'&0x3013'+'&0x06B3';}
+			else if(addr==0x3014){url=url+'0xFFFF'+'&0x3014'+'&0x3015'+'&0x3016'+'&0x3017'+'&0x3018'+'&0x06B4';}
+			else if(addr==0x3019){url=url+'0xFFFF'+'&0x3019'+'&0x301A'+'&0x301B'+'&0x301C'+'&0x301D'+'&0x06B5';}
+			else if(addr==0x301E){url=url+'0xFFFF'+'&0x301E'+'&0x301F'+'&0x3020'+'&0x3021'+'&0x3022'+'&0x06B6';}
+			else if(addr==0x3023){url=url+'0xFFFF'+'&0x3023'+'&0x3024'+'&0x3025'+'&0x3026'+'&0x3027'+'&0x06B7';}
+			else if(addr==0x3028){url=url+'0xFFFF'+'&0x3028'+'&0x3029'+'&0x302A'+'&0x302B'+'&0x302C'+'&0x06B8';}
+			else if(addr==0x302D){url=url+'0xFFFF'+'&0x302D'+'&0x302E'+'&0x302F'+'&0x3030'+'&0x3031'+'&0x06B9';}
+			else if(addr==0x3032){url=url+'0xFFFF'+'&0x3032'+'&0x3033'+'&0x3034'+'&0x3035'+'&0x3036'+'&0x06BA';}
+			else if(addr==0x3037){url=url+'0xFFFF'+'&0x3037'+'&0x3038'+'&0x3039'+'&0x303A'+'&0x303B'+'&0x06BB';}
+			else if(addr==0x303C){url=url+'0xFFFF'+'&0x303C'+'&0x303D'+'&0x303E'+'&0x303F'+'&0x3040'+'&0x06BC';}
+			else if(addr==0x3041){url=url+'0xFFFF'+'&0x3041'+'&0x3042'+'&0x3043'+'&0x3044'+'&0x3045'+'&0x06BD';}
+			else if(addr==0x3046){url=url+'0xFFFF'+'&0x3046'+'&0x3047'+'&0x3048'+'&0x3049'+'&0x304A'+'&0x06BE';}
+			else if(addr==0x304B){url=url+'0xFFFF'+'&0x304B'+'&0x304C'+'&0x304D'+'&0x304E'+'&0x304F'+'&0x06BF';}
+			else if(addr==0x3050){url=url+'0xFFFF'+'&0x3050'+'&0x3051'+'&0x3052'+'&0x3053'+'&0x3054'+'&0x06C0';}
+			else if(addr==0x3055){url=url+'0xFFFF'+'&0x3055'+'&0x3056'+'&0x3057'+'&0x3058'+'&0x3059'+'&0x06C1';}
+			else if(addr==0x305A){url=url+'0xFFFF'+'&0x305A'+'&0x305B'+'&0x305C'+'&0x305D'+'&0x305E'+'&0x06C2';}
+			else if(addr==0x305F){url=url+'0xFFFF'+'&0x305F'+'&0x3060'+'&0x3061'+'&0x3062'+'&0x3063'+'&0x06C3';}
+			else if(addr==0x3064){url=url+'0xFFFF'+'&0x3064'+'&0x3065'+'&0x3066'+'&0x3067'+'&0x3068'+'&0x06C4';}
+			else if(addr==0x3069){url=url+'0xFFFF'+'&0x3069'+'&0x306A'+'&0x306B'+'&0x306C'+'&0x306D'+'&0x06C5';}
+			else if(addr==0x306E){url=url+'0xFFFF'+'&0x306E'+'&0x306F'+'&0x3070'+'&0x3071'+'&0x3072'+'&0x06C6';}
+			else if(addr==0x3073){url=url+'0xFFFF'+'&0x3073'+'&0x3074'+'&0x3075'+'&0x3076'+'&0x3077'+'&0x06C7';}
+			else if(addr==0x3078){url=url+'0xFFFF'+'&0x3078'+'&0x3079'+'&0x307A'+'&0x307B'+'&0x307C'+'&0x06C8';}
+			else if(addr==0x307D){url=url+'0xFFFF'+'&0x307D'+'&0x307E'+'&0x307F'+'&0x3080'+'&0x3081'+'&0x06C9';}
+			else if(addr==0x3082){url=url+'0xFFFF'+'&0x3082'+'&0x3083'+'&0x3084'+'&0x3085'+'&0x3086'+'&0x06CA';}
+			else if(addr==0x3087){url=url+'0xFFFF'+'&0x3087'+'&0x3088'+'&0x3089'+'&0x308A'+'&0x308B'+'&0x06CB';}
+			else if(addr==0x308C){url=url+'0xFFFF'+'&0x308C'+'&0x308D'+'&0x308E'+'&0x308F'+'&0x3090'+'&0x06CC';}
+			else if(addr==0x3091){url=url+'0xFFFF'+'&0x3091'+'&0x3092'+'&0x3093'+'&0x3094'+'&0x3095'+'&0x06CD';}
+			else if(addr==0x3096){url=url+'0xFFFF'+'&0x3096'+'&0x3097'+'&0x3098'+'&0x3099'+'&0x309A'+'&0x06CE';}
+			else if(addr==0x309B){url=url+'0xFFFF'+'&0x309B'+'&0x309C'+'&0x309D'+'&0x309E'+'&0x309F'+'&0x06CF';}
+			else if(addr==0x30A0){url=url+'0xFFFF'+'&0x30A0'+'&0x30A1'+'&0x30A2'+'&0x30A3'+'&0x30A4'+'&0x06D0';}
+			else if(addr==0x30A5){url=url+'0xFFFF'+'&0x30A5'+'&0x30A6'+'&0x30A7'+'&0x30A8'+'&0x30A9'+'&0x06D1';}
+			else if(addr==0x30AA){url=url+'0xFFFF'+'&0x30AA'+'&0x30AB'+'&0x30AC'+'&0x30AD'+'&0x30AE'+'&0x06D2';}
+			else if(addr==0x30AF){url=url+'0xFFFF'+'&0x30AF'+'&0x30B0'+'&0x30B1'+'&0x30B2'+'&0x30B3'+'&0x06D3';}
+			else if(addr==0x30B4){url=url+'0xFFFF'+'&0x30B4'+'&0x30B5'+'&0x30B6'+'&0x30B7'+'&0x30B8'+'&0x06D4';}
+			else if(addr==0x30B9){url=url+'0xFFFF'+'&0x30B9'+'&0x30BA'+'&0x30BB'+'&0x30BC'+'&0x30BD'+'&0x06D5';}
+			else if(addr==0x30BE){url=url+'0xFFFF'+'&0x30BE'+'&0x30BF'+'&0x30C0'+'&0x30C1'+'&0x30C2'+'&0x06D6';}
+			else if(addr==0x30C3){url=url+'0xFFFF'+'&0x30C3'+'&0x30C4'+'&0x30C5'+'&0x30C6'+'&0x30C7'+'&0x06D7';}
+			else if(addr==0x30C8){url=url+'0xFFFF'+'&0x30C8'+'&0x30C9'+'&0x30CA'+'&0x30CB'+'&0x30CC'+'&0x06D8';}
+			else if(addr==0x30CD){url=url+'0xFFFF'+'&0x30CD'+'&0x30CE'+'&0x30CF'+'&0x30D0'+'&0x30D1'+'&0x06D9';}
+			else if(addr==0x30D2){url=url+'0xFFFF'+'&0x30D2'+'&0x30D3'+'&0x30D4'+'&0x30D5'+'&0x30D6'+'&0x06DA';}
+			else if(addr==0x30D7){url=url+'0xFFFF'+'&0x30D7'+'&0x30D8'+'&0x30D9'+'&0x30DA'+'&0x30DB'+'&0x06DB';}
+			else if(addr==0x30DC){url=url+'0xFFFF'+'&0x30DC'+'&0x30DD'+'&0x30DE'+'&0x30DF'+'&0x30E0'+'&0x06DC';}
+			else if(addr==0x30E1){url=url+'0xFFFF'+'&0x30E1'+'&0x30E2'+'&0x30E3'+'&0x30E4'+'&0x30E5'+'&0x06DD';}
+			else if(addr==0x30E6){url=url+'0xFFFF'+'&0x30E6'+'&0x30E7'+'&0x30E8'+'&0x30E9'+'&0x30EA'+'&0x06DE';}
+			else if(addr==0x30EB){url=url+'0xFFFF'+'&0x30EB'+'&0x30EC'+'&0x30ED'+'&0x30EE'+'&0x30EF'+'&0x06DF';}
+			else if(addr==0x30F0){url=url+'0xFFFF'+'&0x30F0'+'&0x30F1'+'&0x30F2'+'&0x30F3'+'&0x30F4'+'&0x06E0';}
+			else if(addr==0x30F5){url=url+'0xFFFF'+'&0x30F5'+'&0x30F6'+'&0x30F7'+'&0x30F8'+'&0x30F9'+'&0x06E1';}	
+			else if(addr==0x30FA){url=url+'0xFFFF'+'&0x30FA'+'&0x30FB'+'&0x30FC'+'&0x30FD'+'&0x30FE'+'&0x06E2';}	
+			else if(addr==0x30FF){url=url+'0xFFFF'+'&0x30FF'+'&0x3100'+'&0x3101'+'&0x3102'+'&0x3103'+'&0x06E3';}	
+			else if(addr==0x3104){url=url+'0xFFFF'+'&0x3104'+'&0x3105'+'&0x3106'+'&0x3107'+'&0x3108'+'&0x06E4';}	
+			else if(addr==0x3109){url=url+'0xFFFF'+'&0x3109'+'&0x310A'+'&0x310B'+'&0x310C'+'&0x310D'+'&0x06E5';}	
+			else if(addr==0x310E){url=url+'0xFFFF'+'&0x310E'+'&0x310F'+'&0x3110'+'&0x3111'+'&0x3112'+'&0x06E6';}	
+			else if(addr==0x3113){url=url+'0xFFFF'+'&0x3113'+'&0x3114'+'&0x3115'+'&0x3116'+'&0x3117'+'&0x06E7';}	
+			else if(addr==0x3118){url=url+'0xFFFF'+'&0x3118'+'&0x3119'+'&0x311A'+'&0x311B'+'&0x311C'+'&0x06E8';}	
+			else if(addr==0x311D){url=url+'0xFFFF'+'&0x311D'+'&0x311E'+'&0x311F'+'&0x3120'+'&0x3121'+'&0x06E9';}	
+			else if(addr==0x3122){url=url+'0xFFFF'+'&0x3122'+'&0x3123'+'&0x3124'+'&0x3125'+'&0x3126'+'&0x06EA';}	
+			else if(addr==0x3127){url=url+'0xFFFF'+'&0x3127'+'&0x3128'+'&0x3129'+'&0x312A'+'&0x312B'+'&0x06EB';}	
+			else {url=url+'0xFFFF'+'&0x0'+addr.toString(16).toUpperCase();}
+			url=url+'&time='+new Date();
+			//alert(url);
+
+			var xmlhttp;
+			if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+			else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+			//xmlhttp.onreadystatechange=function()
+			{
+				//if(xmlhttp.readyState==4 && xmlhttp.status==200)
+				{
+					//eval('Json='+xmlhttp.responseText);
+					//回读PV 网口参数
+					if(addr==0x3000 || addr==0x3005 || addr==0x300A || addr==0x300F || addr==0x3014 || addr==0x3019 || 
+						addr==0x301E || addr==0x3023 || addr==0x3028 || addr==0x302D || addr==0x3032 || addr==0x3037 || addr==0x303C ||
+						  addr==0x3041 || addr==0x3046 || addr==0x304B || addr==0x3050 || addr==0x3055 || addr==0x305F || addr==0x3064 ||
+						   addr==0x3069 || addr==0x306E || addr==0x3073 || addr==0x3078 || addr==0x307D || addr==0x3082 || addr==0x3087 ||
+						    addr==0x308C || addr==0x3091 || addr==0x3096 || addr==0x309B || addr==0x30A0 || addr==0x30A5 || addr==0x30AA ||
+						     addr==0x30AF || addr==0x30B4 || addr==0x30B9 || addr==0x30BE || addr==0x30C3 || addr==0x30C8 || addr==0x30CD ||
+						      addr==0x30D2 || addr==0x30D7 || addr==0x30DC || addr==0x30E1 || addr==0x30E6 || addr==0x30EB || addr==0x30F0 || 
+						       addr==0x30F5 || addr==0x30FA || addr==0x30FF || addr==0x3104 || addr==0x3109 || addr==0x310E || addr==0x3113 || 
+						        addr==0x3118 || addr==0x311D || addr==0x3122 || addr==0x3127)
+					{
+						var index = (addr-0x3000)/5;
+						eval('var ip=$(\'PVSerIP'+index+'\').value;'); 
+						eval('var ip_get=String(Json.ID_0x'+addr.toString(16).toUpperCase()+')+\'.\'+String(Json.ID_0x'+(addr+1).toString(16).toUpperCase()+')+\'.\'+String(Json.ID_0x'+(addr+2).toString(16).toUpperCase()+')+\'.\'+String(Json.ID_0x'+(addr+3).toString(16).toUpperCase()+');');	
+						eval('var port=$(\'PVPORT'+index+'\').value;');
+						eval('var port_get=Json.ID_0x'+(addr+4).toString(16).toUpperCase()+';');
+						eval('var id=$(\'PVID'+index+'\').selectedIndex+1;');
+						eval('var id_get=Json.ID_0x0'+(0x6B0+index).toString(16).toUpperCase()+';');
+						show_tip_ex(1,'&nbsp;');
+						if(ip!=ip_get || port!=port_get || id!=id_get){
+							eval('$(\'PVSerIP'+index+'\').value=ip_get;');
+							eval('$(\'PVPORT'+index+'\').value=port_get;');
+							eval('$(\'PVID'+index+'\').options[Json.ID_0x0'+(0x6B0+index).toString(16).toUpperCase()+'-1].selected=true;');
+							setTimeout('show_tip_ex(1,lang.N541[language])',500);		
+						}else{
+							setTimeout('show_tip_ex(1,lang.N542[language])',500);
+						}
+						setTimeout('show_tip_ex(1,\'&nbsp;\')',2500);
+					}
+			        //回读PV modbus地址
+			        else if(addr >= 0x6B0 && addr <= 0x6EB)
+	            	{
+						var pr,fe;
+						eval('pr=$(\'ID_0x0'+addr.toString(16).toUpperCase()+'\').value;');
+						eval('fe=Json.ID_0x0'+addr.toString(16).toUpperCase()+';');
+						if(pr!=fe) eval('$(\'ID_0x0'+addr.toString(16).toUpperCase()+'\').value=Json.ID_0x0'+addr.toString(16).toUpperCase()+';');	            		
+		     			show_tip_ex(1, '&nbsp;');
+		    			if(pr==fe){setTimeout('show_tip_ex(1,lang.N542[language])',500);}
+		    			else {setTimeout('show_tip_ex(1,lang.N541[language])',500);}
+			            setTimeout('show_tip_ex(1, \'&nbsp;\')',2500);               		
+	            	}
+				}
+			};
+			xmlhttp.open('GET',url,true);
+			xmlhttp.send();     
+        } 	
+
+		function doSubmit(obj)
+		{
+            var URL='a_027.html?';
+
+            var readBack=0;
+            switch(obj.id)
+           	{
+            	//net pv 设置
+           		case 'N1000': case 'N1001': case 'N1002': case 'N1003': case 'N1004': case 'N1005': case 'N1006': case 'N1007': case 'N1008': case 'N1009':
+           		case 'N1010': case 'N1011': case 'N1012': case 'N1013': case 'N1014': case 'N1015': case 'N1016': case 'N1017': case 'N1018': case 'N1019':
+           		case 'N1020': case 'N1021': case 'N1022': case 'N1023': case 'N1024': case 'N1025': case 'N1026': case 'N1027': case 'N1028': case 'N1029':
+           		case 'N1030': case 'N1031': case 'N1032': case 'N1033': case 'N1034': case 'N1035': case 'N1036': case 'N1037': case 'N1038': case 'N1039':
+           		case 'N1040': case 'N1041': case 'N1042': case 'N1043': case 'N1044': case 'N1045': case 'N1046': case 'N1047': case 'N1048': case 'N1049':
+           		case 'N1050': case 'N1051': case 'N1052': case 'N1053': case 'N1054': case 'N1055': case 'N1056': case 'N1057': case 'N1058': case 'N1059':
+           		var str = obj.id;
+           		var cutstr = str.substring(str.length-4,str.length);
+           		var index = parseInt(cutstr)-1000;
+           		eval('var ip=$(\'PVSerIP'+index+'\').value.split(\'.\');');
+           		eval('var id=$(\'PVID'+index+'\').selectedIndex+1;');
+           		eval('URL=URL+\'0x'+(0x3000+5*index).toString(16).toUpperCase()+'=\'+ip[0]+\'&0x'+(0x3000+5*index+1).toString(16).toUpperCase()+'=\'+ip[1]+\'&0x'+(0x3000+5*index+2).toString(16).toUpperCase()+'=\'+ip[2]+\'&0x'+(0x3000+5*index+3).toString(16).toUpperCase()+'=\'+ip[3]+\'&0x'+(0x3000+5*index+4).toString(16).toUpperCase()+'=\'+$(\'PVPORT'+index+'\').value+\'&0x0'+(0x6B0+index).toString(16).toUpperCase()+'=\'+id;');	
+           		eval('readBack=0x'+(0x3000+5*index).toString(16).toUpperCase()+';');
+           		break;	
+            	default:break;
+           	}
+
+            URL=URL+'&time='+new Date();
+            //alert(URL);          
+
+            function success()
+            {
+            	if(readBack >= 0x6B0 && readBack <= 0x6EB || (readBack >= 0x3000 && readBack <= 0x312B))
+            	{
+	     			show_tip_ex(1, '&nbsp;');
+	    			setTimeout('read_back('+readBack+')', 100);
+		            setTimeout('show_tip_ex(1, \'&nbsp;\')',2500);               		
+            	}			
+            } 
+
+            //测试
+            success();  
+
+			sendHttpReq(URL, success);
+		}
+
+		function show_tip_ex(id, obj){eval('$(\'tip'+id+'\').innerHTML=obj;');}
+		function doRangeCheck(obj,reg)
+		{
+			var range=parseInt(obj.value);
+			var err, err2;			
+
+			if(!obj.value.match(reg)){err=2;}
+			else if(range<1||range>247){err=1;}
+			else{err=0;}
+	
+			//pv
+			if(!obj.value.match(reg)){err2=2;}
+			else if(range>=100000||range==0||range==80||range==8080){err2=1;}
+			else{err2=0;}
+
+			switch(obj.id)
+			{
+				case "PVPORT0": case "PVPORT1": case "PVPORT2": case "PVPORT3": case "PVPORT4": case "PVPORT5": case "PVPORT6": case "PVPORT7": case "PVPORT8": case "PVPORT9":  
+				case "PVPORT10": case "PVPORT11": case "PVPORT12": case "PVPORT13": case "PVPORT14": case "PVPORT15": case "PVPORT16": case "PVPORT17": case "PVPORT18": case "PVPORT19": 
+				case "PVPORT20": case "PVPORT21": case "PVPORT22": case "PVPORT23": case "PVPORT24": case "PVPORT25": case "PVPORT26": case "PVPORT27": case "PVPORT28": case "PVPORT29":  
+				case "PVPORT30": case "PVPORT31": case "PVPORT32": case "PVPORT33": case "PVPORT34": case "PVPORT35": case "PVPORT36": case "PVPORT37": case "PVPORT38": case "PVPORT39":  
+				case "PVPORT40": case "PVPORT41": case "PVPORT42": case "PVPORT43": case "PVPORT44": case "PVPORT45": case "PVPORT46": case "PVPORT47": case "PVPORT48": case "PVPORT49":  
+				case "PVPORT50": case "PVPORT51": case "PVPORT52": case "PVPORT53": case "PVPORT54": case "PVPORT55": case "PVPORT56": case "PVPORT57": case "PVPORT58": case "PVPORT59": 
+				if(err2==1||err2==2){
+					for(var i=0; i<Json.ID_0x0351; i++)
+					{
+						if(eval('$(\'PVPORT'+i+'\').id')==obj.id) {flg_pv[i]=1;eval('$(\'N'+(1000+i)+'\').disabled=true;');break;}
+					}	
+				}
+				if(err2==1)show_tip_ex(1,lang.N544[language]);
+				else if(err2==2)show_tip_ex(1,lang.N543[language]);
+				else{
+					for(var i=0; i<Json.ID_0x0351; i++)
+					{
+						if(eval('$(\'PVPORT'+i+'\').id')==obj.id) {flg_pv[i]=0;eval('$(\'N'+(1000+i)+'\').disabled=false;');break;}
+					}							
+					var a=0;
+					for(var i=0; i<50; i++) a|=flg_pv[i];
+					if(a==0)show_tip_ex(1,"&nbsp;");							
+				}
+				break;
+			}
+		}
+	</script>
+</html>

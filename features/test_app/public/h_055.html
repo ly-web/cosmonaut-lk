@@ -1,0 +1,422 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>
+		<link type='text/css' href='c_000.css' rel='stylesheet'/>
+		<style type='text/css'>
+			tr{height:27px;}
+			.select{width:180px;_width:150px;}
+			.time{width:65px;_width:100px;}
+			.txt{width:70px;text-align:center;}
+			.short_txt{width:50px;}
+			.td_value{text-align:right;padding-right:20px;}
+			.td1{padding-left:20px;padding-right:20px;text-align:left;}
+			.td2{padding-left:0px;text-align:center;}
+			.td3{padding-left:60px;text-align:left;}
+			.td4{padding-right:5px;text-align:right;}
+			.td5{padding-right:10px;text-align:right;}
+			.radio{padding-left:30px;}
+			.btnStyle{width:70px;height:24px;}
+			.submenu{line-height:32px;padding-left:20px;width:225px;height:32px;color:#000;background-color:#eee;font-weight:normal;font-size:14px;}
+		</style>	
+		<script type='text/javascript'>
+			var $=function(o){return document.getElementById(o);};
+			function lang_init_ex(st,end){for(var i=st;i<=end;i++)eval('$(\'N'+(i<10?'0'+i:i)+'\').innerHTML=lang.N'+(i<10?'0'+i:i)+'[language];');}
+			function show_tip(obj){$('tip').innerHTML=obj;}
+			function show_T(tid)
+			{
+				var str='';
+				str+="<div class='title' style='width:90%;'><div class='r1 color'></div><div class='r2 color'></div><div class='r3 color'></div><div class='r4 color'></div>";
+				str+="<div class='content color'><span id='"+tid+"'></span></div>";
+				str+="<div class='r4 color'></div><div class='r3 color'></div><div class='r2 color'></div><div class='r1 color'></div></div><div class='blank'></div>";
+				document.write(str);
+			}
+			function show_sT(tid)
+			{
+				var str='';
+				str+="<div class='title' style='width:90%;'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+				str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+				str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+				document.write(str);
+			}
+			function show_sT_ex(tid, id)
+			{
+				var str='';
+				str+="<div class='title' id='"+id+"' style='display:none;width:90%'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+				str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+				str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+				document.write(str);
+			}
+			function sendHttpReq(url, successFn)
+			{
+				//alert(url);	
+		        var xmlhttp;
+		        if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+		        else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+		        xmlhttp.onreadystatechange=function()
+		        {
+		            if(xmlhttp.readyState==4 && xmlhttp.status==200)
+		            {
+		                if(xmlhttp.responseText=='1'){successFn();}
+		            }
+		        };
+		        xmlhttp.open('GET',url,true);
+		        xmlhttp.send();
+			}	
+		</script>
+		<script type='text/javascript'>
+			var language=0;
+			//正整数+0
+			var reg=/^(0|[1-9]\d*)$/;
+			var Json;
+			var flg_pvs = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+			var lang=
+			{
+				//PVS, bnt ID 从500开始
+				N6350:['设&nbsp;&nbsp;置','Set'],
+				N6351:['设&nbsp;&nbsp;置','Set'],
+				N6352:['设&nbsp;&nbsp;置','Set'],
+				N6353:['设&nbsp;&nbsp;置','Set'],
+				N6354:['设&nbsp;&nbsp;置','Set'],
+				N6355:['设&nbsp;&nbsp;置','Set'],
+				N6356:['设&nbsp;&nbsp;置','Set'],
+				N6357:['设&nbsp;&nbsp;置','Set'],
+				N6358:['设&nbsp;&nbsp;置','Set'],
+				N6359:['设&nbsp;&nbsp;置','Set'],
+				N6360:['设&nbsp;&nbsp;置','Set'],
+				N6361:['设&nbsp;&nbsp;置','Set'],
+				N6362:['设&nbsp;&nbsp;置','Set'],
+				N6363:['设&nbsp;&nbsp;置','Set'],
+				N6364:['设&nbsp;&nbsp;置','Set'],
+				N6365:['设&nbsp;&nbsp;置','Set'],
+				N6366:['设&nbsp;&nbsp;置','Set'],
+				N6367:['设&nbsp;&nbsp;置','Set'],
+				N6368:['设&nbsp;&nbsp;置','Set'],
+				N6369:['设&nbsp;&nbsp;置','Set'],
+				N6370:['设&nbsp;&nbsp;置','Set'],
+				N6371:['设&nbsp;&nbsp;置','Set'],
+				N6372:['设&nbsp;&nbsp;置','Set'],
+				N6373:['设&nbsp;&nbsp;置','Set'],
+				N6374:['设&nbsp;&nbsp;置','Set'],
+				N6375:['设&nbsp;&nbsp;置','Set'],
+				N6376:['设&nbsp;&nbsp;置','Set'],
+				N6377:['设&nbsp;&nbsp;置','Set'],
+				N6378:['设&nbsp;&nbsp;置','Set'],
+				N6379:['设&nbsp;&nbsp;置','Set'],
+				N6380:['设&nbsp;&nbsp;置','Set'],
+				N6381:['设&nbsp;&nbsp;置','Set'],
+				N6382:['设&nbsp;&nbsp;置','Set'],
+				N6383:['设&nbsp;&nbsp;置','Set'],
+				N6384:['设&nbsp;&nbsp;置','Set'],
+				N6385:['设&nbsp;&nbsp;置','Set'],
+				N6386:['设&nbsp;&nbsp;置','Set'],
+				N6387:['设&nbsp;&nbsp;置','Set'],
+				N6388:['设&nbsp;&nbsp;置','Set'],
+				N6389:['设&nbsp;&nbsp;置','Set'],
+				N6390:['设&nbsp;&nbsp;置','Set'],
+				N6391:['设&nbsp;&nbsp;置','Set'],
+				N6392:['设&nbsp;&nbsp;置','Set'],
+				N6393:['设&nbsp;&nbsp;置','Set'],
+				N6394:['设&nbsp;&nbsp;置','Set'],
+				N6395:['设&nbsp;&nbsp;置','Set'],
+				N6396:['设&nbsp;&nbsp;置','Set'],
+				N6397:['设&nbsp;&nbsp;置','Set'],
+				N6398:['设&nbsp;&nbsp;置','Set'],
+				N6399:['设&nbsp;&nbsp;置','Set'],
+				N6400:['设&nbsp;&nbsp;置','Set'],
+				N6401:['设&nbsp;&nbsp;置','Set'],
+
+	 			N500:['一共','Total '],
+	 			N501:['页，共',' Pages, '],
+	 			N502:['页，共',' Page, '],
+	 			N503:['台',' Nums'],
+	 			N504:['台',' Num'],
+
+				N541:['设置失败！','Set failed!'],
+				N542:['设置成功！','Set successfully!'],
+				N543:['格式错误！','Format error!'],
+				N544:['范围错误！','Range error!'],
+
+				N550:['设&nbsp;&nbsp;置','Set'],
+				N551:['设&nbsp;&nbsp;置','Set']
+			};
+
+			//显示设置Mdobus地址设置框 nid -- text框id(实际的)，bid -- 确认按钮id(>=1)，tid -- 提示信息区id(>=1), num -- 添加的个数
+			function show_Set(nid,bid,tid,num)
+			{
+				var loop=0;
+				var str='';
+				var style="odd";
+				var more=0, all=0;
+				var line=0;
+				more=num%4;
+				if(more!=0){all=num+(4-more);}
+				else{all=num;}
+				str+="<tr id='t"+(bid+line)+"' style='display:none'>";
+				for(var i=0; i<all; i++)
+				{
+					if(i%8<4){style="odd"}else{style="even"}
+					if(i>=num){
+						str+="<td width='12%' class='td1 odd "+style+"'><span id='text"+(bid+i)+"'>No.Na</span></td><td width='9%' class='td2 "+style+"'><input class='txt' type='text' value='Na' disabled='true'/></td><td width='8%' class='td2 "+style+"'><button class='btnStyle' disabled='true' style='display:block;'></td>";
+					}else{						
+						str+="<td width='12%' class='"+style+"'><span id='text"+(bid+i)+"'>No."+(i<9?'0'+(i+1):(i+1))+"</span></td><td width='9%' class='td2 "+style+"'><input class='txt' id='ID_0x0"+(nid+i).toString(16).toUpperCase()+"' value='"+(i+1)+"' maxlength='3' onkeyup='doRangeCheck(this,reg)' type='text'/></td><td width='%8' class='td2 "+style+"'><button class='btnStyle' onclick='doSubmit(this)' id='N"+(bid+i)+"' style='display:block;'></td>";	
+					}	
+					if(i%4==3){
+						loop=0;
+						line++;
+						if(i!=all-1){str+="</tr><tr id='t"+(bid+line)+"' style='display:none'>"};
+
+					}
+					loop++;
+				}
+				str+="</tr>";
+				document.write(str);
+			}				
+		</script>
+	</head>
+	<body onload='Init()'>
+		<!-- 汇流箱 -->
+		<table id='tbl_pvs' width='90%' border='1' bordercolor="#E0E0E0" style='display:none;'>
+			<script type='text/javascript'>
+			show_Set(0x760, 6350, 6, 52);
+			lang_init_ex(6350,6401);
+			</script>
+		</table>
+		<div class='tip' id='tip5' style='width:90%;'><span>&nbsp;</span></div>	
+		<div class='btm_blank'></div>
+		<div id='trans'></div>
+		<!--[if IE 6]><script type='text/javascript'>document.execCommand('BackgroundImageCache',false,true);</script><![endif]-->
+	</body>
+	<script language='javascript' type='text/javascript'>
+
+		Json={	ID_0x0301:85,ID_0x0282:0x22,ID_0x0390:1,ID_0x0391:1,ID_0x0392:1,ID_0x0393:1,ID_0x0394:1,ID_0x0395:1,ID_0x039A:1,
+				ID_0x0353:50,
+
+				ID_0x0760:22,ID_0x0761:23,ID_0x0762:24,ID_0x0763:25,ID_0x0764:27,ID_0x0765:27,ID_0x0766:27,ID_0x0767:27,ID_0x0768:27,ID_0x0769:27,
+				ID_0x076A:27,ID_0x076B:30,ID_0x076C:24,ID_0x076D:25,ID_0x076E:27,ID_0x076F:27,ID_0x0770:27,ID_0x0771:27,ID_0x0772:27,ID_0x0773:27,
+				ID_0x0774:27,ID_0x0775:30,ID_0x0776:24,ID_0x0777:25,ID_0x0778:27,ID_0x0779:27,ID_0x077A:27,ID_0x077B:27,ID_0x077C:27,ID_0x077D:27,
+				ID_0x077E:27,ID_0x077F:27,ID_0x0780:27,ID_0x0781:27,ID_0x0782:27,ID_0x0783:27,ID_0x0784:27,ID_0x0785:27,ID_0x0786:27,ID_0x0787:27,
+				ID_0x0788:27,ID_0x0789:66,ID_0x078A:27,ID_0x078B:30,ID_0x078C:22,ID_0x078D:23,ID_0x078E:24,ID_0x078F:25,ID_0x0790:27,ID_0x0791:27,
+				ID_0x0792:27,ID_0x0793:27,ID_0x0794:27,ID_0x0795:27,ID_0x0796:27,ID_0x0797:27,ID_0x0798:27,ID_0x0799:27,ID_0x079A:27,ID_0x079B:27		
+			};
+
+		function change_color(obj)
+		{
+			if(current_id!=obj.id)
+			{
+				obj.style.background='#007b3e';
+				obj.style.color='#fff';
+			}
+		}
+		function resume_color(obj)
+		{
+			if(current_id!=obj.id)
+			{
+				obj.style.background='#aaa';
+				obj.style.color='#000';
+			}
+		}
+		
+		//pvs
+		function choose_pvs()
+		{
+			var lin=0;
+			if(Json.ID_0x0393==1){ $('tbl_pvs').style.display='table'; $('tip5').style.display='block';} else { $('tbl_pvs').style.display='none';  $('tip5').style.display='none';}	
+			//pvs
+			for(var i=0; i<52; i++){
+				if(i>=Json.ID_0x0353){
+					eval('$(\'ID_0x0'+(0x760+i).toString(16).toUpperCase()+'\').value=\'\';');
+					eval('$(\'ID_0x0'+(0x760+i).toString(16).toUpperCase()+'\').disabled=\'true\';');
+					eval('$(\'N'+(6350+i)+'\').disabled=true;');
+					eval('$(\'N'+(6350+i)+'\').style.background="#F0F0F0";');
+					eval('$(\'text'+(6350+i)+'\').innerHTML=\'No.--\';');
+				}else{
+					if(Json.ID_0x0282==0x22){
+						eval('$(\'N'+(6350+i)+'\').disabled=false;');
+						eval('$(\'N'+(6350+i)+'\').style.background="#99D9EA";');
+					}else{
+						eval('$(\'N'+(6350+i)+'\').style.background="#F0F0F0";');
+					}
+				}
+			}
+			if(Json.ID_0x0353%4==0){lin=parseInt(Json.ID_0x0353/4);}
+			else {lin=parseInt(Json.ID_0x0353/4)+1;}
+			for(var j=0; j<13; j++)
+			{
+				if(j>=lin) eval('$(\'t'+(6350+j)+'\').style.display=\'none\';');
+				else eval('$(\'t'+(6350+j)+'\').style.display=\'table\';');
+			}	
+			Set_PVS_For_Serial();	
+		}
+
+		//设置串口汇流箱数据
+		function Set_PVS_For_Serial()
+		{
+			var URL='s_027.html?0x0760&time='+new Date();
+			var xmlhttp;
+			if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+			else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+			//xmlhttp.onreadystatechange=function()
+			{
+				//if(xmlhttp.readyState==4 && xmlhttp.status==200)
+				{
+					//eval('Json='+xmlhttp.responseText);			
+					for(var i=0; i<Json.ID_0x0353; i++)
+					{
+						eval('$(\'ID_0x0'+(0x760+i).toString(16).toUpperCase()+'\').value=Json.ID_0x0'+(0x760+i).toString(16).toUpperCase()+';');
+					}
+				}
+			};
+			//xmlhttp.open('GET',URL,true);
+			//xmlhttp.send();	
+		}	
+
+		function Init()
+		{
+			//参数=0读所有设备地址
+			var URL='s_027.html?0x0000&time='+new Date();
+			var xmlhttp;
+			if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+			else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+			//xmlhttp.onreadystatechange=function()
+			{
+				//if(xmlhttp.readyState==4 && xmlhttp.status==200)
+				{
+					//eval('Json='+xmlhttp.responseText);
+
+					if(Json.ID_0x0301==0x55)language=0;else language=1;
+					lang_init_ex(6350,6401);
+
+					//设备选择
+					choose_pvs();
+
+					if(Json.ID_0x0282==0x11)
+					{
+						$('trans').style.zIndex=-9999;
+					}
+					else
+					{
+						$('trans').style.zIndex=-9999;
+					}					
+				}
+			};
+			xmlhttp.open('GET',URL,true);
+			xmlhttp.send();
+		}
+	 	function read_back(addr)
+		{ 
+			var url='s_027.html?';
+
+			url=url+'0xFFFF'+'&0x0'+addr.toString(16).toUpperCase();
+			url=url+'&time='+new Date();
+			//alert(url);
+
+			var xmlhttp;
+			if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+			else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+			//xmlhttp.onreadystatechange=function()
+			{
+				//if(xmlhttp.readyState==4 && xmlhttp.status==200)
+				{
+					//eval('Json='+xmlhttp.responseText);
+	            	//回读PVS modbus地址
+	            	if(addr >= 0x760 && addr < 0x800)
+	            	{
+						var pr,fe;
+						eval('pr=$(\'ID_0x0'+addr.toString(16).toUpperCase()+'\').value;');
+						eval('fe=Json.ID_0x0'+addr.toString(16).toUpperCase()+';');
+						if(pr!=fe) eval('$(\'ID_0x0'+addr.toString(16).toUpperCase()+'\').value=Json.ID_0x0'+addr.toString(16).toUpperCase()+';');
+		     			show_tip_ex(5, '&nbsp;');
+		    			if(pr==fe){setTimeout('show_tip_ex(5,lang.N542[language])',500);}
+		    			else {setTimeout('show_tip_ex(5,lang.N541[language])',500);}
+			            setTimeout('show_tip_ex(5, \'&nbsp;\')',2500);               		
+	            	}  
+				}
+			};
+			xmlhttp.open('GET',url,true);
+			xmlhttp.send();     
+        } 	
+
+		function doSubmit(obj)
+		{
+            var URL='a_027.html?';
+
+            var readBack=0;
+            switch(obj.id)
+           	{
+            	//serail pvs设置 
+            	case 'N6350': case 'N6351': case 'N6352': case 'N6353': case 'N6354': case 'N6355': case 'N6356': case 'N6357': case 'N6358': case 'N6359': 
+            	case 'N6360': case 'N6361': case 'N6362': case 'N6363': case 'N6364': case 'N6365': case 'N6366': case 'N6367': case 'N6368': case 'N6369': 
+            	case 'N6370': case 'N6371': case 'N6372': case 'N6373': case 'N6374': case 'N6375': case 'N6376': case 'N6377': case 'N6378': case 'N6379':
+            	case 'N6380': case 'N6381': case 'N6382': case 'N6383': case 'N6384': case 'N6385': case 'N6386': case 'N6387': case 'N6388': case 'N6389': 
+            	case 'N6390': case 'N6391': case 'N6392': case 'N6393': case 'N6394': case 'N6395': case 'N6396': case 'N6397': case 'N6398': case 'N6399': 
+            	var str = obj.id;
+            	var cutstr = str.substring(str.length-4,str.length);
+           		var index = parseInt(cutstr)-6350;
+            	if(flg_pvs[index]){return;}   
+            	eval('URL=URL+\'&0x0'+(0x760+index).toString(16).toUpperCase()+'=\'+$(\'ID_0x0'+(0x760+index).toString(16).toUpperCase()+'\').value;');
+            	eval('readBack=0x0'+(0x760+index).toString(16).toUpperCase()+';');    
+            	break;     	
+            	default:break;
+           	}
+
+            URL=URL+'&time='+new Date();
+            //alert(URL);          
+
+            function success()
+            {
+            	if(readBack >= 0x760 && readBack < 0x800)
+            	{
+	     			show_tip_ex(5, '&nbsp;');
+	    			setTimeout('read_back('+readBack+')', 100);
+		            setTimeout('show_tip_ex(5, \'&nbsp;\')',2500);               		
+            	} 
+            } 
+
+            //测试
+            success();  
+
+			sendHttpReq(URL, success);
+		}
+
+		function show_tip_ex(id, obj){eval('$(\'tip'+id+'\').innerHTML=obj;');}
+		function doRangeCheck(obj,reg)
+		{
+			var range=parseInt(obj.value);
+			var err, err2;			
+
+			if(!obj.value.match(reg)){err=2;}
+			else if(range<1||range>247){err=1;}
+			else{err=0;}
+	
+			//pvs
+			switch(obj.id)
+			{
+				case "ID_0x0760": case "ID_0x0761": case "ID_0x0762": case "ID_0x0763": case "ID_0x0764": case "ID_0x0765": case "ID_0x0766": case "ID_0x0767": case "ID_0x0768": case "ID_0x0769":
+			 	case "ID_0x076A": case "ID_0x076B": case "ID_0x076C": case "ID_0x076D": case "ID_0x076E": case "ID_0x076F": case "ID_0x0770": case "ID_0x0771": case "ID_0x0772": case "ID_0x0773": 
+			 	case "ID_0x0774": case "ID_0x0775": case "ID_0x0776": case "ID_0x0777": case "ID_0x0778": case "ID_0x0779": case "ID_0x077A": case "ID_0x077B": case "ID_0x077C": case "ID_0x077D": 
+			 	case "ID_0x077E": case "ID_0x077F": case "ID_0x0780": case "ID_0x0781": case "ID_0x0782": case "ID_0x0783": case "ID_0x0784": case "ID_0x0785": case "ID_0x0786": case "ID_0x0787": 
+			 	case "ID_0x0788": case "ID_0x0789": case "ID_0x078A": case "ID_0x078B": case "ID_0x078C": case "ID_0x078D": case "ID_0x078E": case "ID_0x078F": case "ID_0x0790": case "ID_0x0791":
+				if(err==1||err==2)
+				{
+					for(var i=0; i<Json.ID_0x0353; i++)
+					{
+						if(eval('$(\'ID_0x0'+(0x760+i).toString(16).toUpperCase()+'\').id')==obj.id) {flg_pvs[i]=1;eval('$(\'N'+(6350+i)+'\').disabled=true;');break;}
+					}					
+				}
+				if(err==1)show_tip_ex(5,lang.N544[language]);
+				else if(err==2)show_tip_ex(5,lang.N543[language]);
+				else{
+					for(var i=0; i<Json.ID_0x0353; i++)
+					{
+						if(eval('$(\'ID_0x0'+(0x760+i).toString(16).toUpperCase()+'\').id')==obj.id) {flg_pvs[i]=0;eval('$(\'N'+(6350+i)+'\').disabled=false;');break;}
+					}						
+					var a=0;
+					for(var i=0; i<50; i++) a|=flg_pvs[i];
+					if(a==0)show_tip_ex(5,"&nbsp;");						
+				}
+				break;
+			}
+		}
+	</script>
+</html>

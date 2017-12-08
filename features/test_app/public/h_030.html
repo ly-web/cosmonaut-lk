@@ -1,0 +1,577 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>
+		<link type='text/css' href='c_000.css' rel='stylesheet'/>
+		<script type='text/javascript'>
+            var $=function(o){return document.getElementById(o);};
+            function lang_init_ex(st,end){for(var i=st;i<=end;i++)eval('$(\'N'+(i<10?'0'+i:i)+'\').innerHTML=lang.N'+(i<10?'0'+i:i)+'[language];');}
+            function show_tip_ex(id, obj){eval('$(\'tip'+id+'\').innerHTML=obj;');}
+            function show_T(tid)
+            {
+                var str='';
+                str+="<div class='title' style='width:90%;'><div class='r1 color'></div><div class='r2 color'></div><div class='r3 color'></div><div class='r4 color'></div>";
+                str+="<div class='content color'><span id='"+tid+"'></span></div>";
+                str+="<div class='r4 color'></div><div class='r3 color'></div><div class='r2 color'></div><div class='r1 color'></div></div><div class='blank'></div>";
+                document.write(str);
+            }
+            function show_sT(tid)
+            {
+                var str='';
+                str+="<div class='title' style='width:90%;'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+                str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+                str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+                document.write(str);
+            }
+            function show_sT_ex(tid, id)
+            {
+                var str='';
+                str+="<div class='title' id='"+id+"' style='display:none;width:90%'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+                str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+                str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+                document.write(str);
+            }
+            function sendHttpReq(url, successFn)
+            {
+                //alert(url);   
+                var xmlhttp;
+                if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+                else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+                xmlhttp.onreadystatechange=function()
+                {
+                    if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                    {
+                        if(xmlhttp.responseText=='1'){successFn();}
+                    }
+                };
+                xmlhttp.open('GET',url,true);
+                xmlhttp.send();
+            }
+        </script>
+		<style type='text/css'>
+			tr{height:27px;}
+			.td1{padding-left:40px;text-align:left;}
+			.td2{text-align:left;}
+			.td3{padding-right:40px;text-align:right;}
+			.txt{width:100px;text-align:right;}
+		</style>
+	</head>
+	<body onload='Init()'>
+		<script type='text/javascript'>
+			show_T('N01');
+            show_sT('N02');
+		</script>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='30%' class='td1 odd'><span id='N03'></span></td>
+                <td width='20%' class='td1 odd'><input class='txt' id='ID_0x03A0' onkeyup='Verify(this)' type='text' maxlength='5'/>&nbsp;</td>
+                <td width='15%' class='td2 odd'>[0.01 ~ 60]</td>
+                <td width='35%' class='td3 odd'></td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even tip'><span id='tip1'>&nbsp;</span></td>
+                <!-- 保存 -->
+                <td width='50%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn1' style='display:block;'><span id='N400'>Save</span></button></td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='30%' class='td1 odd'><span id='N04'></span></td>
+                <td width='20%' class='td1 odd'><input class='txt' id='ID_0x03A1' onkeyup='Verify(this)' type='text' maxlength='5'/>&nbsp;</td>
+                <td width='15%' class='td2 odd'>[0.01 ~ 60]</td>
+                <td width='35%' class='td3 odd'></td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even tip'><span id='tip2'>&nbsp;</span></td>
+                <!-- 保存 -->
+                <td width='50%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn2' style='display:block;'><span id='N401'>Save</span></button></td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='30%' class='td1 odd'><span id='N05'></span></td>
+                <td width='20%' class='td1 odd'><input class='txt' id='ID_0x03A2' onkeyup='Verify(this)' type='text' maxlength='5'/>&nbsp;</td>
+                <td width='15%' class='td2 odd'>[0.01 ~ 60]</td>
+                <td width='35%' class='td3 odd'></td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even tip'><span id='tip3'>&nbsp;</span></td>
+                <!-- 保存 -->
+                <td width='50%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn3' style='display:block;'><span id='N402'>Save</span></button></td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='30%' class='td1 odd'><span id='N06'></span></td>
+                <td width='20%' class='td1 odd'><input class='txt' id='ID_0x03A3' onkeyup='Verify(this)' type='text' maxlength='5'/>&nbsp;</td>
+                <td width='15%' class='td2 odd'>[0.01 ~ 60]</td>
+                <td width='35%' class='td3 odd'></td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even tip'><span id='tip4'>&nbsp;</span></td>
+                <!-- 保存 -->
+                <td width='50%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn4' style='display:block;'><span id='N403'>Save</span></button></td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='30%' class='td1 odd'><span id='N07'></span></td>
+                <td width='20%' class='td1 odd'><input class='txt' id='ID_0x03A4' onkeyup='Verify(this)' type='text' maxlength='5'/>&nbsp;</td>
+                <td width='15%' class='td2 odd'>[0.1 ~ 100]</td>
+                <td width='35%' class='td3 odd'></td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even tip'><span id='tip5'>&nbsp;</span></td>
+                <!-- 保存 -->
+                <td width='50%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn5' style='display:block;'><span id='N404'>Save</span></button></td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='30%' class='td1 odd'><span id='N08'></span></td>
+                <td width='20%' class='td1 odd'><input class='txt' id='ID_0x03A5' onkeyup='Verify(this)' type='text' maxlength='4'/>&nbsp;</td>
+                <td width='15%' class='td2 odd'>[5.0 ~ 50.0]</td>
+                <td width='35%' class='td3 odd'></td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even tip'><span id='tip6'>&nbsp;</span></td>
+                <!-- 保存 -->
+                <td width='50%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn6' style='display:block;'><span id='N405'>Save</span></button></td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='30%' class='td1 odd'><span id='N09'></span></td>
+                <td width='20%' class='td1 odd'><input class='txt' id='ID_0x03A6' onkeyup='Verify(this)' type='text' maxlength='6'/>&nbsp;</td>
+                <td width='15%' class='td2 odd'>[1.01 ~ 100]</td>
+                <td width='35%' class='td3 odd'></td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even tip'><span id='tip7'>&nbsp;</span></td>
+                <!-- 保存 -->
+                <td width='50%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn7' style='display:block;'><span id='N406'>Save</span></button></td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='30%' class='td1 odd'><span id='N10'></span></td>
+                <td width='20%' class='td1 odd'><input class='txt' id='ID_0x03A7' onkeyup='Verify(this)' type='text' maxlength='3'/>&nbsp;</td>
+                <td width='15%' class='td2 odd'>[1 ~ 100]</td>
+                <td width='35%' class='td3 odd'></td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even tip'><span id='tip8'>&nbsp;</span></td>
+                <!-- 保存 -->
+                <td width='50%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn8' style='display:block;'><span id='N407'>Save</span></button></td>
+            </tr>
+        </table>
+        <div class='line_long'></div>
+        <div class='btm_blank'></div>
+        <script type='text/javascript'>
+            show_sT('N11');
+        </script>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='30%' class='td1 odd'><input name='PV-BROADCAST' type='radio' value='85' id='PV-BROADCAST-DIS'/><span id='N50'></span></td>
+                <td width='30%' class='td1 odd'><input name='PV-BROADCAST' type='radio' value='170' id='PV-BROADCAST-EN'/><span id='N51'></span></td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even tip'><span id='tip9'>&nbsp;</span></td>
+                <!-- 保存 -->
+                <td width='50%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn9' style='display:block;'><span id='N408'>Save</span></button></td>
+            </tr>
+        </table>
+        <div class='line_long'></div>
+        <div class='btm_blank'></div>
+		<div id='trans'></div>
+		<!--[if IE 6]><script type='text/javascript'>document.execCommand('BackgroundImageCache',false,true);</script><![endif]-->
+	</body>
+    <script type='text/javascript'>
+        window.history.forward(1);
+        var language=0;
+        var Json; 
+        var lang=
+        {
+            N01:['专家参数',' Proficient Settings'],
+            N02:['KPI设置','KPI Settings'],
+            N03:['电池电压保护参数KP','Battery V KP'],
+            N04:['电池电压保护参数KI','Battery V KI'],
+            N05:['PV限功率比例KP','PV limit P KP'], 
+         	N06:['PV限功率比例KI','PV limit P KI'],
+         	N07:['均衡控制比例','SOC balancing KP'],
+         	N08:['零电压最大值(V)','Zero V Max(V)'],
+         	N09:['回调比例','Para Callback KP'],
+         	N10:['回调延时','Para Callback delay'],
+            N11:['光伏广播使能','PV broadcast enable'],
+
+            N50:['禁止','Disable'],
+            N51:['使能','Enable'], 
+
+            N400:['设&nbsp;&nbsp;置','Set'], 
+            N401:['设&nbsp;&nbsp;置','Set'], 
+            N402:['设&nbsp;&nbsp;置','Set'], 
+            N403:['设&nbsp;&nbsp;置','Set'], 
+            N404:['设&nbsp;&nbsp;置','Set'], 
+            N405:['设&nbsp;&nbsp;置','Set'],  	          
+            N406:['设&nbsp;&nbsp;置','Set'], 
+            N407:['设&nbsp;&nbsp;置','Set'], 
+            N408:['设&nbsp;&nbsp;置','Set'], 
+
+            N499:['设置成功！','Set successfully!'],
+            N500:['设置失败！','Set Failed!'],
+            N501:['格式错误！','Format error!'],
+            N502:['范围错误！','Range error!']      
+        };
+        function Init()
+        {
+            var URL='s_030.html?0x0000&time='+new Date();
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            //xmlhttp.onreadystatechange=function()
+            {
+                //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {            
+                    //测试
+                    Json={ID_0x0301:85,ID_0x03A0:40,ID_0x03A1:12,ID_0x03A2:31,ID_0x03A3:12,ID_0x03A4:10,ID_0x03A5:50,ID_0x03A6:101,ID_0x03A7:5,ID_0x03B0:0xAA,ID_0x0282:34};
+
+                   	//eval('Json='+xmlhttp.responseText);				
+
+    				if(Json.ID_0x0301==0x55)language=0;else language=1;
+                    //初始化语言
+    				lang_init_ex(1,11);
+                    lang_init_ex(50,51);
+                    lang_init_ex(400,408); 
+
+    				doSetValue(Json);
+
+    				//user用户不能配置，install用户可以配置
+    				if(Json.ID_0x0282==0x11)
+    				{
+    					$('btn1').style.display='none';
+    					$('trans').style.zIndex=9999;
+    				}
+    				else
+    				{
+    					$('btn1').style.display='inline';
+    					$('trans').style.zIndex=-9999;
+    				}
+                }
+            };
+            xmlhttp.open('GET',URL,true);
+            xmlhttp.send();
+        }
+        function read_back(addr)
+        {
+            var url='s_030.html?';
+            url=url+'0x0'+addr.toString(16).toUpperCase();
+            url=url+'&time='+new Date();
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            xmlhttp.onreadystatechange=function()
+            {
+                if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    eval('Json='+xmlhttp.responseText); 
+                    if(addr == 0x03A0)
+                    {
+                        var pr=0,fe=0;
+                        pr=($('ID_0x03A0').value*100).toFixed(0);
+                        fe=Json.ID_0x03A0;
+                        if(pr!=fe)$('ID_0x03A0').value=(Json.ID_0x03A0/100.0).toFixed(2);
+                        show_tip_ex(1,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(1,lang.N500[language])',500);}
+                        else {setTimeout('show_tip_ex(1,lang.N499[language])',500);}
+                        setTimeout('show_tip_ex(1,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x03A1)
+                    {
+                        var pr=0,fe=0;
+                        pr=($('ID_0x03A1').value*100).toFixed(0);
+                        fe=Json.ID_0x03A1;
+                        if(pr!=fe)$('ID_0x03A1').value=(Json.ID_0x03A1/100.0).toFixed(2);
+                        show_tip_ex(2,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(2,lang.N500[language])',500);}
+                        else {setTimeout('show_tip_ex(2,lang.N499[language])',500);}
+                        setTimeout('show_tip_ex(2,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x03A2)
+                    {
+                        var pr=0,fe=0;
+                        pr=($('ID_0x03A2').value*100).toFixed(0);
+                        fe=Json.ID_0x03A2;
+                        if(pr!=fe)$('ID_0x03A2').value=(Json.ID_0x03A2/100.0).toFixed(2);
+                        show_tip_ex(3,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(3,lang.N500[language])',500);}
+                        else {setTimeout('show_tip_ex(3,lang.N499[language])',500);}
+                        setTimeout('show_tip_ex(3,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x03A3)
+                    {
+                        var pr=0,fe=0;
+                        pr=($('ID_0x03A3').value*100).toFixed(0);
+                        fe=Json.ID_0x03A3;
+                        if(pr!=fe)$('ID_0x03A3').value=(Json.ID_0x03A3/100.0).toFixed(2);
+                        show_tip_ex(4,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(4,lang.N500[language])',500);}
+                        else {setTimeout('show_tip_ex(4,lang.N499[language])',500);}
+                        setTimeout('show_tip_ex(4,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x03A4)
+                    {
+                        var pr=0,fe=0;
+                        pr=($('ID_0x03A4').value*10).toFixed(0);
+                        fe=Json.ID_0x03A4;
+                        if(pr!=fe)$('ID_0x03A4').value=(Json.ID_0x03A4/10.0).toFixed(1);
+                        show_tip_ex(5,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(5,lang.N500[language])',500);}
+                        else {setTimeout('show_tip_ex(5,lang.N499[language])',500);}
+                        setTimeout('show_tip_ex(5,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x03A5)
+                    {
+                        var pr=0,fe=0;
+                        pr=($('ID_0x03A5').value*10).toFixed(0);
+                        fe=Json.ID_0x03A5;
+                        if(pr!=fe)$('ID_0x03A5').value=(Json.ID_0x03A5/10.0).toFixed(1);
+                        show_tip_ex(6,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(6,lang.N500[language])',500);}
+                        else {setTimeout('show_tip_ex(6,lang.N499[language])',500);}
+                        setTimeout('show_tip_ex(6,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x03A6)
+                    {
+                        var pr=0,fe=0;
+                        pr=($('ID_0x03A6').value*100).toFixed(0);
+                        fe=Json.ID_0x03A6;
+                        if(pr!=fe)$('ID_0x03A6').value=(Json.ID_0x03A6/100.0).toFixed(2);
+                        show_tip_ex(7,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(7,lang.N500[language])',500);}
+                        else {setTimeout('show_tip_ex(7,lang.N499[language])',500);}
+                        setTimeout('show_tip_ex(7,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x03A7)
+                    {
+                        var pr=0,fe=0;
+                        pr=$('ID_0x03A7').value;
+                        fe=Json.ID_0x03A7;
+                        if(pr!=fe)$('ID_0x03A7').value=Json.ID_0x03A7;
+                        show_tip_ex(8,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(8,lang.N500[language])',500);}
+                        else {setTimeout('show_tip_ex(8,lang.N499[language])',500);}
+                        setTimeout('show_tip_ex(8,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x03B0)
+                    {
+                        var pr=0,fe=0;
+                        if($('PV-BROADCAST-DIS').checked){pr=$('PV-BROADCAST-DIS').value;}    
+                        else if($('PV-BROADCAST-EN').checked){pr=$('PV-BROADCAST-EN').value;}
+                        fe=Json.ID_0x03B0;
+                        if(pr!=fe){
+                            if(Json.ID_0x03B0==0x55){
+                                $('PV-BROADCAST-DIS').checked=true;
+                            }else if(Json.ID_0x03B0==0xAA){
+                                $('PV-BROADCAST-EN').checked=true;
+                            }
+                        }
+                        show_tip_ex(9,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(9,lang.N500[language])',500);}
+                        else {setTimeout('show_tip_ex(9,lang.N499[language])',500);}
+                        setTimeout('show_tip_ex(9,\'&nbsp;\')',2500);
+                    }
+                }
+            };
+            xmlhttp.open('GET',url,true);
+            xmlhttp.send();  
+        }
+        function doSubmit(obj)
+        {
+            var pv_broadcast_en;
+
+            var URL='a_030.html?';
+            switch(obj.id)
+            {
+            	case 'btn1': 
+                    URL=URL+'&0x03A0='+($('ID_0x03A0').value*100).toFixed(0);
+                    readBack=0x03A0;
+            	break;
+                case 'btn2': 
+                    URL=URL+'&0x03A1='+($('ID_0x03A1').value*100).toFixed(0);
+                    readBack=0x03A1;
+                break;
+            	case 'btn3': 
+                    URL=URL+'&0x03A2='+($('ID_0x03A2').value*100).toFixed(0);
+                    readBack=0x03A2;
+            	break;
+            	case 'btn4': 
+                    URL=URL+'&0x03A3='+($('ID_0x03A3').value*100).toFixed(0);
+                    readBack=0x03A3;
+            	break;
+            	case 'btn5': 
+                    URL=URL+'&0x03A4='+($('ID_0x03A4').value*10).toFixed(0);
+                    readBack=0x03A4;
+            	break;
+            	case 'btn6': 
+                    URL=URL+'&0x03A5='+($('ID_0x03A5').value*10).toFixed(0);
+                    readBack=0x03A5;
+            	break;
+                case 'btn7':
+                    URL=URL+'&0x03A6='+($('ID_0x03A6').value*100).toFixed(0);
+                    readBack=0x03A6;
+                break;
+                case 'btn8':
+                    URL=URL+'&0x03A7='+$('ID_0x03A7').value;
+                    readBack=0x03A7;
+                break;
+                case 'btn9':
+                    if($('PV-BROADCAST-DIS').checked){pv_broadcast_en=$('PV-BROADCAST-DIS').value;}    
+                    else if($('PV-BROADCAST-EN').checked){pv_broadcast_en=$('PV-BROADCAST-EN').value;}
+                    URL=URL+'&0x03B0='+pv_broadcast_en;
+                    readBack=0x03B0; 
+                break;
+            	default:break;
+            }
+            URL=URL+'&time='+new Date();
+            //alert(URL);
+
+            function success()
+            {
+    			setTimeout('read_back('+readBack+')', 100);         			
+            }
+
+            //测试
+            //success();  
+
+			sendHttpReq(URL, success);
+        }
+
+        function doSetValue(Json)
+        {
+            $('ID_0x03A0').value=(Json.ID_0x03A0/100.0).toFixed(2);
+            $('ID_0x03A1').value=(Json.ID_0x03A1/100.0).toFixed(2);
+            $('ID_0x03A2').value=(Json.ID_0x03A2/100.0).toFixed(2);
+            $('ID_0x03A3').value=(Json.ID_0x03A3/100.0).toFixed(2);
+            $('ID_0x03A4').value=(Json.ID_0x03A4/10.0).toFixed(1);
+            $('ID_0x03A5').value=(Json.ID_0x03A5/10.0).toFixed(1);
+            $('ID_0x03A6').value=(Json.ID_0x03A6/100.0).toFixed(2);
+            $('ID_0x03A7').value= Json.ID_0x03A7;
+
+            //电表协议
+            if(Json.ID_0x03B0 == 0x55)
+            {
+                $('PV-BROADCAST-DIS').checked=true;
+                $('PV-BROADCAST-EN').checked=false;
+            }
+            else if(Json.ID_0x03B0 == 0xAA)
+            {
+                $('PV-BROADCAST-DIS').checked=false;
+                $('PV-BROADCAST-EN').checked=true;
+            }       
+        }
+        function Verify(obj)
+        {
+            var reg=/^-?[0-9][0-9]*$/;
+            //正整数、带1-2位小数的正浮点数
+            var reg2=/^((0(\.\d{1,2})?)|([1-9]\d*(\.\d{1,2})?))$/;
+            //正整数、带一位小数的正浮点数
+            var reg3=/^((0(\.\d{1})?)|([1-9]\d*(\.\d{1})?))$/;
+            var range=parseInt(obj.value);
+            var range2=parseFloat(obj.value);
+
+            switch(obj.id)
+            {
+                case 'ID_0x03A0':
+                    if(!obj.value.match(reg2)){$('btn1').disabled=true;obj.style.color='#F00';show_tip_ex(1,lang.N501[language]);}
+                    else if(range2<0.01||range2>60){$('btn1').disabled=true;obj.style.color='#F00';show_tip_ex(1,lang.N502[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn1').disabled=false;
+                        show_tip_ex(1,'&nbsp;');
+                    }
+                break;
+                case 'ID_0x03A1':
+                    if(!obj.value.match(reg2)){$('btn2').disabled=true;obj.style.color='#F00';show_tip_ex(2,lang.N501[language]);}
+                    else if(range2<0.01||range2>60){$('btn2').disabled=true;obj.style.color='#F00';show_tip_ex(2,lang.N502[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn2').disabled=false;
+                        show_tip_ex(2,'&nbsp;');
+                    }
+                break;          
+                case 'ID_0x03A2':
+                    if(!obj.value.match(reg2)){$('btn3').disabled=true;obj.style.color='#F00';show_tip_ex(3,lang.N501[language]);}
+                    else if(range2<0.01||range2>60){$('btn3').disabled=true;obj.style.color='#F00';show_tip_ex(3,lang.N502[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn3').disabled=false;
+                        show_tip_ex(3,'&nbsp;');
+                    }
+                break;
+                case 'ID_0x03A3':
+                    if(!obj.value.match(reg2)){$('btn4').disabled=true;obj.style.color='#F00';show_tip_ex(4,lang.N501[language]);}
+                    else if(range2<0.01||range2>60){$('btn4').disabled=true;obj.style.color='#F00';show_tip_ex(4,lang.N502[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn4').disabled=false;
+                        show_tip_ex(4,'&nbsp;');
+                    }
+                break;    
+                case 'ID_0x03A4':
+                    if(!obj.value.match(reg3)){$('btn5').disabled=true;obj.style.color='#F00';show_tip_ex(5,lang.N501[language]);}
+                    else if(range2<0.1||range2>100){$('btn5').disabled=true;obj.style.color='#F00';show_tip_ex(5,lang.N502[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn5').disabled=false;
+                        show_tip_ex(5,'&nbsp;');
+                    }
+                break;  
+                case 'ID_0x03A5':
+                    if(!obj.value.match(reg3)){$('btn6').disabled=true;obj.style.color='#F00';show_tip_ex(6,lang.N501[language]);}
+                    else if(range2<5.0||range2>50){$('btn6').disabled=true;obj.style.color='#F00';show_tip_ex(6,lang.N502[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn6').disabled=false;
+                        show_tip_ex(6,'&nbsp;');
+                    }
+                break; 
+                case 'ID_0x03A6':
+                    if(!obj.value.match(reg2)){$('btn7').disabled=true;obj.style.color='#F00';show_tip_ex(7,lang.N501[language]);}
+                    else if(range2<1.01||range2>100){$('btn7').disabled=true;obj.style.color='#F00';show_tip_ex(7,lang.N502[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn7').disabled=false;
+                        show_tip_ex(7,'&nbsp;');
+                    }
+                break;   
+                case 'ID_0x03A7':
+                    if(!obj.value.match(reg)){$('btn8').disabled=true;obj.style.color='#F00';show_tip_ex(8,lang.N501[language]);}
+                    else if(range<1||range>100){$('btn8').disabled=true;obj.style.color='#F00';show_tip_ex(8,lang.N502[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn8').disabled=false;
+                        show_tip_ex(8,'&nbsp;');
+                    }
+                break; 
+            }
+        }
+    </script>
+</html>

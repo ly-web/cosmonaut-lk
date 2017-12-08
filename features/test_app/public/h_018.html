@@ -1,0 +1,756 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+    <head>
+        <meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>
+        <link type='text/css' href='c_000.css' rel='stylesheet'/>
+        <script src='j_001.js' type='text/javascript'></script>
+        <style type='text/css'>
+        tr{height:27px;}
+        .td1{text-align:left;padding-left:40px;}
+        .td2{text-align:right;padding-right:5px;}
+        .td3{text-align:right;padding-right:40px;}
+        .div_tab{width:780px;height:45px;margin:0 auto;}
+        .div_btn{width:80px;margin:0 auto;height:30px;text-align:right;margin-top:8px;float:left;}
+        .div_text{width:80px;margin:0 auto;height:25px;text-align:right;margin-top:10px;float:left;}
+        .div_span{width:40px;margin:0 auto;height:25px;font-size:16px;font-weight:bold;text-align:right;margin-top:12px;float:left;}
+        .btn{width:75px;height:30px;}
+        .PagerView{font-size:14px;font-family:tahoma,arial;font-weight:bold;color:#333;text-align:center;padding:8px;line-height:100%;}
+        .PagerView span{color:#999;margin:0 1px;padding:3px 6px;border:1px solid #ccc;}
+        .PagerView span.on{color:#fff;font-weight:bold;border:1px solid #666;background:#888;} 
+        .PagerView a{color:#00f;text-decoration:none;}
+        .PagerView a span{color:#33f;border:1px solid #888;}
+        .pager{width:780px;margin:0 auto;}
+        </style>
+        <script type='text/javascript'>
+            var BMS1=new Array('N03','N04','N05','N06','N07','N08','N09','N10','N11','N12','N13','N14','N15');
+            var BMS2=new Array('ID_0x0051','ID_0x0052','ID_0x0053','ID_0x0054','ID_0x0055','ID_0x0056','ID_0x0057','ID_0x0058','ID_0x0059','ID_0x005A','ID_0x005B','ID_0x005C','ID_0x005D');
+            var BMS3=new Array('V','A','%','%','V','V','℃','℃','A','A','','','');
+              
+            var ALARM1_68=new Array('N71','N72','N73','N74','N75','N76','N77','N78','N79','N80','N81','N82','N83','N84','N85','N86');
+            var ALARM2_68=new Array('ID_A71','ID_A72','ID_A73','ID_A74','ID_A75','ID_A76','ID_A77','ID_A78','ID_A79','ID_A80','ID_A81','ID_A82','ID_A83','ID_A84','ID_A85','ID_A86');
+            var ALARM3_68=new Array('','','','','','','','','','','','','','','','');
+
+            var ALARM1_68_rack=new Array('N87','N88','N89','N90','N91','N92','N93','N94','N95','N96','N97','N98','N99','N100');
+            var ALARM2_68_rack=new Array('ID_A87','ID_A88','ID_A89','ID_A90','ID_A91','ID_A92','ID_A93','ID_A94','ID_A95','ID_A96','ID_A97','ID_A98','ID_A99','ID_A100');
+            var ALARM3_68_rack=new Array('','','','','','','','','','','','','','');
+
+            var FAULT1_68=new Array('N52','N53','N54','N58','N59','N60','N61','N62','N64','N65','N66');
+            var FAULT2_68=new Array('ID_F52','ID_F53','ID_F54','ID_F58','ID_F59','ID_F60','ID_F61','ID_F62','ID_F64','ID_F65','ID_F66');
+            var FAULT3_68=new Array('','','','','','','','','','','');
+
+            var ALARM1_94=new Array('N120','N121','N122','N123','N124','N125','N126','N127','N128','N129','N130','N131','N132','N133','N134','N135','N136','N137','N160','N161','N162','N163','N164','N165','N166','N167','N168');
+            var ALARM2_94=new Array('ID_A120','ID_A121','ID_A122','ID_A123','ID_A124','ID_A125','ID_A126','ID_A127','ID_A128','ID_A129','ID_A130','ID_A131','ID_A132','ID_A133','ID_A134','ID_A135','ID_A136','ID_A137','ID_A160','ID_A161','ID_A162','ID_A163','ID_A164','ID_A165','ID_A166','ID_A167','ID_A168');
+            var ALARM3_94=new Array('','','','','','','','','','','','','','','','','','','','','','','','','','','');
+
+            var FAULT1_94=new Array('N200','N201','N202','N203','N204','N205','N206','N207','N208','N209','N210','N211','N212','N213','N214','N215','N216','N217','N240','N241','N242','N243','N244','N245','N246','N247','N248');
+            var FAULT2_94=new Array('ID_F200','ID_F201','ID_F202','ID_F203','ID_F204','ID_F205','ID_F206','ID_F207','ID_F208','ID_F209','ID_F210','ID_F211','ID_F212','ID_F213','ID_F214','ID_F215','ID_F216','ID_F217','ID_F240','ID_F241','ID_F242','ID_F243','ID_F244','ID_F245','ID_F246','ID_F247','ID_F248');
+            var FAULT3_94=new Array('','','','','','','','','','','','','','','','','','','','','','','','','','','');
+
+            function show_SUB(TAB,TR1,TR2,TR3)
+            {
+                var str='';
+                str+="<table id='"+TAB+"' style='display:table;' width='90%' border='0'>";
+                for(var i=0;i<TR1.length;i+=2)
+                {
+                    str+="<tr id='"+TR1[i]+i+"'>";
+                        str+="<td width='30%' class='td1 "+(i%4?"even":"odd")+"'><span id='"+TR1[i]+"'></span></td>";
+                        str+="<td width='15%' class='td2 "+(i%4?"even":"odd")+"'><span id='"+TR2[i]+"'></span></td>";
+                        str+="<td width='5%' class='td3 "+(i%4?"even":"odd")+"'>"+TR3[i]+"</td>";
+                        if(i+1!=TR1.length)
+                        {
+                            str+="<td width='30%' class='td1 "+(i%4?"even":"odd")+"'><span id='"+TR1[i+1]+"'></span></td>";
+                            str+="<td width='15%' class='td2 "+(i%4?"even":"odd")+"'><span id='"+TR2[i+1]+"'></span></td>";
+                            str+="<td width='5%' class='td3 "+(i%4?"even":"odd")+"'>"+TR3[i+1]+"</td>";
+                        }
+                        else
+                        {
+                            str+="<td width='30%' class='td1 "+(i%4?"even":"odd")+"'></td>";
+                            str+="<td width='15%' class='td2 "+(i%4?"even":"odd")+"'></td>";
+                            str+="<td width='5%' class='td3 "+(i%4?"even":"odd")+"'></td>";
+                        }
+                        
+                    str+="</tr>";
+                }
+                str+="</table>";
+                document.write(str);
+            }
+        var PagerView=function(id,AAA,BBB,CCC)
+            {
+                var self=this;
+                this.id=id;
+                this._pageCount=0;
+                this._start=1;
+                this._end=1;
+                this.container=null;
+                this.index=1;
+                this.size=10;
+                this.maxButtons=18;
+                this.itemCount=0;
+                this.onclick=function(index){return true;};
+                this._onclick=function(index)
+                {
+                    var old=self.index;
+                    self.index=index;
+                    if(self.onclick(index)!==false)self.render();
+                    else self.index=old;
+                };
+                this._calculate=function()
+                {
+                    self._pageCount=parseInt(Math.ceil(self.itemCount/self.size));
+                    self.index=parseInt(self.index);
+                    if(self.index>self._pageCount)self.index=self._pageCount;
+                    if(self.index<1)self.index=1;
+                    self._start=Math.max(1,self.index-parseInt(self.maxButtons/2));
+                    self._end=Math.min(self._pageCount,self._start+self.maxButtons-1);
+                    self._start=Math.max(1,self._end-self.maxButtons+1);
+                };
+                this.page=function(rows)
+                {
+                    self._calculate();
+                    var s_num=(self.index-1)*self.size ;
+                    var e_num=self.index*self.size;
+                    return rows.slice(s_num,e_num);
+                };
+                this.render=function()
+                {
+                    var div=document.getElementById(self.id);
+                    div.view=self;
+                    self.container=div;
+                    self._calculate();
+                    var str='';
+                    str+='<div class="PagerView">\n';
+                    if(self._pageCount>1)
+                    {
+                        if(self.index!=1)
+                        {
+                            str+='<a href="javascript://1"><span>|&lt;</span></a>';
+                            str+='<a href="javascript://'+(self.index-1)+'"><span>&lt;&lt;</span></a>';
+                        }
+                        else
+                        {
+                            str+='<span>|&lt;</span>';
+                            str+='<span>&lt;&lt;</span>';
+                        }
+                    }
+                    for(var i=self._start;i<=self._end;i++)
+                    {
+                        if(i==this.index)
+                        {
+                            if(i<10)str+='<span class="on">'+'0'+i+"</span>";
+                            else str+='<span class="on">'+i+"</span>";
+                        }
+                        else
+                        {
+                            if(i<10)str+='<a href="javascript://'+i+'"><span>'+'0'+i+"</span></a>";
+                            else str+='<a href="javascript://'+i+'"><span>'+i+"</span></a>";
+                        }
+                    }
+                    if(self._pageCount>1)
+                    {
+                        if(self.index!=self._pageCount)
+                        {
+                            str+='<a href="javascript://'+(self.index+1)+'"><span>&gt;&gt;</span></a>';
+                            str+='<a href="javascript://'+self._pageCount+'"><span>&gt;|</span></a>';
+                        }
+                        else
+                        {
+                            str+='<span>&gt;&gt;</span>';
+                            str+='<span>&gt;|</span>';
+                        }
+                    }
+                    str+=AAA+self._pageCount+BBB+self.itemCount+CCC;
+                    str+='</div><!--/.pagerView-->\n';
+                    self.container.innerHTML=str;
+                    var a_list=self.container.getElementsByTagName('a');
+                    for(var i=0;i<a_list.length;i++)
+                    {
+                        a_list[i].onclick=function()
+                        {
+                            var index=this.getAttribute('href');
+                            if(index!=undefined&&index!='')
+                            {
+                                index=parseInt(index.replace('javascript://',''));
+                                self._onclick(index);
+                            }
+                            return false;
+                        };
+                    }
+                };
+            };
+        </script>
+    </head>
+    <body onload='Init();'>
+        <script type='text/javascript'>
+            show_T('N01');
+        </script>        
+        <div id='pager' width='90%' style='padding-left:5%;float:left;'></div>
+        <div class='line_long'></div>
+        <div class='blank'></div>
+        <script type='text/javascript'>
+            show_sT('N02');
+            show_SUB('info',BMS1,BMS2,BMS3);
+        </script>
+        <div class='line_long'></div>
+        <div class='blank'></div>          
+        <script type='text/javascript'>
+            show_sT_ex('N40', 't_68_sys');
+            show_SUB('alarm_t_1',ALARM1_68,ALARM2_68,ALARM3_68);
+            show_sT_ex('N42', 't_68_rack');
+            show_SUB('alarm_t_rack',ALARM1_68_rack,ALARM2_68_rack,ALARM3_68_rack);
+            show_SUB('alarm_t_2',ALARM1_94,ALARM2_94,ALARM3_94);
+        </script>      
+        <div class='line_long'></div>
+        <div class='blank'></div>  
+        <script type='text/javascript'>
+            show_sT('N41');
+            show_SUB('fault_t_1',FAULT1_68,FAULT2_68,FAULT3_68);
+            show_SUB('fault_t_2',FAULT1_94,FAULT2_94,FAULT3_94);
+        </script>
+        <div class='line_long'></div>
+        <div class='blank'></div>  
+        <!--[if IE 6]><script type='text/javascript'>document.execCommand('BackgroundImageCache',false,true);</script><![endif]-->
+    </body>
+    <script type='text/javascript'>
+        window.history.forward(1);
+        var $=function(o){return document.getElementById(o);};
+        var language=0;
+        var Json;
+        var CurBms;
+        var lang=
+        {
+            N01:['电池信息','BMS Information'],
+            N02:['系统信息','System Information'],
+            N03:['电池系统电压','System V'],
+            N04:['电池系统电流','System I'],
+            N05:['系统SOC','System SOC'],
+            N06:['系统SOH','System SOH'],
+            N07:['最大单体电压','Max cell V'],
+            N08:['最低单体电压','Min cell V'],
+            N09:['最高单体温度','Max cell T'],
+            N10:['最低单体温度','Min cell T'],
+            N11:['充电限制电流','Charge limit I'],
+            N12:['放电限制电流','Discharge limit I'],
+            N13:['运行Rack数','Rack in service'],
+            N14:['总Rack数','Rack in system'],
+            N15:['系统模式','System Mode'],
+
+            N40:['系统告警状态','Sys Alarm Status'],
+            N41:['故障状态','Fault Status'],
+            N42:['Rack告警状态','Rack Alarm Status'],
+
+            //68Ah fault
+            N51:['',''],
+            N52:['单体过温','Cell Over Temperature'],
+            N53:['单体欠压','Cell Under Voltage'],
+            N54:['单体过压','Cell Over Voltage'],
+            N55:['',''],
+            N56:['',''],
+            N57:['',''],
+            N58:['Rack欠压','Rack Under Voltage'],
+            N59:['Rack过压','Rack Over Voltage'],
+            N60:['通讯故障(系统Rack)','Comm fault (Rack-system)'],
+            N61:['通讯故障(模块Rack)','Comm fault (Module-Rack)'],
+            N62:['过流保护','Over Current Protection'],
+            N63:['',''],
+            N64:['附加保护','Additional Protection'],
+            N65:['直流接触器故障','DC Contactor fail'],
+            N66:['直流接触器传感器失败','DC Contactor Sensor fail'],
+            //68Ah sys alarm
+            N71:['单体欠温','Cell Under Temperature'],
+            N72:['单体过温','Cell Over Temperature'],
+            N73:['单体欠压','Cell Under Voltage'],
+            N74:['单体过压','Cell Over Voltage'],
+            N75:['电压误差过大','Sensing Volt Diff'],
+            N76:['电压不平衡','Voltage imbalance'],
+            N77:['温度不平衡','Temp imbalance'],
+            N78:['Rack欠压','Rack Under Voltage'],
+            N79:['Rack过压','Rack Over Voltage'],
+            N80:['通讯故障(系统Rack)','Comm fault (Rack-system)'],
+            N81:['通讯故障(模块Rack)','Comm fault (Module-Rack)'],
+            N82:['过流保护','Over Current Protection'],
+            N83:['过充','Full Charge'],
+            N84:['电流传感器错误','Current Sensor Error'],
+            N85:['充电限流错误','Charge Limit Error'],
+            N86:['风扇错误','Fan Error'],
+            //68Ah rack alarm
+            N87:['CAN 告警 #1','CAN Alarm #1'],
+            N88:['CAN 告警 #2','CAN Alarm #2'],
+            N89:['RTU 告警 #1','RTU Alarm #1'],
+            N90:['RTU 告警 #2','RTU Alarm #2'],
+            N91:['TCP502 告警 #1','TCP502 Alarm #1'],
+            N92:['TCP502 告警 #2','TCP502 Alarm #2'],
+            N93:['TCP602 告警 #1','TCP602 Alarm #1'],
+            N94:['TCP602 告警 #2','TCP602 Alarm #2'],
+            N95:['S.UVP 告警 #1','S.UVP Alarm #1'],
+            N96:['S.UVP 告警 #2','S.UVP Alarm #2'],
+            N97:['不平衡告警','Imbalance Alarm'],
+            N98:['不平衡停止','Imbalance Stop'],
+            N99:['控制信息不可获取','Ctrl Infor Not Valid'],
+            N100:['控制信息无效','Ctrl Infor Invalid'],
+            N101:['',''],
+            N102:['',''],
+
+            //94Ah - alarm1
+            N120:['模块欠温','module UT'],
+            N121:['模块过温','module OT'],
+            N122:['模块欠压','module UV'],
+            N123:['模块过压','module OV'],
+            N124:['模块电压不平衡','module V-imb'],
+            N125:['模块温度不平衡','module T-imb'],
+            N126:['通讯故障(模块Rack)','R-M comm fail'],
+            N127:['通讯故障(系统Rack)','R-S comm fail'],
+            N128:['rack充电过流','rack ChgOC'],
+            N129:['rack放电过流','rack DchgOC'],
+            N130:['rack欠压','rack UV'],
+            N131:['rack过压','rack OV'],
+            N132:['rack电压误差过大','rack V sensing diff'],
+            N133:['rack电流传感器失效','rack I senser fail'],
+            N134:['rack架电压不平衡','rack string V-imb'],
+            N135:['rack架电流不平衡','rack string I-imb'],
+            //94Ah - alarm2
+            N136:['rack熔断器失效','rack fuse fail'],
+            N137:['永久欠压','permanent uv'],
+            N138:['',''],
+            N139:['',''],
+            N140:['',''],
+            N141:['',''],
+            N142:['',''],
+            N143:['',''],
+            N144:['',''],
+            N145:['',''],
+            N146:['',''],
+            N147:['',''],
+            N148:['',''],
+            N149:['',''],
+            N150:['',''],
+            N151:['',''],
+            //94Ah - alarm3
+            N152:['',''],
+            N153:['',''],
+            N154:['',''],
+            N155:['',''],
+            N156:['',''],
+            N157:['',''],
+            N158:['',''],
+            N159:['',''],
+            N160:['dcsw1传感器失效','dcsw1_sensing_fail'],
+            N161:['dcsw2传感器失效','dcsw2_sensing_fail'],
+            N162:['dcsw3传感器失效','dcsw3_sensing_fail'],
+            N163:['dcsw3失效','dcsw3_fail'],
+            N164:['模块pcb欠温','module pcb ut'],
+            N165:['模块pcb过温','module pcb ot'],
+            N166:['充电电流限制','chg current limit'],
+            N167:['放电电流限制','dchg current limit'],
+            //94Ah - alarm4
+            N168:['附加保护失败','additional protection fail'],
+            N169:['',''],
+            N170:['',''],
+            N171:['',''],
+            N172:['',''],
+            N173:['',''],
+            N174:['',''],
+            N175:['',''],
+            N176:['',''],
+            N177:['',''],
+            N178:['',''],
+            N179:['',''],
+            N180:['',''],
+            N181:['',''],
+            N182:['',''],
+            N183:['',''],
+            N184:['',''],
+
+            //94Ah - protection1
+            N200:['模块欠温','module UT'],
+            N201:['模块过温','module OT'],
+            N202:['模块欠压','module UV'],
+            N203:['模块过压','module OV'],
+            N204:['模块电压不平衡','module V-imb'],
+            N205:['模块温度不平衡','module T-imb'],
+            N206:['通讯故障(模块Rack)','R-M comm fail'],
+            N207:['通讯故障(系统Rack)','R-S comm fail'],
+            N208:['rack充电过流','rack ChgOC'],
+            N209:['rack放电过流','rack DchgOC'],
+            N210:['rack欠压','rack UV'],
+            N211:['rack过压','rack OV'],
+            N212:['rack电压误差过大','rack V sensing diff'],
+            N213:['rack电流传感器失效','rack I senser fail'],
+            N214:['rack架电压不平衡','rack string V-imb'],
+            N215:['rack架电流不平衡','rack string I-imb'],
+            //94Ah - protection2
+            N216:['rack熔断器失效','rack fuse fail'],
+            N217:['永久欠压','permanent  uv'],
+            N218:['',''],
+            N219:['',''],
+            N220:['',''],
+            N221:['',''],
+            N222:['',''],
+            N223:['',''],
+            N224:['',''],
+            N225:['',''],
+            N226:['',''],
+            N227:['',''],
+            N228:['',''],
+            N229:['',''],
+            N230:['',''],
+            N231:['',''],
+            //94Ah - protection3
+            N232:['',''],
+            N233:['',''],
+            N234:['',''],
+            N235:['',''],
+            N236:['',''],
+            N237:['',''],
+            N238:['',''],
+            N239:['',''],
+            N240:['dcsw1传感器失效','dcsw1_sensing_fail'],
+            N241:['dcsw2传感器失效','dcsw2_sensing_fail'],
+            N242:['dcsw3传感器失效','dcsw3_sensing_fail'],
+            N243:['dcsw3失效','dcsw3_fail'],
+            N244:['模块pcb欠温','module pcb ut'],
+            N245:['模块pcb过温','module pcb ot'],
+            N246:['充电电流限制','chg current limit'],
+            N247:['放电电流限制','dchg current limit'],
+            //94Ah - protection4
+            N248:['附加保护失败','additional protection fail'],
+            N249:['',''],
+            N250:['',''],
+            N251:['',''],
+            N252:['',''],
+            N253:['',''],
+            N254:['',''],
+            N255:['',''],
+            N256:['',''],
+            N257:['',''],
+            N258:['',''],
+            N259:['',''],
+            N260:['',''],
+            N261:['',''],
+            N262:['',''],
+            N263:['',''],
+
+            //68ah-system mode
+            N300:['输出控制0','Output #0'],
+            N301:['输出控制1','Output #1'],
+            N302:['',''],
+            N303:['',''],
+            N304:['输入状态0','Input #0'],
+            N305:['输入状态1','Input #1'],
+            N306:['',''],
+            N307:['',''],
+            N308:['充电','Charge'],
+            N309:['放电','Discharge'],
+            N310:['准备','Ready'],
+            N311:['空闲','Idle'],
+            N312:['离线','Off line'],
+            N313:['',''],
+            N314:['',''],
+            N315:['',''],
+
+            //94ah-system mode
+            N350:['输出控制1','Output Control No.1'],
+            N351:['输出控制2','Output Control No.2'],
+            N352:['',''],
+            N353:['',''],
+            N354:['输入状态1','Input Status No.1'],
+            N355:['输入状态2','Input Status No.2'],
+            N356:['输入状态3','Input Status No.3'],
+            N357:['输入状态4','Input Status No.4'],
+            N358:['',''],
+            N359:['',''],
+            N360:['',''],
+            N361:['',''],
+            N362:['',''],
+            N363:['',''],
+            N364:['放电模式','Discharge Mode'],
+            N365:['充电模式','Charge Mode'],
+
+
+            N500:['一共','Total '],
+            N501:['页，共',' Pages, '],
+            N502:['页，共',' Page, '],
+            N503:['台',' Nums'],
+            N504:['台',' Num']
+        };
+        var FaultStatus=
+        {
+            N0:['正常','Normal'],
+            N1:['故障','Fault']
+        };
+        var AlarmStatus=
+        {
+            N0:['正常','Normal'],
+            N1:['告警','Alarm']
+        };
+        //获取串口PVS数据
+        function Get_Bms_Index(index)
+        {
+            eval('var URL=\'s_018.html?0x'+(0+index).toString(16).toUpperCase()+'&time=\'+new Date();');
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            //xmlhttp.onreadystatechange=function()
+            {
+                //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    //eval('Json='+xmlhttp.responseText);   
+                    $('ID_0x0051').innerHTML=(Json.ID_0x0051/10.0).toFixed(1);
+                    $('ID_0x0052').innerHTML=Json.ID_0x0052;
+                    $('ID_0x0053').innerHTML=(Json.ID_0x0053/10.0).toFixed(1);
+                    $('ID_0x0054').innerHTML=(Json.ID_0x0054/10.0).toFixed(1);  
+                    $('ID_0x0055').innerHTML=(Json.ID_0x0055/1000.0).toFixed(3); 
+                    $('ID_0x0056').innerHTML=(Json.ID_0x0056/1000.0).toFixed(3);
+                    $('ID_0x0057').innerHTML=Json.ID_0x0057; 
+                    $('ID_0x0058').innerHTML=Json.ID_0x0058;   
+                    $('ID_0x0059').innerHTML=(Json.ID_0x0059/10.0).toFixed(1); 
+                    $('ID_0x005A').innerHTML=(Json.ID_0x005A/10.0).toFixed(1);    
+                    $('ID_0x005B').innerHTML=Json.ID_0x005B; 
+                    $('ID_0x005C').innerHTML=Json.ID_0x005C;   
+                    $('ID_0x005D').style.fontWeight='bold';
+
+                    if(Json.ID_0x038A == 1){
+                        //系统模式  
+                        if(Json.ID_0x005D<16)eval('document.getElementById(\'ID_0x005D\').innerHTML=lang.N'+(Json.ID_0x005D+300)+'[language];');
+                        //故障
+                        for(var i=0;i<16;i++)
+                        {
+                            if(i==0 || i==4 || i==5 || i==6 || i==12) continue;
+                            if(((Json.ID_0x0068>>i)&1)==1)
+                            {
+                                eval('$(\'ID_F'+(51+i)+'\').innerHTML=FaultStatus.N1[language];');
+                                eval('$(\'ID_F'+(51+i)+'\').style.color=\'#F00\';');
+                            }
+                            else
+                            {
+                                eval('$(\'ID_F'+(51+i)+'\').innerHTML=FaultStatus.N0[language];');
+                                eval('$(\'ID_F'+(51+i)+'\').style.color=\'#000\';');
+                            }
+                        }
+                        //系统告警
+                        for(var i=0;i<16;i++)
+                        {
+                            if(((Json.ID_0x0069>>i)&1)==1)
+                            {
+                                eval('$(\'ID_A'+(71+i)+'\').innerHTML=AlarmStatus.N1[language];');
+                                eval('$(\'ID_A'+(71+i)+'\').style.color=\'#FF9500\';');
+                            }
+                            else
+                            {
+                                eval('$(\'ID_A'+(71+i)+'\').innerHTML=AlarmStatus.N0[language];');
+                                eval('$(\'ID_A'+(71+i)+'\').style.color=\'#000\';');
+                            }
+                        }
+                        //RACK告警
+                        for(var i=0;i<14;i++)
+                        {
+                            if(((Json.ID_0x006A>>i)&1)==1)
+                            {
+                                eval('$(\'ID_A'+(87+i)+'\').innerHTML=AlarmStatus.N1[language];');
+                                eval('$(\'ID_A'+(87+i)+'\').style.color=\'#FF9500\';');
+                            }
+                            else
+                            {
+                                eval('$(\'ID_A'+(87+i)+'\').innerHTML=AlarmStatus.N0[language];');
+                                eval('$(\'ID_A'+(87+i)+'\').style.color=\'#000\';');
+                            }
+                        }
+                    }else if(Json.ID_0x038A == 2){
+                        //系统模式  
+                        if(Json.ID_0x005D<16)eval('document.getElementById(\'ID_0x005D\').innerHTML=lang.N'+(Json.ID_0x005D+350)+'[language];');
+                        //告警1
+                        for(var i=0;i<16;i++)
+                        {
+                            if(((Json.ID_0x005E>>i)&1)==1)
+                            {
+                                eval('$(\'ID_A'+(120+i)+'\').innerHTML=AlarmStatus.N1[language];');
+                                eval('$(\'ID_A'+(120+i)+'\').style.color=\'#FF9500\';');
+                            }
+                            else
+                            {
+                                eval('$(\'ID_A'+(120+i)+'\').innerHTML=AlarmStatus.N0[language];');
+                                eval('$(\'ID_A'+(120+i)+'\').style.color=\'#000\';');
+                            }
+                        }
+                        //告警2
+                        for(var i=0;i<2;i++)
+                        {
+                            if(((Json.ID_0x005F>>i)&1)==1)
+                            {
+                                eval('$(\'ID_A'+(136+i)+'\').innerHTML=AlarmStatus.N1[language];');
+                                eval('$(\'ID_A'+(136+i)+'\').style.color=\'#FF9500\';');
+                            }
+                            else
+                            {
+                                eval('$(\'ID_A'+(136+i)+'\').innerHTML=AlarmStatus.N0[language];');
+                                eval('$(\'ID_A'+(136+i)+'\').style.color=\'#000\';');
+                            }
+                        }
+                        //告警3
+                        for(var i=8;i<16;i++)
+                        {
+                            if(((Json.ID_0x0060>>i)&1)==1)
+                            {
+                                eval('$(\'ID_A'+(152+i)+'\').innerHTML=AlarmStatus.N1[language];');
+                                eval('$(\'ID_A'+(152+i)+'\').style.color=\'#FF9500\';');
+                            }
+                            else
+                            {
+                                eval('$(\'ID_A'+(152+i)+'\').innerHTML=AlarmStatus.N0[language];');
+                                eval('$(\'ID_A'+(152+i)+'\').style.color=\'#000\';');
+                            }
+                        }
+                        //告警4
+                        for(var i=0;i<1;i++)
+                        {
+                            if(((Json.ID_0x0061>>i)&1)==1)
+                            {
+                                eval('$(\'ID_A'+(168+i)+'\').innerHTML=AlarmStatus.N1[language];');
+                                eval('$(\'ID_A'+(168+i)+'\').style.color=\'#FF9500\';');
+                            }
+                            else
+                            {
+                                eval('$(\'ID_A'+(168+i)+'\').innerHTML=AlarmStatus.N0[language];');
+                                eval('$(\'ID_A'+(168+i)+'\').style.color=\'#000\';');
+                            }
+                        }
+                        //故障1
+                        for(var i=0;i<16;i++)
+                        {
+                            if(((Json.ID_0x0062>>i)&1)==1)
+                            {
+                                eval('$(\'ID_F'+(200+i)+'\').innerHTML=FaultStatus.N1[language];');
+                                eval('$(\'ID_F'+(200+i)+'\').style.color=\'#F00\';');
+                            }
+                            else
+                            {
+                                eval('$(\'ID_F'+(200+i)+'\').innerHTML=FaultStatus.N0[language];');
+                                eval('$(\'ID_F'+(200+i)+'\').style.color=\'#000\';');
+                            }
+                        }
+                        //故障2
+                        for(var i=0;i<2;i++)
+                        {
+                            if(((Json.ID_0x0063>>i)&1)==1)
+                            {
+                                eval('$(\'ID_F'+(216+i)+'\').innerHTML=FaultStatus.N1[language];');
+                                eval('$(\'ID_F'+(216+i)+'\').style.color=\'#F00\';');
+                            }
+                            else
+                            {
+                                eval('$(\'ID_F'+(216+i)+'\').innerHTML=FaultStatus.N0[language];');
+                                eval('$(\'ID_F'+(216+i)+'\').style.color=\'#000\';');
+                            }
+                        }
+                        //故障3
+                        for(var i=8;i<16;i++)
+                        {
+                            if(((Json.ID_0x0064>>i)&1)==1)
+                            {
+                                eval('$(\'ID_F'+(232+i)+'\').innerHTML=FaultStatus.N1[language];');
+                                eval('$(\'ID_F'+(232+i)+'\').style.color=\'#F00\';');
+                            }
+                            else
+                            {
+                                eval('$(\'ID_F'+(232+i)+'\').innerHTML=FaultStatus.N0[language];');
+                                eval('$(\'ID_F'+(232+i)+'\').style.color=\'#000\';');
+                            }
+                        }
+                        //故障4
+                        for(var i=0;i<1;i++)
+                        {
+                            if(((Json.ID_0x0065>>i)&1)==1)
+                            {
+                                eval('$(\'ID_F'+(248+i)+'\').innerHTML=FaultStatus.N1[language];');
+                                eval('$(\'ID_F'+(248+i)+'\').style.color=\'#F00\';');
+                            }
+                            else
+                            {
+                                eval('$(\'ID_F'+(248+i)+'\').innerHTML=FaultStatus.N0[language];');
+                                eval('$(\'ID_F'+(248+i)+'\').style.color=\'#000\';');
+                            }
+                        }
+                    }                
+                }
+            };
+            //xmlhttp.open('GET',URL,true);
+            //xmlhttp.send();
+            //alert(URL);   
+        }  
+        function ajax()
+        {
+            Json={ID_0x0301:85,ID_0x038A:2,ID_0x0050:1,ID_0x0051:6500,ID_0x0052:200,ID_0x0053:50000,ID_0x0054:50000,ID_0x0055:5000,ID_0x0056:5000,ID_0x0057:300,ID_0x0058:300,ID_0x0059:200,ID_0x005A:100,ID_0x005B:2,ID_0x005C:3,ID_0x005D:14,ID_0x005E:0x0003,ID_0x005F:0x0003,ID_0x0060:0xff00,ID_0x0061:0x0001,ID_0x0062:0xffff,ID_0x0063:0x40,ID_0x0064:0xff00,ID_0x0065:0x0001,ID_0x0068:0xfff7,ID_0x0069:0xffff,ID_0x006A:0xffff,ID_0x0354:12};
+            var URL='s_018.html?time='+new Date();
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            //xmlhttp.onreadystatechange=function()
+            {
+                //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    //eval('Json='+xmlhttp.responseText);           
+                    if(Json.ID_0x0301==0x55)language=0;else language=1;
+                    lang_init_ex(1,15);
+                    lang_init_ex(40,42);
+                    lang_init_ex(52,54);
+                    lang_init_ex(58,62);
+                    lang_init_ex(64,66);
+                    lang_init_ex(71,100);
+                    lang_init_ex(120,137);
+                    lang_init_ex(160,168);
+                    lang_init_ex(200,217);
+                    lang_init_ex(240,248);
+
+                    if(Json.ID_0x038A == 1){
+                        $('t_68_sys').style.display='block';
+                        $('t_68_rack').style.display='block';
+                        $('alarm_t_2').style.display='none';
+                        $('fault_t_2').style.display='none';
+                    }else if(Json.ID_0x038A == 2){
+                        $('t_68_sys').style.display='block';
+                        $('t_68_rack').style.display='none';
+                        $('alarm_t_1').style.display='none';
+                        $('alarm_t_rack').style.display='none';
+                        $('fault_t_1').style.display='none';
+                    }else{
+                        $('t_68_sys').style.display='block';
+                        $('t_68_rack').style.display='none';
+                        $('alarm_t_1').style.display='none';
+                        $('alarm_t_rack').style.display='none';
+                        $('fault_t_1').style.display='none';
+                        $('alarm_t_2').style.display='none';
+                        $('fault_t_2').style.display='none';
+                        $('info').style.display='none';
+                    }
+
+                    if(Json.ID_0x0354==0){
+                        $('pager').style.display='none';
+                    }else{
+                        $('pager').style.display='block';
+                        mpager=new PagerView('pager',lang.N500[language],lang.N502[language],lang.N503[language]);
+                    }
+  
+                    mpager.itemCount=Json.ID_0x0354;
+                    mpager.size=1;
+                    mpager.index=1; 
+                    CurBms = mpager.index;
+                    Get_Bms_Index(CurBms);               
+                    mpager.onclick=function(index)
+                    {  
+                        CurBms = index;
+                        //获取PCS储能逆变器信息
+                        Get_Bms_Index(index);
+                    };
+                    //index显示更新
+                    mpager.render();
+                }
+            };
+            xmlhttp.open('GET',URL,true);
+            xmlhttp.send();
+        }        
+        function Init()
+        {
+            ajax();
+            setInterval('Get_Bms_Index(CurBms)', 2000);
+        }   
+    </script>
+</html>

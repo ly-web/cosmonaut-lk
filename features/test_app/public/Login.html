@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+    <head>
+        <meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>
+        <title></title>
+        <style type='text/css'>
+            body{margin:0;padding:0;text-align:center;font-size:14px;font-family:'微软雅黑',Verdana,'宋体',sans-serif;background-color:#F7F7F7;}
+            .title{margin:10px auto;width:400px;text-align:left;overflow:hidden;}
+            .subtitle{width:400px;text-align:left;}
+            .subcolor{background-color:#84C1FF;}
+            .cn{width:80px;float:right;}
+            .en{width:80px;float:right;padding-right:26px;}
+            .r1{margin:0 5px;height:1px;overflow:hidden;}
+            .r2{margin:0 3px;height:1px;overflow:hidden;}
+            .r3{margin:0 2px;height:1px;overflow:hidden;}
+            .r4{margin:0 1px;height:2px;overflow:hidden;}
+            .content{height:41px;padding-left:20px;}
+            .subcontent{padding:0;height:200px;font-size:18px;}
+            .line_long{height:2px;overflow:hidden;margin:0 10px;background-color:#050;}
+            .login{height:230px;width:100%;position:absolute;top:50%;left:50%;margin:-115px 0 0 -50%;background-color:#E8E8E8;}
+            .N01{width:150px;float:left;padding-right:20px;text-align:right;height:22px;line-height:22px;}
+            .N02{width:200px;float:left;height:22px;line-height:22px;margin-top: 2px;}
+            #ID_0x0282{width:130px;text-align:left;float:left;}
+            #ID_0x0283{width:124px;text-align:left;float:left;}
+            .main{height:30px;font-size:16px;}
+            .div_btn{text-align:left;padding-left:250px;padding-top:10px;}
+            .btn{width:75px;height:24px;}
+            .img{width:173px;height:41px;background-image:url(i_000.png) !important;background-repeat:no-repeat;_filter:progid: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='i_000.png');_background-image:none;}
+            .tip{width:350px;margin:0 auto;text-align:left;color:#ff0000;font-weight:bold;font-size:14px;padding-left:20px;}
+        </style>
+        <script type='text/javascript'>
+            window.history.forward(1);
+            var language=0;
+            var Json;
+            var timer=-1;
+            var $=function(o){return document.getElementById(o);};
+            var lang=
+            {
+                N01:['用户名:','Username:'],
+                N02:['密码:','Password:'],
+                N03:['登&nbsp;&nbsp;录','Login'],
+                N04:['密码错误，请重新输入！','Wrong password, please re-enter the password!'],
+                N05:['请输入密码','Please key in your password!'],
+                N06:['已经有用户登录，请稍后再试！','User has logged in,please try again later!'],
+                N07:['登录用户满，请稍后再试！','logged in Users is Full,please try again later!'],
+                N10:['操作员','Operator'],
+                N11:['管理员','Administrator'],
+                N12:['维护员','Maintriner']
+            };
+            var doKeyCheck=function(evt)
+            {
+                evt=window.event||evt;
+                if(evt.keyCode==13)doCheck();
+            };
+            window.document.onkeyup=doKeyCheck;
+            function Init()
+            {
+				Json={ID_0x0202:'SC50',ID_0x0301:85};
+                var URL='s_000.html?'+'time='+new Date();
+                var xmlhttp;
+                if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+                else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+                //xmlhttp.onreadystatechange=function()
+                {
+                    //if(xmlhttp.readyState==4&&xmlhttp.status==200)
+                    {
+                        //eval('Json='+xmlhttp.responseText);               
+        				if(Json.ID_0x0301==0x55)language=0;else language=1;
+        				$('N01').innerHTML=lang.N01[language];
+        				$('N02').innerHTML=lang.N02[language];
+        				$('N03').innerHTML=lang.N03[language];
+                        $('ID_0x0282').options.add(new Option(lang.N10[language],0));
+                        $('ID_0x0282').options.add(new Option(lang.N11[language],1));
+                        $('ID_0x0282').options.add(new Option(lang.N12[language],2));
+        				document.title=Json.ID_0x0202;
+                    }
+                };
+                xmlhttp.open('GET',URL,true);
+                xmlhttp.send();   
+                $('ID_0x0283').focus();
+            }
+            function doCheck()
+            {
+                if($('ID_0x0283').value=='')
+                {
+                    show_tip(lang.N05[language]);
+                    $('ID_0x0283').focus();
+                }
+                else doSubmit();
+            }
+            function doSubmit()
+            {
+                var URL='LA.html?'
+                +'0x0282='+$('ID_0x0282').value
+                +'&0x0283='+$('ID_0x0283').value
+                +'&time='+new Date();
+                var xmlhttp;
+                if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+                else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+                xmlhttp.onreadystatechange=function()
+                {
+                    if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                    {
+                        var result=parseInt(xmlhttp.responseText);
+                        if(result==1)
+                        {
+                            replace_location('Index.html');
+                            return;
+                        }
+                        else if(result==3)
+                        {
+                            replace_location('Config.html');
+                            return;                            
+                        }
+                        else if(result==5)
+                        {
+                            replace_location('Debug.html');
+                            return;                            
+                        }
+                        else if(result==0)
+                        {
+                            show_tip(lang.N04[language]);
+                        }
+                        else if(result==2)
+                        {
+                            show_tip(lang.N06[language]);
+                        }
+                        else if(result==4)
+                        {
+                            show_tip(lang.N07[language]);
+                        }
+                        $('ID_0x0283').value='';
+                        $('ID_0x0283').focus();
+                    }
+                };
+                xmlhttp.open('GET',URL,true);
+                xmlhttp.send();
+            }
+            function replace_location(url)
+            {
+                var isIe=(document.all)?true:false;
+                if(isIe)
+                {
+                    var linka=document.createElement('a');
+                    linka.href=url;
+                    document.body.appendChild(linka);
+                    linka.click();
+                }
+                else window.location=url;
+            }
+            function return_to_blank()
+            {
+                $('tip').innerHTML='&nbsp;';
+            }
+            function show_tip(obj)
+            {
+                if(timer!=-1){clearInterval(timer);timer=-1;}
+                $('tip').innerHTML='&nbsp;';
+                $('tip').innerHTML=obj;
+                timer=setInterval('return_to_blank()',5000);
+            }
+            function lang_color_GB()
+            {
+                if(language==0)
+                {
+                    $('CHN').className='text B_C';
+                    $('EN').className='text G_C';
+                }
+                else
+                {
+                    $('CHN').className='text G_C';
+                    $('EN').className='text B_C';
+                }
+            }
+            function lang_color_R(obj)
+            {
+                obj.className='text R_C';
+            }
+            function do_Submit(Lang)
+            {
+                lang_color_GB();
+                var URL='a_012.html?0x0301='+Lang+'&time='+new Date();
+                var xmlhttp;
+                if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+                else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+                xmlhttp.onreadystatechange=function()
+                {
+                    if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                    {              
+                        replace_location('Login.html');
+                        return;
+                    }
+                };
+                xmlhttp.open('GET',URL,true);
+                xmlhttp.send();
+            }
+        </script>
+    </head>
+    <body onload='Init()'>
+        <div>
+            <div class='head'>
+                <div class='en' onclick='do_Submit("170")'>
+                    <a class='a' href='#'><img class='flag' src='i_004.png'/><span id='EN' class='text' onmousemove='lang_color_R(this)' onmouseout='lang_color_GB()'>English</span></a>
+                </div>
+                <div class='cn' onclick='do_Submit("85")'>
+                    <a class='a' href='#'><img class='flag' src='i_003.png'/><span id='CHN' class='text' onmousemove='lang_color_R(this)' onmouseout='lang_color_GB()'>简体中文</span></a>
+                </div>
+            </div>
+        </div>
+        <div class='login'>
+            <div class='title'>
+                <div class='subtitle'>
+                    <div class='r1 subcolor'></div>
+                    <div class='r2 subcolor'></div>
+                    <div class='r3 subcolor'></div>
+                    <div class='r4 subcolor'></div>
+                    <div class='content subcolor subcontent'>
+                        <div class='content subcolor' style='padding-top:15px;'>
+                            <div class='img'></div>
+                        </div>
+                        <div class='line_long'></div>
+                        <div class='main' style='padding-top:25px;'>
+                            <div class='N01'><span id='N01'>&nbsp;</span></div>
+                            <div class='N02'>
+                                <select id='ID_0x0282' onchange='$("ID_0x0283").select()'></select>
+                            </div>
+                        </div>
+                        <div class='main' style='padding-top:5px;'>
+                            <div class='N01'><span id='N02'>&nbsp;</span></div>
+                            <div class='N02'><input id='ID_0x0283' type='password'/></div>
+                        </div>
+                        <div class='div_btn'>
+                            <button class='btn' id='btn0' onclick='doCheck()'><span id='N03'>&nbsp;</span></button>
+                        </div>
+                        <div id='tip' class='tip'>&nbsp;</div>
+                    </div>
+                    <div class='r4 subcolor'></div>
+                    <div class='r3 subcolor'></div>
+                    <div class='r2 subcolor'></div>
+                    <div class='r1 subcolor'></div>
+                </div>
+            </div>
+        </div>
+        <!--[if IE 6]><script type='text/javascript'>document.execCommand('BackgroundImageCache',false,true);</script><![endif]-->
+    </body>
+</html>

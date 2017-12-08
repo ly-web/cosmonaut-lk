@@ -1,0 +1,372 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>
+		<link type='text/css' href='c_000.css' rel='stylesheet'/>
+		<style type='text/css'>
+			tr{height:27px;}
+			.select{width:180px;_width:150px;}
+			.time{width:65px;_width:100px;}
+			.txt{width:70px;text-align:center;}
+			.short_txt{width:50px;}
+			.td_value{text-align:right;padding-right:20px;}
+			.td1{padding-left:20px;padding-right:20px;text-align:left;}
+			.td2{padding-left:0px;text-align:center;}
+			.td3{padding-left:60px;text-align:left;}
+			.td4{padding-right:5px;text-align:right;}
+			.td5{padding-right:10px;text-align:right;}
+			.radio{padding-left:30px;}
+			.btnStyle{width:70px;height:24px;}
+			.submenu{line-height:32px;padding-left:20px;width:225px;height:32px;color:#000;background-color:#eee;font-weight:normal;font-size:14px;}
+		</style>	
+		<script type='text/javascript'>
+			var $=function(o){return document.getElementById(o);};
+			function lang_init_ex(st,end){for(var i=st;i<=end;i++)eval('$(\'N'+(i<10?'0'+i:i)+'\').innerHTML=lang.N'+(i<10?'0'+i:i)+'[language];');}
+			function show_tip(obj){$('tip').innerHTML=obj;}
+			function show_T(tid)
+			{
+				var str='';
+				str+="<div class='title' style='width:90%;'><div class='r1 color'></div><div class='r2 color'></div><div class='r3 color'></div><div class='r4 color'></div>";
+				str+="<div class='content color'><span id='"+tid+"'></span></div>";
+				str+="<div class='r4 color'></div><div class='r3 color'></div><div class='r2 color'></div><div class='r1 color'></div></div><div class='blank'></div>";
+				document.write(str);
+			}
+			function show_sT(tid)
+			{
+				var str='';
+				str+="<div class='title' style='width:90%;'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+				str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+				str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+				document.write(str);
+			}
+			function show_sT_ex(tid, id)
+			{
+				var str='';
+				str+="<div class='title' id='"+id+"' style='display:none;width:90%'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+				str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+				str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+				document.write(str);
+			}
+			function sendHttpReq(url, successFn)
+			{
+				//alert(url);	
+		        var xmlhttp;
+		        if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+		        else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+		        xmlhttp.onreadystatechange=function()
+		        {
+		            if(xmlhttp.readyState==4 && xmlhttp.status==200)
+		            {
+		                if(xmlhttp.responseText=='1'){successFn();}
+		            }
+		        };
+		        xmlhttp.open('GET',url,true);
+		        xmlhttp.send();
+			}
+		</script>
+		<script type='text/javascript'>
+			var language=0;
+			//正整数+0
+			var reg=/^(0|[1-9]\d*)$/;
+			var Json;
+			var flg_ammeter = [0,0,0,0,0,0,0,0,0,0,0,0];
+			var lang=
+			{
+				//电表, bnt ID 从400开始
+				N300:['设&nbsp;&nbsp;置','Set'],
+				N301:['设&nbsp;&nbsp;置','Set'],
+				N302:['设&nbsp;&nbsp;置','Set'],
+				N303:['设&nbsp;&nbsp;置','Set'],
+				N304:['设&nbsp;&nbsp;置','Set'],
+				N305:['设&nbsp;&nbsp;置','Set'],
+				N306:['设&nbsp;&nbsp;置','Set'],
+				N307:['设&nbsp;&nbsp;置','Set'],
+				N308:['设&nbsp;&nbsp;置','Set'],
+				N309:['设&nbsp;&nbsp;置','Set'],
+				N310:['设&nbsp;&nbsp;置','Set'],
+				N311:['设&nbsp;&nbsp;置','Set'],
+
+	 			N500:['一共','Total '],
+	 			N501:['页，共',' Pages, '],
+	 			N502:['页，共',' Page, '],
+	 			N503:['台',' Nums'],
+	 			N504:['台',' Num'],
+
+				N541:['设置失败！','Set failed!'],
+				N542:['设置成功！','Set successfully!'],
+				N543:['格式错误！','Format error!'],
+				N544:['范围错误！','Range error!'],
+
+				N550:['设&nbsp;&nbsp;置','Set'],
+				N551:['设&nbsp;&nbsp;置','Set']
+			};
+
+			//显示设置Mdobus地址设置框 nid -- text框id(实际的)，bid -- 确认按钮id(>=1)，tid -- 提示信息区id(>=1), num -- 添加的个数
+			function show_Set(nid,bid,tid,num)
+			{
+				var loop=0;
+				var str='';
+				var style="odd";
+				var more=0, all=0;
+				var line=0;
+				more=num%4;
+				if(more!=0){all=num+(4-more);}
+				else{all=num;}
+				str+="<tr id='t"+(bid+line)+"' style='display:none'>";
+				for(var i=0; i<all; i++)
+				{
+					if(i%8<4){style="odd"}else{style="even"}
+					if(i>=num){
+						str+="<td width='12%' class='td1 odd "+style+"'><span id='text"+(bid+i)+"'>No.Na</span></td><td width='9%' class='td2 "+style+"'><input class='txt' type='text' value='Na' disabled='true'/></td><td width='8%' class='td2 "+style+"'><button class='btnStyle' disabled='true' style='display:block;'></td>";
+					}else{						
+						str+="<td width='12%' class='"+style+"'><span id='text"+(bid+i)+"'>No."+(i<9?'0'+(i+1):(i+1))+"</span></td><td width='9%' class='td2 "+style+"'><input class='txt' id='ID_0x0"+(nid+i).toString(16).toUpperCase()+"' value='"+(i+1)+"' maxlength='3' onkeyup='doRangeCheck(this,reg)' type='text'/></td><td width='%8' class='td2 "+style+"'><button class='btnStyle' onclick='doSubmit(this)' id='N"+(bid+i)+"' style='display:block;'></td>";	
+					}	
+					if(i%4==3){
+						loop=0;
+						line++;
+						if(i!=all-1){str+="</tr><tr id='t"+(bid+line)+"' style='display:none'>"};
+
+					}
+					loop++;
+				}
+				str+="</tr>";
+				document.write(str);
+			}				
+		</script>
+	</head>
+	<body onload='Init()'>
+		<!-- 电表 -->
+		<table id='tbl_ammeter' width='90%' border='1' bordercolor="#E0E0E0" style='display:none;'>
+			<script type='text/javascript'>
+			show_Set(0x750, 300, 5, 12);
+			lang_init_ex(300,311);			
+			</script>
+		</table>
+		<div class='tip' id='tip4' style='width:90%;'><span>&nbsp;</span></div>		
+		<div class='btm_blank'></div>
+		<div id='trans'></div>
+		<!--[if IE 6]><script type='text/javascript'>document.execCommand('BackgroundImageCache',false,true);</script><![endif]-->
+	</body>
+
+	<script language='javascript' type='text/javascript'>
+
+		Json={	ID_0x0301:85,ID_0x0282:0x22,ID_0x0390:1,ID_0x0391:1,ID_0x0392:1,ID_0x0393:1,ID_0x0394:1,ID_0x0395:1,ID_0x039A:1,ID_0x0355:3,
+
+				ID_0x0750:11,ID_0x0751:12,ID_0x0752:13
+			};
+				
+		function change_color(obj)
+		{
+			if(current_id!=obj.id)
+			{
+				obj.style.background='#007b3e';
+				obj.style.color='#fff';
+			}
+		}
+		function resume_color(obj)
+		{
+			if(current_id!=obj.id)
+			{
+				obj.style.background='#aaa';
+				obj.style.color='#000';
+			}
+		}
+		
+		//ammeter
+		function choose_ammeter()
+		{
+			var lin=0;
+			if(Json.ID_0x0395==1){ $('tbl_ammeter').style.display='table'; $('tip4').style.display='block';} else { $('tbl_ammeter').style.display='none';  $('tip4').style.display='none';}	
+			//电表
+			for(var i=0; i<12; i++){
+				if(i>=Json.ID_0x0355){
+					eval('$(\'ID_0x0'+(0x750+i).toString(16).toUpperCase()+'\').value=\'\';');
+					eval('$(\'ID_0x0'+(0x750+i).toString(16).toUpperCase()+'\').disabled=\'true\';');
+					eval('$(\'N'+(300+i)+'\').disabled=true;');
+					eval('$(\'N'+(300+i)+'\').style.background="#F0F0F0";');
+					eval('$(\'text'+(300+i)+'\').innerHTML=\'No.--\';');
+				}else{	
+					if(Json.ID_0x0282==0x22){ 
+						eval('$(\'N'+(300+i)+'\').disabled=false;');
+						eval('$(\'N'+(300+i)+'\').style.background="#99D9EA";');
+					}else{
+						eval('$(\'N'+(300+i)+'\').style.background="#F0F0F0";');
+					} 
+				}
+			}
+			if(Json.ID_0x0355%4==0){lin=parseInt(Json.ID_0x0355/4);}
+			else {lin=parseInt(Json.ID_0x0355/4)+1;}
+			for(var j=0; j<3; j++)
+			{
+				if(j>=lin) eval('$(\'t'+(300+j)+'\').style.display=\'none\';');
+				else eval('$(\'t'+(300+j)+'\').style.display=\'table\';');
+			}	
+			Set_AMMETER_For_Serial();
+		}
+		
+		//设置串口电表数据
+		function Set_AMMETER_For_Serial()
+		{
+			var URL='s_027.html?0x0750&time='+new Date();
+			var xmlhttp;
+			if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+			else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+			//xmlhttp.onreadystatechange=function()
+			{
+				//if(xmlhttp.readyState==4 && xmlhttp.status==200)
+				{
+					//eval('Json='+xmlhttp.responseText);			
+					for(var i=0; i<Json.ID_0x0355; i++)
+					{
+						eval('$(\'ID_0x0'+(0x750+i).toString(16).toUpperCase()+'\').value=Json.ID_0x0'+(0x750+i).toString(16).toUpperCase()+';');
+					}
+				}
+			};
+			//xmlhttp.open('GET',URL,true);
+			//xmlhttp.send();				
+		}
+		
+		function Init()
+		{
+			//参数=0读所有设备地址
+			var URL='s_027.html?0x0000&time='+new Date();
+			var xmlhttp;
+			if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+			else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+			//xmlhttp.onreadystatechange=function()
+			{
+				//if(xmlhttp.readyState==4 && xmlhttp.status==200)
+				{
+					//eval('Json='+xmlhttp.responseText);
+
+					if(Json.ID_0x0301==0x55)language=0;else language=1;
+					lang_init_ex(300,311);
+
+					//设备选择
+					choose_ammeter();
+
+					if(Json.ID_0x0282==0x11)
+					{
+						$('trans').style.zIndex=-9999;
+					}
+					else
+					{
+						$('trans').style.zIndex=-9999;
+					}					
+				}
+			};
+			xmlhttp.open('GET',URL,true);
+			xmlhttp.send();
+		}
+	 	function read_back(addr)
+		{ 
+			var url='s_027.html?';
+
+			url=url+'0xFFFF'+'&0x0'+addr.toString(16).toUpperCase();
+			url=url+'&time='+new Date();
+			//alert(url);
+
+			var xmlhttp;
+			if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+			else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+			//xmlhttp.onreadystatechange=function()
+			{
+				//if(xmlhttp.readyState==4 && xmlhttp.status==200)
+				{
+					//eval('Json='+xmlhttp.responseText);
+					//回读PCS 网口参数
+					
+	            	//回读电表 modbus地址
+	                if(addr >= 0x750 && addr < 0x760)
+	            	{
+						var pr,fe;
+						eval('pr=$(\'ID_0x0'+addr.toString(16).toUpperCase()+'\').value;');
+						eval('fe=Json.ID_0x0'+addr.toString(16).toUpperCase()+';');
+						if(pr!=fe) eval('$(\'ID_0x0'+addr.toString(16).toUpperCase()+'\').value=Json.ID_0x0'+addr.toString(16).toUpperCase()+';');
+		     			show_tip_ex(4, '&nbsp;');
+		    			if(pr==fe){setTimeout('show_tip_ex(4,lang.N542[language])',500);}
+		    			else {setTimeout('show_tip_ex(4,lang.N541[language])',500);}
+			            setTimeout('show_tip_ex(4, \'&nbsp;\')',2500);               		
+	            	}		
+				}
+			};
+			xmlhttp.open('GET',url,true);
+			xmlhttp.send();     
+        } 	
+
+		function doSubmit(obj)
+		{
+            var URL='a_027.html?';
+
+            var readBack=0;
+            switch(obj.id)
+           	{
+            	//serial 电表设置
+            	case 'N300': case 'N301': case 'N302': case 'N303': case 'N304': case 'N305': case 'N306': case 'N307': case 'N308': case 'N309': case 'N310': case 'N311':
+            	var str = obj.id;
+            	var cutstr = str.substring(str.length-3,str.length);
+           		var index = parseInt(cutstr)-300;
+            	if(flg_ammeter[index]){return;}
+            	eval('URL=URL+\'&0x0'+(0x750+index).toString(16).toUpperCase()+'=\'+$(\'ID_0x0'+(0x750+index).toString(16).toUpperCase()+'\').value;');
+            	eval('readBack=0x0'+(0x750+index).toString(16).toUpperCase()+';');
+            	break;  	
+            	default:break;
+           	}
+
+            URL=URL+'&time='+new Date();
+            //alert(URL);          
+
+            function success()
+            {
+            	if(readBack >= 0x750 && readBack < 0x760)
+            	{
+	     			show_tip_ex(4, '&nbsp;');
+	    			setTimeout('read_back('+readBack+')', 100);
+		            setTimeout('show_tip_ex(4, \'&nbsp;\')',2500);               		
+            	}		
+            } 
+
+            //测试
+            success();  
+
+			sendHttpReq(URL, success);
+		}
+
+		function show_tip_ex(id, obj){eval('$(\'tip'+id+'\').innerHTML=obj;');}
+		function doRangeCheck(obj,reg)
+		{
+			var range=parseInt(obj.value);
+			var err, err2;			
+
+			if(!obj.value.match(reg)){err=2;}
+			else if(range<1||range>247){err=1;}
+			else{err=0;}
+	
+			//电表	
+			switch(obj.id)
+			{
+				case "ID_0x0750": case "ID_0x0751": case "ID_0x0752": case "ID_0x0753": case "ID_0x0754": case "ID_0x0755":
+				case "ID_0x0756": case "ID_0x0757": case "ID_0x0758": case "ID_0x0759": case "ID_0x075A": case "ID_0x075B":
+				if(err==1||err==2)
+				{
+					for(var i=0; i<Json.ID_0x0355; i++)
+					{
+						if(eval('$(\'ID_0x0'+(0x750+i).toString(16).toUpperCase()+'\').id')==obj.id) {flg_ammeter[i]=1;eval('$(\'N'+(300+i)+'\').disabled=true;');break;}
+					}		
+				}
+				if(err==1)show_tip_ex(4,lang.N544[language]);
+				else if(err==2)show_tip_ex(4,lang.N543[language]);
+				else{
+					for(var i=0; i<Json.ID_0x0355; i++)
+					{
+						if(eval('$(\'ID_0x0'+(0x750+i).toString(16).toUpperCase()+'\').id')==obj.id) {flg_ammeter[i]=0;eval('$(\'N'+(300+i)+'\').disabled=false;');break;}
+					}						
+					var a=0;
+					for(var i=0; i<12; i++) a|=flg_ammeter[i];
+					if(a==0)show_tip_ex(4,"&nbsp;");						
+				}
+				break;
+			}
+		}
+	</script>
+</html>

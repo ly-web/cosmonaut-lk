@@ -1,0 +1,1586 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>
+		<link type='text/css' href='c_000.css' rel='stylesheet'/>
+		<script type='text/javascript'>
+			var $=function(o){return document.getElementById(o);};
+			function lang_init_ex(st,end){for(var i=st;i<=end;i++)eval('$(\'N'+(i<10?'0'+i:i)+'\').innerHTML=lang.N'+(i<10?'0'+i:i)+'[language];');}
+			function show_T(tid)
+			{
+				var str='';
+				str+="<div class='title' style='width:90%;'><div class='r1 color'></div><div class='r2 color'></div><div class='r3 color'></div><div class='r4 color'></div>";
+				str+="<div class='content color'><span id='"+tid+"'></span></div>";
+				str+="<div class='r4 color'></div><div class='r3 color'></div><div class='r2 color'></div><div class='r1 color'></div></div><div class='blank'></div>";
+				document.write(str);
+			}
+			function show_sT(tid)
+			{
+				var str='';
+				str+="<div class='title' style='width:90%;'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+				str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+				str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+				document.write(str);
+			}
+			function sendHttpReq(url, successFn)
+			{
+				//alert(url);	
+		        var xmlhttp;
+		        if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+		        else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+		        xmlhttp.onreadystatechange=function()
+		        {
+		            if(xmlhttp.readyState==4 && xmlhttp.status==200)
+		            {
+		                if(xmlhttp.responseText=='1'){successFn();}
+		            }
+		        };
+		        xmlhttp.open('GET',url,true);
+		        xmlhttp.send();
+			}				
+		</script>
+		<style type='text/css'>
+			tr{height:27px;}
+			.select{width:180px;_width:150px;}
+			.time{width:65px;_width:100px;}
+			.txt{width:120px;height:22px;font-size:14px;text-align:right;}
+			.short_txt{width:50px;}
+			.td_value{text-align:right;padding-right:20px;}
+			.td1{padding-left:40px;text-align:left;}
+			.td2{padding-left:0px;text-align:left;}
+			.td3{padding-left:60px;text-align:left;}
+			.td4{padding-right:5px;text-align:right;}
+			.td5{padding-right:10px;text-align:right;}
+			.radio{padding-left:30px;}
+			.btnStyle{width:50px;height:24px;}
+		</style>
+	</head>
+	<body onload='Init()'>
+		<script type='text/javascript'>
+			show_T('N01');
+			show_sT('N02');
+		</script>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='10%' class='td1 odd'><span id='N03'></span></td>
+			  <td width='15%' class='td2 odd'><input class='txt' style='text-align:center;' id='IP' onkeyup='IPverify(this)' type='text'/></td>
+				<td width='10%' class='td1 odd'><span id='N04'></span></td>
+			  <td width='15%' class='td2 odd'><input class='txt' style='text-align:center;' id='SUBMASK' onkeyup='IPverify(this)' type='text'/></td>
+				<td width='10%' class='td1 odd'><span id='N05'></span></td>
+			  <td width='15%' class='td2 odd'><input class='txt' style='text-align:center;' id='GATEWAY' onkeyup='IPverify(this)' type='text'/></td>
+			   <td width='10%' class='td1 odd'><span id='N48'></span></td>
+			  <td width='15%' class='td2 odd'><input class='txt' style='text-align:center;' id='MAC' onkeyup='MACverify(this)' type='text'/></td>
+			</tr>
+		</table>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='50%' class='even' align='left'><span id='tip1' class='tip'>&nbsp;</span></td>
+				<td width='50%' class='even' align='right'>
+					<button class='btn' onclick='doSubmit(this)' id='N500' style='display:block;'></button>
+				</td>
+			</tr>
+		</table>
+		<div class='line_long'></div>
+		<div class='blank'></div>
+		<script type='text/javascript'>
+			show_sT('N44');
+		</script>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='10%' class='td1 odd'><span id='N45'></span></td>
+			  <td width='15%' class='td2 odd'><input class='txt' style='text-align:center;' id='IP2' onkeyup='IPverify2(this)' type='text'/></td>
+				<td width='10%' class='td1 odd'><span id='N46'></span></td>
+			  <td width='15%' class='td2 odd'><input class='txt' style='text-align:center;' id='SUBMASK2' onkeyup='IPverify2(this)' type='text'/></td>
+				<td width='10%' class='td1 odd'><span id='N47'></span></td>
+			  <td width='15%' class='td2 odd'><input class='txt' style='text-align:center;' id='GATEWAY2' onkeyup='IPverify2(this)' type='text'/></td>
+			    <td width='10%' class='td1 odd'><span id='N49'></span></td>
+			  <td width='15%' class='td2 odd'><input class='txt' style='text-align:center;' id='MAC2' onkeyup='MAC2verify(this)' type='text'/></td>
+			</tr>
+		</table>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='50%' class='even' align='left'><span id='tip8' class='tip'>&nbsp;</span></td>
+				<td width='50%' class='even' align='right'>
+					<button class='btn' onclick='doSubmit(this)' id='N512' style='display:block;'></button>
+				</td>
+			</tr>
+		</table>
+		<div class='line_long'></div>
+		<div class='blank'></div>
+		<script type='text/javascript'>
+			show_sT('N08');
+		</script>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='13%' class='td1 odd'><span id='N09'></span></td>
+			  <td width='15%' class='td2 odd'><input class='txt' id='ID_0x0164' maxlength='3' onkeyup='Verify(this)' type='text'/></td>
+				<td width='20%' class='td2 odd'>(1~247)</td>
+				<td width='20%' class='td1 odd'><span id='N10'></span></td>
+			  <td width='12%' class='td2 odd'><input class='txt' id='ID_0x0165' maxlength='5' onkeyup='Verify(this)' type='text'/></td>
+				<td width='20%' class='td2 odd'>(1~65535)</td>
+			</tr>
+		</table>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='50%' class='even' align='left'><span id='tip3' class='tip'>&nbsp;</span></td>
+				<td width='50%' class='even' align='right'>
+					<button class='btn' onclick='doSubmit(this)' id='N502' style='display:block;'></button>
+				</td>
+			</tr>
+		</table>
+		<div class='line_long'></div>
+		<div class='blank'></div>
+		<script type='text/javascript'>
+			show_sT('N11');
+		</script>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='15%' class='td1 odd'><span id='N12'></span></td>
+				<td width='15%' class='td2 odd'><input name='BMSMODE' type='radio' id='BMSM0' onclick='radiocontrol()' value='0' checked='checked'/><span id='N13'></span></td>
+				<td width='15%' class='td2 odd'><input name='BMSMODE' type='radio' id='BMSM1' onclick='radiocontrol()' value='1'/><span id='N14'></span></td>
+				<td width='15%' class='td2 odd'><input name='BMSMODE' type='radio' id='BMSM2' onclick='radiocontrol()' value='2'/><span id='N15'></span></td>
+				<td width='15%' class='td2 odd'></td>
+				<td width='10%' class='td2 odd'></td>
+			</tr>
+			<tr>
+				<td class='td1 even'><span id='N16'></span></td>
+				<td class='td2 even'><input name='BMSFCONT' type='radio' id='BMSFC0' value='0' checked='checked'/><span id='N17'></span></td>
+				<td class='td2 even'><input name='BMSFCONT' type='radio' id='BMSFC1' value='1'/><span id='N18'></span></td>
+				<td class='td2 even'><input name='BMSFCONT' type='radio' id='BMSFC2' value='2'/><span id='N19'></span></td>
+				<td class='td2 even'></td>
+				<td class='td2 even'></td>
+			</tr>
+			<tr>
+				<td class='td1 odd'><span id='N20'></span></td>
+				<td class='td2 odd'><input name='BMSWCONT' type='radio' id='BMSWC0' value='0' checked='checked'/><span id='N21'></span></td>
+				<td class='td2 odd'><input name='BMSWCONT' type='radio' id='BMSWC1' value='1'/><span id='N22'></span></td>
+				<td class='td2 odd'><input name='BMSWCONT' type='radio' id='BMSWC2' value='2'/><span id='N23'></span></td>
+				<td class='td2 odd'></td>
+				<td class='td2 odd'></td>
+			</tr>
+		</table>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='50%' class='even' align='left'><span id='tip4' class='tip'>&nbsp;</span></td>
+				<td width='50%' class='even' align='right'>
+					<button class='btn' onclick='doSubmit(this)' id='N503' style='display:block;'></button>
+				</td>
+			</tr>
+		</table>
+		<div class='line_long'></div>
+		<div class='blank'></div>
+		<script type='text/javascript'>
+			show_sT('N25');
+		</script>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='17%' class='td1 odd'><span id='N26'></span></td>
+			  <td width='17%' class='td2 odd'><input class='txt' id='ID_0x016A' maxlength='5' onkeyup='Verify(this)' type='text'/></td>
+				<td width='15%' class='td2 odd'>(1~65535)</td>
+				<td width='17%' class='td1 odd'></td>
+				<td width='17%' class='td2 odd'></td>
+				<td width='17%' class='td2 odd'></td>
+			</tr>
+			<tr>
+				<td class='td1 even'><span id='N27'></span></td>
+				<td class='td2 even'><input class='txt' id='ID_0x016B' maxlength='3' onkeyup='Verify(this)' type='text'/>s</td>
+				<td class='td2 even'>(1~255)</td>
+				<td class='td1 even'><span id='N28'></span></td>
+				<td class='td2 even'><input class='txt' id='ID_0x016C' maxlength='3' onkeyup='Verify(this)' type='text'/>s</td>
+				<td class='td2 even'>(1~255)</td>
+			</tr>
+			<tr>
+				<td class='td1 odd'><span id='N29'></span></td>
+				<td class='td2 odd'><input class='txt' id='ID_0x016D' maxlength='5' onkeyup='Verify(this)' type='text'/></td>
+				<td class='td2 odd'>(1~32767)</td>
+				<td class='td1 odd'><span id='N30'></span></td>
+				<td class='td2 odd'><input class='txt' id='ID_0x016E' maxlength='5' onkeyup='Verify(this)' type='text'/></td>
+				<td class='td2 odd'>(1~32767)</td>
+			</tr>
+		</table>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='50%' class='even' align='left'><span id='tip5' class='tip'>&nbsp;</span></td>
+				<td width='50%' class='even' align='right'>
+					<button class='btn' onclick='doSubmit(this)' id='N504' style='display:block;'></button>
+				</td>
+			</tr>
+		</table>
+		<div class='line_long'></div>
+		<div class='blank'></div>
+        <!-- 通讯参数配置 -->
+        <script type='text/javascript'>
+            show_sT('N38');
+        </script>
+        <table width='90%' border='1' id='tab1' style='border-collapse:collapse;border-spacing:0px;border-color:#e0e0e0;'>  
+            <tr id='tr0'>
+                <!-- 串口号 -->
+                <td width='10%' class='odd'><span id='N39' style="font-weight:bold;"></span></td>
+                <!-- 波特率 -->
+                <td width='20%' class='odd'><span id='N40' style="font-weight:bold;"></span></td>
+                <!-- 接入设备类型 -->
+                <td width='20%' class='odd'><span id='N41' style="font-weight:bold;"></span></td>
+                <!-- 起始ID -->
+                <td width='25%' class='odd'><span id='N42' style="font-weight:bold;"></span></td>
+                <!-- 结束ID -->
+                <td width='25%' class='odd'><span id='N43' style="font-weight:bold;"></span></td>
+            </tr>
+            <tr id='tr1'>
+                <td width='10%' class='even'><span>1</span></td>
+                <td width='20%' class='even'><select style='width:135px;text-align:center;' id='COM_BAUD0'></select></td>
+                <td width='20%' class='even'><select onchange='onChange(this)' style='width:135px;text-align:center;' id='COM_DEVICE_TYPE0'></select></td>
+                <td width='25%' class='even'><select style='width:135px;text-align:center;' id='COM_BEGIN_ID0'></select></td>
+                <td width='25%' class='even'><select style='width:135px;text-align:center;' id='COM_END_ID0'></select></td>
+            </tr>
+            <tr id='tr2'>
+                <td width='10%' class='even'><span>2</span></td>
+                <td width='20%' class='even'><select style='width:135px;text-align:center;' id='COM_BAUD1'></select></td>
+                <td width='20%' class='even'><select onchange='onChange(this)' style='width:135px;text-align:center;' id='COM_DEVICE_TYPE1'></select></td>
+                <td width='25%' class='even'><select style='width:135px;text-align:center;' id='COM_BEGIN_ID1'></select></td>
+                <td width='25%' class='even'><select style='width:135px;text-align:center;' id='COM_END_ID1'></select></td>
+            </tr>
+            <tr id='tr3'>
+                <td width='10%' class='even'><span>3</span></td>
+                <td width='20%' class='even'><select style='width:135px;text-align:center;' id='COM_BAUD2'></select></td>
+                <td width='20%' class='even'><select onchange='onChange(this)' style='width:135px;text-align:center;' id='COM_DEVICE_TYPE2'></select></td>
+                <td width='25%' class='even'><select style='width:135px;text-align:center;' id='COM_BEGIN_ID2'></select></td>
+                <td width='25%' class='even'><select style='width:135px;text-align:center;' id='COM_END_ID2'></select></td>
+            </tr>
+            <tr id='tr4'>
+                <td width='10%' class='even'><span>4</span></td>
+                <td width='20%' class='even'><select style='width:135px;text-align:center;' id='COM_BAUD3'></select></td>
+                <td width='20%' class='even'><select onchange='onChange(this)' style='width:135px;text-align:center;' id='COM_DEVICE_TYPE3'></select></td>
+                <td width='25%' class='even'><select style='width:135px;text-align:center;' id='COM_BEGIN_ID3'></select></td>
+                <td width='25%' class='even'><select style='width:135px;text-align:center;' id='COM_END_ID3'></select></td>
+            </tr>   
+            <tr id='tr5'>
+                <td width='10%' class='even'><span>5</span></td>
+                <td width='20%' class='even'><select style='width:135px;text-align:center;' id='COM_BAUD4'></select></td>
+                <td width='20%' class='even'><select onchange='onChange(this)' style='width:135px;text-align:center;' id='COM_DEVICE_TYPE4'></select></td>
+                <td width='25%' class='even'><select style='width:135px;text-align:center;' id='COM_BEGIN_ID4'></select></td>
+                <td width='25%' class='even'><select style='width:135px;text-align:center;' id='COM_END_ID4'></select></td>
+            </tr>  
+            <tr id='tr6'>
+                <td width='10%' class='even'><span>6</span></td>
+                <td width='20%' class='even'><select style='width:135px;text-align:center;' id='COM_BAUD5'></select></td>
+                <td width='20%' class='even'><select onchange='onChange(this)' style='width:135px;text-align:center;' id='COM_DEVICE_TYPE5'></select></td>
+                <td width='25%' class='even'><select style='width:135px;text-align:center;' id='COM_BEGIN_ID5'></select></td>
+                <td width='25%' class='even'><select style='width:135px;text-align:center;' id='COM_END_ID5'></select></td>
+            </tr>    
+        </table>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='50%' class='even' align='left'><span id='tip7' class='tip'>&nbsp;</span></td>
+				<td width='50%' class='even' align='right'>
+					<button class='btn' onclick='doSubmit(this)' id='N511' style='display:block;'></button>
+				</td>
+			</tr>
+		</table>
+		<div class='line_long'></div>
+		<div class='blank'></div>
+		<script type='text/javascript'>
+			show_sT('N31');
+		</script>
+		<table width='90%' border='0'>
+			<tr id='tPcs'>
+				<!-- PCS最大个数配置 -->
+				<td width='30%' class='td1 odd' align='left'><span id='N32'></span></td>
+		  	  	<td width='30%' class='odd' align='right'><input class='txt' id='ID_0x0350' maxlength='6' onkeyup='Verify(this)' type='text'/></td>
+				<td width='40%' class='td1 odd' align='left'>(1~60)</td>
+			</tr>
+			<tr id='bPcs'>
+				<td width='30%' class='even' align='left'><span id='tip10' class='tip'>&nbsp;</span></td>
+				<td width='30%' class='even' align='left'></td>
+				<td width='40%' class='even' align='right'>
+					<button class='btn' onclick='doSubmit(this)' id='N505' style='display:block;'></button>
+				</td>
+			</tr>
+			<tr id='tPv'>
+				<!-- PV最大个数配置 -->
+				<td width='30%' class='td1 odd' align='left'><span id='N33'></span></td>
+		  	  	<td width='30%' class='odd' align='right'><input class='txt' id='ID_0x0351' maxlength='6' onkeyup='Verify(this)' type='text'/></td>
+				<td width='40%' class='td1 odd' align='left'>(1~60)</td>
+			</tr>
+			<tr id='bPv'>
+				<td width='30%' class='even' align='left'><span id='tip11' class='tip'>&nbsp;</span></td>
+				<td width='30%' class='even' align='left'></td>
+				<td width='40%' class='even' align='right'>
+					<button class='btn' onclick='doSubmit(this)' id='N506' style='display:block;'></button>
+				</td>
+			</tr>
+			<tr id='tDcdc'>
+				<!-- DCDC最大个数配置 -->
+				<td width='30%' class='td1 odd' align='left'><span id='N34'></span></td>
+		  	  	<td width='30%' class='odd' align='right'><input class='txt' id='ID_0x0352' maxlength='6' onkeyup='Verify(this)' type='text'/></td>
+				<td width='40%' class='td1 odd' align='left'>(1~30)</td>
+			</tr>
+			<tr id='bDcdc'>
+				<td width='30%' class='even' align='left'><span id='tip12' class='tip'>&nbsp;</span></td>
+				<td width='30%' class='even' align='left'></td>
+				<td width='40%' class='even' align='right'>
+					<button class='btn' onclick='doSubmit(this)' id='N507' style='display:block;'></button>
+				</td>
+			</tr>
+			</tr>
+				<tr id='tPvs'>
+				<!-- PVS最大个数配置 -->
+				<td width='30%' class='td1 odd' align='left'><span id='N35'></span></td>
+		  	  	<td width='30%' class='odd' align='right'><input class='txt' id='ID_0x0353' maxlength='6' onkeyup='Verify(this)' type='text'/></td>
+				<td width='40%' class='td1 odd' align='left'>(1~50)</td>
+			</tr>
+			<tr id='bPvs'>
+				<td width='30%' class='even' align='left'><span id='tip13' class='tip'>&nbsp;</span></td>
+				<td width='30%' class='even' align='left'></td>
+				<td width='40%' class='even' align='right'>
+					<button class='btn' onclick='doSubmit(this)' id='N508' style='display:block;'></button>
+				</td>
+			</tr>
+			<tr id='tBms'>
+				<!-- BMS最大个数配置 -->
+				<td width='30%' class='td1 odd' align='left'><span id='N36'></span></td>
+		  	  	<td width='30%' class='odd' align='right'><input class='txt' id='ID_0x0354' maxlength='6' onkeyup='Verify(this)' type='text'/></td>
+				<td width='40%' class='td1 odd' align='left'>(1~60)</td>
+			</tr>
+			<tr id='bBms'>
+				<td width='30%' class='even' align='left'><span id='tip14' class='tip'>&nbsp;</span></td>
+				<td width='30%' class='even' align='left'></td>
+				<td width='40%' class='even' align='right'>
+					<button class='btn' onclick='doSubmit(this)' id='N509' style='display:block;'></button>
+				</td>
+			</tr>
+			<tr id='tAmmeter'>
+				<!-- 电表最大个数配置 -->
+				<td width='30%' class='td1 odd' align='left'><span id='N37'></span></td>
+		  	  	<td width='30%' class='odd' align='right'><input class='txt' id='ID_0x0355' maxlength='6' onkeyup='Verify(this)' type='text'/></td>
+				<td width='40%' class='td1 odd' align='left'>(1~12)</td>
+			</tr>
+			<tr id='bAmmeter'>
+				<td width='30%' class='even' align='left'><span id='tip15' class='tip'>&nbsp;</span></td>
+				<td width='30%' class='even' align='left'></td>
+				<td width='40%' class='even' align='right'>
+					<button class='btn' onclick='doSubmit(this)' id='N510' style='display:block;'></button>
+				</td>
+		</table>
+		<div class='line_long'></div>
+		<div class='btm_blank'></div>
+		<div id='trans'></div>
+		<!--[if IE 6]><script type='text/javascript'>document.execCommand('BackgroundImageCache',false,true);</script><![endif]-->
+	</body>
+	<script language='javascript' type='text/javascript'>
+		var language=1;
+		var Json;
+		var lang=
+		{
+			N01:['通讯参数','Communication Parameters'],
+			N02:['网络1参数','Network1 Parameters'],
+			N03:['IP地址','IP Address'],
+			N04:['子网掩码','Subnet Mask'],
+			N05:['网关','Gateway'],
+			N06:['RS485参数','RS485 Parameters'],
+			N07:['波特率','Baud Rate'],
+			N08:['Modbus参数','Modbus Parameters'],
+			N09:['地址','Address'],
+			N10:['TCP端口号','TCP Port'],
+			N11:['BMS参数','BMS Parameters'],
+			N12:['BMS通讯方式','BMS Com-Mode'],
+			N13:['无','None'],
+			N14:['CAN','CAN'],
+			N15:['RS485','RS485'],
+			N16:['BMS故障干接点','BMS F-Contact'],
+			N17:['关闭','Disabled'],
+			N18:['开启（常开）','Enabled(Open)'],
+			N19:['开启（常闭）','Enabled(Close)'],
+			N20:['BMS告警干接点','BMS W-Contact'],
+			N21:['关闭','Disabled'],
+			N22:['开启（常开）','Enabled(Open)'],
+			N23:['开启（常闭）','Enabled(Close)'],
+			N24:['开启（常闭）','Enabled(Close)'],			
+			N25:['IEC-104参数','IEC-104 Parameters'],
+			N26:['地址','Address'],
+			N27:['超时时间T1','Timeout T1'],
+			N28:['超时时间T3','Timeout T3'],
+			N29:['参数k','Parameter k'],
+			N30:['参数w','Parameter w'],
+			N31:['设备最大台数','Devices Max Num'],
+			N32:['储能逆变器个数','PCS Num'],
+			N33:['光伏逆变器个数','PV Num'],
+			N34:['光伏控制器个数','DCDC Num'],
+			N35:['汇流箱个数','PVS Num'],
+			N36:['电池个数','BMS Num'],
+			N37:['电表个数','Ammeter Num'],
+
+            N38:['通讯口配置','Com Config'],
+            N39:['串口号','Serial Num'],
+            N40:['波特率','Baud'],
+            N41:['接入设备类型','Device Type'],
+            N42:['起始ID','Begin ID'],
+            N43:['结束ID','End ID'],	
+
+			N44:['网络2参数','Network2 Parameters'],
+			N45:['IP地址','IP Address'],
+			N46:['子网掩码','Subnet Mask'],
+			N47:['网关','Gateway'],      
+
+			N48:['物理地址','Mac'],  
+			N49:['物理地址','Mac'],    		
+
+			N50:['80端口已被占用！','Port 80 has been occupied!'],
+			N51:['2404端口已被占用！','Port 2404 has been occupied!'],
+			N52:['保存成功！','Saved successfully!'],
+			N53:['格式错误！','Format error!'],
+			N54:['范围错误！','Range error!'],
+			N55:['超时时间T1&lt;超时时间T3！','Timeout T1&lt;Timeout T3!'],
+			N56:['超时时间T3&gt;超时时间T1！','Timeout T3&gt;Timeout T1!'],
+			N57:['k*2/3&gt;=w！','k*2/3&gt;=w!'],
+			N58:['设置失败！','Set failed!'],
+			N59:['设置成功！','Set successfully!'],
+
+            N100:['触摸屏','TOUCH'],
+            N101:['储能逆变器','PCS'],
+            N102:['光伏逆变器','PV'],
+            N103:['光伏控制器','DCDC'],
+            N104:['电池','BMS'],
+            N105:['电表','AMMETER'],
+            N106:['汇流箱','PVS'],
+            N107:['环境监测仪','Env-Detector'], 
+            N108:['无','NONE'],
+          
+            N110:['触摸屏','TOUCH'],
+            N111:['储能逆变器','PCS'],
+            N112:['光伏逆变器','PV'],
+            N113:['光伏控制器','DCDC'],
+            N114:['电池','BMS'],
+            N115:['电表','AMMETER'],
+            N116:['汇流箱','PVS'], 
+            N117:['环境监测仪','Env-Detector'], 
+            N118:['无','NONE'],
+
+            N120:['触摸屏','TOUCH'],
+            N121:['储能逆变器','PCS'],
+            N122:['光伏逆变器','PV'],
+            N123:['光伏控制器','DCDC'],
+            N124:['电池','BMS'],
+            N125:['电表','AMMETER'],
+            N126:['汇流箱','PVS'],  
+            N127:['环境监测仪','Env-Detector'], 
+            N128:['无','NONE'],                   
+
+            N130:['触摸屏','TOUCH'],
+            N131:['储能逆变器','PCS'],
+            N132:['光伏逆变器','PV'],
+            N133:['光伏控制器','DCDC'],
+            N134:['电池','BMS'],
+            N135:['电表','AMMETER'],
+            N136:['汇流箱','PVS'], 
+            N137:['环境监测仪','Env-Detector'], 
+            N138:['无','NONE'],
+
+            N140:['触摸屏','TOUCH'],
+            N141:['储能逆变器','PCS'],
+            N142:['光伏逆变器','PV'],
+            N143:['光伏控制器','DCDC'],
+            N144:['电池','BMS'],
+            N145:['电表','AMMETER'],
+            N146:['汇流箱','PVS'], 
+            N147:['环境监测仪','Env-Detector'], 
+            N148:['无','NONE'],
+
+            N150:['触摸屏','TOUCH'],
+            N151:['上位机','PC'],  			
+
+			N500:['设&nbsp;&nbsp;置','Set'],
+			N501:['设&nbsp;&nbsp;置','Set'],
+			N502:['设&nbsp;&nbsp;置','Set'],
+			N503:['设&nbsp;&nbsp;置','Set'],
+			N504:['设&nbsp;&nbsp;置','Set'],
+			N505:['设&nbsp;&nbsp;置','Set'],
+			N506:['设&nbsp;&nbsp;置','Set'],
+			N507:['设&nbsp;&nbsp;置','Set'],
+			N508:['设&nbsp;&nbsp;置','Set'],
+			N509:['设&nbsp;&nbsp;置','Set'],
+			N510:['设&nbsp;&nbsp;置','Set'],
+			N511:['设&nbsp;&nbsp;置','Set'],
+			N512:['设&nbsp;&nbsp;置','Set']
+		};
+		var temp_IP,temp_MASK,temp_GATE;
+
+		function Init()
+		{
+			Json={ID_0x0301:85,ID_0x0282:0x22,
+				ID_0x0157:192,ID_0x0158:168,ID_0x0159:1,ID_0x015A:250,ID_0x015B:255,ID_0x015C:255,ID_0x015D:255,ID_0x015E:0,ID_0x015F:192,ID_0x0160:168,ID_0x0161:63,ID_0x0162:254,ID_0x020B:1,
+				ID_0x0210:192,ID_0x0211:168,ID_0x0212:1,ID_0x0213:250,ID_0x0214:255,ID_0x0215:255,ID_0x0216:255,ID_0x0217:0,ID_0x0218:192,ID_0x0219:168,ID_0x021A:63,ID_0x021B:254,
+				ID_0x0230:0x01,ID_0x0231:0x22,ID_0x0232:0x33,ID_0x0233:0x44,ID_0x0234:0x55,ID_0x0235:0x66,ID_0x0240:0xaa,ID_0x0241:0xbb,ID_0x0242:0xCC,ID_0x0243:0xdd,ID_0x0244:0x0e,ID_0x0245:0xff,
+				ID_0x0163:2,ID_0x0164:1,ID_0x0165:502,ID_0x0166:0,ID_0x0167:0,ID_0x0168:0,ID_0x016A:1,ID_0x016B:15,ID_0x016C:20,ID_0x016D:12,ID_0x016E:8,ID_0x0350:1,ID_0x0351:1,ID_0x0352:1,ID_0x0353:1,ID_0x0354:1,ID_0x0355:1,ID_0x0390:1,ID_0x0391:1,ID_0x0392:1,ID_0x0393:1,ID_0x0394:1,ID_0x0395:1,ID_0x2000:38400,ID_0x2001:3,ID_0x2002:5,ID_0x2003:7,ID_0x2004:9600,ID_0x2005:3,ID_0x2006:20,ID_0x2007:30,ID_0x2008:9600,ID_0x2009:1,ID_0x200A:41,ID_0x200B:51,ID_0x200C:9600,ID_0x200D:1,ID_0x200E:71,ID_0x200F:81,ID_0x2010:9600,ID_0x2011:1,ID_0x2012:11,ID_0x2013:111,ID_0x2014:9600,ID_0x2015:0,ID_0x2016:1,ID_0x2017:1};
+			var URL='s_006.html?0x0000&time='+new Date();
+			var xmlhttp;
+			if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+			else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+			//xmlhttp.onreadystatechange=function()
+			{
+				//if(xmlhttp.readyState==4 && xmlhttp.status==200)
+				{
+					//eval('Json='+xmlhttp.responseText);
+					if(Json.ID_0x0301==0x55)language=0;else language=1;
+					lang_init_ex(1,5);
+					lang_init_ex(8,23);
+					lang_init_ex(25,49);
+					lang_init_ex(500,500);
+					lang_init_ex(502,512);
+
+					//删除所有option, 动态切换语言时必须操作
+					for(var i=0;i<6;i++)
+					{
+						eval('$(\'COM_BAUD'+i+'\').options.length=0;');
+						eval('$(\'COM_DEVICE_TYPE'+i+'\').options.length=0;');
+						eval('$(\'COM_BEGIN_ID'+i+'\').options.length=0;');
+						eval('$(\'COM_END_ID'+i+'\').options.length=0;');
+					}					
+
+                    //初始化
+                    for(var i=0;i<5;i++)
+                    {
+                        eval('$(\'COM_BAUD'+i+'\').options.add(new Option('+9600+',0));');
+                        eval('$(\'COM_BAUD'+i+'\').options.add(new Option('+19200+',1));');
+                        eval('$(\'COM_BAUD'+i+'\').options.add(new Option('+38400+',2));');
+                        eval('$(\'COM_DEVICE_TYPE'+i+'\').options.add(new Option(lang.N'+(100+i*10+1)+'[language],0));');
+                        eval('$(\'COM_DEVICE_TYPE'+i+'\').options.add(new Option(lang.N'+(100+i*10+2)+'[language],1));');
+                        eval('$(\'COM_DEVICE_TYPE'+i+'\').options.add(new Option(lang.N'+(100+i*10+3)+'[language],2));');
+                        eval('$(\'COM_DEVICE_TYPE'+i+'\').options.add(new Option(lang.N'+(100+i*10+4)+'[language],3));');
+                        eval('$(\'COM_DEVICE_TYPE'+i+'\').options.add(new Option(lang.N'+(100+i*10+5)+'[language],4));');
+                        eval('$(\'COM_DEVICE_TYPE'+i+'\').options.add(new Option(lang.N'+(100+i*10+6)+'[language],5));');
+                        eval('$(\'COM_DEVICE_TYPE'+i+'\').options.add(new Option(lang.N'+(100+i*10+7)+'[language],6));');
+                        eval('$(\'COM_DEVICE_TYPE'+i+'\').options.add(new Option(lang.N'+(100+i*10+8)+'[language],7));');
+                        for(var j=0; j<247; j++)eval('$(\'COM_BEGIN_ID'+i+'\').options.add(new Option('+(j+1)+','+j+'));');
+                        for(var k=0; k<247; k++)eval('$(\'COM_END_ID'+i+'\').options.add(new Option('+(k+1)+','+k+'));');                 
+                    }
+
+                    $('COM_BAUD5').options.add(new Option(9600,0));
+                    $('COM_BAUD5').options.add(new Option(19200,1));
+                    $('COM_BAUD5').options.add(new Option(38400,2));
+
+                    //$('COM_BAUD5').disabled = true;
+                    $('COM_DEVICE_TYPE5').options.add(new Option(lang.N150[language],0));
+                    $('COM_DEVICE_TYPE5').options.add(new Option(lang.N151[language],1));
+                    //$('COM_DEVICE_TYPE5').disabled = true;
+                    for(var j=0; j<247; j++)eval('$(\'COM_BEGIN_ID5\').options.add(new Option('+(j+1)+','+j+'));');
+                    //$('COM_BEGIN_ID5').disabled = true;
+                    $('COM_END_ID5').disabled = true;
+
+					doSetValue(Json);
+
+					if(Json.ID_0x0282==0x11)
+					{
+						$('N500').style.display='none';
+						for(var i=502; i<=512; i++) eval('$(\'N'+i+'\').style.display=\'none\';'); 
+						$('trans').style.zIndex=9999;	
+					}
+					else
+					{
+						$('N500').style.display='inline';
+						for(var i=502; i<=512; i++) eval('$(\'N'+i+'\').style.display=\'inline\';');
+						$('trans').style.zIndex=-9999;
+					}
+				}
+			};
+			xmlhttp.open('GET',URL,true);
+			xmlhttp.send();
+		}
+        function onChange(obj)
+        {
+        	switch(obj.id)
+        	{
+	        	case 'COM_DEVICE_TYPE0':
+		        	if($('COM_DEVICE_TYPE0').selectedIndex==7){
+		        		$('COM_BAUD0').disabled=true;
+		                $('COM_BEGIN_ID0').disabled = true;
+		                $('COM_END_ID0').disabled = true; 	
+		        	}else{
+		        		$('COM_BAUD0').disabled=false;
+		                $('COM_BEGIN_ID0').disabled = false;
+		                $('COM_END_ID0').disabled = false;         		
+		        	}   
+	        	break;     	
+	        	case 'COM_DEVICE_TYPE1':
+		        	if($('COM_DEVICE_TYPE1').selectedIndex==7){
+		        		$('COM_BAUD1').disabled=true;
+		                $('COM_BEGIN_ID1').disabled = true;
+		                $('COM_END_ID1').disabled = true; 	
+		        	}else{
+		        		$('COM_BAUD1').disabled=false;
+		                $('COM_BEGIN_ID1').disabled = false;
+		                $('COM_END_ID1').disabled = false;         		
+		        	}   
+	        	break;
+	        	case 'COM_DEVICE_TYPE2':
+		        	if($('COM_DEVICE_TYPE2').selectedIndex==7){
+		        		$('COM_BAUD2').disabled=true;
+		                $('COM_BEGIN_ID2').disabled = true;
+		                $('COM_END_ID2').disabled = true; 	
+		        	}else{
+		        		$('COM_BAUD2').disabled=false;
+		                $('COM_BEGIN_ID2').disabled = false;
+		                $('COM_END_ID2').disabled = false;         		
+		        	}   
+	        	break;
+	        	case 'COM_DEVICE_TYPE3':
+		        	if($('COM_DEVICE_TYPE3').selectedIndex==7){
+		        		$('COM_BAUD3').disabled=true;
+		                $('COM_BEGIN_ID3').disabled = true;
+		                $('COM_END_ID3').disabled = true; 	
+		        	}else{
+		        		$('COM_BAUD3').disabled=false;
+		                $('COM_BEGIN_ID3').disabled = false;
+		                $('COM_END_ID3').disabled = false;         		
+		        	}   
+	        	break;
+	        	case 'COM_DEVICE_TYPE4':
+		        	if($('COM_DEVICE_TYPE4').selectedIndex==7){
+		        		$('COM_BAUD4').disabled=true;
+		                $('COM_BEGIN_ID4').disabled = true;
+		                $('COM_END_ID4').disabled = true; 	
+		        	}else{
+		        		$('COM_BAUD4').disabled=false;
+		                $('COM_BEGIN_ID4').disabled = false;
+		                $('COM_END_ID4').disabled = false;         		
+		        	}   
+	        	break;
+	        	case 'COM_DEVICE_TYPE5':
+		            if($('COM_DEVICE_TYPE5').selectedIndex==0){
+		                $('COM_BEGIN_ID5').disabled = true;
+		                $('COM_END_ID5').disabled = true; 
+		            }else if($('COM_DEVICE_TYPE5').selectedIndex==1){
+		                $('COM_BEGIN_ID5').disabled = false;
+		                $('COM_END_ID5').disabled = true; 
+		            }
+		        break;
+        	}
+        }
+        //16进制数补齐2位
+		function str_pad(hex){
+		   var zero = '00';   
+		   var tmp  = 2-hex.length;
+		   return zero.substr(0,tmp) + hex;
+		}
+		function read_back(addr)
+		{
+			var url='s_006.html?';
+
+			if(addr==0x157){url=url+'0x0157'+'&0x0158'+'&0x0159'+'&0x015A'+'&0x015B'+'&0x015C'+'&0x015D'+'&0x015E'+'&0x015F'+'&0x0160'+'&0x0161'+'&0x0162'+'&0x0230'+'&0x0231'+'&0x0232'+'&0x0233'+'&0x0234'+'&0x0235';}
+			else if(addr==0x210){url=url+'0x0210'+'&0x0211'+'&0x0212'+'&0x0213'+'&0x0214'+'&0x0215'+'&0x0216'+'&0x0217'+'&0x0218'+'&0x0219'+'&0x021A'+'&0x021B'+'&0x0240'+'&0x0241'+'&0x0242'+'&0x0243'+'&0x0244'+'&0x0245';}
+			else if(addr==0x164){url=url+'0x0164'+'&0x0165';}
+			else if(addr==0x166){url=url+'0x0166'+'&0x0167'+'&0x0168';}
+			else if(addr==0x16A){url=url+'0x016A'+'&0x016B'+'&0x016C'+'&0x016D'+'&0x016E';}
+			else if(addr==0x2000){url=url+'0x2000'+'&0x2001'+'&0x2002'+'&0x2003'+'&0x2004'+'&0x2005'+'&0x2006'+'&0x2007'+'&0x2008'+'&0x2009'+'&0x200A'+'&0x200B'+
+				'&0x200C'+'&0x200D'+'&0x200E'+'&0x200F'+'&0x2010'+'&0x2011'+'&0x2012'+'&0x2013'+'&0x2014'+'&0x2015'+'&0x2016'+'&0x2017';}
+			else{url=url+'0x0'+addr.toString(16).toUpperCase();}	
+			url=url+'&time='+new Date();
+			//alert(url); 
+
+			var xmlhttp;
+			if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+			else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+			//xmlhttp.onreadystatechange=function()
+			{
+				//if(xmlhttp.readyState==4 && xmlhttp.status==200)
+				{
+					//eval('Json='+xmlhttp.responseText);
+					if(addr==0x157)
+					{
+						var ip=$('IP').value;
+						var submask=$('SUBMASK').value;
+						var gateway=$('GATEWAY').value;
+						var mac=$('MAC').value;
+						var ip_get=String(Json.ID_0x0157)+'.'+String(Json.ID_0x0158)+'.'+String(Json.ID_0x0159)+'.'+String(Json.ID_0x015A);
+						var submask_get=String(Json.ID_0x015B)+'.'+String(Json.ID_0x015C)+'.'+String(Json.ID_0x015D)+'.'+String(Json.ID_0x015E);
+						var gateway_get=String(Json.ID_0x015F)+'.'+String(Json.ID_0x0160)+'.'+String(Json.ID_0x0161)+'.'+String(Json.ID_0x0162);
+						var mac_get=String(str_pad(Json.ID_0x0230.toString(16)))+':'+String(str_pad(Json.ID_0x0231.toString(16)))+':'+String(str_pad(Json.ID_0x0232.toString(16)))+':'+String(str_pad(Json.ID_0x0233.toString(16)))+':'+String(str_pad(Json.ID_0x0234.toString(16)))+':'+String(str_pad(Json.ID_0x0235.toString(16)));
+						show_tip_ex(1,'&nbsp;');
+						if(ip!=ip_get || submask!=submask_get || gateway!= gateway_get || mac!=mac_get){
+							$('IP').value=ip_get;
+							$('SUBMASK').value=submask_get;
+							$('GATEWAY').value=gateway_get;
+							$('MAC').value=String(str_pad(Json.ID_0x0230.toString(16)))+':'+String(str_pad(Json.ID_0x0231.toString(16)))+':'+String(str_pad(Json.ID_0x0232.toString(16)))+':'+String(str_pad(Json.ID_0x0233.toString(16)))+':'+String(str_pad(Json.ID_0x0234.toString(16)))+':'+String(str_pad(Json.ID_0x0235.toString(16)));
+							setTimeout('show_tip_ex(1,lang.N58[language])',500);		
+						}else{
+							setTimeout('show_tip_ex(1,lang.N59[language])',500);
+						}
+						setTimeout('show_tip_ex(1,\'&nbsp;\')',2500);
+					}
+					else if(addr==0x210)
+					{
+						var ip=$('IP2').value;
+						var submask=$('SUBMASK2').value;
+						var gateway=$('GATEWAY2').value;
+						var mac=$('MAC2').value;
+						var ip_get=String(Json.ID_0x0210)+'.'+String(Json.ID_0x0211)+'.'+String(Json.ID_0x0212)+'.'+String(Json.ID_0x0213);
+						var submask_get=String(Json.ID_0x0214)+'.'+String(Json.ID_0x0215)+'.'+String(Json.ID_0x0216)+'.'+String(Json.ID_0x0217);
+						var gateway_get=String(Json.ID_0x0218)+'.'+String(Json.ID_0x0219)+'.'+String(Json.ID_0x021A)+'.'+String(Json.ID_0x021B);
+						var mac_get=String(str_pad(Json.ID_0x0240.toString(16)))+':'+String(str_pad(Json.ID_0x0241.toString(16)))+':'+String(str_pad(Json.ID_0x0242.toString(16)))+':'+String(str_pad(Json.ID_0x0243.toString(16)))+':'+String(str_pad(Json.ID_0x0244.toString(16)))+':'+String(str_pad(Json.ID_0x0245.toString(16)));
+						show_tip_ex(8,'&nbsp;');
+						if(ip!=ip_get || submask!=submask_get || gateway!= gateway_get || mac!=mac_get){
+							$('IP2').value=ip_get;
+							$('SUBMASK2').value=submask_get;
+							$('GATEWAY2').value=gateway_get;
+							$('MAC2').value=String(str_pad(Json.ID_0x0240.toString(16)))+':'+String(str_pad(Json.ID_0x0241.toString(16)))+':'+String(str_pad(Json.ID_0x0242.toString(16)))+':'+String(str_pad(Json.ID_0x0243.toString(16)))+':'+String(str_pad(Json.ID_0x0244.toString(16)))+':'+String(str_pad(Json.ID_0x0245.toString(16)));
+							setTimeout('show_tip_ex(8,lang.N58[language])',500);		
+						}else{
+							setTimeout('show_tip_ex(8,lang.N59[language])',500);
+						}
+						setTimeout('show_tip_ex(8,\'&nbsp;\')',2500);
+					}
+					else if(addr==0x164)
+					{
+						var pr_addr,fe_addr,pr_port,fe_port;
+						pr_addr=$('ID_0x0164').value;
+						pr_port=$('ID_0x0165').value;
+						fe_addr=Json.ID_0x0164;
+						fe_port=Json.ID_0x0165;
+						if(pr_addr!=fe_addr || pr_port!=fe_port){
+							$('ID_0x0164').value=Json.ID_0x0164;
+							$('ID_0x0165').value=Json.ID_0x0165;
+							setTimeout('show_tip_ex(3,lang.N58[language])',500);
+						}else{
+							setTimeout('show_tip_ex(3,lang.N59[language])',500);
+						}
+						setTimeout('show_tip_ex(3,\'&nbsp;\')',2500);
+					}
+					else if(addr==0x166)
+					{
+						var pr_bmsmode, fe_bmsmode;
+						var pr_bmsfcont, fe_bmsfcont;
+						var pr_bmswcont, fe_bmswcont;
+						if($('BMSM0').checked)pr_bmsmode=$('BMSM0').value;
+						else if($('BMSM1').checked)pr_bmsmode=$('BMSM1').value;
+						else if($('BMSM2').checked)pr_bmsmode=$('BMSM2').value;
+						if($('BMSFC0').checked)pr_bmsfcont=$('BMSFC0').value;
+						else if($('BMSFC1').checked)pr_bmsfcont=$('BMSFC1').value;
+						else if($('BMSFC2').checked)pr_bmsfcont=$('BMSFC2').value;
+						if($('BMSWC0').checked)pr_bmswcont=$('BMSWC0').value;
+						else if($('BMSWC1').checked)pr_bmswcont=$('BMSWC1').value;
+						else if($('BMSWC2').checked)pr_bmswcont=$('BMSWC2').value;
+						fe_bmsmode=Json.ID_0x0166;
+						fe_bmsfcont=Json.ID_0x0167;
+						fe_bmswcont=Json.ID_0x0168;
+						if(pr_bmsmode!=fe_bmsmode || pr_bmsfcont!=fe_bmsfcont || pr_bmswcont!=fe_bmswcont){
+							if(Json.ID_0x0166==0)
+							{
+								$('BMSM0').checked=true;
+								$('BMSM1').checked=false;
+								$('BMSM2').checked=false;
+				                $('BMSFC0').disabled=true;
+				                $('BMSFC1').disabled=true;
+				                $('BMSFC2').disabled=true;
+				                $('BMSWC0').disabled=true;
+				                $('BMSWC1').disabled=true;
+				                $('BMSWC2').disabled=true;
+							}
+							else if(Json.ID_0x0166==1)
+							{
+								$('BMSM0').checked=false;
+								$('BMSM1').checked=true;
+								$('BMSM2').checked=false;
+							}
+							else if(Json.ID_0x0166==2)
+							{
+								$('BMSM0').checked=false;
+								$('BMSM1').checked=false;
+								$('BMSM2').checked=true;
+							}
+							if(Json.ID_0x0167==0)
+							{
+								$('BMSFC0').checked=true;
+								$('BMSFC1').checked=false;
+								$('BMSFC2').checked=false;
+							}
+							else if(Json.ID_0x0167==1)
+							{
+								$('BMSFC0').checked=false;
+								$('BMSFC1').checked=true;
+								$('BMSFC2').checked=false;
+							}
+							else if(Json.ID_0x0167==2)
+							{
+								$('BMSFC0').checked=false;
+								$('BMSFC1').checked=false;
+								$('BMSFC2').checked=true;
+							}
+							if(Json.ID_0x0168==0)
+							{
+								$('BMSWC0').checked=true;
+								$('BMSWC1').checked=false;
+								$('BMSWC2').checked=false;
+							}
+							else if(Json.ID_0x0168==1)
+							{
+								$('BMSWC0').checked=false;
+								$('BMSWC1').checked=true;
+								$('BMSWC2').checked=false;
+							}
+							else if(Json.ID_0x0168==2)
+							{
+								$('BMSWC0').checked=false;
+								$('BMSWC1').checked=false;
+								$('BMSWC2').checked=true;
+							}
+							setTimeout('show_tip_ex(4,lang.N58[language])',500);
+						}else{
+							setTimeout('show_tip_ex(4,lang.N59[language])',500);
+						}
+						setTimeout('show_tip_ex(4,\'&nbsp;\')',2500);
+					}
+					else if(addr==0x16A)
+					{
+						var pr_addr, fe_addr;
+						var pr_t1, fe_t1;
+						var pr_t3, fe_t3;
+						var pr_k, fe_k;
+						var pr_w, fe_w;
+						pr_addr=$('ID_0x016A').value;
+						pr_t1=$('ID_0x016B').value;
+						pr_t3=$('ID_0x016C').value;
+						pr_k=$('ID_0x016D').value;
+						pr_w=$('ID_0x016E').value;
+						fe_addr=Json.ID_0x016A;
+						fe_t1=Json.ID_0x016B;
+						fe_t3=Json.ID_0x016C;
+						fe_k=Json.ID_0x016D;
+						fe_w=Json.ID_0x016E;
+						if(pr_addr!=fe_addr || pr_t1!=fe_t1 || pr_t3!=fe_t3 || pr_k!=fe_k || pr_w!=fe_w){
+							$('ID_0x016A').value=Json.ID_0x016A;
+							$('ID_0x016B').value=Json.ID_0x016B;
+							$('ID_0x016C').value=Json.ID_0x016C;
+							$('ID_0x016D').value=Json.ID_0x016D;
+							$('ID_0x016E').value=Json.ID_0x016E;
+							setTimeout('show_tip_ex(5,lang.N58[language])',500);
+						}else{
+							setTimeout('show_tip_ex(5,lang.N59[language])',500);
+						}
+						setTimeout('show_tip_ex(5,\'&nbsp;\')',2500);
+					}
+                    else if(addr == 0x2000)
+                    {
+                        var pr_baud=new Array(0,0,0,0,0), fe_baud=new Array(0,0,0,0,0); 
+                        var pr_type=new Array(0,0,0,0,0), fe_type=new Array(0,0,0,0,0);
+                        var pr_st=new Array(0,0,0,0,0), fe_st=new Array(0,0,0,0,0);
+                        var pr_end=new Array(0,0,0,0,0), fe_end=new Array(0,0,0,0,0);
+                        for(var i=0; i<6; i++)
+                        {
+                            if(eval('$(\'COM_BAUD'+i+'\').selectedIndex;')==0) pr_baud[i]=9600;
+                            else if(eval('$(\'COM_BAUD'+i+'\').selectedIndex;')==1) pr_baud[i]=19200;
+                            else if(eval('$(\'COM_BAUD'+i+'\').selectedIndex;')==2) pr_baud[i]=38400;
+                            if(i<5){
+                                if(eval('$(\'COM_DEVICE_TYPE'+i+'\').selectedIndex;')==0) pr_type[i]=1;
+                                else if(eval('$(\'COM_DEVICE_TYPE'+i+'\').selectedIndex;')==1) pr_type[i]=2;
+                                else if(eval('$(\'COM_DEVICE_TYPE'+i+'\').selectedIndex;')==2) pr_type[i]=3;
+                                else if(eval('$(\'COM_DEVICE_TYPE'+i+'\').selectedIndex;')==3) pr_type[i]=4;
+                                else if(eval('$(\'COM_DEVICE_TYPE'+i+'\').selectedIndex;')==4) pr_type[i]=5;
+                                else if(eval('$(\'COM_DEVICE_TYPE'+i+'\').selectedIndex;')==5) pr_type[i]=6; 
+                                else if(eval('$(\'COM_DEVICE_TYPE'+i+'\').selectedIndex;')==6) pr_type[i]=8; 
+                                else if(eval('$(\'COM_DEVICE_TYPE'+i+'\').selectedIndex;')==7) pr_type[i]=10; 
+                                pr_st[i] = eval('$(\'COM_BEGIN_ID'+i+'\').selectedIndex;')+1;
+                                pr_end[i] = eval('$(\'COM_END_ID'+i+'\').selectedIndex;')+1;
+                            }else{
+                                if(eval('$(\'COM_DEVICE_TYPE'+i+'\').selectedIndex;')==0) pr_type[i]=0;
+                                else if(eval('$(\'COM_DEVICE_TYPE'+i+'\').selectedIndex;')==1) pr_type[i]=7; 
+                                pr_st[i] = eval('$(\'COM_BEGIN_ID'+i+'\').selectedIndex;')+1;
+                                pr_end[i] = 0;
+                            } 
+
+                            fe_baud[i] = eval('Json.ID_0x'+(0x2000+4*i).toString(16).toUpperCase()+'');
+                            fe_type[i] = eval('Json.ID_0x'+(0x2000+4*i+1).toString(16).toUpperCase()+'');
+                            fe_st[i] = eval('Json.ID_0x'+(0x2000+4*i+2).toString(16).toUpperCase()+'');
+                            fe_end[i] = eval('Json.ID_0x'+(0x2000+4*i+3).toString(16).toUpperCase()+'');                                    
+                        }
+                        for(var i=0; i<6; i++)
+                        {
+                            if(pr_baud[i] != fe_baud[i])
+                            {
+                                if(eval('Json.ID_0x'+(0x2000+i*4).toString(16).toUpperCase()+'')==9600){
+                                    eval('$(\'COM_BAUD'+i+'\').options[0].selected=true;');
+                                }else if(eval('Json.ID_0x'+(0x2000+i*4).toString(16).toUpperCase()+'')==19200){
+                                    eval('$(\'COM_BAUD'+i+'\').options[1].selected=true;');
+                                }else if(eval('Json.ID_0x'+(0x2000+i*4).toString(16).toUpperCase()+'')==38400){
+                                    eval('$(\'COM_BAUD'+i+'\').options[2].selected=true;');
+                                }
+                            }
+                            if(i<5){
+                                if(pr_type[i] != fe_type[i])
+                                {
+                                    if(eval('Json.ID_0x'+(0x2000+i*4+1).toString(16).toUpperCase()+'')==1){
+                                        eval('$(\'COM_DEVICE_TYPE'+i+'\').options[0].selected=true;');
+                                    }else if(eval('Json.ID_0x'+(0x2000+i*4+1).toString(16).toUpperCase()+'')==2){
+                                        eval('$(\'COM_DEVICE_TYPE'+i+'\').options[1].selected=true;');
+                                    }else if(eval('Json.ID_0x'+(0x2000+i*4+1).toString(16).toUpperCase()+'')==3){
+                                        eval('$(\'COM_DEVICE_TYPE'+i+'\').options[2].selected=true;');
+                                    }else if(eval('Json.ID_0x'+(0x2000+i*4+1).toString(16).toUpperCase()+'')==4){
+                                        eval('$(\'COM_DEVICE_TYPE'+i+'\').options[3].selected=true;');
+                                    }else if(eval('Json.ID_0x'+(0x2000+i*4+1).toString(16).toUpperCase()+'')==5){
+                                        eval('$(\'COM_DEVICE_TYPE'+i+'\').options[4].selected=true;');
+                                    }else if(eval('Json.ID_0x'+(0x2000+i*4+1).toString(16).toUpperCase()+'')==6){
+                                        eval('$(\'COM_DEVICE_TYPE'+i+'\').options[5].selected=true;');
+                                    }else if(eval('Json.ID_0x'+(0x2000+i*4+1).toString(16).toUpperCase()+'')==8){
+                                        eval('$(\'COM_DEVICE_TYPE'+i+'\').options[6].selected=true;');
+                                    }else if(eval('Json.ID_0x'+(0x2000+i*4+1).toString(16).toUpperCase()+'')==10){
+                                        eval('$(\'COM_DEVICE_TYPE'+i+'\').options[7].selected=true;');
+                                    }
+                                }    
+                                var temp = 0;
+                                if(pr_st[i] != fe_st[i])
+                                {
+                                    temp = eval('Json.ID_0x'+(0x2000+i*4+2).toString(16).toUpperCase()+'-1');
+                                    eval('$(\'COM_BEGIN_ID'+i+'\').options['+temp+'].selected=true;');
+                                }
+                                if(pr_end[i] != fe_end[i])
+                                {
+                                    temp = eval('Json.ID_0x'+(0x2000+i*4+3).toString(16).toUpperCase()+'-1');
+                                    eval('$(\'COM_END_ID'+i+'\').options['+temp+'].selected=true;');
+                                }                 
+                            }else{
+                                if(pr_type[i] != fe_type[i])
+                                {
+                                    if(eval('Json.ID_0x'+(0x2000+i*4+1).toString(16).toUpperCase()+'')==0){
+                                        eval('$(\'COM_DEVICE_TYPE'+i+'\').options[0].selected=true;');
+                                    }else if(eval('Json.ID_0x'+(0x2000+i*4+1).toString(16).toUpperCase()+'')==7){
+                                        eval('$(\'COM_DEVICE_TYPE'+i+'\').options[1].selected=true;');
+                                    }                                    
+                                }
+                                var temp = 0;
+                                if(pr_st[i] != fe_st[i])
+                                {
+                                    temp = eval('Json.ID_0x'+(0x2000+i*4+2).toString(16).toUpperCase()+'-1');
+                                    eval('$(\'COM_BEGIN_ID'+i+'\').options['+temp+'].selected=true;');
+                                }
+                            }
+                        }
+                        show_tip_ex(7,'&nbsp;');
+                        if(pr_baud[0]!=fe_baud[0] || pr_baud[1]!=fe_baud[1] || pr_baud[2]!=fe_baud[2] || pr_baud[3]!=fe_baud[3] || pr_baud[4]!=fe_baud[4] || pr_baud[5]!=fe_baud[5] || pr_type[0] != fe_type[0] || pr_type[1] != fe_type[1] || pr_type[2] != fe_type[2] || pr_type[3] != fe_type[3] || pr_type[4] != fe_type[4] || pr_type[5] != fe_type[5] || pr_st[0] != fe_st[0] || pr_st[1] != fe_st[1] || pr_st[2] != fe_st[2] || pr_st[3] != fe_st[3] || pr_st[4] != fe_st[4] || pr_st[5] != fe_st[5] || pr_end[0] != fe_end[0] || pr_end[1] != fe_end[1] || pr_end[2] != fe_end[2] || pr_end[3] != fe_end[3] || pr_end[4] != fe_end[4])
+                        {setTimeout('show_tip_ex(7,lang.N58[language])',500);}
+                        else {setTimeout('show_tip_ex(7,lang.N59[language])',500);}
+                        setTimeout('show_tip_ex(7,\'&nbsp;\')',2500);
+                    }
+					else
+					{
+						var pr,fe;
+						eval('pr=$(\'ID_0x0'+addr.toString(16).toUpperCase()+'\').value;');
+						eval('fe=Json.ID_0x0'+addr.toString(16).toUpperCase()+';');	
+						if(pr!=fe) eval('$(\'ID_0x0'+addr.toString(16).toUpperCase()+'\').value=Json.ID_0x0'+addr.toString(16).toUpperCase()+';');
+						if(addr == 0x350){
+			    			show_tip_ex(10,'&nbsp;');
+			    			if(pr==fe){setTimeout('show_tip_ex(10,lang.N59[language])',500);}
+			    			else {setTimeout('show_tip_ex(10,lang.N58[language])',500);}
+				            setTimeout('show_tip_ex(10,\'&nbsp;\')',2500); 
+	            		}else if(addr == 0x351){
+			    			show_tip_ex(11,'&nbsp;');
+			    			if(pr==fe){setTimeout('show_tip_ex(11,lang.N59[language])',500);}
+			    			else {setTimeout('show_tip_ex(11,lang.N58[language])',500);}
+				            setTimeout('show_tip_ex(11,\'&nbsp;\')',2500);  
+	            		}else if(addr == 0x352){
+			    			show_tip_ex(12,'&nbsp;');
+			    			if(pr==fe){setTimeout('show_tip_ex(12,lang.N59[language])',500);}
+			    			else {setTimeout('show_tip_ex(12,lang.N58[language])',500);}
+				            setTimeout('show_tip_ex(12,\'&nbsp;\')',2500);  
+	            		}else if(addr == 0x353){
+			    			show_tip_ex(13,'&nbsp;');
+			    			if(pr==fe){setTimeout('show_tip_ex(13,lang.N59[language])',500);}
+			    			else {setTimeout('show_tip_ex(13,lang.N58[language])',500);}
+				            setTimeout('show_tip_ex(13,\'&nbsp;\')',2500);   
+	            		}else if(addr == 0x354){
+			    			show_tip_ex(14,'&nbsp;');
+			    			if(pr==fe){setTimeout('show_tip_ex(14,lang.N59[language])',500);}
+			    			else {setTimeout('show_tip_ex(14,lang.N58[language])',500);}
+				            setTimeout('show_tip_ex(14,\'&nbsp;\')',2500); 
+	            		}else if(addr == 0x355){
+			    			show_tip_ex(15,'&nbsp;');
+			    			if(pr==fe){setTimeout('show_tip_ex(15,lang.N59[language])',500);}
+			    			else {setTimeout('show_tip_ex(15,lang.N58[language])',500);}
+				            setTimeout('show_tip_ex(15,\'&nbsp;\')',2500);  
+	            		} 
+					}
+				}
+			};
+			xmlhttp.open('GET',url,true);
+			xmlhttp.send();   		
+		}
+		function stringToHex(str){
+			var val=0;  
+			for(var i = 0; i < str.length; i++){
+				if(val == 0)  
+					val = str.charCodeAt(i).toString(16);
+				else
+					val += str.charCodeAt(i).toString(16);
+			}
+			return val;
+		} 
+		function doSubmit(obj)
+		{
+            var URL='a_006.html?';
+            var readBack=[0,0,0,0,0,0,0,0,0,0,0,0];
+            var readCnt=0;
+            switch(obj.id)
+           	{
+           		case 'N500':
+		           	var ip=$('IP').value.split('.');
+					var submask=$('SUBMASK').value.split('.');
+					var gateway=$('GATEWAY').value.split('.');
+					var mac=$('MAC').value.split(':');
+					URL=URL+'&0x0157='+ip[0]+'&0x0158='+ip[1]+'&0x0159='+ip[2]+'&0x015A='+ip[3];
+					URL=URL+'&0x015B='+submask[0]+'&0x015C='+submask[1]+'&0x015D='+submask[2]+'&0x015E='+submask[3];
+					URL=URL+'&0x015F='+gateway[0]+'&0x0160='+gateway[1]+'&0x0161='+gateway[2]+'&0x0162='+gateway[3];
+					URL=URL+'&0x0230='+parseInt(mac[0],16)+'&0x0231='+parseInt(mac[1],16)+'&0x0232='+parseInt(mac[2],16)+'&0x0233='+parseInt(mac[3],16)+'&0x0234='+parseInt(mac[4],16)+'&0x0235='+parseInt(mac[5],16);
+					readBack=0x0157;
+           			break;
+           		case 'N502':
+					URL=URL+'&0x0164='+$('ID_0x0164').value;
+					URL=URL+'&0x0165='+$('ID_0x0165').value;
+					readBack=0x0164;
+					break;
+				case 'N503':
+					//BMS通讯方式、故障干接点、告警干接点
+					var bmsmode;
+					var bmsfcont;
+					var bmswcont;
+					if($('BMSM0').checked)bmsmode=$('BMSM0').value;
+					if($('BMSM1').checked)bmsmode=$('BMSM1').value;
+					if($('BMSM2').checked)bmsmode=$('BMSM2').value;
+					if($('BMSFC0').checked)bmsfcont=$('BMSFC0').value;
+					if($('BMSFC1').checked)bmsfcont=$('BMSFC1').value;
+					if($('BMSFC2').checked)bmsfcont=$('BMSFC2').value;
+					if($('BMSWC0').checked)bmswcont=$('BMSWC0').value;
+					if($('BMSWC1').checked)bmswcont=$('BMSWC1').value;
+					if($('BMSWC2').checked)bmswcont=$('BMSWC2').value;
+					URL=URL+'&0x0166='+bmsmode+'&0x0167='+bmsfcont+'&0x0168='+bmswcont;
+					readBack=0x0166;
+					break;
+				case 'N504':
+					URL=URL+'&0x016A='+$('ID_0x016A').value
+					+'&0x016B='+$('ID_0x016B').value
+					+'&0x016C='+$('ID_0x016C').value
+					+'&0x016D='+$('ID_0x016D').value
+					+'&0x016E='+$('ID_0x016E').value;
+					readBack=0x016A;
+					break;
+				case 'N505':
+					URL=URL+'&0x0350='+$('ID_0x0350').value;
+					readBack=0x0350;
+					break;
+				case 'N506':
+					URL=URL+'&0x0351='+$('ID_0x0351').value;
+					readBack=0x0351;
+					break;
+				case 'N507':
+					URL=URL+'&0x0352='+$('ID_0x0352').value;
+					readBack=0x0352;
+					break;
+				case 'N508':
+					URL=URL+'&0x0353='+$('ID_0x0353').value;
+					readBack=0x0353;
+					break;
+				case 'N509':
+					URL=URL+'&0x0354='+$('ID_0x0354').value;
+					readBack=0x0354;
+					break;
+				case 'N510':
+					URL=URL+'&0x0355='+$('ID_0x0355').value;
+					readBack=0x0355;
+					break;
+                case 'N511':
+                    var baud, type, st, end; 
+                    for(var i=0; i<6; i++)
+                    {
+                        if(i<5)
+                        {
+                            if(eval('$(\'COM_BAUD'+i+'\').selectedIndex;')==0) baud=9600;
+                            else if(eval('$(\'COM_BAUD'+i+'\').selectedIndex;')==1) baud=19200;
+                            else if(eval('$(\'COM_BAUD'+i+'\').selectedIndex;')==2) baud=38400;
+                            eval('URL=URL+\'&0x'+(0x2000+4*i).toString(16).toUpperCase()+'=\'+baud;');
+                            if(eval('$(\'COM_DEVICE_TYPE'+i+'\').selectedIndex;')==0) type=1;
+                            else if(eval('$(\'COM_DEVICE_TYPE'+i+'\').selectedIndex;')==1) type=2;
+                            else if(eval('$(\'COM_DEVICE_TYPE'+i+'\').selectedIndex;')==2) type=3;
+                            else if(eval('$(\'COM_DEVICE_TYPE'+i+'\').selectedIndex;')==3) type=4;
+                            else if(eval('$(\'COM_DEVICE_TYPE'+i+'\').selectedIndex;')==4) type=5;
+                            else if(eval('$(\'COM_DEVICE_TYPE'+i+'\').selectedIndex;')==5) type=6;  
+                            else if(eval('$(\'COM_DEVICE_TYPE'+i+'\').selectedIndex;')==6) type=8; 
+                            else if(eval('$(\'COM_DEVICE_TYPE'+i+'\').selectedIndex;')==7) type=10; 
+                            eval('URL=URL+\'&0x'+(0x2000+4*i+1).toString(16).toUpperCase()+'=\'+type;');
+                            st = eval('$(\'COM_BEGIN_ID'+i+'\').selectedIndex;')+1;
+                            eval('URL=URL+\'&0x'+(0x2000+4*i+2).toString(16).toUpperCase()+'=\'+st;');
+                            end = eval('$(\'COM_END_ID'+i+'\').selectedIndex;')+1;
+                            eval('URL=URL+\'&0x'+(0x2000+4*i+3).toString(16).toUpperCase()+'=\'+end;');             
+                        }
+                        else
+                        {
+                            if(eval('$(\'COM_BAUD'+i+'\').selectedIndex;')==0) baud=9600;
+                            else if(eval('$(\'COM_BAUD'+i+'\').selectedIndex;')==1) baud=19200;
+                            else if(eval('$(\'COM_BAUD'+i+'\').selectedIndex;')==2) baud=38400;  
+                            eval('URL=URL+\'&0x'+(0x2000+4*i).toString(16).toUpperCase()+'=\'+baud;');
+                            if(eval('$(\'COM_DEVICE_TYPE'+i+'\').selectedIndex;')==0) type=0;
+                            else if(eval('$(\'COM_DEVICE_TYPE'+i+'\').selectedIndex;')==1) type=7;  
+                            eval('URL=URL+\'&0x'+(0x2000+4*i+1).toString(16).toUpperCase()+'=\'+type;');   
+                            st = eval('$(\'COM_BEGIN_ID'+i+'\').selectedIndex;')+1;
+                            eval('URL=URL+\'&0x'+(0x2000+4*i+2).toString(16).toUpperCase()+'=\'+st;'); 
+                            eval('URL=URL+\'&0x'+(0x2000+4*i+3).toString(16).toUpperCase()+'=\'+0;');                
+                        }
+                    }
+                    readBack=0x2000;
+                break;
+           		case 'N512':
+		           	var ip=$('IP2').value.split('.');
+					var submask=$('SUBMASK2').value.split('.');
+					var gateway=$('GATEWAY2').value.split('.');
+					var mac=$('MAC2').value.split(':');
+					URL=URL+'&0x0210='+ip[0]+'&0x0211='+ip[1]+'&0x0212='+ip[2]+'&0x0213='+ip[3];
+					URL=URL+'&0x0214='+submask[0]+'&0x0215='+submask[1]+'&0x0216='+submask[2]+'&0x0217='+submask[3];
+					URL=URL+'&0x0218='+gateway[0]+'&0x0219='+gateway[1]+'&0x021A='+gateway[2]+'&0x021B='+gateway[3];
+					URL=URL+'&0x0240='+parseInt(mac[0],16)+'&0x0241='+parseInt(mac[1],16)+'&0x0242='+parseInt(mac[2],16)+'&0x0243='+parseInt(mac[3],16)+'&0x0244='+parseInt(mac[4],16)+'&0x0245='+parseInt(mac[5],16);
+					readBack=0x0210;
+           			break;
+           	}
+
+            URL=URL+'&time='+new Date();
+            //alert(URL);     
+
+            function success()
+            {
+            	if(readBack >= 0x157 && readBack <= 0x162)
+            	{
+	     			show_tip_ex(1,'&nbsp;');
+	    			setTimeout('read_back('+readBack+')', 100);
+		            setTimeout('show_tip_ex(1,\'&nbsp;\')',2500);               		
+            	}
+            	else if(readBack >= 0x210 && readBack <= 0x21B)
+            	{
+	     			show_tip_ex(8,'&nbsp;');
+	    			setTimeout('read_back('+readBack+')', 100);
+		            setTimeout('show_tip_ex(8,\'&nbsp;\')',2500);               		
+            	}
+            	else if(readBack == 0x163)
+            	{
+	     			show_tip_ex(2,'&nbsp;');
+	    			setTimeout('read_back('+readBack+')', 100);
+		            setTimeout('show_tip_ex(2,\'&nbsp;\')',2500);               		
+            	}
+            	else if(readBack >= 0x164 && readBack <= 0x165)
+            	{
+	     			show_tip_ex(3,'&nbsp;');
+	    			setTimeout('read_back('+readBack+')', 100);
+		            setTimeout('show_tip_ex(3,\'&nbsp;\')',2500);               		
+            	}
+            	else if(readBack >= 0x166 && readBack <= 0x168)
+            	{
+	     			show_tip_ex(4,'&nbsp;');
+	    			setTimeout('read_back('+readBack+')', 100);
+		            setTimeout('show_tip_ex(4,\'&nbsp;\')',2500);               		
+            	}
+            	else if(readBack >= 0x16A && readBack <= 0x16E)
+            	{
+	     			show_tip_ex(5,'&nbsp;');
+	    			setTimeout('read_back('+readBack+')', 100);
+		            setTimeout('show_tip_ex(5,\'&nbsp;\')',2500);               		
+            	}
+            	else if(readBack >= 0x350 && readBack <= 0x355)
+            	{
+	     			//show_tip_ex(6,'&nbsp;');
+	    			setTimeout('read_back('+readBack+')', 100);
+		            //setTimeout('show_tip_ex(6,\'&nbsp;\')',2500);               		
+            	}
+            	else if(readBack >= 0x2000 && readBack <= 0x2017)
+	     		{
+					show_tip_ex(7,'&nbsp;');
+	    			setTimeout('read_back('+readBack+')', 100);
+		            setTimeout('show_tip_ex(7,\'&nbsp;\')',2500); 
+            	}
+            }
+
+            //测试
+            //success();  
+
+			sendHttpReq(URL, success);            
+		}
+		function radiocontrol()
+		{
+            if($('BMSM0').checked)
+            {
+                $('BMSFC0').disabled=true;
+                $('BMSFC1').disabled=true;
+                $('BMSFC2').disabled=true;
+                $('BMSFC0').checked=true;
+                $('BMSFC1').checked=false;
+                $('BMSFC2').checked=false;
+            }
+            else
+            {
+                $('BMSFC0').disabled=false;
+                $('BMSFC1').disabled=false;
+                $('BMSFC2').disabled=false;
+            }
+            if($('BMSM0').checked)
+            {
+                $('BMSWC0').disabled=true;
+                $('BMSWC1').disabled=true;
+                $('BMSWC2').disabled=true;
+                $('BMSWC0').checked=true;
+                $('BMSWC1').checked=false;
+                $('BMSWC2').checked=false;
+            }
+            else
+            {
+                $('BMSWC0').disabled=false;
+                $('BMSWC1').disabled=false;
+                $('BMSWC2').disabled=false;
+            }
+		}
+		function doSetValue(Json)
+		{
+			$('IP').value=String(Json.ID_0x0157)+'.'+String(Json.ID_0x0158)+'.'+String(Json.ID_0x0159)+'.'+String(Json.ID_0x015A);
+			$('SUBMASK').value=String(Json.ID_0x015B)+'.'+String(Json.ID_0x015C)+'.'+String(Json.ID_0x015D)+'.'+String(Json.ID_0x015E);
+			$('GATEWAY').value=String(Json.ID_0x015F)+'.'+String(Json.ID_0x0160)+'.'+String(Json.ID_0x0161)+'.'+String(Json.ID_0x0162);
+			$('MAC').value=String(str_pad(Json.ID_0x0230.toString(16)))+':'+String(str_pad(Json.ID_0x0231.toString(16)))+':'+String(str_pad(Json.ID_0x0232.toString(16)))+':'+String(str_pad(Json.ID_0x0233.toString(16)))+':'+String(str_pad(Json.ID_0x0234.toString(16)))+':'+String(str_pad(Json.ID_0x0235.toString(16)));
+			$('IP2').value=String(Json.ID_0x0210)+'.'+String(Json.ID_0x0211)+'.'+String(Json.ID_0x0212)+'.'+String(Json.ID_0x0213);
+			$('SUBMASK2').value=String(Json.ID_0x0214)+'.'+String(Json.ID_0x0215)+'.'+String(Json.ID_0x0216)+'.'+String(Json.ID_0x0217);
+			$('GATEWAY2').value=String(Json.ID_0x0218)+'.'+String(Json.ID_0x0219)+'.'+String(Json.ID_0x021A)+'.'+String(Json.ID_0x021B);
+			$('MAC2').value=String(str_pad(Json.ID_0x0240.toString(16)))+':'+String(str_pad(Json.ID_0x0241.toString(16)))+':'+String(str_pad(Json.ID_0x0242.toString(16)))+':'+String(str_pad(Json.ID_0x0243.toString(16)))+':'+String(str_pad(Json.ID_0x0244.toString(16)))+':'+String(str_pad(Json.ID_0x0245.toString(16)));
+			if(Json.ID_0x020B == 1){
+				$('MAC').disabled = true;  
+				$('MAC2').disabled = true;  
+			}else{
+				$('MAC').disabled = false;
+				$('MAC2').disabled = false;
+			}
+
+			$('ID_0x0164').value=Json.ID_0x0164;
+			$('ID_0x0165').value=Json.ID_0x0165;
+			$('ID_0x016A').value=Json.ID_0x016A;
+			$('ID_0x016B').value=Json.ID_0x016B;
+			$('ID_0x016C').value=Json.ID_0x016C;
+			$('ID_0x016D').value=Json.ID_0x016D;
+			$('ID_0x016E').value=Json.ID_0x016E;
+			$('ID_0x0350').value=Json.ID_0x0350;
+			$('ID_0x0351').value=Json.ID_0x0351;
+			$('ID_0x0352').value=Json.ID_0x0352;
+			$('ID_0x0353').value=Json.ID_0x0353;
+			$('ID_0x0354').value=Json.ID_0x0354;
+			$('ID_0x0355').value=Json.ID_0x0355;
+			temp_IP=$('IP').value;
+			temp_MASK=$('SUBMASK').value;
+			temp_GATE=$('GATEWAY').value;
+			if(Json.ID_0x0166==0)
+			{
+				$('BMSM0').checked=true;
+				$('BMSM1').checked=false;
+				$('BMSM2').checked=false;
+                $('BMSFC0').disabled=true;
+                $('BMSFC1').disabled=true;
+                $('BMSFC2').disabled=true;
+                $('BMSWC0').disabled=true;
+                $('BMSWC1').disabled=true;
+                $('BMSWC2').disabled=true;
+			}
+			else if(Json.ID_0x0166==1)
+			{
+				$('BMSM0').checked=false;
+				$('BMSM1').checked=true;
+				$('BMSM2').checked=false;
+			}
+			else if(Json.ID_0x0166==2)
+			{
+				$('BMSM0').checked=false;
+				$('BMSM1').checked=false;
+				$('BMSM2').checked=true;
+			}
+			if(Json.ID_0x0167==0)
+			{
+				$('BMSFC0').checked=true;
+				$('BMSFC1').checked=false;
+				$('BMSFC2').checked=false;
+			}
+			else if(Json.ID_0x0167==1)
+			{
+				$('BMSFC0').checked=false;
+				$('BMSFC1').checked=true;
+				$('BMSFC2').checked=false;
+			}
+			else if(Json.ID_0x0167==2)
+			{
+				$('BMSFC0').checked=false;
+				$('BMSFC1').checked=false;
+				$('BMSFC2').checked=true;
+			}
+			if(Json.ID_0x0168==0)
+			{
+				$('BMSWC0').checked=true;
+				$('BMSWC1').checked=false;
+				$('BMSWC2').checked=false;
+			}
+			else if(Json.ID_0x0168==1)
+			{
+				$('BMSWC0').checked=false;
+				$('BMSWC1').checked=true;
+				$('BMSWC2').checked=false;
+			}
+			else if(Json.ID_0x0168==2)
+			{
+				$('BMSWC0').checked=false;
+				$('BMSWC1').checked=false;
+				$('BMSWC2').checked=true;
+			}
+            //通讯口
+            for(var i=0;i<5;i++)
+            {
+                if(eval('Json.ID_0x'+(0x2000+i*4).toString(16).toUpperCase()+'')==9600){
+                    eval('$(\'COM_BAUD'+i+'\').options[0].selected=true;');
+                }else if(eval('Json.ID_0x'+(0x2000+i*4).toString(16).toUpperCase()+'')==19200){
+                    eval('$(\'COM_BAUD'+i+'\').options[1].selected=true;');
+                }else if(eval('Json.ID_0x'+(0x2000+i*4).toString(16).toUpperCase()+'')==38400){
+                    eval('$(\'COM_BAUD'+i+'\').options[2].selected=true;');
+                }
+                if(eval('Json.ID_0x'+(0x2000+i*4+1).toString(16).toUpperCase()+'')==1){
+                    eval('$(\'COM_DEVICE_TYPE'+i+'\').options[0].selected=true;');
+                }else if(eval('Json.ID_0x'+(0x2000+i*4+1).toString(16).toUpperCase()+'')==2){
+                    eval('$(\'COM_DEVICE_TYPE'+i+'\').options[1].selected=true;');
+                }else if(eval('Json.ID_0x'+(0x2000+i*4+1).toString(16).toUpperCase()+'')==3){
+                    eval('$(\'COM_DEVICE_TYPE'+i+'\').options[2].selected=true;');
+                }else if(eval('Json.ID_0x'+(0x2000+i*4+1).toString(16).toUpperCase()+'')==4){
+                    eval('$(\'COM_DEVICE_TYPE'+i+'\').options[3].selected=true;');
+                }else if(eval('Json.ID_0x'+(0x2000+i*4+1).toString(16).toUpperCase()+'')==5){
+                    eval('$(\'COM_DEVICE_TYPE'+i+'\').options[4].selected=true;');
+                }else if(eval('Json.ID_0x'+(0x2000+i*4+1).toString(16).toUpperCase()+'')==6){
+                    eval('$(\'COM_DEVICE_TYPE'+i+'\').options[5].selected=true;');
+                }else if(eval('Json.ID_0x'+(0x2000+i*4+1).toString(16).toUpperCase()+'')==8){
+                    eval('$(\'COM_DEVICE_TYPE'+i+'\').options[6].selected=true;');
+                }else if(eval('Json.ID_0x'+(0x2000+i*4+1).toString(16).toUpperCase()+'')==10){
+                    eval('$(\'COM_DEVICE_TYPE'+i+'\').options[7].selected=true;');
+                }
+                var temp = 0;
+                temp = eval('Json.ID_0x'+(0x2000+i*4+2).toString(16).toUpperCase()+'-1');
+                eval('$(\'COM_BEGIN_ID'+i+'\').options['+temp+'].selected=true;');
+                temp = eval('Json.ID_0x'+(0x2000+i*4+3).toString(16).toUpperCase()+'-1');
+                eval('$(\'COM_END_ID'+i+'\').options['+temp+'].selected=true;');
+            }
+
+            if(Json.ID_0x2014==9600){
+                $('COM_BAUD5').options[0].selected=true;
+            }else if(Json.ID_0x2014==19200){
+                $('COM_BAUD5').options[1].selected=true;
+            }else if(Json.ID_0x2014==38400){
+                $('COM_BAUD5').options[2].selected=true;
+            }
+
+            if(Json.ID_0x2015==0){
+                $('COM_DEVICE_TYPE5').options[0].selected=true;
+                $('COM_BEGIN_ID5').disabled = true;
+                $('COM_END_ID5').disabled = true;            
+            }else if(Json.ID_0x2015==7){
+                $('COM_DEVICE_TYPE5').options[1].selected=true;
+                $('COM_BEGIN_ID5').disabled = false;
+                $('COM_END_ID5').disabled = true; 
+            }
+            var temp = 0;
+            temp = Json.ID_0x2016-1;
+            eval('$(\'COM_BEGIN_ID5\').options['+temp+'].selected=true;');    
+
+			if(Json.ID_0x0390==0){$('tPcs').style.display='none';$('bPcs').style.display='none';}
+			if(Json.ID_0x0391==0){$('tPv').style.display='none';$('bPv').style.display='none';}
+			if(Json.ID_0x0392==0){$('tDcdc').style.display='none';$('bDcdc').style.display='none';}
+			if(Json.ID_0x0393==0){$('tPvs').style.display='none';$('bPvs').style.display='none';}
+			//$('tPvs').style.display='none';$('bPvs').style.display='none';
+			if(Json.ID_0x0394==0){$('tBms').style.display='none';$('bBms').style.display='none';}
+			//if(Json.ID_0x0395==0){$('tAmmeter').style.display='none';$('bAmmeter').style.display='none';}
+			$('tAmmeter').style.display='none';$('bAmmeter').style.display='none';
+		}
+
+		function show_tip_ex(id, obj){eval('$(\'tip'+id+'\').innerHTML=obj;');eval('$(\'tip'+id+'\').style.color=\'#F00\';');}
+		function IPverify(obj)
+		{
+			//需要将 '\'转换为'\\'
+			var reg=/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])(\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])){3}$/;
+			if(!obj.value.match(reg))
+			{
+				$('N500').disabled=true;
+				obj.style.color='#F00';
+				show_tip_ex(1,lang.N53[language]);
+			}
+			else
+			{
+				$('N500').disabled=false;
+				obj.style.color='#000';
+				show_tip_ex(1,'&nbsp;');
+			}
+		}
+		function IPverify2(obj)
+		{
+			//需要将 '\'转换为'\\'
+			var reg=/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])(\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])){3}$/;
+			if(!obj.value.match(reg))
+			{
+				$('N512').disabled=true;
+				obj.style.color='#F00';
+				show_tip_ex(8,lang.N53[language]);
+			}
+			else
+			{
+				$('N512').disabled=false;
+				obj.style.color='#000';
+				show_tip_ex(8,'&nbsp;');
+			}
+		}
+		function MACverify(obj)
+		{
+			var reg=/[a-fA-F\d]{2}:[a-fA-F\d]{2}:[a-fA-F\d]{2}:[a-fA-F\d]{2}:[a-fA-F\d]{2}:[a-fA-F\d]{2}/;
+			if(!obj.value.match(reg))
+			{
+				$('N500').disabled=true;
+				obj.style.color='#F00';
+				show_tip_ex(1,lang.N53[language]);
+			}
+			else
+			{
+				$('N500').disabled=false;
+				obj.style.color='#000';
+				show_tip_ex(1,'&nbsp;');
+			}
+		}
+		function MAC2verify(obj)
+		{
+			var reg=/[a-fA-F\d]{2}:[a-fA-F\d]{2}:[a-fA-F\d]{2}:[a-fA-F\d]{2}:[a-fA-F\d]{2}:[a-fA-F\d]{2}/;
+			if(!obj.value.match(reg))
+			{
+				$('N512').disabled=true;
+				obj.style.color='#F00';
+				show_tip_ex(8,lang.N53[language]);
+			}
+			else
+			{
+				$('N512').disabled=false;
+				obj.style.color='#000';
+				show_tip_ex(8,'&nbsp;');
+			}
+		}
+		var err_tip3=[0,0];
+		var err_tip5=[0,0,0,0,0];
+		var err_tip6=[0,0,0,0,0,0];
+		function Verify(obj)
+		{			
+			var reg=/^[1-9]\d*$/;
+			var range=parseInt(obj.value);
+			switch(obj.id)
+			{
+				case 'ID_0x0164':
+					if(!obj.value.match(reg)){$('N502').disabled=true;obj.style.color='#F00';show_tip_ex(3,lang.N53[language]);err_tip3[0]=1;}
+					else if(range<1||range>247){$('N502').disabled=true;obj.style.color='#F00';show_tip_ex(3,lang.N54[language]);err_tip3[0]=1;}
+					else if((err_tip3[0]|err_tip3[1])==0){$('N502').disabled=false;obj.style.color='#000';show_tip_ex(3,'&nbsp;');}
+					else{
+						err_tip3[0]=0;obj.style.color='#000';
+						if((err_tip3[0]|err_tip3[1])==0){$('N502').disabled=false;show_tip_ex(3,'&nbsp;');}
+					}
+				break;
+				case 'ID_0x0165':
+					if(!obj.value.match(reg)){$('N502').disabled=true;obj.style.color='#F00';show_tip_ex(3,lang.N53[language]);err_tip3[1]=1;}
+					else if(range<1||range>65535){$('N502').disabled=true;obj.style.color='#F00';show_tip_ex(3,lang.N54[language]);err_tip3[1]=1;}
+					else {
+						err_tip3[1]=0;obj.style.color='#000';
+						if((err_tip3[0]|err_tip3[1])==0){$('N502').disabled=false;show_tip_ex(3,'&nbsp;');}
+					}
+				break;
+				case 'ID_0x016A':
+					if(!obj.value.match(reg)){$('N504').disabled=true;obj.style.color='#F00';show_tip_ex(5,lang.N53[language]);err_tip5[0]=1;}
+					else if(range<1||range>65535){$('N504').disabled=true;obj.style.color='#F00';show_tip_ex(5,lang.N54[language]);err_tip5[0]=1;}
+					else if((err_tip5[0]|err_tip5[1]|err_tip5[2]|err_tip5[3]|err_tip5[4])==0){$('N504').disabled=false;obj.style.color='#000';show_tip_ex(5,'&nbsp;');}
+					else{
+						err_tip5[0]=0;obj.style.color='#000';
+						if((err_tip5[0]|err_tip5[1]|err_tip5[2]|err_tip5[3]|err_tip5[4])==0){$('N504').disabled=false;show_tip_ex(5,'&nbsp;');}
+					}
+				break;
+				case 'ID_0x016B':
+					if(!obj.value.match(reg)){$('N504').disabled=true;obj.style.color='#F00';show_tip_ex(5,lang.N53[language]);err_tip5[1]=1;}
+					else if(range<1||range>255){$('N504').disabled=true;obj.style.color='#F00';show_tip_ex(5,lang.N54[language]);err_tip5[1]=1;}
+					else if((err_tip5[0]|err_tip5[1]|err_tip5[2]|err_tip5[3]|err_tip5[4])==0){$('N504').disabled=false;obj.style.color='#000';show_tip_ex(5,'&nbsp;');}
+					else{
+						err_tip5[1]=0;obj.style.color='#000';
+						if((err_tip5[0]|err_tip5[1]|err_tip5[2]|err_tip5[3]|err_tip5[4])==0){$('N504').disabled=false;show_tip_ex(5,'&nbsp;');}
+					}
+				break;
+				case 'ID_0x016C':
+					if(!obj.value.match(reg)){$('N504').disabled=true;obj.style.color='#F00';show_tip_ex(5,lang.N53[language]);err_tip5[2]=1;}
+					else if(range<1||range>255){$('N504').disabled=true;obj.style.color='#F00';show_tip_ex(5,lang.N54[language]);err_tip5[2]=1;}
+					else if((err_tip5[0]|err_tip5[1]|err_tip5[2]|err_tip5[3]|err_tip5[4])==0){$('N504').disabled=false;obj.style.color='#000';show_tip_ex(5,'&nbsp;');}
+					else{
+						err_tip5[2]=0;obj.style.color='#000';
+						if((err_tip5[0]|err_tip5[1]|err_tip5[2]|err_tip5[3]|err_tip5[4])==0){$('N504').disabled=false;show_tip_ex(5,'&nbsp;');}
+					}
+				break;
+				case 'ID_0x016D':
+					if(!obj.value.match(reg)){$('N504').disabled=true;obj.style.color='#F00';show_tip_ex(5,lang.N53[language]);err_tip5[3]=1;}
+					else if(range<1||range>32767){$('N504').disabled=true;obj.style.color='#F00';show_tip_ex(5,lang.N54[language]);err_tip5[3]=1;}
+					else if((err_tip5[0]|err_tip5[1]|err_tip5[2]|err_tip5[3]|err_tip5[4])==0){$('N504').disabled=false;obj.style.color='#000';show_tip_ex(5,'&nbsp;');}
+					else{
+						err_tip5[3]=0;obj.style.color='#000';
+						if((err_tip5[0]|err_tip5[1]|err_tip5[2]|err_tip5[3]|err_tip5[4])==0){$('N504').disabled=false;show_tip_ex(5,'&nbsp;');}
+					}
+				break;
+				case 'ID_0x016E':
+					if(!obj.value.match(reg)){$('N504').disabled=true;obj.style.color='#F00';show_tip_ex(5,lang.N53[language]);err_tip5[4]=1;}
+					else if(range<1||range>32767){$('N504').disabled=true;obj.style.color='#F00';show_tip_ex(5,lang.N54[language]);err_tip5[4]=1;}
+					else if((err_tip5[0]|err_tip5[1]|err_tip5[2]|err_tip5[3]|err_tip5[4])==0){$('N504').disabled=false;obj.style.color='#000';show_tip_ex(5,'&nbsp;');}
+					else{
+						err_tip5[4]=0;obj.style.color='#000';
+						if((err_tip5[0]|err_tip5[1]|err_tip5[2]|err_tip5[3]|err_tip5[4])==0){$('N504').disabled=false;show_tip_ex(5,'&nbsp;');}
+					}
+				break;
+				case 'ID_0x0350':
+					if(!obj.value.match(reg)){$('N505').disabled=true;obj.style.color='#F00';show_tip_ex(6,lang.N53[language]);err_tip6[0]=1;}
+					else if(range<1||range>60){$('N505').disabled=true;obj.style.color='#F00';show_tip_ex(6,lang.N54[language]);err_tip6[0]=1;}
+					else if((err_tip6[0]|err_tip6[1]|err_tip6[2]|err_tip6[3]|err_tip6[4]|err_tip6[5])==0){$('N505').disabled=false;obj.style.color='#000';show_tip_ex(5,'&nbsp;');}
+					else{
+						err_tip6[0]=0;obj.style.color='#000';$('N505').disabled=false;
+						if((err_tip6[0]|err_tip6[1]|err_tip6[2]|err_tip6[3]|err_tip6[4]|err_tip6[5])==0){show_tip_ex(6,'&nbsp;');}
+					}
+				break;
+				case 'ID_0x0351':
+					if(!obj.value.match(reg)){$('N506').disabled=true;obj.style.color='#F00';show_tip_ex(6,lang.N53[language]);err_tip6[1]=1;}
+					else if(range<1||range>60){$('N506').disabled=true;obj.style.color='#F00';show_tip_ex(6,lang.N54[language]);err_tip6[1]=1;}
+					else if((err_tip6[0]|err_tip6[1]|err_tip6[2]|err_tip6[3]|err_tip6[4]|err_tip6[5])==0){$('N506').disabled=false;obj.style.color='#000';show_tip_ex(5,'&nbsp;');}
+					else{
+						err_tip6[1]=0;obj.style.color='#000';$('N506').disabled=false;
+						if((err_tip6[0]|err_tip6[1]|err_tip6[2]|err_tip6[3]|err_tip6[4]|err_tip6[5])==0){show_tip_ex(6,'&nbsp;');}
+					}
+				break;
+				case 'ID_0x0352':
+					if(!obj.value.match(reg)){$('N507').disabled=true;obj.style.color='#F00';show_tip_ex(6,lang.N53[language]);err_tip6[2]=1;}
+					else if(range<1||range>30){$('N507').disabled=true;obj.style.color='#F00';show_tip_ex(6,lang.N54[language]);err_tip6[2]=1;}
+					else if((err_tip6[0]|err_tip6[1]|err_tip6[2]|err_tip6[3]|err_tip6[4]|err_tip6[5])==0){$('N507').disabled=false;obj.style.color='#000';show_tip_ex(5,'&nbsp;');}
+					else{
+						err_tip6[2]=0;obj.style.color='#000';$('N507').disabled=false;
+						if((err_tip6[0]|err_tip6[1]|err_tip6[2]|err_tip6[3]|err_tip6[4]|err_tip6[5])==0){show_tip_ex(6,'&nbsp;');}
+					}
+				break;
+				case 'ID_0x0353':
+					if(!obj.value.match(reg)){$('N508').disabled=true;obj.style.color='#F00';show_tip_ex(6,lang.N53[language]);err_tip6[3]=1;}
+					else if(range<1||range>50){$('N508').disabled=true;obj.style.color='#F00';show_tip_ex(6,lang.N54[language]);err_tip6[3]=1;}
+					else if((err_tip6[0]|err_tip6[1]|err_tip6[2]|err_tip6[3]|err_tip6[4]|err_tip6[5])==0){$('N508').disabled=false;obj.style.color='#000';show_tip_ex(5,'&nbsp;');}
+					else{
+						err_tip6[3]=0;obj.style.color='#000';$('N508').disabled=false;
+						if((err_tip6[0]|err_tip6[1]|err_tip6[2]|err_tip6[3]|err_tip6[4]|err_tip6[5])==0){show_tip_ex(6,'&nbsp;');}
+					}
+				break;
+				case 'ID_0x0354':
+					if(!obj.value.match(reg)){$('N509').disabled=true;obj.style.color='#F00';show_tip_ex(6,lang.N53[language]);err_tip6[4]=1;}
+					else if(range<1||range>60){$('N509').disabled=true;obj.style.color='#F00';show_tip_ex(6,lang.N54[language]);err_tip6[4]=1;}
+					else if((err_tip6[0]|err_tip6[1]|err_tip6[2]|err_tip6[3]|err_tip6[4]|err_tip6[5])==0){$('N509').disabled=false;obj.style.color='#000';show_tip_ex(5,'&nbsp;');}
+					else{
+						err_tip6[4]=0;obj.style.color='#000';$('N509').disabled=false;
+						if((err_tip6[0]|err_tip6[1]|err_tip6[2]|err_tip6[3]|err_tip6[4]|err_tip6[5])==0){show_tip_ex(6,'&nbsp;');}
+					}
+				break;
+				case 'ID_0x0355':
+					if(!obj.value.match(reg)){$('N510').disabled=true;obj.style.color='#F00';show_tip_ex(6,lang.N53[language]);err_tip6[5]=1;}
+					else if(range<1||range>12){$('N510').disabled=true;obj.style.color='#F00';show_tip_ex(6,lang.N54[language]);err_tip6[5]=1;}
+					else if((err_tip6[0]|err_tip6[1]|err_tip6[2]|err_tip6[3]|err_tip6[4]|err_tip6[5])==0){$('N505').disabled=false;obj.style.color='#000';show_tip_ex(5,'&nbsp;');}
+					else{
+						err_tip6[5]=0;obj.style.color='#000';$('N510').disabled=false;
+						if((err_tip6[0]|err_tip6[1]|err_tip6[2]|err_tip6[3]|err_tip6[4]|err_tip6[5])==0){show_tip_ex(6,'&nbsp;');}
+					}
+				break;
+			}		
+		}
+	</script>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+        <meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>
+        <title></title>
+        <script type='text/javascript'>
+            window.history.forward(1);
+            var Json;
+            setInterval('feed()',5000);
+            function Init()
+            {
+                //测试
+                //Json={ID_0x0202:'EMS100-1000K',ID_0x0301:85}; 
+
+                var URL='s_020.html?'+'time='+new Date();
+                var xmlhttp;
+                if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+                else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+                xmlhttp.onreadystatechange=function()
+                {
+                    if(xmlhttp.readyState==4&&xmlhttp.status==200)
+                    {
+                        eval('Json='+xmlhttp.responseText);
+                        document.title=Json.ID_0x0202;
+                    }
+                };
+                xmlhttp.open('GET',URL,true);
+                xmlhttp.send();
+            }
+
+            //定时发送心跳包
+            function feed()
+            {
+                var URL='Feed.html?'+'time='+new Date();
+                var xmlhttp;
+                if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+                else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+                xmlhttp.onreadystatechange=function()
+                {
+                    if(xmlhttp.readyState==4&&xmlhttp.status==200)
+                    {
+                        if(xmlhttp.responseText=='1')
+                        {
+                            parent.document.location.href='Login.html';
+                        }
+					}
+                };
+                xmlhttp.open('GET',URL,true);
+                xmlhttp.send();
+            }
+        </script>
+    </head>
+        <frameset rows='89,*' cols='*' border='0' onload='Init()'>
+            <!-- 需要将h_012.html和h_021.html改成h_012.aspx和h_021.aspx的框架调用方式 -->
+            <frame noresize='noresize' src='h_012.html' name='logo' id='logo'>
+            <frameset rows='*' cols='250,*' border='0'>
+                <frame noresize='noresize' src='h_021.html' name='menu' id='menu'>
+                <frame noresize='noresize' name='main' id='main'>
+        	</frameset>
+        </frameset>
+        <noframes>
+        </noframes>)
+</html>

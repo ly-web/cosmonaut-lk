@@ -1,0 +1,1051 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+    <head>
+        <meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>
+        <style type='text/css'>
+            html{_overflow-y:scroll;}
+            body{
+	margin:0;
+	padding:0;
+	text-align:center;
+	font-size:14px;
+	font-family:'微软雅黑',Verdana,'宋体',sans-serif;
+	background-color:#fff;
+	min-width:867px;
+	margin-top: 4px;
+}
+            img{vertical-align: top; display: block;}
+            .title{margin:5px auto;width:90%;text-align:left;overflow:hidden;}
+            .r1{margin:0 5px;height:1px;overflow:hidden;}
+            .r2{margin:0 3px;height:1px;overflow:hidden;}
+            .r3{margin:0 2px;height:1px;overflow:hidden;}
+            .r4{margin:0 1px;height:2px;overflow:hidden;}
+            .color{background-color:#F58E03;}
+            .content{height:24px;line-height:24px;padding-left:20px;font-size:24px;color:#EEE;text-align:left;}
+            .blank{height:4px;overflow:hidden;}
+            .btm_blank{height:15px;overflow:hidden;}
+            .back_color{background-color:#efefff;}
+            .back_high{width:100%;height:240px;margin:0 auto;}
+            .line_long{height:2px;overflow:hidden;margin:2px auto;background-color:#ccc; width:90%;}
+            .img_common{float:right;margin-right:12px;width:50px;height:50px;}
+            .bg1{background:transparent url(i_001.png) no-repeat scroll 0 0;}
+            .bg2{background:transparent url(i_001.png) no-repeat scroll -50px 0;}
+            .bg3{background:transparent url(i_001.png) no-repeat scroll -100px 0;}
+            .bg4{background:transparent url(i_001.png) no-repeat scroll 0 -50px;}
+            .bg5{background:transparent url(i_001.png) no-repeat scroll -50px -50px;}
+            .bg6{background:transparent url(i_001.png) no-repeat scroll -100px -50px;}
+            .bg7{background:transparent url(i_005.png) no-repeat scroll 0 0;}
+            .bg8{background:transparent url(i_006.png) no-repeat scroll 0 0;}
+            .bg9{background:transparent url(i_007.png) no-repeat scroll 0 0;}
+            .name{text-align:left;font-size:14px;font-weight:normal;color:#000;}
+            .value{text-align:left;font-size:18px;font-weight:bold;color:#06C;font-style:normal;}
+            .div_query{margin:0px auto;width:90%;float:left;height:26px;line-height:24px;font-size:16px;color:#000;}
+            .date_label{width:150px;padding-left:10%;float:left;}
+            .div_btn{width:80px;float:left;margin-left:50px;text-align:center;font-size:15px;font-weight: bold;color:#888;}
+            .color{background-color:#F58E03;}
+            .color2{background-color:#aaa;}
+            .date{width:100px;float:left;margin-left:10px;margin-top:2px;text-align:center;font-family:tahoma,arial;font-size:14px;color:#00f;}
+            .Ftab{width:100%;height:22px;line-height:18px;padding-left:20px;color:#EEE;text-align:center;}
+            .Ftab span{margin:0;padding:0;width:90%;float:left;width:20%;height:20px;line-height:20px;font-size:18px;color:#EEE;}
+            .Ftab .select{background: #007B3E;}
+        </style>
+        <script src='j_000.js' type='text/javascript'></script>
+        <script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="j_highcharts.js"></script>
+        <script type="text/javascript" src="j_exporting.js"></script>
+        <script type="text/javascript" src="j_canvas-tools.js"></script>
+        <script type="text/javascript" src="j_export-csv.js"></script>
+        <script type="text/javascript" src="j_highcharts-export-clientside.js"></script>
+        <script type='text/javascript'>
+            function show_T(tid)
+            {
+                var str='';
+                str+="<div class='title' style='width:90%;'><div class='r1 color'></div><div class='r2 color'></div><div class='r3 color'></div><div class='r4 color'></div>";
+                str+="<div class='content color'><span id='"+tid+"'></span></div>";
+                str+="<div class='r4 color'></div><div class='r3 color'></div><div class='r2 color'></div><div class='r1 color'></div></div><div class='blank'></div>";
+                document.write(str);
+            }
+        </script> 
+    </head>
+    <body onload='Init()'>  
+        <div class='title' style='width:90%;'><div class='r1 color2'></div><div class='r2 color2'></div><div class='r3 color2'></div><div class='r4 color2'></div>
+        <div class='Ftab color2' id="tabFunc">
+            <span class='select' id='N02'></span><span id='N03'></span><span id='N04' style='display:none;'></span><span id='N05' style='display:none;'></span><span id='N06' style='display:none;'></span>
+        </div>  
+        <div class='r4 color2'></div><div class='r3 color2'></div><div class='r2 color2'></div><div class='r1 color2'></div></div>
+        <div class='blank'></div>
+        <div id='query' class='div_query'>
+            <span class='date_label' id='N20'></span>
+            <input id='DATE' class='date' type="text" onClick="SelectDate(this,'yyyy-MM-dd',language)"/>
+            <button class='div_btn' onclick='doSubmit()'><span id='N21'></span></button>
+        </div>
+        <div id="curver" width='90%' style="height: 600px;padding-left:2%; min-width: 780px; padding-right:5%;"></div>
+        
+        <!--[if IE 6]><script type='text/javascript'>document.execCommand('BackgroundImageCache',false,true);</script><![endif]-->
+    </body>
+    <script>
+        var fresh_time;
+        var tab_index=0;
+        var CurRecordIndex=1;
+        var btns = document.getElementById('tabFunc').getElementsByTagName('span');
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].index = i;
+            btns[i].onclick = function(){
+                tab_index = this.index;
+                for (var i = 0; i < btns.length; i++) { btns[i].className = ''; };
+                this.className = 'select';
+                Switch_Tab(tab_index);
+            }
+        };
+        function Switch_Tab(index)
+        {
+            for (var i = 0; i < btns.length; i++) { btns[i].className = ''; };
+            btns[index].className = 'select';
+            if(tab_index==0){
+                document.getElementById('query').style.display='none';
+                ajax_s(tab_index+1);
+                fresh_time=setInterval('ajax_s(tab_index+1)',interval_time);
+            }else{
+                document.getElementById('query').style.display='block';
+                clearTimeout(fresh_time);
+                ajax_s(tab_index+1);
+            }
+        }
+    </script>
+    <script type='text/javascript'>
+        window.history.forward(1);
+        var FromMobileDevice=false;
+        function FromWhichDevice()
+        {
+            var sUserAgent=navigator.userAgent.toLowerCase();
+            var Ipad=sUserAgent.match(/ipad/i)=='ipad';
+            var IphoneOs=sUserAgent.match(/iphone os/i)=='iphone os';
+            var Android=sUserAgent.match(/android/i)=='android';
+            var WindowsPhone=sUserAgent.match(/windows phone/i)=='windows phone';
+            if(Ipad||IphoneOs||Android||WindowsPhone)FromMobileDevice=true;
+            else FromMobileDevice=false;
+        }
+        var language=0;
+        var Json;
+        var lang=
+        {
+            N01:['XX','XX'],
+            N02:['实时功率','Realtime Power'],
+            N03:['记录','Record'],
+
+            N07:['导&nbsp;&nbsp;出','Export'],
+            N08:['负载功率','Load Power'],
+            N09:['电网功率','Grid Power'],
+            N10:['储能逆变器功率','PCS Power'],
+
+            N20:['查询日期：','Inquery Date:'],
+            N21:['查&nbsp;&nbsp;询','Inquery'],
+
+            N29:['导出/打印', 'Export/Print'],
+            N30:['打印图表', 'Print Chart'],
+            N31:['下载 JPEG 文件', 'Download JPEG'],
+            N32:['下载 PNG 文件', 'Download PNG'],
+            N33:['下载 SVG 文件', 'Download SVG'],
+            N34:['下载 CSV 文件', 'Download CSV'],
+            N35:['下载 XLS 文件', 'Download XLS'],
+
+            N500:['一共','Total '],
+            N501:['页，共',' Pages, '],
+            N502:['条',' Nums']
+        };
+
+        var interval_time = 10000;
+        var chart;
+        var timer;
+   
+        function ConfigureChart()
+        {
+            Highcharts.setOptions({
+                global: {
+                    useUTC: false
+                },
+                lang: {
+                    printChart: lang.N30[language],
+                    downloadJPEG: lang.N31[language], 
+                    downloadPNG: lang.N32[language],
+                    downloadSVG: lang.N33[language], 
+                    downloadCSV: lang.N34[language],
+                    downloadXLS: lang.N35[language]
+                },
+                chart:{
+                    renderTo: 'curver',
+                    //'spline' 'line' 'area'
+                    //type: 'area',
+                    //背景色
+                    //backgroundColor: '#eee',
+                    //背景渐变
+                    //backgroundColor: {
+                    //    linearGradient: [0, 0, 500, 500],
+                    //    stops: [
+                    //        [0, 'rgb(255, 255, 255)'],
+                    //        [1, 'rgb(200, 200, 255)']
+                    //    ]
+                    //},
+                    //animation: Highcharts.svg,
+                    //marginRight: 10
+                },
+                title: {
+                    text: ''
+                },
+                xAxis: {
+                    //X轴标题
+                    title: { text:'T(h)/'+ Json.D00+'-'+Json.D01+'-'+Json.D02 }, 
+                    showFirstLable: true,
+                    showLastLabel: true,   
+                    lineWidth: 2,
+                    lineColor: '#808080',
+                    tickColor: '#e0e0e0',             
+                    // The types are 'linear', 'logarithmic' and 'datetime'
+                    type: 'linear',    
+                    categories: ['0', '', '0:30', '', '1:00', '', '1:30', '', '2:00', '', '2:30', '', '3:00', '', '3:30', '', '4:00', '', '4:30', '', '5:00', '', '5:30', '', '6:00', '', '6:30', '', '7:00', '', '7:30', '', '8:00', '', '8:30', '', '9:00', '', '9:30', '', '10:00', '', '10:30', '', '11:00', '', '11:30', '', '12:00', '', '12:30', '', '13:00', '', '13:30', '', '14:00', '', '14:30', '', '15:00', '', '15:30', '', '16:00', '', '16:30', '', '17:00', '', '17:30', '', '18:00', '', '18:30', '', '19:00', '', '19:30', '', '20:00', '', '20:30', '', '21:00', '', '21:30', '', '22:00', '', '22:30', '', '23:00', '', '23:30', '', '0']
+                },
+                yAxis: {
+                    //Y轴标题
+                    title: { text: 'P(Kw)' },
+                    showEmpty: false,
+                    lineWidth: 2,
+                    lineColor: '#808080',
+                    //隔行显示颜色
+                    //alternateGridColor: '#FDFFD5',
+                    //网格线颜色
+                    gridLineColor: '#e0e0e0',
+                    gridLineWidth: 1,
+                    labels: {
+                        formatter: function() {
+                            return  this.value + ' Kw';
+                        }
+                    },
+                    //max: 500,
+                    //min: -500,
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                plotOptions: {
+                     //针对图形类型的设置 'spline' 'line' 'area'
+                    area: {
+                        allowPointSelect:true,
+                        fillOpacity:0.6,
+                        marker:{
+                            enabled: false,
+                                states: {
+                                hover: {
+                                    enabled: true,
+                                    symbol: 'circle',
+                                    radius: 2,
+                                    lineWidth: 1
+                                }
+                            }
+                        }
+                    },
+                    series: {
+                        animation: false,
+                        marker:{
+                            enabled: false
+                        }
+                    }
+                },
+                tooltip: {
+                    formatter: function() {
+                        return '<b><span style="color:'+this.series.color+'">'+ this.series.name +'</span></b><br/>'+
+                        Highcharts.numberFormat(this.y, 1) + ' Kw';
+                    }
+                },
+                //版本信息
+                credits: {
+                    text: ''
+                },
+                navigation: {
+                    buttonOptions: {
+                        enabled: true,
+                        theme: {
+                            style: {
+                                color: '#0000FF',
+                                textDecoration: 'underline'
+                            }
+                        }
+                    }
+                },
+                exporting: {
+                    //enabled:true, //默认为可用，当设置为false时，图表的打印及导出功能失效
+                    //配置按钮选项
+                    buttons:{   
+                        contextButton: {
+                            text: lang.N29[language],
+                            symbol: 'circle',
+                            symbolFill: '#A349A4',
+                            //menuItems: [
+                            //    Highcharts.getOptions().exporting.buttons.contextButton.menuItems[1],
+                            //    Highcharts.getOptions().exporting.buttons.contextButton.menuItems[2],
+                            //    Highcharts.getOptions().exporting.buttons.contextButton.menuItems[3],
+                            //    Highcharts.getOptions().exporting.buttons.contextButton.menuItems[4],
+                            //    Highcharts.getOptions().exporting.buttons.contextButton.menuItems[5],
+                            //    Highcharts.getOptions().exporting.buttons.contextButton.menuItems[6],
+                            //    Highcharts.getOptions().exporting.buttons.contextButton.menuItems[7]
+                            //]
+                            //禁止导出列表子项显示
+                            //menuItems: null,
+                            //点击导出按钮时直接导出
+                            //onclick: function () { this.exportChart(); }
+                        },
+                        //配置打印按钮
+                        //printButton:{   
+                        //    width:50,
+                        //    symbolSize:20,
+                        //    borderWidth:2,
+                        //    borderRadius:0,
+                        //    hoverBorderColor:'red',
+                        //    height:30,
+                        //    symbolX:25,
+                        //    symbolY:15,
+                        //    x:-200,
+                        //    y:20
+                        //},
+                        //配置导出按钮
+                        //exportButton:{  
+                        //    width:50,
+                        //    symbolSize:20,
+                        //    borderWidth:2,
+                        //    borderRadius:0,
+                        //    hoverBorderColor:'red',
+                        //    height:30,
+                        //    symbolX:25,
+                        //    symbolY:15,
+                        //    x:-150,
+                        //    y:20
+                        //}
+                    },
+                    chartOptions: {
+                        plotOptions: {
+                            series: {
+                                dataLabels: {
+                                    //导出时显示数据标签
+                                    enabled: true
+                                }
+                            }
+                        }
+                    },
+                    filename:'pls',
+                    //type:'image/png',
+                    //width:800,
+                    //height:600  
+                },
+                //图例
+                legend: {
+                    backgroundColor: '#FCFFC5',
+                    borderColor: '#C98657',
+                    borderWidth: 1,
+                    //layout: 'vertical',
+                    layout: 'horizontal',
+                    itemDistance: 10,
+                    backgroundColor: '#FFFFFF',
+                    floating: true,
+                    align: 'left',
+                    verticalAlign: 'top',
+                    x: 80,
+                    y: 0,
+                    labelFormatter: function () {
+                        return this.name;
+                    }
+                }
+            });
+        }
+        function CreateChart()
+        {
+            chart = new Highcharts.Chart({
+                events: {
+                    redraw: function () {
+                        var label = this.renderer.label('The chart was just redrawn', 100, 120)
+                            .attr({
+                                fill: Highcharts.getOptions().colors[0],
+                                padding: 10,
+                                r: 5,
+                                zIndex: 8
+                            })
+                            .css({
+                                color: '#FFFFFF'
+                            })
+                            .add();
+
+                        setTimeout(function () {
+                            label.fadeOut();
+                        }, 1000);
+                    }
+                },
+                //数据段
+                series: 
+                [   
+                    {
+                        type: 'line',
+                        //ShortDash,LongDash,ShortDot,ShortDashDot,DashDot
+                        dashStyle:"ShortDash",
+                        name: lang.N08[language],
+                        //线段颜色
+                        //lineColor: '#303030',
+                        //线段或区域颜色
+                        color: '#F7A35C',
+                        //数据段1初始化
+                        //data: (function() {
+                        //    return data1;
+                        //})()
+                    },
+                    {
+                        type: 'area',
+                        name: lang.N09[language],
+                        //线段颜色
+                        //lineColor: '#303030',
+                        //线段或区域颜色
+                        color: '#90ED7D',
+                        //数据段2初始化
+                        //data: (function() {
+                        //    return data2;
+                        //})()
+                    },
+                    {
+                        type: 'area',
+                        name: lang.N10[language],
+                        //线段颜色
+                        //lineColor: '#303030',
+                        //线段或区域颜色
+                        color: '#99D9EA',
+                        //数据段2初始化
+                        //data: (function() {
+                        //    return data2;
+                        //})()
+                    }
+                ]
+            });    
+        }
+
+        Json={ID_0x0301:85,ID_0x03B4:20,D00:17,D01:3,D02:4,
+            A00:10.3,A01:13.5,A02:13.5,A03:13.5,A04:13.5,A05:13.5,A06:13.5,A07:13.5,A08:13.5,A09:13.5,A10:11.5,A11:11.5,A12:11.5,A13:11.5,A14:11.5,A15:11.5,A16:11.5,A17:11.5,A18:11.5,A19:11.5,A20:16.5,A21:16.5,A22:16.5,A23:16.5,A24:16.5,A25:16.5,A26:16.5,A27:16.5,A28:16.5,A29:16.5,A30:12.3,A31:12.3,A32:12.3,A33:12.3,A34:12.3,A35:12.3,A36:12.3,A37:12.3,A38:12.3,A39:12.3,A40:13.3,A41:13.3,A42:13.3,A43:13.3,A44:13.3,A45:13.3,A46:13.3,A47:13.3,A48:13.3,A49:13.3,A50:13.3,A51:17.3,A52:17.3,A53:17.3,A54:17.3,A55:17.3,A56:17.3,A57:17.3,A58:17.3,A59:17.3,A60:17.3,A61:17.3,A62:13.3,A63:13.3,A64:13.3,A65:13.3,A66:13.3,A67:13.3,A68:13.3,A69:13.3,A70:13.3,A71:14.7,A72:14.7,A73:14.7,A74:14.7,A75:14.7,A76:14.7,A77:14.7,A78:14.7,A79:14.7,A80:14.7,A81:13.7,A82:13.7,A83:13.7,A84:13.7,A85:13.7,A86:13.7,A87:13.7,A88:13.7,A89:13.7,A90:13.7,A91:13.7,A92:15.7,A93:15.7,A94:15.7,A95:15.7,A96:15.7,
+            B00:10.3,B01:13.5,B02:13.5,B03:13.5,B04:13.5,B05:13.5,B06:13.5,B07:13.5,B08:13.5,B09:13.5,B10:11.5,B11:11.5,B12:11.5,B13:11.5,B14:11.5,B15:11.5,B16:11.5,B17:11.5,B18:11.5,B19:11.5,B20:16.5,B21:16.5,B22:16.5,B23:16.5,B24:16.5,B25:16.5,B26:16.5,B27:16.5,B28:16.5,B29:16.5,B30:12.3,B31:12.3,B32:12.3,B33:12.3,B34:12.3,B35:12.3,B36:12.3,B37:12.3,B38:12.3,B39:12.3,B40:13.3,B41:13.3,B42:13.3,B43:13.3,B44:13.3,B45:13.3,B46:13.3,B47:13.3,B48:13.3,B49:13.3,B50:13.3,B51:17.3,B52:17.3,B53:17.3,B54:17.3,B55:17.3,B56:17.3,B57:17.3,B58:17.3,B59:17.3,B60:17.3,B61:17.3,B62:13.3,B63:13.3,B64:13.3,B65:13.3,B66:13.3,B67:13.3,B68:13.3,B69:13.3,B70:13.3,B71:14.7,B72:14.7,B73:14.7,B74:14.7,B75:14.7,B76:14.7,B77:14.7,B78:14.7,B79:14.7,B80:14.7,B81:13.7,B82:13.7,B83:13.7,B84:13.7,B85:13.7,B86:13.7,B87:13.7,B88:13.7,B89:13.7,B90:13.7,B91:13.7,B92:15.7,B93:15.7,B94:15.7,B95:15.7,B96:15.7,
+            C00:10.3,C01:13.5,C02:13.5,C03:13.5,C04:13.5,C05:13.5,C06:13.5,C07:13.5,C08:13.5,C09:13.5,C10:11.5,C11:11.5,C12:11.5,C13:11.5,C14:11.5,C15:11.5,C16:11.5,C17:11.5,C18:11.5,C19:11.5,C20:16.5,C21:16.5,C22:16.5,C23:16.5,C24:16.5,C25:16.5,C26:16.5,C27:16.5,C28:16.5,C29:16.5,C30:12.3,C31:12.3,C32:12.3,C33:12.3,C34:12.3,C35:12.3,C36:12.3,C37:12.3,C38:12.3,C39:12.3,C40:13.3,C41:13.3,C42:13.3,C43:13.3,C44:13.3,C45:13.3,C46:13.3,C47:13.3,C48:13.3,C49:13.3,C50:13.3,C51:17.3,C52:17.3,C53:17.3,C54:17.3,C55:17.3,C56:17.3,C57:17.3,C58:17.3,C59:17.3,C60:17.3,C61:17.3,C62:13.3,C63:13.3,C64:13.3,C65:13.3,C66:13.3,C67:13.3,C68:13.3,C69:13.3,C70:13.3,C71:14.7,C72:14.7,C73:14.7,C74:14.7,C75:14.7,C76:14.7,C77:14.7,C78:14.7,C79:14.7,C80:14.7,C81:13.7,C82:13.7,C83:13.7,C84:13.7,C85:13.7,C86:13.7,C87:13.7,C88:13.7,C89:13.7,C90:13.7,C91:13.7,C92:15.7,C93:15.7,C94:15.7,C95:15.7,C96:15.7
+        };
+        function Init()
+        {
+            FromWhichDevice();
+            var URL ='s_033.html?0x0000&time='+new Date();
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            //xmlhttp.onreadystatechange=function() 
+            {
+                //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    //eval('Json='+xmlhttp.responseText);
+                    if(Json.ID_0x0301==0x55)language=0;else language=1;    
+                    document.getElementById('N02').innerHTML=lang.N02[language];
+                    document.getElementById('N03').innerHTML=lang.N03[language];
+                    //document.getElementById('N04').innerHTML=lang.N04[language];
+                    //document.getElementById('N05').innerHTML=lang.N05[language];
+                    //document.getElementById('N06').innerHTML=lang.N06[language];
+
+                    document.getElementById('N20').innerHTML=lang.N20[language];
+                    document.getElementById('N21').innerHTML=lang.N21[language];
+                    var d = new Date();
+                    var year = d.getYear()-100;
+                    var month = d.getMonth() + 1;
+                    var day = d.getDate();    
+                    document.getElementById('DATE').value=(year+2000)+'-'+(month<10?'0'+month:month)+'-'+(day<10?'0'+day:day);
+                    Switch_Tab(tab_index);
+                }
+            }            
+            xmlhttp.open('GET',URL,true);
+            xmlhttp.send();      
+        }
+
+        //
+        //var data3 = [];
+        //var data4 = [];  
+
+        //type: 0x0001 获取实时数据, 0x0002 获取历史数据
+        function ajax_s(type)
+        {
+            var URL;
+            if(type == 1){
+                URL ='s_033.html?0x000'+type+'&time='+new Date();
+            }else{
+                var ip=document.getElementById('DATE').value.split('-');
+                var URL='r_033.html?'+'Y='+ip[0]+'&M='+ip[1]+'&D='+ip[2]+'&P='+1+'&time='+new Date();
+            }
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            //xmlhttp.onreadystatechange=function() 
+            {
+                //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    //eval('Json='+xmlhttp.responseText);
+                    if(Json.ID_0x0301==0x55)language=0;else language=1;
+
+                    var data1 = [];
+                    var data2 = [];  
+                    var data3 = [];                  
+                    for(var i=0; i<96; i++){
+                        if(i<10) eval('data1['+i+']=Json.A0'+i+';');else eval('data1['+i+']=Json.A'+i+';');
+                        if(i<10) eval('data2['+i+']=Json.B0'+i+';');else eval('data2['+i+']=Json.B'+i+';');
+                        if(i<10) eval('data3['+i+']=Json.C0'+i+';');else eval('data3['+i+']=Json.C'+i+';');
+                        //data1[i]=(Math.random()*1.3+40);
+                        //data2[i]=(Math.random()*1.3+50);
+                        //data3[i]=(Math.random()*1.3+60);
+                    }
+                    if(chart!=undefined)chart.destroy();
+                    ConfigureChart();
+                    CreateChart();
+                    chart.series[0].setData(data1);
+                    chart.series[1].setData(data2);
+                    chart.series[2].setData(data3);
+                    chart.redraw();
+                    //data1.length=0;  //会影响图片导出
+                    //data2.length=0;  //会影响图片导出
+                    //data3.length=0;  //会影响图片导出
+
+                    //for(var i=0; i<96; i++){
+                    //    data3.push( (Math.random()*1.3+40) );
+                    //    data4.push( (Math.random()*1.3+50) );
+                    //}
+                    //chart.series[0].setData(data3);
+                    //chart.series[1].setData(data4);
+                    //chart.redraw();
+                }
+            };
+            //xmlhttp.open('GET',URL,true);
+            //xmlhttp.send();
+        }
+        function doSubmit(obj)
+        {
+            ajax_s(2);
+        }
+    </script>  
+    <script>
+    //日期控件
+    var cal;
+    //是否为焦点
+    var isFocus=false; 
+    //自加
+    var objdate;
+
+    var objdate1;
+
+    //选择日期  lang: 0 --中文， 1--英文
+    function SelectDate(obj,strFormat,lang)
+    {
+        //自加
+        objdate = obj;
+        var date = new Date();
+        //最小值 → 50 年前
+        var by = date.getFullYear()-50;  
+        //最大值 → 50 年后
+        var ey = date.getFullYear()+50;  
+        //初始化英文版，0 为中文版
+        cal = (cal==null) ? new Calendar(by, ey, lang) : cal;    
+        cal.dateFormatStyle = strFormat;
+        cal.show(obj);
+    }
+
+    // * 返回日期
+    // * @param d the delimiter
+    // * @param p the pattern of your date
+    // * 根据用户指定的 style 来确定；
+    //String.prototype.toDate = function(x, p) {
+    String.prototype.toDate = function(style) {
+      var y = this.substring(style.indexOf('y'),style.lastIndexOf('y')+1);
+      var m = this.substring(style.indexOf('M'),style.lastIndexOf('M')+1);
+      var d = this.substring(style.indexOf('d'),style.lastIndexOf('d')+1);
+      if(isNaN(y)) y = new Date().getFullYear();
+      if(isNaN(m)) m = new Date().getMonth();
+      if(isNaN(d)) d = new Date().getDate();
+      var dt ;
+      eval ("dt = new Date('"+ y+"', '"+(m-1)+"','"+ d +"')");
+      return dt;
+    }
+
+    // * 格式化日期
+    // * @param   d the delimiter
+    // * @param   p the pattern of your date
+    // * @author  meizz
+    Date.prototype.format = function(style) {
+      var o = {
+        "M+" : this.getMonth() + 1, 
+        "d+" : this.getDate(),     
+        "h+" : this.getHours(),    
+        "m+" : this.getMinutes(),   
+        "s+" : this.getSeconds(),   
+        "w+" : "天一二三四五六".charAt(this.getDay()),  
+        "q+" : Math.floor((this.getMonth() + 3) / 3),  
+        "S"  : this.getMilliseconds() 
+      }
+      if(/(y+)/.test(style)) {
+        style = style.replace(RegExp.$1,
+        (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+      }
+      for(var k in o){
+        if(new RegExp("("+ k +")").test(style)){
+          style = style.replace(RegExp.$1,
+            RegExp.$1.length == 1 ? o[k] :
+            ("00" + o[k]).substr(("" + o[k]).length));
+        }
+      }
+      return style;
+    };
+
+    // * 日历类
+    // * @param   beginYear 1990
+    // * @param   endYear   2010
+    // * @param   lang      0(中文)|1(英语) 可自由扩充
+    // * @param   dateFormatStyle  "yyyy-MM-dd";
+    // * @version 2006-04-01
+    // * @author  KimSoft (jinqinghua [at] gmail.com)
+    // * @update
+    function Calendar(beginYear, endYear, lang, dateFormatStyle) {
+      this.beginYear = 1990;
+      this.endYear = 2010;
+      //0(中文) | 1(英文)
+      this.lang = 0;            
+      this.dateFormatStyle = "yyyy-MM-dd";
+
+      if (beginYear != null && endYear != null){
+        this.beginYear = beginYear;
+        this.endYear = endYear;
+      }
+      if (lang != null){
+        this.lang = lang
+      }
+
+      if (dateFormatStyle != null){
+        this.dateFormatStyle = dateFormatStyle
+      }
+
+      this.dateControl = null;
+      this.panel = this.getElementById("calendarPanel");
+      this.container = this.getElementById("ContainerPanel");
+      this.form  = null;
+
+      this.date = new Date();
+      this.year = this.date.getFullYear();
+      this.month = this.date.getMonth();
+
+      this.colors = {
+          //当日日期文字颜色
+          "cur_word"      : "#FFFFFF",  
+          //当日日期单元格背影色
+          "cur_bg"        : "#00FF00",  
+          //已被选择的日期单元格背影色 2006-12-03 寒羽枫添加
+          "sel_bg"        : "#FFCCCC",  
+          //星期天文字颜色
+          "sun_word"      : "#FF0000",  
+          //星期六文字颜色
+          "sat_word"      : "#0000FF",  
+          //单元格文字颜色
+          "td_word_light" : "#333333",  
+          //单元格文字暗色
+          "td_word_dark"  : "#CCCCCC",  
+          //单元格背影色
+          "td_bg_out"     : "#EFEFEF", 
+          //单元格背影色 
+          "td_bg_over"    : "#FFCC00", 
+          //日历头文字颜色 
+          "tr_word"       : "#FFFFFF", 
+          //日历头背影色 
+          "tr_bg"         : "#666666", 
+          //input控件的边框颜色 
+          "input_border"  : "#CCCCCC",
+          //input控件的背影色  
+          "input_bg"      : "#EFEFEF"   
+      }
+
+      this.draw();
+      this.bindYear();
+      this.bindMonth();
+      this.changeSelect();
+      this.bindData();
+    }
+
+    //日历类属性（语言包，可自由扩展）
+    Calendar.language = {
+      "year"   : [[""], [""]],
+      "months" : [["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
+            ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"]
+             ],
+      "weeks"  : [["日","一","二","三","四","五","六"],
+            ["SUN","MON","TUR","WED","THU","FRI","SAT"]
+             ],
+      "clear"  : [["清空"], ["CLS"]],
+      "today"  : [["今天"], ["TODAY"]],
+      "close"  : [["关闭"], ["CLOSE"]]
+    }
+
+    Calendar.prototype.draw = function() {
+      calendar = this;
+
+      var mvAry = [];  
+      mvAry[mvAry.length]  = '  <div name="calendarForm" style="margin: 0px;">';
+      mvAry[mvAry.length]  = '    <table width="100%" border="0" cellpadding="0" cellspacing="1">';
+      mvAry[mvAry.length]  = '      <tr>';
+      mvAry[mvAry.length]  = '        <th align="left" width="1%"><input style="border: 1px solid ' + calendar.colors["input_border"] + ';background-color:' + calendar.colors["input_bg"] + ';width:16px;height:20px;" name="prevMonth" type="button" id="prevMonth" value="&lt;" /></th>';
+      mvAry[mvAry.length]  = '        <th align="center" width="98%" nowrap="nowrap"><select name="calendarYear" id="calendarYear" style="font-size:12px;"></select><select name="calendarMonth" id="calendarMonth" style="font-size:12px;"></select></th>';
+      mvAry[mvAry.length]  = '        <th align="right" width="1%"><input style="border: 1px solid ' + calendar.colors["input_border"] + ';background-color:' + calendar.colors["input_bg"] + ';width:16px;height:20px;" name="nextMonth" type="button" id="nextMonth" value="&gt;" /></th>';
+      mvAry[mvAry.length]  = '      </tr>';
+      mvAry[mvAry.length]  = '    </table>';
+      mvAry[mvAry.length]  = '    <table id="calendarTable" width="100%" style="border:0px solid #CCCCCC;background-color:#FFFFFF;font-size:9pt" border="0" cellpadding="2" cellspacing="1">';
+      mvAry[mvAry.length]  = '      <tr>';
+      for(var i = 0; i < 7; i++) {
+        mvAry[mvAry.length]  = '      <th style="font-weight:normal;background-color:' + calendar.colors["tr_bg"] + ';color:' + calendar.colors["tr_word"] + ';">' + Calendar.language["weeks"][this.lang][i] + '</th>';
+      }
+      mvAry[mvAry.length]  = '      </tr>';
+      for(var i = 0; i < 6;i++){
+        mvAry[mvAry.length]  = '    <tr align="center">';
+        for(var j = 0; j < 7; j++) {
+          if (j == 0){
+            mvAry[mvAry.length]  = '  <td style="cursor:default;color:' + calendar.colors["sun_word"] + ';"></td>';
+          } else if(j == 6) {
+            mvAry[mvAry.length]  = '  <td style="cursor:default;color:' + calendar.colors["sat_word"] + ';"></td>';
+          } else {
+            mvAry[mvAry.length]  = '  <td style="cursor:default;"></td>';
+          }
+        }
+        mvAry[mvAry.length]  = '    </tr>';
+      }
+      mvAry[mvAry.length]  = '      <tr style="background-color:' + calendar.colors["input_bg"] + ';">';
+      mvAry[mvAry.length]  = '        <th colspan="2"><input name="calendarClear" type="button" id="calendarClear" value="' + Calendar.language["clear"][this.lang] + '" style="border: 1px solid ' + calendar.colors["input_border"] + ';background-color:' + calendar.colors["input_bg"] + ';width:100%;height:18px;font-size:9pt;"/></th>';
+      mvAry[mvAry.length]  = '        <th colspan="3"><input name="calendarToday" type="button" id="calendarToday" value="' + Calendar.language["today"][this.lang] + '" style="border: 1px solid ' + calendar.colors["input_border"] + ';background-color:' + calendar.colors["input_bg"] + ';width:100%;height:18px;font-size:9pt;"/></th>';
+      mvAry[mvAry.length]  = '        <th colspan="2"><input name="calendarClose" type="button" id="calendarClose" value="' + Calendar.language["close"][this.lang] + '" style="border: 1px solid ' + calendar.colors["input_border"] + ';background-color:' + calendar.colors["input_bg"] + ';width:100%;height:18px;font-size:9pt;"/></th>';
+      mvAry[mvAry.length]  = '      </tr>';
+      mvAry[mvAry.length]  = '    </table>';  
+      mvAry[mvAry.length]  = '  </div>';
+      this.panel.innerHTML = mvAry.join("");
+      
+      ///**//******** 以下代码由寒羽枫 2006-12-01 添加 **********/
+      var obj = this.getElementById("prevMonth");
+      obj.onclick = function () {calendar.goPrevMonth(calendar);}
+      obj.onblur = function () {calendar.onblur();}
+      this.prevMonth= obj;
+      
+      obj = this.getElementById("nextMonth");
+      obj.onclick = function () {calendar.goNextMonth(calendar);}
+      obj.onblur = function () {calendar.onblur();}
+      this.nextMonth= obj;   
+
+      obj = this.getElementById("calendarClear");
+      obj.onclick = function () {calendar.dateControl.value = "";calendar.hide();}
+      this.calendarClear = obj;
+      
+      obj = this.getElementById("calendarClose");
+      obj.onclick = function () {calendar.hide();}
+      this.calendarClose = obj;
+      
+      obj = this.getElementById("calendarYear");
+      obj.onchange = function () {calendar.update(calendar);}
+      obj.onblur = function () {calendar.onblur();}
+      this.calendarYear = obj;
+      
+      obj = this.getElementById("calendarMonth");
+      with(obj)
+      {
+        onchange = function () {calendar.update(calendar);}
+        onblur = function () {calendar.onblur();}
+      }this.calendarMonth = obj;
+     
+      obj = this.getElementById("calendarToday");
+      obj.onclick = function () {
+        var today = new Date();
+        calendar.date = today;
+        calendar.year = today.getFullYear();
+        calendar.month = today.getMonth();
+        calendar.changeSelect();
+        calendar.bindData();
+        calendar.dateControl.value = today.format(calendar.dateFormatStyle);
+        calendar.hide();
+      }
+      this.calendarToday = obj; 
+    }
+
+    //年份下拉框绑定数据
+    Calendar.prototype.bindYear = function() { 
+      var cy = this.calendarYear;
+      cy.length = 0;
+      for (var i = this.beginYear; i <= this.endYear; i++){
+        cy.options[cy.length] = new Option(i + Calendar.language["year"][this.lang], i);
+      }
+    }
+
+    //月份下拉框绑定数据
+    Calendar.prototype.bindMonth = function() { 
+      var cm = this.calendarMonth;
+      cm.length = 0;
+      for (var i = 0; i < 12; i++){
+        cm.options[cm.length] = new Option(Calendar.language["months"][this.lang][i], i);
+      }
+    }
+
+    //向前一月
+    Calendar.prototype.goPrevMonth = function(e){
+      if (this.year == this.beginYear && this.month == 0){return;}
+      this.month--;
+      if (this.month == -1) {
+        this.year--;
+        this.month = 11;
+      }
+      this.date = new Date(this.year, this.month, 1);
+      this.changeSelect();
+      this.bindData();
+    }
+
+    //向后一月
+    Calendar.prototype.goNextMonth = function(e){
+      if (this.year == this.endYear && this.month == 11){return;}
+      this.month++;
+      if (this.month == 12) {
+        this.year++;
+        this.month = 0;
+      }
+      this.date = new Date(this.year, this.month, 1);
+      this.changeSelect();
+      this.bindData();
+    }
+
+    //改变SELECT选中状态
+    Calendar.prototype.changeSelect = function() { 
+      var cy = this.calendarYear;
+      var cm = this.calendarMonth;
+      for (var i= 0; i < cy.length; i++){
+        if (cy.options[i].value == this.date.getFullYear()){
+          cy[i].selected = true;
+          break;
+        }
+      }
+      for (var i= 0; i < cm.length; i++){
+        if (cm.options[i].value == this.date.getMonth()){
+          cm[i].selected = true;
+          break;
+        }
+      }
+    }
+
+    //更新年、月
+    Calendar.prototype.update = function (e){ 
+      this.year  = e.calendarYear.options[e.calendarYear.selectedIndex].value;
+      this.month = e.calendarMonth.options[e.calendarMonth.selectedIndex].value;
+      this.date = new Date(this.year, this.month, 1);
+      this.changeSelect();
+      this.bindData();
+    }
+
+    //绑定数据到月视图
+    Calendar.prototype.bindData = function () {
+      var calendar = this;
+      var dateArray = this.getMonthViewArray(this.date.getFullYear(), this.date.getMonth());
+      var tds = this.getElementById("calendarTable").getElementsByTagName("td");
+      for(var i = 0; i < tds.length; i++) {
+      //tds[i].style.color = calendar.colors["td_word_light"];
+      tds[i].style.backgroundColor = calendar.colors["td_bg_out"];
+        tds[i].onclick = function () {return;}
+        tds[i].onmouseover = function () {return;}
+        tds[i].onmouseout = function () {return;}
+        if (i > dateArray.length - 1) break;
+        tds[i].innerHTML = dateArray[i];
+        if (dateArray[i] != "&nbsp;"){
+          tds[i].onclick = function () {
+            if (calendar.dateControl != null){
+              calendar.dateControl.value = new Date(calendar.date.getFullYear(),
+                                                    calendar.date.getMonth(),
+                                                    this.innerHTML).format(calendar.dateFormatStyle);
+            }
+            calendar.hide();
+          }
+          tds[i].onmouseover = function () {
+            this.style.backgroundColor = calendar.colors["td_bg_over"];
+          }
+          tds[i].onmouseout = function () {
+            this.style.backgroundColor = calendar.colors["td_bg_out"];
+          }
+          if (new Date().format(calendar.dateFormatStyle) ==
+              new Date(calendar.date.getFullYear(),
+                       calendar.date.getMonth(),
+                       dateArray[i]).format(calendar.dateFormatStyle)) {
+            //tds[i].style.color = calendar.colors["cur_word"];
+            tds[i].style.backgroundColor = calendar.colors["cur_bg"];
+            tds[i].onmouseover = function () {
+              this.style.backgroundColor = calendar.colors["td_bg_over"];
+            }
+            tds[i].onmouseout = function () {
+              this.style.backgroundColor = calendar.colors["cur_bg"];
+            }
+            //continue; //若不想当天单元格的背景被下面的覆盖，请取消注释
+          }   
+          
+          if (calendar.dateControl != null && calendar.dateControl.value == new Date(calendar.date.getFullYear(),
+                       calendar.date.getMonth(),
+                       dateArray[i]).format(calendar.dateFormatStyle)) {
+            tds[i].style.backgroundColor = calendar.colors["sel_bg"];
+            tds[i].onmouseover = function () {
+              this.style.backgroundColor = calendar.colors["td_bg_over"];
+            }
+            tds[i].onmouseout = function () {
+              this.style.backgroundColor = calendar.colors["sel_bg"];
+            }
+          }
+        }
+      }
+    }
+
+    //根据年、月得到月视图数据(数组形式)
+    Calendar.prototype.getMonthViewArray = function (y, m) {
+      var mvArray = [];
+      var dayOfFirstDay = new Date(y, m, 1).getDay();
+      var daysOfMonth = new Date(y, m + 1, 0).getDate();
+      for (var i = 0; i < 42; i++) {
+        mvArray[i] = "&nbsp;";
+      }
+      for (var i = 0; i < daysOfMonth; i++){
+        mvArray[i + dayOfFirstDay] = i + 1;
+      }
+      return mvArray;
+
+      //  var dateArray = new Array(42);
+      //  var dayOfFirstDate = new Date(y, m, 1).getDay();
+      //  var dateCountOfMonth = new Date(y, m + 1, 0).getDate();
+      //  for (var i = 0; i < dateCountOfMonth; i++) {
+      //      dateArray[i + dayOfFirstDate] = i + 1;
+      //  }
+      //  return dateArray;
+    }
+
+    //扩展 document.getElementById(id) 多浏览器兼容性 from meizz tree source
+    Calendar.prototype.getElementById = function(id){
+      if (typeof(id) != "string" || id == "") return null;
+      if (document.getElementById) return document.getElementById(id);
+      if (document.all) return document.all(id);
+      try {return eval(id);} catch(e){ return null;}
+    }
+
+    //扩展 object.getElementsByTagName(tagName)
+    Calendar.prototype.getElementsByTagName = function(object, tagName){
+      if (document.getElementsByTagName) return document.getElementsByTagName(tagName);
+      if (document.all) return document.all.tags(tagName);
+    }
+
+    //取得HTML控件绝对位置
+    Calendar.prototype.getAbsPoint = function (e){
+      var x = e.offsetLeft;
+      var y = e.offsetTop;
+      while(e = e.offsetParent){
+        x += e.offsetLeft;
+        y += e.offsetTop;
+      }
+      return {"x": x, "y": y};
+    }
+
+    //显示日历
+    Calendar.prototype.show = function (dateObj, popControl) {
+      if (dateObj == null){
+        throw new Error("arguments[0] is necessary")
+      }
+      this.dateControl = dateObj;
+      
+      this.date = (dateObj.value.length > 0) ? new Date(dateObj.value.toDate(this.dateFormatStyle)) : new Date();
+      this.year = this.date.getFullYear();
+      this.month = this.date.getMonth();
+      this.changeSelect();
+      this.bindData();
+      
+      if (popControl == null){
+        popControl = dateObj;
+      }
+      var xy = this.getAbsPoint(popControl);
+      this.panel.style.left = xy.x  + "px";
+      this.panel.style.top = (xy.y + dateObj.offsetHeight) + "px"; 
+     
+      this.panel.style.display = "";
+      this.container.style.display = "";
+      
+      dateObj.onblur = function(){calendar.onblur();}
+      this.container.onmouseover = function(){isFocus=true;}
+      this.container.onmouseout = function(){isFocus=false;}
+    }
+    //隐藏日历
+    Calendar.prototype.hide = function() {
+      this.panel.style.display = "none";
+      this.container.style.display = "none";
+      isFocus=false;
+      
+
+    // --自定义验控件是否为空--
+    //  try
+    // {
+         CheckDate(objdate);
+    //  }
+    //  catch(err)
+    //  {
+    //  }
+    }
+    function CheckDate(obj) 
+    {
+        //var t = document.getElementById('txtPeriod').value;
+        var t = obj.value;
+        var v = null;
+        var tt = /^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/;
+        var dv = obj.id;
+            dv="dv_"+dv;
+        var dvDate =document.getElementById(dv);
+        
+        if (dvDate == null)
+        {
+            return;
+        }
+        if(t!="")
+        {
+            if(t.search(tt)!=-1)
+            {
+                
+                dvDate.style.display = 'none';
+                v = 0;  
+            }
+            else
+            {
+                dvDate.style.display = 'block';
+                v = 1;
+            }
+            if(DateCompare(obj.value,datenow)==true)
+            {
+                v = 0;
+            }
+            else
+            {
+                dvDate.style.display = 'block';
+                dvDate.innerHTML = "  <font color=red>&nbsp;&nbsp;您的截止日期必须大于今天</font>";
+                v = 1
+            }
+        }
+        else
+        {
+            dvDate.style.display = 'block';
+            v = 1;
+        }
+        return v;
+    }
+
+    //焦点转移时隐藏日历
+    Calendar.prototype.onblur = function() {
+        if(!isFocus){this.hide();}
+    }
+    document.write('<div id="ContainerPanel" style="display:none"><div id="calendarPanel" style="position: absolute;display: none;z-index: 9999;');
+    document.write('background-color: #FFFFFF;border: 1px solid #CCCCCC;width:175px;font-size:9px;"></div>');
+    if(document.all)
+    {
+        document.write('<iframe style="position:absolute;z-index:2000;width:expression(this.previousSibling.offsetWidth);');
+        document.write('height:expression(this.previousSibling.offsetHeight);');
+        document.write('left:expression(this.previousSibling.offsetLeft);top:expression(this.previousSibling.offsetTop);');
+        document.write('display:expression(this.previousSibling.style.display);" scrolling="no" frameborder="no"></iframe>');
+    }
+    document.write('</div>');
+    </script>
+</html>

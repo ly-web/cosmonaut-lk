@@ -1,0 +1,711 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>
+		<link type='text/css' href='c_000.css' rel='stylesheet'/>
+		<script type='text/javascript'>
+            var $=function(o){return document.getElementById(o);};
+            function lang_init_ex(st,end){for(var i=st;i<=end;i++)eval('$(\'N'+(i<10?'0'+i:i)+'\').innerHTML=lang.N'+(i<10?'0'+i:i)+'[language];');}
+            function show_tip(obj){$('tip').innerHTML=obj;}
+            function show_T(tid)
+            {
+                var str='';
+                str+="<div class='title' style='width:90%;'><div class='r1 color'></div><div class='r2 color'></div><div class='r3 color'></div><div class='r4 color'></div>";
+                str+="<div class='content color'><span id='"+tid+"'></span></div>";
+                str+="<div class='r4 color'></div><div class='r3 color'></div><div class='r2 color'></div><div class='r1 color'></div></div><div class='blank'></div>";
+                document.write(str);
+            }
+            function show_sT(tid)
+            {
+                var str='';
+                str+="<div class='title' style='width:90%;'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+                str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+                str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+                document.write(str);
+            }
+            function show_sT_ex(tid, id)
+            {
+                var str='';
+                str+="<div class='title' id='"+id+"' style='display:none;width:90%'><div class='subtitle'><div class='r1 subcolor'></div><div class='r2 subcolor'></div><div class='r3 subcolor'></div><div class='r4 subcolor'></div>";
+                str+="<div class='content subcolor subcontent'><span id='"+tid+"'></span></div>";
+                str+="<div class='r4 subcolor'></div><div class='r3 subcolor'></div><div class='r2 subcolor'></div><div class='r1 subcolor'></div></div><div class='line_short'></div></div>";
+                document.write(str);
+            }
+            function sendHttpReq(url, successFn)
+            {
+                //alert(url);   
+                var xmlhttp;
+                if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+                else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+                xmlhttp.onreadystatechange=function()
+                {
+                    if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                    {
+                        if(xmlhttp.responseText=='1'){successFn();}
+                    }
+                };
+                xmlhttp.open('GET',url,true);
+                xmlhttp.send();
+            }
+        </script>
+		<style type='text/css'>
+			tr{height:27px;}
+			.td1{padding-left:40px;text-align:left;}
+			.td2{text-align:left;}
+			.td3{padding-right:40px;text-align:right;}
+			.txt{width:80px;text-align:right;}
+            .tipL{width:255px;margin:0 auto;text-align:left;margin-top:5px;color:#f00;font-weight:bold;font-size:16px;}
+		</style>
+	</head>
+	<body onload='Init()'>
+		<script type='text/javascript'>
+			show_T('N01');
+			show_sT('N02');
+		</script>
+		<!-- 系统功率设置 -->
+		<table width='90%' border='0'>
+			<tr>
+                <td width='30%' class='td1 odd'><span id='N03'></span></td>
+                <td width='20%' class='td1 odd'><input class='txt' id='ID_0x0384' onkeyup='Verify(this)' type='text' maxlength='7'/>&nbsp;</td>
+                <td width='15%' class='td2 odd'>(0, 29000)kW</td>
+                <td width='35%' class='td3 odd'></td>
+			</tr>
+		</table>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='50%' class='tipL even'><span id='tip1'>&nbsp;</span></td>
+            	<!-- 保存 -->
+			  	<td width='50%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn1' style='display:block;'><span id='N400'>Save</span></button></td>
+			</tr>
+		</table>
+		<div class='line_long'></div>
+		<div class='blank'></div>
+        <!-- 并网模式选择 -->
+        <script type='text/javascript'>
+            show_sT('N40');
+        </script>
+            <!-- 并网模式, 默认不显示 -->
+            <table width='90%' border='0' style='display:block;' id='GRID1'>
+                <tr>
+                    <!-- 恒流模式 -->
+                    <td width='20%' class='td1 odd'><input name='Grid_Mode' type='radio' value='0' id='CC' onclick='Change_Grid_Mode(this)'/><span id='N41'></span></td>
+                    <!-- 恒直流功率模式 -->
+                    <td width='20%' class='td1 odd'><input name='Grid_Mode' type='radio' value='2' id='CP_DC' onclick='Change_Grid_Mode(this)'/><span id='N43'></span></td>
+                    <td width='60%' class='td1 odd'></td>
+                </tr>
+                <tr>
+                    <!-- 恒压模式 -->
+                    <td width='50%' class='td1 even'><input name='Grid_Mode' type='radio' value='1' id='CV' onclick='Change_Grid_Mode(this)'/><span id='N42'></span></td>
+                    <!-- 恒交流功率模式 -->
+                    <td width='50%' class='td1 even'><input name='Grid_Mode' type='radio' value='3' id='CP_AC' onclick='Change_Grid_Mode(this)'/><span id='N44'></span></td>
+                </tr>
+                <tr>
+                    <!-- 待机模式 -->
+                    <td width='20%' class='td1 odd'><input name='Grid_Mode' type='radio' value='4' id='STANDBY' onclick='Change_Grid_Mode(this)'/><span id='N45'></span></td>
+                    <td width='20%' class='td1 odd'></td>
+                    <td width='60%' class='td1 odd'></td>
+                </tr>
+            </table>
+            <!--并网模式,恒流充电电流上下限设置，默认不显示-->
+            <table width='100%' border='0' style='display:none;' id='TR1'>
+                <tr>
+                    <td width='177' class='td1 odd'><span id='N50'></span></td>
+                    <td width='90' class='td2 odd'><input class='txt' id='ID_0x0175' onkeyup='Verify(this,reg4)' type='text' maxlength='7'/>A</td>
+                    <td width='110' class='td3 odd'>(<span id='ID_0x0400'></span>~<span id='ID_0x0401'></span>)</td>
+                    <td width='177' class='td1 odd'></td>
+                    <td width='90' class='td2 odd'></td>
+                    <td width='110' class='td3 odd'></td>
+                </tr>
+            </table>
+            <!-- 并网模式,恒压充电电压上下限设置, 默认不显示 -->
+            <table width='100%' border='0' style='display:none;' id='TR2'>
+                <tr>
+                    <td width='177' class='td1 odd'><span id='N51'></span></td>
+                    <td width='90' class='td2 odd'><input class='txt' id='ID_0x0177' onkeyup='Verify(this,reg1)' type='text' maxlength='6'/>V</td>
+                    <td width='110' class='td3 odd'>(<span id='ID_0x0402'></span>~<span id='ID_0x0403'></span>)</td>
+                    <td width='177' class='td1 odd'><span id='N52'></span></td>
+                    <td width='90' class='td2 odd'><input class='txt' id='ID_0x0176' onkeyup='Verify(this,reg1)' type='text' maxlength='6'/>A</td>
+                    <td width='110' class='td3 odd'>(<span id='ID_0x0404'></span>~<span id='ID_0x0405'></span>)</td>
+                </tr>
+            </table>
+            <!-- 并网模式,恒功率DC功率上下限 -->
+            <table width='100%' border='0' style='display:none;' id='TR3'>
+                <tr>
+                    <td width='177' class='td1 odd'><span id='N53'></span></td>
+                    <td width='90' class='td2 odd'><input class='txt' id='ID_0x0178' onkeyup='Verify(this,reg4)' type='text' maxlength='6'/>kW</td>
+                    <td width='110' class='td3 odd'>(<span id='ID_0x0406'></span>~<span id='ID_0x0407'></span>)</td>
+                    <td width='177' class='td1 odd'></td>
+                    <td width='90' class='td2 odd'></td>
+                    <td width='110' class='td3 odd'></td>
+                </tr>
+            </table>
+            <!-- 并网模式,恒功率AC功率上下限 -->
+            <table width='100%' border='0' style='display:none;' id='TR4'>
+                <tr>
+                    <td width='177' class='td1 odd'><span id='N54'></span></td>
+                    <td width='90' class='td2 odd'><input class='txt' id='ID_0x0179' onkeyup='Verify(this,reg4)' type='text' maxlength='6'/>kW</td>
+                    <td width='110' class='td3 odd'>(<span id='ID_0x040E'></span>~<span id='ID_0x040F'></span></span>)</td>
+                    <td width='177' class='td1 odd'></td>
+                    <td width='90' class='td2 odd'></td>
+                    <td width='110' class='td3 odd'></td>
+                </tr>
+            </table>
+		<table width='90%' border='0'>
+			<tr>
+				<td width='50%' class='tipL even'><span id='tip2'>&nbsp;</span></td>
+            	<!-- 保存 -->
+			  	<td width='50%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn2' style='display:block;'><span id='N401'>Save</span></button></td>
+			</tr>
+		</table>
+        <div class='line_long'></div>
+        <div class='blank'></div>
+        <!-- 控制方式 -->
+        <script type='text/javascript'>
+            show_sT('N04');
+        </script>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='30%' class='td1 odd'><input name='CONTROL-Mode' type='radio' value='0' id='LoRemo'/><span id='N05'></span></td>
+                <td width='30%' class='td1 odd'><input name='CONTROL-Mode' type='radio' value='1' id='Remote'/><span id='N06'></span></td>
+                <td width='30%' class='td1 odd'><input name='CONTROL-Mode' type='radio' value='2' id='Local'/><span id='N07'></span></td>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='tipL even'><span id='tip3'>&nbsp;</span></td>
+                <!-- 保存 -->
+                <td width='50%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn3' style='display:block;'><span id='N402'>Save</span></button></td>
+            </tr>
+        </table>
+        <div class='line_long'></div>
+        <div class='blank'></div>
+        <!-- 离网参数 -->
+        <script type='text/javascript'>
+            show_sT('N08');
+        </script>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='35%' class='td1 odd'><span id='N09'></span></td>
+                <td width='20%' class='td1 odd'><input class='txt' id='ID_0x0180' onkeyup='Verify(this)' type='text' maxlength='6'/>&nbsp;</td>
+                <td width='30%' class='td2 odd'>(<span id='ID_0x0410'></span>~<span id='ID_0x0411'></span>)V</td>
+                <td width='15%' class='td3 odd'></td>
+            </tr>
+            <tr>
+                <td width='35%' class='td1 even'><span id='N10'></span></td>
+                <td width='20%' class='td1 even'><input class='txt' id='ID_0x0181' onkeyup='Verify(this)' type='text' maxlength='6'/>&nbsp;</td>
+                <td width='30%' class='td2 even'>(<span id='ID_0x0412'></span>~<span id='ID_0x0413'></span>)Hz</td>
+                <td width='15%' class='td3 even'></td>
+            </tr>
+            <tr>
+                <td width='35%' class='td1 odd'><span id='N11'></span></td>
+                <td width='20%' class='td1 odd'><input class='txt' id='ID_0x019A' onkeyup='Verify(this)' type='text' maxlength='6'/>&nbsp;</td>
+                <td width='30%' class='td2 odd'>(<span id='ID_0x0426'></span>~<span id='ID_0x0427'></span>)V</td>
+                <td width='1%' class='td3 odd'></td>
+            </tr>
+            <tr>
+                <td width='35%' class='td1 even'><span id='N12'></span></td>
+                <td width='20%' class='td1 even'><input class='txt' id='ID_0x019B' onkeyup='Verify(this)' type='text' maxlength='6'/>&nbsp;</td>
+                <td width='30%' class='td2 even'>(<span id='ID_0x0428'></span>~<span id='ID_0x0429'></span>)V</td>
+                <td width='15%' class='td3 even'></td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='tipL even'><span id='tip4'>&nbsp;</span></td>
+                <!-- 保存 -->
+                <td width='50%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn4' style='display:block;'><span id='N403'>Save</span></button></td>
+            </tr>
+        </table>
+        <div class='line_long'></div>
+        <div class='blank'></div>
+        <!-- 柴油机参数 -->
+        <script type='text/javascript'>
+            show_sT('N13');
+        </script>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='30%' class='td1 odd'><span id='N14'></span></td>
+                <td width='20%' class='td1 odd'><input class='txt' id='ID_0x0360' onkeyup='Verify(this)' type='text' maxlength='7'/>&nbsp;</td>
+                <td width='15%' class='td2 odd'>(0, 30000)kW</td>
+                <td width='35%' class='td3 odd'></td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='tipL even'><span id='tip5'>&nbsp;</span></td>
+                <!-- 保存 -->
+                <td width='50%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn5' style='display:block;'><span id='N404'>Save</span></button></td>
+            </tr>
+        </table>
+        <div class='line_long'></div>
+        <div class='blank'></div>
+        <!-- 网口下发周期 -->
+        <script type='text/javascript'>
+            show_sT('N15');
+        </script>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='30%' class='td1 odd'><span id='N16'></span></td>
+                <td width='20%' class='td1 odd'><input class='txt' id='ID_0x0361' onkeyup='Verify(this)' type='text' maxlength='4'/>&nbsp;</td>
+                <td width='15%' class='td2 odd'>(5,2000)ms</td>
+                <td width='35%' class='td3 odd'></td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='tipL even'><span id='tip6'>&nbsp;</span></td>
+                <!-- 保存 -->
+                <td width='50%' align='right' class='even'><button class='btn' onclick='doSubmit(this)' id='btn6' style='display:block;'><span id='N405'>Save</span></button></td>
+            </tr>
+        </table>
+        <div class='line_long'></div>
+        <div class='blank'></div>
+		<div id='trans'></div>
+		<!--[if IE 6]><script type='text/javascript'>document.execCommand('BackgroundImageCache',false,true);</script><![endif]-->
+	</body>
+    <script type='text/javascript'>
+        window.history.forward(1);
+        var language=0;
+        var Json;
+        var lang=
+        {
+            N01:['运行设置','Running Settings'],
+			N02:['系统功率','System Power'],
+            N03:['功率设定','Power Set'],
+            N04:['控制方式','Control Ways'],
+            N05:['本地/远程','Local/ Remote'],
+            N06:['远程','Remote'],
+            N07:['本地','Local'],
+            N08:['离网参数','OffGrid Parameter'],
+            N09:['微网电压设定','MG Voltage Set'],
+            N10:['微网频率设定','MG Frequecy Set'],
+            N11:['并网模式恒压模式放电目标电压','Grid CV-Mode Discharge Target Voltage'],
+            N12:['并网模式恒压模式充电目标电压','Grid CV-Mode Charge Target Voltage'],
+            N13:['运行保护参数', 'Running Protect Param'],
+            N14:['最大逆流功率', 'Max Backwash Power'],
+            N15:['网口参数', 'Net Para'],
+            N16:['发送周期', 'Period of Send'],
+
+            //并网模式
+            N40:['并网运行模式','Grid Running Mode'],
+            N41:['恒流模式','CC-Mode'],
+            N42:['恒压模式','CV-Mode'],
+            N43:['恒功率模式(DC)','CP-Mode(DC)'],
+            N44:['恒功率模式(AC)','CP-Mode(AC)'],
+            N45:['待机模式','Standby-Mode'],
+
+            //并网模式参数
+            N50:['恒流模式电流','CC-Current'],
+            N51:['恒压模式电压','CV-Vlotage'],
+            N52:['恒压模式电流','CV-Current'],
+            N53:['恒功率模式功率(DC)','CP-Power(DC)'],
+            N54:['恒功率模式功率(AC)','CP-Power(AC)'],          
+
+            N400:['设&nbsp;&nbsp;置','Set'],             
+            N401:['设&nbsp;&nbsp;置','Set'], 
+            N402:['设&nbsp;&nbsp;置','Set'],
+            N403:['设&nbsp;&nbsp;置','Set'],
+            N404:['设&nbsp;&nbsp;置','Set'],
+            N405:['设&nbsp;&nbsp;置','Set'],
+
+            N499:['设置成功！','Set successfully!'],
+            N500:['设置失败！','Set Failed!'],
+            N501:['格式错误！','Format error!'],
+            N502:['范围错误！','Range error!']               
+        };
+        function Init()
+        {
+            var URL='s_024.html?0x0000&time='+new Date();
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            //xmlhttp.onreadystatechange=function()
+            {
+                //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {               
+        			//测试
+        			Json={ID_0x0301:85,ID_0x0282:34,ID_0x0360:20,ID_0x0361:1000,ID_0x0384:100,ID_0x0187:4,ID_0x0183:1,ID_0x0180:3900,ID_0x0181:5000,ID_0x0410:3800,ID_0x0411:4100,ID_0x0412:4900,ID_0x0413:5100,ID_0x019A:5500,ID_0x019B:7000,ID_0x0426:5000,ID_0x0427:8000,ID_0x0428:5000,ID_0x0429:8000,
+                        ID_0x2000:38400,ID_0x2001:3,ID_0x2002:5,ID_0x2003:7,ID_0x2004:9600,ID_0x2005:3,ID_0x2006:20,ID_0x2007:30,ID_0x2008:9600,ID_0x2009:1,ID_0x200A:41,ID_0x200B:51,ID_0x200C:9600,ID_0x200D:1,ID_0x200E:71,ID_0x200F:81,ID_0x2010:9600,ID_0x2011:1,ID_0x2012:11,ID_0x2013:111,ID_0x2014:9600,ID_0x2015:0,ID_0x2016:1,ID_0x2017:1};
+
+                   	//eval('Json='+xmlhttp.responseText);				
+    				if(Json.ID_0x0301==0x55)language=0;else language=1;
+                    //初始化语言
+    				lang_init_ex(1,16);
+                    lang_init_ex(40,45); 
+                    lang_init_ex(50,54); 
+                    lang_init_ex(400,405);    
+
+    				doSetValue(Json);
+
+    				if(Json.ID_0x0282==0x11)
+    				{
+                        $('btn1').style.display='none';
+    					$('btn2').style.display='none';
+                        $('btn3').style.display='none';
+    					$('trans').style.zIndex=9999;
+    				}
+    				else
+    				{
+                        $('btn1').style.display='inline';
+    					$('btn2').style.display='inline';
+                        $('btn3').style.display='inline';
+    					$('trans').style.zIndex=-9999;
+    				}
+                }
+            };
+            xmlhttp.open('GET',URL,true);
+            xmlhttp.send();
+        }
+
+        //隐藏并网模式下所有子模式的参数设置框
+        function Hide_box()
+        {
+            for(var i=1;i<=4;i++)eval("$('TR"+i+"').style.display='none';");
+            select_nbps();
+        }
+        //根据当前并网模式，显示对于的参数设置框
+        function Visit_box(obj)
+        {
+            Hide_box();
+            //从obj第2个字符后开始截取字符
+            //eval("$('TR"+obj.id.substring(2)+"').style.display='block';");
+        }
+        //并网模式下子模式间的切换
+        function Change_Grid_Mode(obj)
+        {
+            select_nbps();
+            switch(obj.id)
+            {
+                case 'CC':
+                    Visit_box($('TR1'));
+                break;
+                case 'CV':
+                    Visit_box($('TR2'));
+                break;
+                case 'CP_DC':
+                    Visit_box($('TR3'));
+                break;
+                case 'CP_AC':
+                    Visit_box($('TR4'));
+                break;
+                default:
+                    Hide_box();
+                break;
+            }
+        }
+        function doSetValue(Json)
+        {
+        	//系统功率匹配设置
+            $('ID_0x0384').value=Json.ID_0x0384;
+
+            $('ID_0x0360').value=Json.ID_0x0360;
+            $('ID_0x0361').value=Json.ID_0x0361;
+
+            //独立逆变电压、频率
+            $('ID_0x0180').value=(Json.ID_0x0180/10.0).toFixed(1);
+            $('ID_0x0181').value=(Json.ID_0x0181/100.0).toFixed(2);
+            $('ID_0x019A').value=(Json.ID_0x019A/10.0).toFixed(1);
+            $('ID_0x019B').value=(Json.ID_0x019B/10.0).toFixed(1);            
+
+            $('ID_0x0410').innerHTML=(Json.ID_0x0410/10.0).toFixed(1);
+            $('ID_0x0411').innerHTML=(Json.ID_0x0411/10.0).toFixed(1);
+            $('ID_0x0412').innerHTML=(Json.ID_0x0412/100.0).toFixed(2);
+            $('ID_0x0413').innerHTML=(Json.ID_0x0413/100.0).toFixed(2);
+            $('ID_0x0426').innerHTML=(Json.ID_0x0426/10.0).toFixed(1);
+            $('ID_0x0427').innerHTML=(Json.ID_0x0427/10.0).toFixed(1);
+            $('ID_0x0428').innerHTML=(Json.ID_0x0428/10.0).toFixed(1);
+            $('ID_0x0429').innerHTML=(Json.ID_0x0429/10.0).toFixed(1);
+            //并网模式设置
+            switch(Json.ID_0x0187)
+            {
+                case 0:$('CC').checked=true;break;//$('TR1').style.display='block';break;
+                case 1:$('CV').checked=true;break;//$('TR2').style.display='block';break;
+                case 2:$('CP_DC').checked=true;break;//$('TR3').style.display='block';break;
+                case 3:$('CP_AC').checked=true;break;//$('TR4').style.display='block';break;
+                case 4:$('STANDBY').checked=true;break;
+                //case 5:$('STOP').checked=true;break;
+            }
+            //控制模式设置
+            if(Json.ID_0x0183==0){
+                $('LoRemo').checked=true;$('Remote').checked=false;$('Local').checked=false;
+            }if(Json.ID_0x0183==1){
+                $('LoRemo').checked=false;$('Remote').checked=true;$('Local').checked=false;
+            }if(Json.ID_0x0183==2){
+                $('LoRemo').checked=false;$('Remote').checked=false;$('Local').checked=true;
+            }    
+        }
+        function show_tip_ex(id, obj){eval('$(\'tip'+id+'\').innerHTML=obj;');}
+        function read_back(addr)
+        {
+            var url='s_024.html?';
+            if(addr == 0x180) {url=url+'0x0180'+'&0x0181'+'&0x019A'+'&0x019B';}
+            else {url=url+'0x0'+addr.toString(16).toUpperCase();}
+            url=url+'&time='+new Date();
+
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            //xmlhttp.onreadystatechange=function()
+            {
+                //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    //eval('Json='+xmlhttp.responseText); 
+                    if(addr == 0x384)
+                    {
+                        var pr=0,fe=0;
+                        pr=$('ID_0x0384').value;
+                        fe=Json.ID_0x0384;
+                        if(pr!=fe)$('ID_0x0384').value=Json.ID_0x0384;
+                        show_tip_ex(1,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(1,lang.N500[language])',500);}
+                        else {setTimeout('show_tip_ex(1,lang.N499[language])',500);}
+                        setTimeout('show_tip_ex(1,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x187)
+                    {
+                        var pr=0,fe=0;
+                        if($('CC').checked){pr=$('CC').value;}
+                        if($('CV').checked){pr=$('CV').value;}
+                        if($('CP_DC').checked){pr=$('CP_DC').value;}
+                        if($('CP_AC').checked){pr=$('CP_AC').value;}
+                        if($('STANDBY').checked){pr=$('STANDBY').value;}
+                        fe=Json.ID_0x0187;
+                        if(pr!=fe){
+                            switch(Json.ID_0x0187)
+                            {
+                                case 0:$('CC').checked=true;break;//$('TR1').style.display='block';break;
+                                case 1:$('CV').checked=true;break;//$('TR2').style.display='block';break;
+                                case 2:$('CP_DC').checked=true;break;//$('TR3').style.display='block';break;
+                                case 3:$('CP_AC').checked=true;break;//$('TR4').style.display='block';break;
+                                case 4:$('STANDBY').checked=true;break;
+                                //case 5:$('STOP').checked=true;break;
+                            }
+                        }
+                        show_tip_ex(2,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(2,lang.N500[language])',500);}
+                        else {setTimeout('show_tip_ex(2,lang.N499[language])',500);}
+                        setTimeout('show_tip_ex(2,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x183)
+                    {
+                        var pr=0,fe=0;
+                        if($('LoRemo').checked){pr=$('LoRemo').value;}
+                        if($('Remote').checked){pr=$('Remote').value;}
+                        if($('Local').checked){pr=$('Local').value;}
+                        fe=Json.ID_0x0183;
+                        if(pr!=fe){
+                             if(Json.ID_0x0183==0){
+                                $('LoRemo').checked=true;$('Remote').checked=false;$('Local').checked=false;
+                            }if(Json.ID_0x0183==1){
+                                $('LoRemo').checked=false;$('Remote').checked=true;$('Local').checked=false;
+                            }if(Json.ID_0x0183==2){
+                                $('LoRemo').checked=false;$('Remote').checked=false;$('Local').checked=true;
+                            }
+                        }
+                        show_tip_ex(3,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(3,lang.N500[language])',500);}
+                        else {setTimeout('show_tip_ex(3,lang.N499[language])',500);}
+                        setTimeout('show_tip_ex(3,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x180)
+                    {
+                        var pr_vol=0,fe_vol=0;
+                        var pr2_vol=0,fe2_vol=0;
+                        var pr3_vol=0,fe3_vol=0;
+                        var pr_hz=0,fe_hz=0;
+                        pr_vol=$('ID_0x0180').value*10;
+                        pr_hz=$('ID_0x0181').value*100;
+                        pr2_vol=$('ID_0x019A').value*10;
+                        pr3_vol=$('ID_0x019B').value*10;
+                        fe_vol=Json.ID_0x0180;
+                        fe_hz=Json.ID_0x0181;
+                        fe2_vol=Json.ID_0x019A;
+                        fe3_vol=Json.ID_0x019B;
+                        if(pr_vol!=fe_vol || pr_hz!=fe_hz || pr2_vol!=fe2_vol || pr3_vol!=fe3_vol){
+                            $('ID_0x0180').value=(Json.ID_0x0180/10.0).toFixed(1);
+                            $('ID_0x0181').value=(Json.ID_0x0181/100.0).toFixed(2);
+                            $('ID_0x019A').value=(Json.ID_0x019A/10.0).toFixed(1);
+                            $('ID_0x019B').value=(Json.ID_0x019B/10.0).toFixed(1);
+                        }
+                        show_tip_ex(4,'&nbsp;');
+                        if(pr_vol!=fe_vol || pr_hz!=fe_hz || pr2_vol!=fe2_vol || pr3_vol!=fe3_vol){setTimeout('show_tip_ex(4,lang.N500[language])',500);}
+                        else {setTimeout('show_tip_ex(4,lang.N499[language])',500);}
+                        setTimeout('show_tip_ex(4,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x360)
+                    {
+                        var pr=0,fe=0;
+                        pr=$('ID_0x0360').value;
+                        fe=Json.ID_0x0360;
+                        if(pr!=fe)$('ID_0x0360').value=Json.ID_0x0360;
+                        show_tip_ex(5,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(5,lang.N500[language])',500);}
+                        else {setTimeout('show_tip_ex(5,lang.N499[language])',500);}
+                        setTimeout('show_tip_ex(5,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x361)
+                    {
+                        var pr=0,fe=0;
+                        pr=$('ID_0x0361').value;
+                        fe=Json.ID_0x0361;
+                        if(pr!=fe)$('ID_0x0361').value=Json.ID_0x0361;
+                        show_tip_ex(6,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(6,lang.N500[language])',500);}
+                        else {setTimeout('show_tip_ex(6,lang.N499[language])',500);}
+                        setTimeout('show_tip_ex(6,\'&nbsp;\')',2500);
+                    }
+                }
+            };
+            xmlhttp.open('GET',url,true);
+            xmlhttp.send();  
+        }
+
+        function doSubmit(obj)
+        {
+            var URL='a_024.html?';
+            var readBack=0;
+
+            switch(obj.id)
+            {
+                case 'btn1':
+                    URL=URL+'&0x0384='+$('ID_0x0384').value;
+                    readBack=0x0384;
+                break;
+                case 'btn2':
+                    var grid_mode;
+                    if($('CC').checked){grid_mode=$('CC').value;}
+                    if($('CV').checked){grid_mode=$('CV').value;}
+                    if($('CP_DC').checked){grid_mode=$('CP_DC').value;}
+                    if($('CP_AC').checked){grid_mode=$('CP_AC').value;}
+                    if($('STANDBY').checked){grid_mode=$('STANDBY').value;}
+                    URL=URL+'&0x0187='+grid_mode;
+                    readBack=0x0187;
+                break;
+                case 'btn3':
+                    var mode;
+                    if($('LoRemo').checked){mode=$('LoRemo').value;}
+                    if($('Remote').checked){mode=$('Remote').value;}
+                    if($('Local').checked){mode=$('Local').value;}
+                    URL=URL+'&0x0183='+mode;
+                    readBack=0x0183;
+                break;
+                case 'btn4':
+                    URL=URL+'&0x0180='+$('ID_0x0180').value*10;
+                    URL=URL+'&0x0181='+$('ID_0x0181').value*100;
+                    URL=URL+'&0x019A='+$('ID_0x019A').value*10;
+                    URL=URL+'&0x019B='+$('ID_0x019B').value*10;
+                    readBack=0x0180;                   
+                break;
+                case 'btn5':
+                    URL=URL+'&0x0360='+$('ID_0x0360').value;
+                    readBack=0x0360; 
+                break;
+                case 'btn6':
+                    URL=URL+'&0x0361='+$('ID_0x0361').value;
+                    readBack=0x0361; 
+                break;
+            }
+            URL=URL+'&time='+new Date();
+            //alert(URL);
+
+            function success()
+            {
+                setTimeout('read_back('+readBack+')', 100);
+            }            
+
+            //测试
+            success();
+            
+            sendHttpReq(URL,success);                                               
+        }
+        var err_mg=[0,0,0,0];
+        function Verify(obj)
+        {
+			var reg=/^-?[0-9][0-9]*$/;
+            //正整数、带1-2位小数的正浮点数
+            var reg2=/^((0(\.\d{1,2})?)|([1-9]\d*(\.\d{1,2})?))$/;
+            //正整数、带一位小数的正浮点数
+            var reg3=/^((0(\.\d{1})?)|([1-9]\d*(\.\d{1})?))$/;
+            var range=parseInt(obj.value);
+            var range2=parseFloat(obj.value);
+
+            switch(obj.id)
+            {
+                case 'ID_0x0384':
+                    if(!obj.value.match(reg)){$('btn1').disabled=true;obj.style.color='#F00';show_tip_ex(1,lang.N501[language]);}
+                    else if(range<0||range>29000){$('btn1').disabled=true;obj.style.color='#F00';show_tip_ex(1,lang.N502[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn1').disabled=false;
+                        show_tip_ex(1,'&nbsp;');
+                    }
+                break;
+                case 'ID_0x0180':
+                    if(!obj.value.match(reg3)){$('btn4').disabled=true;obj.style.color='#F00';show_tip_ex(4,lang.N501[language]);err_mg[0]=1;}
+                    else if(range2<(Json.ID_0x0410/10.0).toFixed(1)||range2>(Json.ID_0x0411/10.0).toFixed(1)){$('btn4').disabled=true;obj.style.color='#F00';show_tip_ex(4,lang.N502[language]);err_mg[0]=1;}
+                    else{
+                        err_mg[0]=0;
+                        obj.style.color='#000';
+                        if((err_mg[0]|err_mg[1]|err_mg[2]|err_mg[3])==0){
+                            $('btn4').disabled=false;
+                            show_tip_ex(4,'&nbsp;');
+                        }
+                    }
+                break;
+                case 'ID_0x0181':
+                    if(!obj.value.match(reg2)){$('btn4').disabled=true;obj.style.color='#F00';show_tip_ex(4,lang.N501[language]);err_mg[1]=1;}
+                    else if(range2<(Json.ID_0x0412/100.0).toFixed(2)||range2>(Json.ID_0x0413/100.0).toFixed(2)){$('btn4').disabled=true;obj.style.color='#F00';show_tip_ex(4,lang.N502[language]);err_mg[1]=1;}
+                    else{
+                        err_mg[1]=0;
+                        obj.style.color='#000';
+                        if((err_mg[0]|err_mg[1]|err_mg[2]|err_mg[3])==0){
+                            $('btn4').disabled=false;
+                            show_tip_ex(4,'&nbsp;');
+                        }
+                    }
+                break;
+                case 'ID_0x019A':
+                    if(!obj.value.match(reg3)){$('btn4').disabled=true;obj.style.color='#F00';show_tip_ex(4,lang.N501[language]);err_mg[2]=1;}
+                    else if(range2<(Json.ID_0x0426/10.0).toFixed(1)||range2>(Json.ID_0x0427/10.0).toFixed(1)){$('btn4').disabled=true;obj.style.color='#F00';show_tip_ex(4,lang.N502[language]);err_mg[2]=1;}
+                    else{
+                        err_mg[2]=0;
+                        obj.style.color='#000';
+                        if((err_mg[0]|err_mg[1]|err_mg[2]|err_mg[3])==0){
+                            $('btn4').disabled=false;
+                            show_tip_ex(4,'&nbsp;');
+                        }
+                    }
+                break;
+                case 'ID_0x019B':
+                    if(!obj.value.match(reg3)){$('btn4').disabled=true;obj.style.color='#F00';show_tip_ex(4,lang.N501[language]);err_mg[3]=1;}
+                    else if(range2<(Json.ID_0x0428/10.0).toFixed(1)||range2>(Json.ID_0x0429/10.0).toFixed(1)){$('btn4').disabled=true;obj.style.color='#F00';show_tip_ex(4,lang.N502[language]);err_mg[3]=1;}
+                    else{
+                        err_mg[3]=0;
+                        obj.style.color='#000';
+                        if((err_mg[0]|err_mg[1]|err_mg[2]|err_mg[3])==0){
+                            $('btn4').disabled=false;
+                            show_tip_ex(4,'&nbsp;');
+                        }
+                    }
+                break;  
+                case 'ID_0x0360':
+                    if(!obj.value.match(reg)){$('btn5').disabled=true;obj.style.color='#F00';show_tip_ex(5,lang.N501[language]);}
+                    else if(range<0||range>30000){$('btn5').disabled=true;obj.style.color='#F00';show_tip_ex(5,lang.N502[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn5').disabled=false;
+                        show_tip_ex(5,'&nbsp;');
+                    }
+                break;     
+                case 'ID_0x0361':
+                    if(!obj.value.match(reg)){$('btn6').disabled=true;obj.style.color='#F00';show_tip_ex(6,lang.N501[language]);}
+                    else if(range<5||range>2000){$('btn6').disabled=true;obj.style.color='#F00';show_tip_ex(6,lang.N502[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn6').disabled=false;
+                        show_tip_ex(6,'&nbsp;');
+                    }
+                break;     
+            }
+        }
+    </script>
+</html>

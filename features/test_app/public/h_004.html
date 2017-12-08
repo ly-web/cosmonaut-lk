@@ -1,0 +1,700 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+    <head>
+        <meta http-equiv='Content-Type' content='text/html; charset=GB2312'/>
+        <link type='text/css' href='c_000.css' rel='stylesheet'/>
+        <script src='j_001.js' type='text/javascript'></script>
+        <script type='text/javascript'>
+            function SelectYear()
+            {
+                for(i=2000;i<=2099;i++)
+                {
+                    //需要将 '\'转换为'\\'
+                    document.write('<option value=\''+i+'\'>'+i+'</option>');
+                }
+            }
+            function SelectMonth()
+            {
+                for(i=1;i<=12;i++)
+                {
+                    //需要将 '\'转换为'\\'
+                    if(i<10)document.write('<option value=\''+i+'\'>0'+i+'</option>');
+                    else document.write('<option value=\''+i+'\'>'+i+'</option>');
+                }
+            }
+            function SelectHour()
+            {
+                for(i=0;i<=23;i++)
+                {
+                    //需要将 '\'转换为'\\'
+                    if(i<10)document.write('<option value=\''+i+'\'>0'+i+'</option>');
+                    else document.write('<option value=\''+i+'\'>'+i+'</option>');
+                }
+            }
+            function SelectMinute()
+            {
+                for(i=0;i<60;i++)
+                {
+                    //需要将 '\'转换为'\\'
+                    if(i<10)document.write('<option value=\''+i+'\'>0'+i+'</option>');
+                    else document.write('<option value=\''+i+'\'>'+i+'</option>')
+                }
+            }
+            function CheckDay(Y,M,D)
+            {
+                var YearNo,MonthNo,DayNo;
+                try
+                {
+                    YearNo=$(Y).value;
+                    MonthNo=$(M).value;
+                }
+                catch(e)
+                {
+                    var datenow=new Date();
+                    YearNo=datenow.getFullYear();
+                    MonthNo=datenow.getMonth()+1;
+                }
+                var i,DayCount;
+                if(MonthNo==1||MonthNo==3||MonthNo==5||MonthNo==7||MonthNo==8||MonthNo==10||MonthNo==12)
+                {
+                    DayCount=31;
+                }
+                if(MonthNo==4||MonthNo==6||MonthNo==9||MonthNo==11 )
+                {
+                    DayCount=30;
+                }
+                if(MonthNo==2)
+                {
+                    if(IsRunY(YearNo))
+                    {
+                        DayCount=29;
+                    }
+                    else
+                    {
+                        DayCount=28;
+                    }
+                }
+                $(D).length=DayCount;
+                var currentDay=new Date().getDate();
+                for(i=0;i<DayCount;i++)
+                {
+                    $(D)[i]=new Option(i+1);
+                    $(D)[i].value=i+1;
+                    $(D)[i].innerHTML=i<9?'0'+(i+1):(i+1);
+                    if(currentDay==(i+1))
+                    $(D)[i].selected=true;
+                }
+            }
+            function IsRunY(YearNo)
+            {
+                if((YearNo%4==0&&YearNo%100!=0)||YearNo%400==0)return true;
+                else return false;
+            }
+        </script>
+        <style type='text/css'>
+            tr{height:27px;}
+            .select{width:180px;}
+            .time{width:80px;text-align: center;}
+            .td_value{text-align:right;padding-right:20px;}
+            .td1{padding-left:40px;text-align:left;}
+            .td2{padding-left:20px;text-align:left;}
+            .td3{padding-right:20px;text-align:right;}
+            .txt{font-size:14px;text-align:center;padding-right:2px;}
+        </style>
+    </head>
+    <body onload='Init()'>
+        <script type='text/javascript'>
+            show_T('N01');
+            show_sT('N02');
+        </script>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='21%' class='td1 odd'><span id='N03'></span></td>
+                <td width='79%' class='td2 odd'>
+                    <select class='time' id='ID_0x0170' onchange='CheckDay("ID_0x0170","ID_0x0171","ID_0x0172")'>
+                        <script type='text/javascript'>SelectYear();</script>
+                    </select>&nbsp;<b>/</b> 
+                    <select class='time' id='ID_0x0171' onchange='CheckDay("ID_0x0170","ID_0x0171","ID_0x0172");'>
+                        <script type='text/javascript'>SelectMonth();</script>
+                    </select>&nbsp;<b>/</b> 
+                    <select class='time' id='ID_0x0172' value='1'></select>&nbsp;&nbsp;&nbsp;
+                    <select class='time' id='ID_0x0173'>
+                        <script type='text/javascript'>SelectHour();</script>
+                    </select>&nbsp;<b>:</b> 
+                    <select class='time' id='ID_0x0174'>
+                        <script type='text/javascript'>SelectMinute();</script>
+                    </select><span>&nbsp;(YYYY/MM/DD hh:mm)</span>
+                </td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even' align='left'><span id='tip1' class='tip'>&nbsp;</span></td>
+                <td width='50%' class='even' align='right'>
+                    <button class='btn' onclick='doSubmit(this)' id='btn1' style='display:none;'><span id='N04'></span></button>
+                </td>
+            </tr>
+        </table>
+        <div class='line_long'></div>
+        <div class='blank'></div>
+        <script type='text/javascript'>
+            show_sT('N05');
+        </script>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='20%' class='td1 odd'><span id='N31'></span></td>
+                <td width='10%' class='td1 odd'><span id='ID_0x0341'>0kWh</span></td>
+                <td width='20%' class='td1 odd'><span id='N06'></span></td>
+                <td width='50%' class='td2 odd'>
+                    <input id='ID_0x017C' value='0' type='text' class='txt' maxlength='5' onkeyup='Verify(this)'/>kWh&nbsp;&nbsp;&nbsp;&nbsp;(-9999~9999)
+                </td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even' align='left'><span id='tip2' class='tip'>&nbsp;</span></td>
+                <td width='50%' class='even' align='right'>
+                    <button class='btn' onclick='doSubmit(this)' id='btn2' style='display:none;'><span id='N07'></span></button>
+                </td>
+            </tr>
+        </table>
+        <div class='line_long'></div>
+        <div class='blank'></div>
+        <script type='text/javascript'>
+            show_sT('N08');
+        </script>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='21%' class='td1 odd'><span id='N09'></span></td>
+                <td width='79%' class='td2 odd'>
+                    <input id='ID_0x0208' value='9999' type='password' class='txt' maxlength='5' onkeyup='Verify(this)'/>&nbsp;&nbsp;&nbsp;&nbsp;(0~9999)
+                </td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even' align='left'><span id='tip3' class='tip'>&nbsp;</span></td>
+                <td width='50%' class='even' align='right'>
+                    <button class='btn' onclick='doSubmit(this)' id='btn3' style='display:none;'><span id='N10'></span></button>
+                </td>
+            </tr>
+        </table>
+        <div class='line_long'></div>
+        <div class='blank'></div>
+        <script type='text/javascript'>
+            show_sT('N11');
+        </script>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='21%' class='td1 odd'><span id='N12'></span></td>
+                <td width='79%' class='td2 odd'>
+                    <input id='ID_0x0209' value='9999' type='password' class='txt' maxlength='5' onkeyup='Verify(this)'/>&nbsp;&nbsp;&nbsp;&nbsp;(0~9999)
+              </td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even' align='left'><span id='tip4' class='tip'>&nbsp;</span></td>
+                <td width='50%' class='even' align='right'>
+                    <button class='btn' onclick='doSubmit(this)' id='btn4' style='display:none;'><span id='N13'></span></button>
+                </td>
+            </tr>
+        </table>
+        <div class='line_long'></div>
+        <div class='blank'></div>
+        <script type='text/javascript'>
+            show_sT('N14');
+        </script>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='21%' class='td1 odd'><span id='N15'></span></td>
+                <td width='79%' class='td2 odd'>
+                    <input id='ID_0x020A' value='9999' type='password' class='txt' maxlength='5' onkeyup='Verify(this)'/>&nbsp;&nbsp;&nbsp;&nbsp;(0~9999)
+                </td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even' align='left'><span id='tip5' class='tip'>&nbsp;</span></td>
+                <td width='50%' class='even' align='right'>
+                    <button class='btn' onclick='doSubmit(this)' id='btn5' style='display:none;'><span id='N16'></span></button>
+                </td>
+            </tr>
+        </table>
+        <div class='line_long'></div>
+        <div class='blank'></div>
+        <script type='text/javascript'>
+            show_sT('N28');
+        </script>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='21%' class='td1 odd'><span id='N29'></span></td>
+                <td width='79%' class='td2 odd'>
+                    <input id='ID_0x020C' value='9999' type='password' class='txt' maxlength='5' onkeyup='Verify(this)'/>&nbsp;&nbsp;&nbsp;&nbsp;(0~9999)
+                </td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even' align='left'><span id='N58' class='tip'>&nbsp;</span><span id='tip7' class='td1 tip'>&nbsp;</span></td>
+                <td width='50%' class='even' align='right'>
+                    <button class='btn' onclick='doSubmit(this)' id='btn7' style='display:none;'><span id='N30'></span></button>
+                </td>
+            </tr>
+        </table>
+        <div class='line_long'></div>
+        <div class='blank'></div>
+        <script type='text/javascript'>
+            show_sT('N17');
+        </script>
+        <table width='90%' border='0'>
+            <tr>
+              <td width='21%' class='td1 even'><input type='checkbox' id='NTP-SEL' onclick='ntp_change(this)'/><span id='N20'></span></td>
+              <td width='13%' class='td2 even'></td>
+              <td width='10%' class='td1 even'></td>
+              <td width='15%' class='td2 even'></td>
+              <td width='41%' class='td2 even'></td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='21%' class='td1 odd'><span id='N18'></span></td>
+              <td width='13%' class='td2 odd'><input class='txt' style='text-align:center;' id='IP' onkeyup='IPverify(this)' type='text'/></td>
+                <td width='10%' class='td1 odd'><span id='N19'></span></td>
+              <td width='15%' class='td2 odd'><input class='txt' id='ID_0x0224' maxlength='5' onkeyup='Verify(this)' type='text'/></td>
+                <td width='41%' class='td2 odd'>(1~65535)</td>
+            </tr>
+        </table>
+        <table width='90%' border='0'>
+            <tr>
+                <td width='50%' class='even' align='left'><span id='tip6' class='tip'>&nbsp;</span></td>
+                <td width='50%' class='even' align='right'>
+                    <button class='btn' onclick='doSubmit(this)' id='btn6' style='display:none;'><span id='N21'></span></button>
+                </td>
+            </tr>
+        </table>
+        <div class='line_long'></div>
+        <div class='blank'></div>
+        <div id='trans'></div>
+        <!--[if IE 6]><script type='text/javascript'>document.execCommand('BackgroundImageCache',false,true);</script><![endif]-->
+    </body>
+    <script type='text/javascript'>
+        window.history.forward(1);
+        var language=0;
+        var Json;
+        var lang=
+        {
+            N01:['系统参数','System Parameters'],
+            N02:['时间设置','Time Setting'],
+            N03:['时间','Time'],
+            N04:['设&nbsp;&nbsp;置','Set'],
+            N05:['电量补偿','Energy Adjust'],
+            N06:['负载总电量校正值','Total E-Load Adjust Value'],
+            N07:['设&nbsp;&nbsp;置','Set'],
+            N08:['恢复出厂参数','Load Default Param'],
+            N09:['请输入密码: ','Please input password: '],
+            N10:['设&nbsp;&nbsp;置','Set'],
+            N11:['用户参数备份','User Param Bak'],     
+            N12:['请输入密码: ','Please input password: '],
+            N13:['设&nbsp;&nbsp;置','Set'],    
+            N14:['用户参数恢复','User Param Recovery'], 
+            N15:['请输入密码: ','Please input password: '],
+            N16:['设&nbsp;&nbsp;置','Set'],
+            N17:['NTP参数','NTP Parameters'],
+            N18:['服务器地址','Server IP'],
+            N19:['端口号','Port'],
+            N20:['启动NTP对时','Start NTP Timing'],
+            N21:['设&nbsp;&nbsp;置','Set'],
+            N22:['转发云服务器设置','Forwarding Cloud Server Settings'],
+            N23:['启动云服务','Start Cloud Server'],
+            N24:['域名(IP)','DomainName(IP)'],
+            N25:['端口号','Port'],
+            N26:['传输周期', 'Transmission Cycle'],
+            N27:['设&nbsp;&nbsp;置','Set'],
+            N28:['重启系统','System Reboot'],
+            N29:['请输入密码: ','Please input password: '],
+            N30:['重启','Reboot'],
+            N31:['负载总电量','Total E-Load'],
+
+            N49:['设置成功!','Set successfully!'],
+            N50:['设置失败!','Set failed!'],
+            N51:['格式错误!','Format error!'],
+            N52:['范围错误!','Range error!'],
+            N53:['请稍等，正在恢复中...','Please wait, now is recoverying...'],
+            N54:['恢复成功!','Recovery Successfully!'],
+            N55:['密码错误!','Password error!'],
+            N56:['请稍等，正在备份中...','Please wait, now is backuping...'],
+            N57:['备份成功!','Backup Successfully!'],
+            N58:['*运行状态请不要重启系统!','*Please do not reboot the system in running!'],
+            N59:['重启中 ...','Rebooting ...'],
+            N60:['请先停机!','Please Stop First!']
+        };
+
+        Json={ID_0x0301:85,ID_0x0170:2014,ID_0x0171:8,ID_0x0172:13,ID_0x0173:14,ID_0x0174:21,ID_0x0282:0x22,ID_0x017C:1000,ID_0x020C:0,ID_0x0220:50,ID_0x0221:1,ID_0x0222:3,ID_0x0223:120,ID_0x0224:123,ID_0x0225:0xaa,ID_0x0341:2000};
+
+        function Init()
+        {
+            var URL='s_004.html?0x0000&time='+new Date();
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            //xmlhttp.onreadystatechange=function()
+            {
+                //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    //eval('Json='+xmlhttp.responseText);
+        			if(Json.ID_0x0301==0x55)language=0;else language=1;
+        			lang_init_ex(1,21);
+                    lang_init_ex(28,31);
+                    lang_init_ex(58,58);
+
+        			$('ID_0x0170').value=Json.ID_0x0170;
+        			$('ID_0x0171').value=Json.ID_0x0171;
+        			CheckDay('ID_0x0170','ID_0x0171','ID_0x0172');
+        			$('ID_0x0172').value=Json.ID_0x0172;
+        			$('ID_0x0173').value=Json.ID_0x0173;
+        			$('ID_0x0174').value=Json.ID_0x0174;
+                    $('ID_0x017C').value=Json.ID_0x017C;
+                    $('ID_0x0341').innerHTML=Json.ID_0x0341+'kWh';
+                    $('IP').value=String(Json.ID_0x0220)+'.'+String(Json.ID_0x0221)+'.'+String(Json.ID_0x0222)+'.'+String(Json.ID_0x0223);
+                    $('ID_0x0224').value=Json.ID_0x0224;
+
+                    if(Json.ID_0x0225 == 0x55){
+                        $('NTP-SEL').checked=false;
+                        $('IP').disabled = true;
+                        $('ID_0x0224').disabled = true;
+                        $('btn6').disabled = true;
+                    }else if(Json.ID_0x0225 == 0xaa){
+                        $('NTP-SEL').checked=true;
+                        $('IP').disabled = false;
+                        $('ID_0x0224').disabled = false;
+                        $('btn6').disabled = false;
+                    }
+
+        			if(Json.ID_0x0282==0x11)
+        			{
+        				$('btn1').style.display='none';
+                        $('btn2').style.display='none';
+                        $('btn3').style.display='none';
+                        $('btn4').style.display='none';
+                        $('btn5').style.display='none';
+                        $('btn6').style.display='none';
+                        $('btn7').style.display='none';
+        				$('trans').style.zIndex=9999;	
+        			}
+        			else
+        			{
+        				$('btn1').style.display='inline';
+                        $('btn2').style.display='inline';
+                        $('btn3').style.display='inline';
+                        $('btn4').style.display='inline';
+                        $('btn5').style.display='inline';
+                        $('btn6').style.display='inline';
+                        $('btn7').style.display='inline';
+        				$('trans').style.zIndex=-9999;
+        			}
+                }
+            };
+            xmlhttp.open('GET',URL,true);
+            xmlhttp.send();
+        }
+        function show_tip_ex(id, obj){eval('$(\'tip'+id+'\').innerHTML=obj;');}
+        function read_back(addr)
+        {
+            var url='s_004.html?';
+            if(addr == 0x0170){url=url+'0x0170'+'&0x0171'+'&0x0172'+'&0x0173'+'&0x0174';}
+            else if(addr==0x0220){url=url+'0x0220'+'&0x0221'+'&0x0222'+'&0x0223'+'&0x0224';}
+            url=url+'&time='+new Date();
+            //alert(url);
+
+            var xmlhttp;
+            if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+            else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+            //xmlhttp.onreadystatechange=function()
+            {
+                //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    //eval('Json='+xmlhttp.responseText); 
+                    if(addr == 0x170)
+                    {
+                        var pr_year, fe_year, pr_mon, fe_mon, pr_day, fe_day, pr_hour, fe_min, pr_min, fe_min;
+                        pr_year=parseInt($('ID_0x0170').value);
+                        pr_mon=$('ID_0x0171').value;
+                        pr_day=$('ID_0x0172').value;
+                        pr_hour=$('ID_0x0173').value;
+                        pr_min=$('ID_0x0174').value;
+                        fe_year=Json.ID_0x0170;
+                        fe_mon=Json.ID_0x0171;
+                        fe_day=Json.ID_0x0172;
+                        fe_hour=Json.ID_0x0173;
+                        fe_min=Json.ID_0x0174;
+                        if(pr_year!=fe_year || pr_mon!=fe_mon || pr_day!=fe_day || pr_hour!=fe_hour || pr_min!=fe_min)
+                        {
+                            $('ID_0x0170').value=Json.ID_0x0170;
+                            $('ID_0x0171').value=Json.ID_0x0171;
+                            $('ID_0x0172').value=Json.ID_0x0172;
+                            $('ID_0x0173').value=Json.ID_0x0173;
+                            $('ID_0x0174').value=Json.ID_0x0174;
+                        }
+                        show_tip_ex(1,'&nbsp;');
+                        if(pr_year!=fe_year || pr_mon!=fe_mon || pr_day!=fe_day || 
+                            pr_hour!=fe_hour || pr_min!=fe_min){setTimeout('show_tip_ex(1,lang.N50[language])',500);}
+                        else {setTimeout('show_tip_ex(1,lang.N49[language])',500);}
+                        setTimeout('show_tip_ex(1,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x17C)
+                    {
+                        var pr=0,fe=0;
+                        pr=$('ID_0x017C').value;
+                        fe=Json.ID_0x017C;
+                        if(pr!=fe){$('ID_0x017C').value=0}
+                        $('ID_0x0341').innerHTML=Json.ID_0x0341+'kWh';
+                        show_tip_ex(2,'&nbsp;');
+                        if(pr!=fe){setTimeout('show_tip_ex(2,lang.N50[language])',500);}
+                        else {setTimeout('show_tip_ex(2,lang.N49[language])',500);}
+                        setTimeout('show_tip_ex(2,\'&nbsp;\')',2500);
+                    }
+                    else if(addr == 0x0220)
+                    {
+                        var ip=$('IP').value;
+                        var ip_get=String(Json.ID_0x0220)+'.'+String(Json.ID_0x0221)+'.'+String(Json.ID_0x0222)+'.'+String(Json.ID_0x0223);
+                        var port=$('ID_0x0224').value;
+                        var port_get=Json.ID_0x0224;
+                        show_tip_ex(6,'&nbsp;');
+                        if(ip!=ip_get || port!=port_get){
+                            $('IP').value=ip_get;
+                            $('ID_0x0224').value=port_get;
+                            setTimeout('show_tip_ex(6,lang.N50[language])',500);        
+                        }else{
+                            setTimeout('show_tip_ex(6,lang.N49[language])',500);
+                        }
+                        setTimeout('show_tip_ex(6,\'&nbsp;\')',2500);                        
+                    }
+                    else if(addr == 0x0225)
+                    {
+                        if(Json.ID_0x0225 == 0x55){
+                            $('IP').disabled = true;
+                            $('ID_0x0224').disabled = true;
+                            $('btn6').disabled = true;
+                        }else if(Json.ID_0x0225 == 0xaa){
+                            $('IP').disabled = false;
+                            $('ID_0x0224').disabled = false;
+                            $('btn6').disabled = false;
+                        }
+                    }
+                    else if(addr == 0x0208 || addr == 0x020A || addr == 0x020C)
+                    {
+                        if(Json.ID_0x020C == 0){
+                            var URL='a_004.html?';
+                            URL=URL+'&0x020C='+'170';
+                            URL=URL+'&time='+new Date();
+                            sendHttpReq(URL,null);
+                            setTimeout('system_logout()',500); 
+                        }else{
+                            show_tip_ex(7,'&nbsp;');
+                            show_tip_ex(7,lang.N60[language]);
+                            setTimeout('show_tip_ex(7,"&nbsp;")',2000);
+                            setTimeout('$("ID_0x020C").value=9999',2000);
+                        }
+                    }
+                }
+            };
+            xmlhttp.open('GET',url,true);
+            xmlhttp.send();  
+        }
+        function system_logout()
+        {
+            parent.document.location.href='Login.html';
+        }
+        function doSubmit(obj)
+        {
+            var URL='a_004.html?';
+            var readBack=0;
+
+            switch(obj.id)
+            {
+                case 'btn1':
+                    URL=URL+'&0x0170='+(parseInt($('ID_0x0170').value))+'&0x0171='+$('ID_0x0171').value+'&0x0172='+$('ID_0x0172').value+'&0x0173='+$('ID_0x0173').value+'&0x0174='+$('ID_0x0174').value;
+                    readBack=0x0170;
+                break;
+                case 'btn2':
+                    URL=URL+'&0x017C='+parseInt($('ID_0x017C').value);
+                    readBack=0x017C;
+                break;
+                case 'btn3':
+                    if(parseInt($('ID_0x0208').value)==1111)
+                    {
+                        setTimeout('show_tip_ex(3,lang.N53[language])',10);
+                        URL=URL+'&0x0208='+'170';
+                        //show_tip_ex(3,'&nbsp;');                    
+                        //setTimeout('show_tip_ex(3,lang.N54[language])',5000);
+                        //setTimeout('show_tip_ex(3,"&nbsp;")',7000);
+                        //setTimeout('$("ID_0x0208").value=9999',7000);      
+                        readBack=0x0208;
+                    }else{
+                        show_tip_ex(3,lang.N55[language]);
+                        setTimeout('show_tip_ex(3,"&nbsp;")',2000);
+                        setTimeout('$("ID_0x0208").value=9999',2000);
+                        return;
+                    }
+                break;
+                case 'btn4':
+                    if(parseInt($('ID_0x0209').value)==1111)
+                    {
+                        setTimeout('show_tip_ex(4,lang.N56[language])',10);
+                        URL=URL+'&0x0209='+'170';
+                        show_tip_ex(4,'&nbsp;');                    
+                        setTimeout('show_tip_ex(4,lang.N57[language])',5000);
+                        setTimeout('show_tip_ex(4,"&nbsp;")',7000);
+                        setTimeout('$("ID_0x0209").value=9999',7000);          
+                    }else{
+                        show_tip_ex(4,lang.N55[language]);
+                        setTimeout('show_tip_ex(4,"&nbsp;")',2000);
+                        setTimeout('$("ID_0x0209").value=9999',2000);
+                        return;
+                    }
+                break;
+                case 'btn5':
+                    if(parseInt($('ID_0x020A').value)==1111)
+                    {
+                        setTimeout('show_tip_ex(5,lang.N53[language])',10);
+                        URL=URL+'&0x020A='+'170';
+                        //show_tip_ex(5,'&nbsp;');                    
+                        //setTimeout('show_tip_ex(5,lang.N54[language])',5000);
+                        //setTimeout('show_tip_ex(5,"&nbsp;")',7000);
+                        //setTimeout('$("ID_0x020A").value=9999',7000);    
+                        readBack=0x020A;      
+                    }else{
+                        show_tip_ex(5,lang.N55[language]);
+                        setTimeout('show_tip_ex(5,"&nbsp;")',2000);
+                        setTimeout('$("ID_0x020A").value=9999',2000);
+                        return;
+                    }
+                break;
+                case 'btn6':
+                    var ip=$('IP').value.split('.');
+                    URL=URL+'&0x0220='+ip[0]+'&0x0221='+ip[1]+'&0x0222='+ip[2]+'&0x0223='+ip[3]+'&0x0224='+$('ID_0x0224').value;
+                    readBack=0x0220;
+                    break;
+                break;
+                case 'btn7':
+                    if(parseInt($('ID_0x020C').value)==1111)
+                    {
+                        readBack=0x020C; 
+                    }else{
+                        show_tip_ex(7,lang.N55[language]);
+                        setTimeout('show_tip_ex(7,"&nbsp;")',2000);
+                        setTimeout('$("ID_0x020C").value=9999',2000);
+                        return;
+                    }
+                break;
+            }
+            URL=URL+'&time='+new Date();
+            //alert(URL);
+
+            function success()
+            {
+                setTimeout('read_back('+readBack+')', 100);
+            }            
+
+            //测试
+            success();
+            
+            sendHttpReq(URL,success);
+        }
+        function ntp_change(obj)
+        {
+            var URL='a_004.html?';
+            var readBack=0;
+            if(obj.checked == false){
+                URL=URL+'&0x0225='+85;
+            }else{
+                URL=URL+'&0x0225='+170;
+            }
+            readBack=0x0225;
+            URL=URL+'&time='+new Date();
+            //alert(URL);
+
+            //测试
+            //success();
+
+            function success()
+            {
+                setTimeout('read_back('+readBack+')', 100);
+            }   
+            sendHttpReq(URL,success);
+        }
+        function IPverify(obj)
+        {
+            //需要将 '\'转换为'\\'
+            var reg=/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])(\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])){3}$/;
+            if(!obj.value.match(reg))
+            {
+                $('btn6').disabled=true;
+                obj.style.color='#F00';
+                show_tip_ex(6,lang.N51[language]);
+            }
+            else
+            {
+                $('btn6').disabled=false;
+                obj.style.color='#000';
+                show_tip_ex(6,'&nbsp;');
+            }
+        }
+        function Verify(obj)
+        {
+            var reg=/^-?[0-9][0-9]*$/;
+            var reg2=/^-?\d+$/; 
+            var range=parseInt(obj.value);
+
+            switch(obj.id)
+            {
+                case 'ID_0x017C':
+                    if(!obj.value.match(reg2)){$('btn2').disabled=true;obj.style.color='#F00';show_tip_ex(2,lang.N51[language]);}
+                    else if(range<-9999||range>9999){$('btn2').disabled=true;obj.style.color='#F00';show_tip_ex(2,lang.N52[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn2').disabled=false;
+                        show_tip_ex(2,'&nbsp;');
+                    }                
+                break;
+                case 'ID_0x0208':
+                    if(!obj.value.match(reg)){$('btn3').disabled=true;obj.style.color='#F00';show_tip_ex(3,lang.N51[language]);}
+                    else if(range<0||range>9999){$('btn3').disabled=true;obj.style.color='#F00';show_tip_ex(3,lang.N52[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn3').disabled=false;
+                        show_tip_ex(3,'&nbsp;');
+                    }
+                break;
+                case 'ID_0x0209':
+                    if(!obj.value.match(reg)){$('btn4').disabled=true;obj.style.color='#F00';show_tip_ex(4,lang.N51[language]);}
+                    else if(range<0||range>9999){$('btn4').disabled=true;obj.style.color='#F00';show_tip_ex(4,lang.N52[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn4').disabled=false;
+                        show_tip_ex(4,'&nbsp;');
+                    }
+                break;
+                case 'ID_0x020A':
+                    if(!obj.value.match(reg)){$('btn5').disabled=true;obj.style.color='#F00';show_tip_ex(5,lang.N51[language]);}
+                    else if(range<0||range>9999){$('btn5').disabled=true;obj.style.color='#F00';show_tip_ex(5,lang.N52[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn5').disabled=false;
+                        show_tip_ex(5,'&nbsp;');
+                    }
+                break;
+                case 'ID_0x0224':
+                    if(!obj.value.match(reg)){$('btn6').disabled=true;obj.style.color='#F00';show_tip_ex(6,lang.N51[language]);}
+                    else if(range<0||range>9999){$('btn6').disabled=true;obj.style.color='#F00';show_tip_ex(6,lang.N52[language]);}
+                    else{
+                        obj.style.color='#000';
+                        $('btn6').disabled=false;
+                        show_tip_ex(6,'&nbsp;');
+                    }
+                break;
+            }         
+        }
+    </script>
+</html>

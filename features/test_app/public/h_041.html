@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<style>
+body {margin-top:1px; background: #e0e0e0; color: #00A2EB; font-family: Tahoma, SimSun, sans-serif; font-size:14px; font-weight: bold; }
+</style>
+</head>
+<body onload='Init();'>
+	<div id="stat">
+	<span id='N001'>使用CPU：</span><span id='0x0285'>5</span>% | <span id='N002'>可用内存：</span><span id='0x0286'>34590</span>KB | <span id='N003'>在线用户数：</span><span id='0x0287'>0 / 3</span>
+	</div>
+</body>
+<script type='text/javascript'>
+	window.history.forward(1);
+    var $=function(o){return document.getElementById(o);};
+    var language=0;
+    var Json;
+    var lang=
+    {
+        N001:['使用CPU：','Used CPU：'],
+        N002:['可用内存：','Free Mem：'],
+        N003:['在线用户数：','Online-Users：']
+    };
+
+    function Init()
+    {
+		ajax();
+		setInterval('ajax()', 6000);
+    }
+
+    function ajax()
+    {
+        var URL='s_041.html?time='+new Date();
+        var xmlhttp;
+        if(window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
+        else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+        //xmlhttp.onreadystatechange=function()
+        {
+            //if(xmlhttp.readyState==4 && xmlhttp.status==200)
+            {
+                //eval('Json='+xmlhttp.responseText);      
+                
+                Json={ID_0x0301:85,ID_0x0285:2.6,ID_0x0286:32123,ID_0x0287:'3 / 5'};
+
+    			if(Json.ID_0x0301==0x55)language=0;else language=1;
+    			for(var i=1;i<=3;i++)
+    			{
+    				eval('$(\'N0'+(i<10?'0'+i:i)+'\').innerHTML=lang.N0'+(i<10?'0'+i:i)+'[language];');
+    			}
+    			$('0x0285').innerHTML = Json.ID_0x0285;
+    			$('0x0286').innerHTML = Json.ID_0x0286;
+    			$('0x0287').innerHTML = Json.ID_0x0287;
+            }
+        };
+        xmlhttp.open('GET',URL,true);
+        xmlhttp.send();
+    }
+</script>
+</html>
